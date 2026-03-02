@@ -1,0 +1,94 @@
+body{
+margin:0;
+font-family:Arial, sans-serif;
+line-height:1.6;
+}
+
+header{
+background:#0b3d91;
+color:white;
+padding:15px;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+nav ul{
+list-style:none;
+display:flex;
+gap:20px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+}
+
+.hero{
+text-align:center;
+padding:90px 20px;
+background:#f4f6f8;
+}
+
+.hero h2{
+font-size:38px;
+}
+
+.btn{
+background:#d52b1e;
+color:white;
+padding:12px 25px;
+text-decoration:none;
+border-radius:5px;
+}
+
+.section{
+padding:60px 20px;
+text-align:center;
+}
+
+.grey{
+background:#f1f1f1;
+}
+
+.download-btn{
+display:inline-block;
+margin-top:20px;
+padding:14px 28px;
+background:#0b3d91;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+.contact-container{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:15px;
+margin-top:20px;
+}
+
+.contact-card{
+padding:15px 25px;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;
+}
+
+.whatsapp{background:#25D366;}
+.instagram{background:#E1306C;}
+.tiktok{background:#000;}
+.email{background:#0072c6;}
+.phone{background:#28a745;}
+
+footer{
+background:#222;
+color:white;
+text-align:center;
+padding:20px;
+}
