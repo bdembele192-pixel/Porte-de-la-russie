@@ -5,38 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mèche · Apprends à trader sans te brûler</title>
 <meta name="description" content="Simulateur de trading sur les vrais prix du marché : trading live, krachs historiques à rejouer, algos à backtester, académie et coach intégré.">
-<meta name="theme-color" content="#07070C">
+<meta name="theme-color" content="#060606">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='5' y='5' width='54' height='54' rx='15' fill='%230B0910' stroke='%23A855F7' stroke-width='3'/%3E%3Cpath d='M32 11c4 7 12 12 12 23a12 12 0 0 1-24 0c0-6 4-9 6-13 1 4 3 6 5 6-1-5 0-10 1-16z' fill='%23C084FC'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&family=Rajdhani:wght@600;700&family=Unbounded:wght@600;800;900&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&family=Rajdhani:wght@600;700&family=Unbounded:wght@600;800;900&family=Sora:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/v3.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="tb-left"><a class="tb-level" id="tb-level" href="#/profile"></a></div>
-  <a class="logo" href="#/home" data-tip-text="Retour à l'accueil"><span class="logo-i" data-logo="34"></span><span class="logo-t">Mèche</span></a>
+<aside class="sidebar">
+  <a class="logo" href="#/home" data-tip-text="Retour à l'accueil"><span class="logo-i" data-logo="40"></span><span class="logo-t">Mèche</span></a>
   <nav class="nav">
-    <a href="#/home" data-nav="home" data-tip-text="Ton tableau de bord : niveau, marchés, défi du jour."><i data-icon="home"></i><span>Accueil</span></a>
-    <a href="#/live" data-nav="live" data-tip-text="Trade sur les vrais prix en temps réel avec 10 000 $ virtuels."><i data-icon="live"></i><span>Live</span></a>
-    <a href="#/missions" data-nav="missions" data-tip-text="Rejoue des krachs et des rallyes historiques, bougie par bougie."><i data-icon="missions"></i><span>Missions</span></a>
+    <a href="#/home" data-nav="home" data-short="Accueil" data-tip-text="Ton tableau de bord : marchés, portefeuille, défi du jour."><i data-icon="home"></i><span>Accueil</span></a>
+    <a href="#/live" data-nav="live" data-short="Live" data-tip-text="Trade sur les vrais prix en temps réel avec de l'argent virtuel."><i data-icon="live"></i><span>Trading live</span></a>
+    <a href="#/news" data-nav="news" data-tip-text="Actus : communiqués officiels des banques centrales, du FMI, des régulateurs… mis à jour automatiquement."><i data-icon="globe"></i><span>Marchés &amp; actus</span></a>
+    <a href="#/missions" data-nav="missions" data-short="Krachs" data-tip-text="Rejoue des krachs et des rallyes historiques, bougie par bougie."><i data-icon="missions"></i><span>Krachs historiques</span></a>
+    <a href="#/lab" data-nav="lab" data-tip-text="Backteste 4 algorithmes de trading sur de vraies données."><i data-icon="lab"></i><span>Backtest</span></a>
+    <a href="#/ai" data-nav="ai" data-short="IA" data-tip-text="Mèche IA : ton copilote de trading et ton assistant pour toutes tes questions."><i data-icon="ai"></i><span>Mèche IA</span></a>
+    <a href="#/academy" data-nav="academy" data-short="Cours" data-tip-text="Les cours : instruments, styles, stratégies, algos, macro, psychologie."><i data-icon="academy"></i><span>Académie</span></a>
+    <a href="#/quiz" data-nav="quiz" data-short="Quiz" data-tip-text="Parcours de quiz façon Duolingo : 5 minutes par jour."><i data-icon="quiz"></i><span>Quiz</span></a>
     <a href="#/swipe" data-nav="swipe" data-tip-text="Mini-jeu : la prochaine bougie sera-t-elle verte ou rouge ?"><i data-icon="swipe"></i><span>Swipe</span></a>
-    <a href="#/lab" data-nav="lab" data-tip-text="Backteste 4 algorithmes de trading sur de vraies données."><i data-icon="lab"></i><span>Algo Lab</span></a>
-    <a href="#/quiz" data-nav="quiz" data-tip-text="Parcours de quiz façon Duolingo : 5 minutes par jour, théorie et pratique."><i data-icon="quiz"></i><span>Quiz</span></a>
-    <a href="#/ai" data-nav="ai" data-tip-text="Mèche IA : ton copilote de trading et ton assistant pour toutes tes questions (économie, finance, géopolitique, droit…)."><i data-icon="ai"></i><span>IA</span></a>
-    <a href="#/news" data-nav="news" data-tip-text="Actus : communiqués officiels des banques centrales, du FMI, de la Banque mondiale, des régulateurs… mis à jour automatiquement."><i data-icon="globe"></i><span>Actus</span></a>
-    <a href="#/academy" data-nav="academy" data-tip-text="Les cours : instruments, styles, stratégies, algos, macro, psychologie."><i data-icon="academy"></i><span>Académie</span></a>
-    <a href="#/profile" data-nav="profile" data-tip-text="Ton niveau, tes badges, tes stats et tes réglages."><i data-icon="profile"></i><span>Profil</span></a>
+    <a href="#/profile" data-nav="profile" data-short="Profil" data-tip-text="Ton niveau, tes badges, tes stats."><i data-icon="profile"></i><span>Profil</span></a>
+    <a href="#/settings" data-nav="settings" class="nav-set" data-tip-text="Thème, police, taille, photo, icône, langue, devise, montants…"><i data-icon="settings"></i><span>Paramètres</span></a>
   </nav>
+  <div class="side-quote"><p>La vraie force n'est pas de gagner toujours, mais de ne jamais arrêter d'apprendre.</p><span>→ Mèche</span></div>
+</aside>
+<header class="topbar">
+  <a class="logo logo-m" href="#/home" aria-label="Accueil"><span class="logo-t">Mèche</span></a>
+  <button class="tb-search" id="tb-search" type="button" data-tip-text="Recherche rapide : actifs, cours, termes du glossaire, pages. Raccourci Ctrl+K."><i data-icon="search"></i><span>Rechercher un actif, une crypto, un cours…</span><kbd>Ctrl K</kbd></button>
   <div class="tb-right">
+    <a class="tb-level" id="tb-level" href="#/profile"></a>
     <span class="tb-streak" id="tb-streak" data-tip-text="Jours d'affilée sur l'app. Reviens chaque jour pour garder la flamme."></span>
-    <a class="tb-gear" href="#/settings" data-nav="settings" data-tip-text="Paramètres : thème, police, taille, photo, icône, langue, devise, montants…" aria-label="Paramètres" data-icon="settings"></a>
-    <a class="av tb-av" id="tb-av" href="#/profile" data-tip-text="Ton profil" aria-label="Profil"></a>
+    <a class="tb-btn tb-bell" id="tb-bell" href="#/news" aria-label="Actus" data-tip-text="Nouveaux communiqués officiels" data-icon="bell"></a>
+    <button class="tb-btn" id="tb-mode" type="button" aria-label="Mode clair ou sombre" data-tip-text="Basculer entre le mode sombre et le mode clair" data-icon="sun"></button>
+    <a class="tb-gear tb-btn" href="#/settings" data-nav="settings" data-tip-text="Paramètres" aria-label="Paramètres" data-icon="settings"></a>
+    <a class="tb-me" id="tb-me" href="#/profile" data-tip-text="Ton profil"><span class="av tb-av" id="tb-av"></span><span class="tb-me-t"><b id="tb-name">Invité</b><small id="tb-lv">Niveau 1</small></span><i data-icon="chevron"></i></a>
   </div>
 </header>
 
 <main id="view" class="view"></main>
+
+<footer class="foot">
+  <a class="logo" href="#/home"><span class="logo-i" data-logo="26"></span><span class="logo-t">Mèche</span></a>
+  <span class="foot-tag">Apprendre aujourd'hui. Trader demain.</span>
+  <span class="foot-q">Le trading est un marathon, pas un sprint.</span>
+</footer>
 
 <script src="js/config.js"></script>
 <script src="js/icons.js"></script>
@@ -63,5 +78,6 @@
 <script src="js/news.js"></script>
 <script src="js/account.js"></script>
 <script src="js/tour.js"></script>
+<script src="js/shell.js"></script>
 </body>
 </html>

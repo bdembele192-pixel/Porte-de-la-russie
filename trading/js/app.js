@@ -33,6 +33,8 @@ window.M = window.M || {};
         st.settings = Object.assign({}, M.SETTINGS_DEFAULT, s.settings || {});
         // Migration : le thème « Panthère » devient le thème principal (une seule fois)
         if (!st.themeV2) { if (!st.settings.theme || st.settings.theme === "neon") st.settings.theme = "panthere"; st.themeV2 = true; }
+        // Migration : nouveau design « Or noir » par défaut (une seule fois)
+        if (!st.themeV3) { if (["neon", "panthere"].includes(st.settings.theme)) { st.settings.theme = "ornoir"; st.settings.fontHead = "grotesk"; st.settings.font = "inter"; } st.themeV3 = true; }
         return st;
       }
     } catch (e) { /* stockage indisponible : on repart de zéro */ }
