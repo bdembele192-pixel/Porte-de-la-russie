@@ -97,7 +97,8 @@ window.M = window.M || {};
     { id: "streak_3", e: "🔥", n: "On fire", d: "Reviens 3 jours d'affilée." },
     { id: "quiz_first", e: "🦉", n: "Première leçon", d: "Termine une leçon du parcours Quiz." },
     { id: "quiz_combo", e: "⚡", n: "Combo x8", d: "Enchaîne 8 bonnes réponses d'affilée au Quiz." },
-    { id: "quiz_all", e: "🏅", n: "Parcours complet", d: "Termine toutes les unités du Quiz." }
+    { id: "quiz_all", e: "🏅", n: "Parcours complet", d: "Termine toutes les unités du Quiz." },
+    { id: "ai_saved", e: "🛟", n: "Sauvé par l'IA", d: "Applique une proposition du copilote Mèche IA en Live." }
   ];
   M.unlock = function (id) {
     if (M.state.badges[id]) return;
@@ -185,7 +186,7 @@ window.M = window.M || {};
     el.innerHTML = `<span class="lv-emoji">${L.emoji}</span><span class="lv-txt"><b>Niv. ${L.idx}</b> ${L.name}</span>
       <span class="xpbar"><i style="width:${Math.round(L.progress * 100)}%"></i></span>`;
     el.setAttribute("data-tip-text", L.nextName ? `${M.state.xp} XP — encore ${L.to - M.state.xp} XP pour devenir « ${L.nextName} ». Gagne de l'XP en lisant des cours, en réussissant des quiz et des missions.` : `${M.state.xp} XP — niveau max atteint. Légende.`);
-    $("#tb-streak").innerHTML = `🔥 ${M.state.streak.days}`;
+    $("#tb-streak").innerHTML = `${M.icon("flame")} ${M.state.streak.days}`;
     const av = $("#tb-av");
     if (av) av.innerHTML = M.state.photo ? `<img src="${M.state.photo}" alt="">` : L.emoji;
   }
@@ -224,12 +225,12 @@ window.M = window.M || {};
           <h1>Apprends à trader.<br><span class="grad">Sans te brûler.</span></h1>
           <p class="lede">Des <b>vrais prix de marché</b> en temps réel, de l'argent virtuel, des krachs historiques à rejouer, des algos à tester et un coach qui te dit la vérité.</p>
           <div class="cta">
-            <a class="btn primary" href="#/live" data-tip-text="Trade le Bitcoin, l'or ou l'euro sur les prix réels du marché, avec 10 000 $ virtuels." data-tip-title="Trading live">⚡ Trader en live</a>
-            <a class="btn ghost" href="#/missions" data-tip-text="Remonte le temps et revis les plus gros krachs de l'histoire crypto, bougie par bougie." data-tip-title="Time Machine">⏳ Rejouer un krach</a>
+            <a class="btn primary" href="#/live" data-tip-text="Trade le Bitcoin, l'or ou l'euro sur les prix réels du marché, avec 10 000 $ virtuels." data-tip-title="Trading live">${M.icon("live")} Trader en live</a>
+            <a class="btn ghost" href="#/missions" data-tip-text="Remonte le temps et revis les plus gros krachs de l'histoire crypto, bougie par bougie." data-tip-title="Time Machine">${M.icon("missions")} Rejouer un krach</a>
           </div>
         </div>
         <div class="hero-card glass">
-          <div class="hc-row"><a class="hc-emoji av" href="#/settings/profil" style="border-radius:16px" data-tip-text="Change ta photo dans Paramètres → Profil">${s.photo ? `<img src="${s.photo}" alt="">` : L.emoji}</a><div><small>Niveau ${L.idx}</small><b>${L.name}</b></div><span class="pill" data-tip-text="Jours d'affilée où tu as ouvert l'app. Reviens demain pour garder la flamme.">🔥 ${s.streak.days} j</span></div>
+          <div class="hc-row"><a class="hc-emoji av" href="#/settings/profil" style="border-radius:16px" data-tip-text="Change ta photo dans Paramètres → Profil">${s.photo ? `<img src="${s.photo}" alt="">` : L.emoji}</a><div><small>Niveau ${L.idx}</small><b>${L.name}</b></div><span class="pill" data-tip-text="Jours d'affilée où tu as ouvert l'app. Reviens demain pour garder la flamme.">${M.icon("flame")} ${s.streak.days} j</span></div>
           <div class="xpbar big" data-tip-text="${s.xp} XP. ${L.nextName ? "Prochain niveau : " + L.nextName : "Niveau max"}"><i style="width:${Math.round(L.progress * 100)}%"></i></div>
           <div class="hc-grid">
             <div data-tip="equity"><small>Portefeuille</small><b class="mono" id="h-eq">${eq != null ? M.fmt$(eq) : "…"}</b></div>
@@ -252,37 +253,42 @@ window.M = window.M || {};
 
       <div class="bento">
         <a class="tile t-live" href="#/live">
-          <span class="t-tag">LIVE</span><h3>Trading temps réel</h3>
+          <span class="t-tag">${M.icon("live")} LIVE</span><h3>Trading temps réel</h3>
           <p>Prix réels, flux des transactions en direct, levier, stop-loss. 10 000 $ virtuels pour faire tes armes.</p>
           <span class="t-go">Ouvrir le terminal →</span>
         </a>
         <a class="tile t-time" href="#/missions">
-          <span class="t-tag">TIME MACHINE</span><h3>Rejoue l'histoire</h3>
+          <span class="t-tag">${M.icon("missions")} TIME MACHINE</span><h3>Rejoue l'histoire</h3>
           <p>Covid, FTX, ETF Bitcoin, choc des tarifs 2025… ${M.MISSIONS.length} vrais moments de marché, bougie par bougie.</p>
           <span class="t-go">Choisir une mission →</span>
         </a>
+        <a class="tile t-ai" href="#/ai">
+          <span class="t-tag">${M.icon("ai")} MÈCHE IA</span><h3>Ton copilote financier</h3>
+          <p>Il apprend chaque jour sur les vrais marchés, bloque tes trades dangereux en Live et te propose une option plus sûre. Et répond à toutes tes questions.</p>
+          <span class="t-go">Discuter avec l'IA →</span>
+        </a>
         <a class="tile t-swipe" href="#/swipe">
-          <span class="t-tag">MINI-JEU</span><h3>Swipe : haut ou bas ?</h3>
+          <span class="t-tag">${M.icon("swipe")} MINI-JEU</span><h3>Swipe : haut ou bas ?</h3>
           <p>10 vraies bougies à deviner. Spoiler : c'est plus dur que TikTok le laisse croire.</p>
           <span class="t-go">Jouer →</span>
         </a>
         <a class="tile t-lab" href="#/lab">
-          <span class="t-tag">ALGO LAB</span><h3>4 algos à backtester</h3>
+          <span class="t-tag">${M.icon("lab")} ALGO LAB</span><h3>4 algos à backtester</h3>
           <p>Trend following, Turtles, mean reversion, pairs trading. Sur de vraies données, frais inclus.</p>
           <span class="t-go">Lancer un test →</span>
         </a>
         <a class="tile t-quiz" href="#/quiz">
-          <span class="t-tag">QUIZ · ${M.QUIZ_COUNT || 80}+ QUESTIONS</span><h3>Apprends en 5 min/jour</h3>
+          <span class="t-tag">${M.icon("quiz")} QUIZ · ${M.QUIZ_COUNT || 80}+ QUESTIONS</span><h3>Apprends en 5 min/jour</h3>
           <p>Un parcours façon Duolingo : théorie, calculs et lecture de graphiques. Garde ta série 🔥</p>
           <span class="t-go">Commencer →</span>
         </a>
         <a class="tile t-acad" href="#/academy">
-          <span class="t-tag">ACADÉMIE</span><h3>${M.COURSES.length} modules à jour</h3>
+          <span class="t-tag">${M.icon("academy")} ACADÉMIE</span><h3>${M.COURSES.length} modules à jour</h3>
           <p>Instruments, styles, stratégies, algos, BRVM & UEMOA, options, crypto, macro 2025-2026, arnaques à éviter.</p>
           <div class="xpbar"><i style="width:${Math.round(coursesDone / M.COURSES.length * 100)}%"></i></div>
         </a>
         <a class="tile t-daily" href="#/mission/${dm.id}">
-          <span class="t-tag">🎯 DÉFI DU JOUR</span><h3>${dm.emoji} ${dm.title}</h3>
+          <span class="t-tag">${M.icon("target")} DÉFI DU JOUR</span><h3>${dm.emoji} ${dm.title}</h3>
           <p>Termine cette mission avec un score Coach d'au moins 70 → <b>+60 XP bonus</b>.</p>
           <span class="t-go">${s.daily[today()] ? "✅ Défi réussi aujourd'hui" : "Relever le défi →"}</span>
         </a>

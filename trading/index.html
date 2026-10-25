@@ -17,26 +17,30 @@
 <header class="topbar">
   <a class="logo" href="#/home" data-tip-text="Retour à l'accueil"><span class="logo-i">🕯️</span><span>Mèche</span></a>
   <nav class="nav">
-    <a href="#/home" data-nav="home" data-tip-text="Ton tableau de bord : niveau, marchés, défi du jour."><i>🏠</i><span>Accueil</span></a>
-    <a href="#/live" data-nav="live" data-tip-text="Trade sur les vrais prix en temps réel avec 10 000 $ virtuels."><i>⚡</i><span>Live</span></a>
-    <a href="#/missions" data-nav="missions" data-tip-text="Rejoue des krachs et des rallyes historiques, bougie par bougie."><i>⏳</i><span>Missions</span></a>
-    <a href="#/swipe" data-nav="swipe" data-tip-text="Mini-jeu : la prochaine bougie sera-t-elle verte ou rouge ?"><i>👆</i><span>Swipe</span></a>
-    <a href="#/lab" data-nav="lab" data-tip-text="Backteste 4 algorithmes de trading sur de vraies données."><i>🧪</i><span>Algo Lab</span></a>
-    <a href="#/quiz" data-nav="quiz" data-tip-text="Parcours de quiz façon Duolingo : 5 minutes par jour, théorie et pratique."><i>🦉</i><span>Quiz</span></a>
-    <a href="#/academy" data-nav="academy" data-tip-text="Les cours : instruments, styles, stratégies, algos, macro, psychologie."><i>🎓</i><span>Académie</span></a>
-    <a href="#/profile" data-nav="profile" data-tip-text="Ton niveau, tes badges, tes stats et tes réglages."><i>👤</i><span>Profil</span></a>
+    <a href="#/home" data-nav="home" data-tip-text="Ton tableau de bord : niveau, marchés, défi du jour."><i data-icon="home"></i><span>Accueil</span></a>
+    <a href="#/live" data-nav="live" data-tip-text="Trade sur les vrais prix en temps réel avec 10 000 $ virtuels."><i data-icon="live"></i><span>Live</span></a>
+    <a href="#/missions" data-nav="missions" data-tip-text="Rejoue des krachs et des rallyes historiques, bougie par bougie."><i data-icon="missions"></i><span>Missions</span></a>
+    <a href="#/swipe" data-nav="swipe" data-tip-text="Mini-jeu : la prochaine bougie sera-t-elle verte ou rouge ?"><i data-icon="swipe"></i><span>Swipe</span></a>
+    <a href="#/lab" data-nav="lab" data-tip-text="Backteste 4 algorithmes de trading sur de vraies données."><i data-icon="lab"></i><span>Algo Lab</span></a>
+    <a href="#/quiz" data-nav="quiz" data-tip-text="Parcours de quiz façon Duolingo : 5 minutes par jour, théorie et pratique."><i data-icon="quiz"></i><span>Quiz</span></a>
+    <a href="#/ai" data-nav="ai" data-tip-text="Mèche IA : ton copilote de trading et ton assistant pour toutes tes questions (économie, finance, géopolitique, droit…)."><i data-icon="ai"></i><span>IA</span></a>
+    <a href="#/academy" data-nav="academy" data-tip-text="Les cours : instruments, styles, stratégies, algos, macro, psychologie."><i data-icon="academy"></i><span>Académie</span></a>
+    <a href="#/profile" data-nav="profile" data-tip-text="Ton niveau, tes badges, tes stats et tes réglages."><i data-icon="profile"></i><span>Profil</span></a>
   </nav>
   <div class="tb-right">
     <a class="tb-level" id="tb-level" href="#/profile"></a>
     <span class="tb-streak" id="tb-streak" data-tip-text="Jours d'affilée sur l'app. Reviens chaque jour pour garder la flamme."></span>
-    <a class="tb-gear" href="#/settings" data-nav="settings" data-tip-text="Paramètres : thème, police, taille, photo, icône, langue, devise, montants…" aria-label="Paramètres">⚙️</a>
+    <a class="tb-gear" href="#/settings" data-nav="settings" data-tip-text="Paramètres : thème, police, taille, photo, icône, langue, devise, montants…" aria-label="Paramètres" data-icon="settings"></a>
     <a class="av tb-av" id="tb-av" href="#/profile" data-tip-text="Ton profil" aria-label="Profil"></a>
   </div>
 </header>
 
 <main id="view" class="view"></main>
 
+<script src="js/icons.js"></script>
+<script src="js/i18n.js"></script>
 <script src="js/glossary.js"></script>
+<script src="js/kb.js"></script>
 <script src="js/courses.js"></script>
 <script src="js/courses2.js"></script>
 <script src="js/quizbank.js"></script>
@@ -53,5 +57,6 @@
 <script src="js/play.js"></script>
 <script src="js/lab.js"></script>
 <script src="js/quiz.js"></script>
+<script src="js/ai.js"></script>
 </body>
 </html>

@@ -52,7 +52,7 @@ window.M = window.M || {};
       const tr = {
         sym: p.sym, dir: p.dir, entry: p.entry, exit: price, qty: p.qty, lev: p.lev, margin: p.margin,
         sl: p.sl, tp: p.tp, pnl: back - p.margin - p.fees, gross: pnl, fees: p.fees + fee, reason, openAt: p.at, closeAt: at,
-        equityBefore: p.equityBefore
+        equityBefore: p.equityBefore, ai: p.ai
       };
       this.s.log.push(tr);
       this.s.pos = null;

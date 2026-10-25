@@ -90,12 +90,14 @@ window.M = window.M || {};
       go.textContent = busy ? "Position déjà ouverte" : (st.dir > 0 ? "▲ Acheter / Long " : "▼ Vendre / Short ") + (opts.sym ? M.Market.asset(opts.sym()).short : "");
     }
 
-    function send(d) {
+    function send(d, bypass) {
       if (d) setDir(d);
       const c = calc();
       if (tr.pos || !(c.price > 0)) return;
       if (c.m > tr.s.cash) { M.toast("Mise supérieure à ton cash (" + M.fmt$(tr.s.cash) + "). Ajoute des fonds dans Paramètres → Trading.", "err"); return; }
       if (opts.guard) { const why = opts.guard(c); if (why) { M.toast(why, "err"); M.sfx("ko"); return; } }
+      // Copilote IA (trading live uniquement) : peut proposer une version plus sûre de l'ordre
+      if (opts.advisor && !bypass && opts.advisor(c, st.dir, { keep: () => send(null, true), apply: p => { apply(p); send(null, true); } })) return;
       if (cfg.confirm && !confirm(`${st.dir > 0 ? "Acheter (long)" : "Vendre (short)"} pour ${M.fmt$(c.m)}${c.L > 1 ? " ×" + c.L : ""} ?\nStop : ${c.slPrice ? M.Market.fmtPrice(c.slPrice) : "aucun"} · Objectif : ${c.tpPrice ? M.Market.fmtPrice(c.tpPrice) : "aucun"}`)) return;
       const r = tr.open({ dir: st.dir, margin: c.m, lev: c.L, sl: c.slPrice, tp: c.tpPrice, price: c.price, at: opts.at ? opts.at() : Date.now(), sym: opts.sym ? opts.sym() : "" });
       if (r.err) { M.toast(r.err, "err"); return; }
@@ -107,7 +109,14 @@ window.M = window.M || {};
     }
     $("#t-go", el).onclick = () => send();
     refresh();
-    return { refresh, send, setDir };
+    function apply(p) {
+      setDir(p.dir);
+      st.lev = p.L; lev.value = p.L;
+      amt.value = toInput(p.m);
+      sl.value = (+p.slp).toFixed(2); tp.value = (+p.tpp).toFixed(2);
+      refresh();
+    }
+    return { refresh, send, setDir, apply };
   };
 
   /* Carte de la position ouverte. */
@@ -150,6 +159,8 @@ window.M = window.M || {};
     M.sfx(tr.pnl >= 0 ? "win" : "loss");
     if (tr.reason === "liq") M.unlock("liquidated");
     if (tr.pnl > 0) M.unlock("first_win");
+    // Seuls les trades live portent un instantané IA : missions et entraînements ne l'alimentent pas
+    if (tr.ai && M.AI) M.AI.learnFromTrade(tr, tr.ai);
   };
 
   // ------------------------------------------------------------------
@@ -224,7 +235,12 @@ window.M = window.M || {};
         const lost = trader.s.log.filter(t => (t.closeAt || 0) >= d0.getTime()).reduce((a, t) => a + t.pnl, 0);
         return lost <= -M.START_CASH * lim / 100 ? `Limite de perte du jour atteinte (${lim} %). Pause jusqu'à demain 🧘 — c'est ce que font les pros.` : null;
       },
-      onOpen() { M.save(true); posCard.draw(); drawLines(); drawWallet(); watchPos(); }
+      advisor: (c, dir, actions) => M.AI ? M.AI.advise(c, dir, { bars: chart ? chart.bars : [], trader, sym, tf }, actions) : false,
+      onOpen(pos) {
+        // L'IA mémorise la situation de marché à l'entrée pour apprendre du résultat
+        if (M.AI && chart && pos) pos.ai = M.AI.snapshot(chart.bars, pos.dir);
+        M.save(true); posCard.draw(); drawLines(); drawWallet(); watchPos();
+      }
     });
     const posCard = M.posCard($("#pc", el), {
       trader, price: () => (trader.pos && trader.pos.sym !== sym ? posPrice : price) || trader.pos.entry,
@@ -323,8 +339,16 @@ window.M = window.M || {};
     }
 
     let lastSave = 0;
+    let lastMon = 0;
     function onTick(bar) {
       price = bar.c;
+      if (M.AI && trader.pos && trader.pos.sym === sym && Date.now() - lastMon > 4000) {
+        lastMon = Date.now();
+        M.AI.monitor(trader, price, chart && chart.bars, {
+          breakeven: () => { if (trader.pos) { trader.pos.sl = trader.pos.entry; M.save(); posCard.draw(); drawLines(); M.toast("Stop déplacé au point mort 🔒"); } },
+          close: () => closePos("manual")
+        });
+      }
       if (trader.pos && trader.pos.sym === sym) {
         const t = trader.check({ o: bar.c, h: bar.c, l: bar.c }, Date.now());
         trader.pos && (trader.pos.lastCheck = Date.now());
