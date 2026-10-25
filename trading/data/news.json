@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T17:13:47.431Z",
+ "generatedAt": "2026-10-25T19:36:09.764Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 404"
+   "error": "HTTP 429"
   },
   {
    "id": "wb",
