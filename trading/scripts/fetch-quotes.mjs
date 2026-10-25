@@ -10,6 +10,7 @@ const HIST = new URL("../data/history.json", import.meta.url);
 const DRY = process.argv.includes("--dry");
 const UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36";
 const HIST_EVERY = 6 * 3600e3; // historique journalier rafraîchi toutes les 6 h
+const T0 = Date.now(), SEED_BUDGET = 120e3; // l'amorçage BRVM s'arrête après 2 min (il reprend au passage suivant)
 
 // id interne · symbole CNBC · symbole TradingView (secours) · nom · type · devise
 const WORLD = [
@@ -227,14 +228,15 @@ async function sikaHistory(sym) {
   }
   return Object.values(out).filter(b => b[4] > 0).sort((a, b) => a[0] - b[0]);
 }
-let seeded = 0, seedErr = null;
+let seeded = 0, seedErr = null, seedFails = 0;
 for (const it of items.filter(i => /^BRVM/.test(i.type) && !i.stale)) {
   if ((hist.items[it.id] || []).length >= 20 || seeded >= 60) continue;
+  if (Date.now() - T0 > SEED_BUDGET || seedFails >= 3) break;
   try {
     const h = await sikaHistory(it.short);
     if (h.length >= 20) { hist.items[it.id] = h.slice(-262); histChanged = true; seeded++; }
     else if (DRY && !seedErr) seedErr = it.short + " : " + h.length + " jours";
-  } catch (e) { seedErr = seedErr || it.short + " : " + e.message; }
+  } catch (e) { seedErr = seedErr || it.short + " : " + e.message; seedFails++; }
 }
 if (seeded || seedErr) sources.push({ name: "Sikafinance (historique BRVM)", ok: seeded > 0, count: seeded, error: seedErr || undefined });
 for (const it of items.filter(i => /^BRVM/.test(i.type) && !i.stale)) {
