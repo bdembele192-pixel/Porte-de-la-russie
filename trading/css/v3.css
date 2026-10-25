@@ -264,3 +264,17 @@ kbd { font: 600 calc(11px * var(--fs)) var(--mono); padding: 3px 7px; border-rad
   .nav a[data-short] span { display: none !important; }
   .nav a[data-short]::after { content: attr(data-short); font-size: calc(10px * var(--fs)); }
 }
+
+/* Cours gratuits (indices, actions, BRVM…) */
+#mk-tabs { overflow-x: auto; scrollbar-width: none; }
+#mk-tabs::-webkit-scrollbar { display: none; }
+#mk-tabs button { flex: 1 0 auto; }
+.mk-rows { max-height: 470px; overflow-y: auto; scrollbar-width: thin; }
+.coin .ic { width: 15px; height: 15px; }
+.coin:not(.sm) .ic { width: 18px; height: 18px; }
+.ch3-cv { position: relative; }
+.ch-empty { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; margin: 0; }
+.ch-empty[hidden] { display: none; }
+#ch-dl { white-space: nowrap; }
+[hidden] { display: none !important; }
+#ch-p { white-space: nowrap; }

@@ -9,6 +9,17 @@ M.CONFIG = {
     "data/news.json"
   ],
 
+  // Cours gratuits (bourses mondiales, matières premières, devises, BRVM), différés de quelques minutes :
+  // collectés toutes les 5 min par le robot GitHub (.github/workflows/quotes.yml).
+  quotesUrls: [
+    "https://raw.githubusercontent.com/bdembele192-pixel/Porte-de-la-russie/main/trading/data/quotes.json",
+    "data/quotes.json"
+  ],
+  historyUrls: [
+    "https://raw.githubusercontent.com/bdembele192-pixel/Porte-de-la-russie/main/trading/data/history.json",
+    "data/history.json"
+  ],
+
   // Comptes utilisateurs (Supabase). Laisse vide pour rester en mode local (sans compte).
   supabaseUrl: "",
   supabaseAnonKey: "",

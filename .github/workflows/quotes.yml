@@ -1,0 +1,36 @@
+name: Cours des marchés
+
+# Collecte les cours gratuits (indices, actions, matières premières, devises, BRVM)
+# et met à jour trading/data/quotes.json (+ history.json). L'app relit ces fichiers toutes les 2 minutes.
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: quotes
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Collecter les cours
+        run: node trading/scripts/fetch-quotes.mjs
+      - name: Publier si nouveau
+        run: |
+          git config user.name "meche-quotes-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trading/data/quotes.json trading/data/history.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo "Rien de nouveau"; exit 0; fi
+          git commit -m "Cours : mise à jour automatique [skip ci]"
+          for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0; sleep 5; done
+          exit 1
