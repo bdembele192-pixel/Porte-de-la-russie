@@ -11,14 +11,14 @@ window.M = window.M || {};
   M.SETTINGS_DEFAULT = {
     tips: true, tipDelay: 280,
     theme: "panthere", accent: null, font: "inter", fontHead: "grotesk", fs: 1, blur: 14, radius: 18, motion: true,
-    wall: null, wallDim: 0.7, icon: "🕯️", iconImg: null, appName: "Mèche",
+    wall: null, wallDim: 0.7, icon: "logo", iconImg: null, appName: "Mèche",
     lang: "fr", currency: "USD", startCash: 10000,
     maxLev: 20, defSl: 2, defTp: 4, confirm: false, dayLoss: 0,
     sound: true, haptic: true, discreet: false
   };
 
   const THEMES = [
-    { id: "panthere", n: "Panthère (défaut)", c: ["#050507", "#A855F7", "#C9C7D6", "#7C3AED"] },
+    { id: "panthere", n: "Bogolan Néon (défaut)", c: ["#07060A", "#A855F7", "#E0A458", "#FF3D9A"] },
     { id: "neon", n: "Néon nuit", c: ["#07070C", "#C6FF3D", "#8B5CFF", "#FF4DA6"] },
     { id: "minuit", n: "Minuit violet", c: ["#0B0716", "#B794FF", "#FF4DA6", "#7DD3FC"] },
     { id: "ocean", n: "Océan", c: ["#04111A", "#3DF5FF", "#2D7FF9", "#2BEA8B"] },
@@ -30,10 +30,10 @@ window.M = window.M || {};
   const FONTS = {
     inter: ["Inter", "Inter"], poppins: ["Poppins", "Poppins"], outfit: ["Outfit", "Outfit"], dmsans: ["DM Sans", "DM+Sans"],
     nunito: ["Nunito", "Nunito"], lexend: ["Lexend", "Lexend"], atkinson: ["Atkinson Hyperlegible", "Atkinson+Hyperlegible"],
-    grotesk: ["Space Grotesk", "Space+Grotesk"], sora: ["Sora", "Sora"], mono: ["JetBrains Mono", "JetBrains+Mono"], system: ["system-ui", null]
+    grotesk: ["Space Grotesk", "Space+Grotesk"], unbounded: ["Unbounded", "Unbounded"], sora: ["Sora", "Sora"], mono: ["JetBrains Mono", "JetBrains+Mono"], system: ["system-ui", null]
   };
-  const FONT_NAMES = { inter: "Inter (défaut)", poppins: "Poppins", outfit: "Outfit", dmsans: "DM Sans", nunito: "Nunito (arrondie)", lexend: "Lexend (lisibilité)", atkinson: "Atkinson (malvoyants)", grotesk: "Space Grotesk", sora: "Sora", mono: "JetBrains Mono", system: "Police du système" };
-  const ICONS = ["🕯️", "🚀", "📈", "💎", "🔥", "🐂", "🦁", "🐺", "⚡", "🌙", "👑", "🎯", "💸", "🧠", "🇲🇱", "🪙"];
+  const FONT_NAMES = { inter: "Police du thème (défaut)", poppins: "Poppins", outfit: "Outfit", dmsans: "DM Sans", nunito: "Nunito (arrondie)", lexend: "Lexend (lisibilité)", atkinson: "Atkinson (malvoyants)", grotesk: "Space Grotesk", unbounded: "Unbounded (futuriste)", sora: "Sora", mono: "JetBrains Mono", system: "Police du système" };
+  const ICONS = ["logo", "flame", "rocket", "chart", "trending", "crown", "zap", "award", "star", "bot", "brain", "map", "globe", "coins", "target", "shield"];
   const CURRENCIES = {
     USD: { sym: "$", dec: 2, n: "Dollar US ($)" },
     EUR: { sym: "€", dec: 2, n: "Euro (€)" },
@@ -121,19 +121,7 @@ window.M = window.M || {};
   };
 
   function iconDataURL(size) {
-    const s = S();
-    const cv = document.createElement("canvas");
-    cv.width = cv.height = size;
-    const ctx = cv.getContext("2d");
-    const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim() || "#07070C";
-    ctx.fillStyle = bg;
-    ctx.beginPath();
-    if (ctx.roundRect) ctx.roundRect(0, 0, size, size, size * 0.22); else ctx.rect(0, 0, size, size);
-    ctx.fill();
-    ctx.font = `${size * 0.62}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
-    ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText(s.icon || "🕯️", size / 2, size * 0.55);
-    return cv.toDataURL("image/png");
+    return "data:image/svg+xml," + encodeURIComponent(M.appIconSVG(ICONS.includes(S().icon) ? S().icon : "logo", size).replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" '));
   }
 
   function applyIcon() {
@@ -147,15 +135,15 @@ window.M = window.M || {};
     set("icon", href);
     set("apple-touch-icon", href);
     const logo = $(".logo-i");
-    if (logo) logo.innerHTML = s.iconImg ? `<img src="${s.iconImg}" alt="">` : esc(s.icon || "🕯️");
-    const name = $(".logo span:last-child");
+    if (logo) logo.innerHTML = s.iconImg ? `<img src="${s.iconImg}" alt="">` : M.appIconSVG(ICONS.includes(s.icon) ? s.icon : "logo", 34);
+    const name = $(".logo .logo-t");
     if (name) name.textContent = s.appName || "Mèche";
     // Manifeste dynamique : l'icône choisie est utilisée si l'app est installée sur l'écran d'accueil
     try {
       const man = {
         name: (s.appName || "Mèche") + " — apprends à trader", short_name: s.appName || "Mèche", start_url: location.href.split("#")[0],
         display: "standalone", background_color: "#07070C", theme_color: "#07070C",
-        icons: [{ src: s.iconImg || iconDataURL(512), sizes: "512x512", type: s.iconImg ? "image/jpeg" : "image/png" }]
+        icons: [{ src: s.iconImg || iconDataURL(512), sizes: s.iconImg ? "512x512" : "any", type: s.iconImg ? "image/jpeg" : "image/svg+xml" }]
       };
       const url = URL.createObjectURL(new Blob([JSON.stringify(man)], { type: "application/manifest+json" }));
       set("manifest", url);
@@ -300,7 +288,7 @@ window.M = window.M || {};
             ${row("Couleur d'accent", "Remplace la couleur principale du thème (boutons, barres, liens).",
               `<input type="color" class="swatch" id="accent" value="${s.accent || "#C6FF3D"}"><button class="btn ghost sm" id="accent-x">Couleur du thème</button>`)}
             ${row("Police du texte", "", `<select id="font">${Object.keys(FONTS).map(k => `<option value="${k}" ${s.font === k ? "selected" : ""}>${FONT_NAMES[k]}</option>`).join("")}</select>`, "Lexend et Atkinson sont conçues pour faciliter la lecture (dyslexie, basse vision).")}
-            ${row("Police des titres", "", `<select id="fontHead">${Object.keys(FONTS).map(k => `<option value="${k}" ${s.fontHead === k ? "selected" : ""}>${k === "grotesk" ? "Space Grotesk (défaut)" : FONT_NAMES[k].replace(" (défaut)", "")}</option>`).join("")}</select>`)}
+            ${row("Police des titres", "", `<select id="fontHead">${Object.keys(FONTS).map(k => `<option value="${k}" ${s.fontHead === k ? "selected" : ""}>${k === "grotesk" ? "Police du thème (défaut)" : FONT_NAMES[k].replace(" (défaut)", "")}</option>`).join("")}</select>`)}
             ${row("Taille du texte", "De 80 % à 140 %.", range("fs", 0.8, 1.4, 0.05, s.fs, v => Math.round(v * 100) + " %"))}
             ${row("Intensité du flou", "Effet « verre dépoli » des panneaux. 0 = désactivé (plus rapide sur les vieux téléphones).", range("blur", 0, 40, 1, s.blur, v => v + " px"))}
             <div class="blur-demo"><div>Aperçu du flou</div></div>
@@ -317,11 +305,11 @@ window.M = window.M || {};
             <h2>${M.icon("profile")} Profil & icône</h2><p class="muted">Ton identité dans l'app et l'icône sur ton écran d'accueil.</p>
             ${row("Pseudo", "", `<span class="inp"><input id="pname" maxlength="20" value="${esc(M.state.name || "")}" placeholder="Ton pseudo"></span>`)}
             ${row("Photo de profil", "Recadrée en carré et stockée uniquement sur cet appareil.",
-              `<span class="av" style="width:56px;height:56px;font-size:28px">${photo ? `<img src="${photo}" alt="">` : M.level().emoji}</span>
+              `<span class="av" style="width:56px;height:56px;font-size:28px">${photo ? `<img src="${photo}" alt="">` : M.icon("profile")}</span>
                <label class="btn ghost sm file-btn">📷 Choisir une image<input type="file" accept="image/*" id="photo"></label>${photo ? `<button class="btn ghost sm" id="photo-x">Retirer</button>` : ""}`)}
             ${row("Nom de l'app", "Affiché en haut à gauche et sous l'icône si tu l'installes.", `<span class="inp"><input id="appName" maxlength="16" value="${esc(s.appName || "Mèche")}"></span>`)}
             <div class="set-row"><div><b>Icône de l'app</b><small>Onglet du navigateur, logo, et écran d'accueil si tu installes l'app (menu du navigateur → « Ajouter à l'écran d'accueil »).</small></div></div>
-            <div class="icons">${ICONS.map(i => `<button class="ico ${!s.iconImg && s.icon === i ? "on" : ""}" data-ico="${i}">${i}</button>`).join("")}
+            <div class="icons">${ICONS.map(i => `<button class="ico ${!s.iconImg && (s.icon === i || (i === "logo" && !ICONS.includes(s.icon))) ? "on" : ""}" data-ico="${i}" aria-label="${i}">${M.appIconSVG(i, 40)}</button>`).join("")}
               ${s.iconImg ? `<button class="ico on" data-tip-text="Ton image perso"><img src="${s.iconImg}" alt=""></button>` : ""}
               <label class="ico file-btn" data-tip-text="Utiliser ta propre image comme icône">＋<input type="file" accept="image/*" id="iconImg"></label></div>
           </section>

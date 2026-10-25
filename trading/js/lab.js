@@ -18,7 +18,7 @@ window.M = window.M || {};
       <div class="page-head"><div><p class="eyebrow">Algo Lab</p><h1>Teste les algos des pros <span class="grad">sur de vraies données</span></h1>
       <p class="lede">Choisis un algo, règle ses paramètres, lance le backtest. Frais inclus, exécution à la bougie suivante (pas de triche avec le futur). Puis compare au simple « acheter et garder ».</p></div></div>
       <div class="algos">${A.map(a => `<button class="algo glass" data-a="${a.id}" data-tip="${a.tip}">
-        <span class="al-e">${a.emoji}</span><b>${a.name}</b><small>${a.tag}</small></button>`).join("")}</div>
+        <span class="al-e">${M.ico("algo", a.id)}</span><b>${a.name}</b><small>${a.tag}</small></button>`).join("")}</div>
       <div class="lab">
         <aside class="glass pad lab-cfg">
           <div id="desc"></div>
@@ -53,7 +53,7 @@ window.M = window.M || {};
     function drawCfg() {
       const a = algo();
       $$(".algo", el).forEach(b => b.classList.toggle("on", b.dataset.a === a.id));
-      $("#desc", el).innerHTML = `<h3>${a.emoji} ${a.name}</h3><p class="small">${M.linkTerms(a.desc)}</p>`;
+      $("#desc", el).innerHTML = `<h3>${M.ico("algo", a.id)} ${a.name}</h3><p class="small">${M.linkTerms(a.desc)}</p>`;
       $("#symf", el).style.display = a.pair ? "none" : "";
       $("#params", el).innerHTML = a.params.map(p => `
         <label class="fld" data-tip="${p.tip}"><span>${p.label} <b class="mono" id="pv-${p.k}">${params[a.id][p.k]}</b></span>
@@ -162,7 +162,7 @@ window.M = window.M || {};
         <div class="cmp">
           <div class="cmp-r head"><span>Algo</span><span data-tip-text="Rendement total, frais inclus">Rendement</span><span data-tip="drawdown">Perte max</span><span data-tip="win-rate">Réussite</span><span data-tip-text="Nombre de trades">Trades</span><span data-tip="sharpe">Sharpe</span></div>
           ${rows.map(({ a, res }) => `<div class="cmp-r ${a === best.a ? "best" : ""}">
-            <span>${a.emoji} ${a.name}${a.pair ? " <small>(ETH/BTC)</small>" : ""}</span>
+            <span>${M.ico("algo", a.id)} ${a.name}${a.pair ? " <small>(ETH/BTC)</small>" : ""}</span>
             <span class="mono ${res.ret >= 0 ? "up" : "dn"}">${pct(res.ret, 1)}</span>
             <span class="mono dn">${pct(res.mdd, 1)}</span>
             <span class="mono">${Math.round(res.winRate * 100)} %</span>
@@ -170,7 +170,7 @@ window.M = window.M || {};
             <span class="mono">${num(res.sharpe)}</span></div>`).join("")}
           <div class="cmp-r bh"><span>📦 Acheter & garder ${M.Market.asset(st.sym).short}</span><span class="mono ${rows[0].res.bh >= 0 ? "up" : "dn"}">${pct(rows[0].res.bh, 1)}</span><span></span><span></span><span></span><span></span></div>
         </div>
-        <p class="small">Le meilleur rapport rendement/risque ici : <b>${best.a.emoji} ${best.a.name}</b>. Mais attention : relance la comparaison sur un autre actif ou une autre unité de temps, et le classement change souvent. C'est exactement la leçon : <b>chaque algo a son régime de marché</b>. Les pros en combinent plusieurs.</p>
+        <p class="small">Le meilleur rapport rendement/risque ici : <b>${M.ico("algo", best.a.id)} ${best.a.name}</b>. Mais attention : relance la comparaison sur un autre actif ou une autre unité de temps, et le classement change souvent. C'est exactement la leçon : <b>chaque algo a son régime de marché</b>. Les pros en combinent plusieurs.</p>
         <button class="btn primary" data-close>Compris</button>`, { wide: true });
     }
 
