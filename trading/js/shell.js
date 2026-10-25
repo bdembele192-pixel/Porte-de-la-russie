@@ -85,6 +85,7 @@ window.M = window.M || {};
     $$(".sidebar .nav a").forEach(a => out.push({ k: "Page", t: a.textContent.trim(), h: a.getAttribute("href"), ic: a.querySelector("[data-icon]") ? a.querySelector("[data-icon]").dataset.icon : "home" }));
     out.push({ k: "Page", t: "Paramètres", h: "#/settings", ic: "settings" }, { k: "Page", t: "Glossaire", h: "#/glossary", ic: "book" }, { k: "Page", t: "Mon compte", h: "#/account", ic: "lock" });
     M.Market.ASSETS.forEach(a => out.push({ k: "Actif", t: `${a.name} (${a.short})`, s: a.type, h: "#/live/" + a.sym, ic: "chart" }));
+    (M.Quotes.items || []).forEach(q => out.push({ k: q.type === "BRVM" ? "BRVM" : "Cours", t: `${q.name} (${q.short})`, s: q.type + " · " + q.delay, h: "#/home", ic: "chart", qs: "Q:" + q.id }));
     (M.COURSES || []).forEach(c => out.push({ k: "Cours", t: c.title, s: c.sub, h: "#/course/" + c.id, ic: "academy" }));
     (M.MISSIONS || []).forEach(m => out.push({ k: "Krach", t: m.title, s: m.year, h: "#/mission/" + m.id, ic: "missions" }));
     Object.entries(M.GLOSSARY || {}).forEach(([id, g]) => out.push({ k: "Glossaire", t: g.t, s: g.d, h: "#/glossary", q: g.t, ic: "book" }));
@@ -122,6 +123,12 @@ window.M = window.M || {};
     }
     document.addEventListener("keydown", key, true);
     function pick(it) {
+      if (it.qs) {
+        const q = M.Quotes.byId[it.qs.slice(2)];
+        M.state.homeSym = it.qs;
+        if (q) M.state.homeTab = Object.keys(TABS).find(k => TABS[k][1] && TABS[k][1](q)) || M.state.homeTab;
+        M.save(); M.go("#/home"); return;
+      }
       M.go(it.h);
       if (it.q) setTimeout(() => { const g = $("#gq"); if (g) { g.value = it.q; g.dispatchEvent(new Event("input")); } }, 60);
     }
@@ -136,7 +143,32 @@ window.M = window.M || {};
   M.openSearch = openSearch;
 
   // ---------- Accueil ----------
-  const TABS = { "Tout": () => true, "Crypto": a => /Crypto|Memecoin/.test(a.type), "Forex": a => a.type === "Forex", "Matières": a => a.type === "Matière première" };
+  // Onglets : actifs Binance (temps réel) + cours gratuits différés (M.Quotes : bourses mondiales, BRVM)
+  const TABS = {
+    "Indices": [null, q => q.type === "Indice" || q.type === "Taux"],
+    "Actions": [null, q => q.type === "Action"],
+    "Crypto": [a => /Crypto|Memecoin/.test(a.type), null],
+    "Matières": [a => a.type === "Matière première", q => q.type === "Matière première"],
+    "Forex": [a => a.type === "Forex", q => q.type === "Forex"],
+    "BRVM": [null, q => /^BRVM/.test(q.type)]
+  };
+  const CUR = { USD: " $", EUR: " €", GBP: " £", JPY: " ¥", HKD: " HK$", CNY: " ¥", NGN: " ₦", ZAR: " R", XOF: " FCFA", pts: "", "%": " %" };
+  const QSTYLE = { "Indice": ["chart", "#E8B64C"], "Taux": ["scale", "#C4B5FD"], "Action": ["trending", "#4D8BFF"], "Matière première": ["leaf", "#C47A32"], "Forex": ["globe", "#2BEA8B"], "BRVM": ["bank", "#2BEA8B"], "BRVM indice": ["chart", "#14B866"] };
+  const QICON = { BRENT: "flame", WTI: "flame", GOLD: "coins", SILVER: "coins" };
+  // Vue unifiée d'un actif (Binance ou cours différé)
+  function info(sym, tick) {
+    if (sym.startsWith("Q:")) {
+      const q = M.Quotes.byId[sym.slice(2)];
+      if (!q) return null;
+      const st = QSTYLE[q.type] || ["chart", "#E8B64C"];
+      return { q: true, sym, short: q.short, name: q.name, label: q.type === "BRVM" ? q.short : q.name, sub: q.type === "BRVM" ? q.name : (q.rt ? "temps réel" : "différé") + " · " + M.Quotes.age(q.time),
+        icon: M.icon(QICON[q.id] || st[0]), color: st[1], price: q.price, chg: q.chg, cur: CUR[q.cur] != null ? CUR[q.cur] : " " + q.cur,
+        fmt: q.cur === "XOF" ? (v => Math.round(v).toLocaleString("fr-FR")) : M.Quotes.fmt, delay: q.delay, src: q.src || "brvm.org", rt: q.rt, tip: null };
+    }
+    const a = M.Market.asset(sym), d = tick[sym];
+    return { q: false, sym, short: a.short, name: a.name, label: a.short === "OR" ? "OR/USD" : a.short + "/USD", sub: a.name, icon: a.icon, color: a.color,
+      price: d ? d.last : null, chg: d ? d.chg : null, cur: " $", fmt: M.Market.fmtPrice, tip: a.tip, rt: true };
+  }
   const RANGES = { "1J": ["15m", 96], "1S": ["1h", 168], "1M": ["4h", 180], "3M": ["1d", 90], "1A": ["1d", 365] };
 
   M.views.home = function (el) {
@@ -144,7 +176,7 @@ window.M = window.M || {};
     const tr = new M.Trader(s.wallet);
     const dm = M.dailyMission();
     const coursesDone = M.COURSES.filter(c => Object.keys(s.lessons[c.id] || {}).length >= c.lessons.length).length;
-    let tab = "Tout", sym = s.homeSym || "BTCUSDT", range = "1J", tick = {}, bars = [], alive = true, pfRange = "TOUT";
+    let tab = TABS[s.homeTab] ? s.homeTab : "Indices", sym = s.homeSym || "BTCUSDT", range = "1J", tick = {}, bars = [], alive = true, pfRange = "TOUT";
     const hero = s.settings.heroImg;
 
     el.innerHTML = `
@@ -180,13 +212,13 @@ window.M = window.M || {};
           <header class="ch3-h">
             <span class="coin" id="ch-ic"></span>
             <div><b id="ch-n"></b><div class="ch3-p"><span class="mono" id="ch-p">—</span><span class="mono" id="ch-c"></span></div></div>
-            <a class="btn line-btn sm" id="ch-go" href="#/live/${sym}">Trader ${M.icon("arrow")}</a>
+            <a class="btn line-btn sm" id="ch-go" href="#/live/${sym}">Trader ${M.icon("arrow")}</a><span class="pill" id="ch-dl" hidden></span>
           </header>
           <div class="ch3-bar">
             <div class="seg sm" id="ch-r">${Object.keys(RANGES).map(k => `<button class="${k === range ? "on" : ""}" data-r="${k}">${k}</button>`).join("")}</div>
             <div class="hlv"><span><small>Haut</small><b class="mono" id="ch-h">—</b></span><span><small>Bas</small><b class="mono" id="ch-l">—</b></span><span><small>Vol.</small><b class="mono" id="ch-v">—</b></span></div>
           </div>
-          <div class="ch3-cv"><canvas id="ch-cv"></canvas></div>
+          <div class="ch3-cv"><canvas id="ch-cv"></canvas><p class="ch-empty muted small" id="ch-empty" hidden>Historique en cours de constitution : le robot ajoute une bougie par séance. Essaie « 1J » ou reviens dans quelques jours.</p></div>
         </section>
 
         <section class="card3 pf3">
@@ -235,17 +267,17 @@ window.M = window.M || {};
 
     // ----- Marchés -----
     function drawRows() {
-      const list = M.Market.ASSETS.filter(TABS[tab]);
-      $("#mk-rows", el).innerHTML = list.map(a => {
-        const d = tick[a.sym];
-        return `<button class="mk-r ${a.sym === sym ? "on" : ""}" data-s="${a.sym}" data-tip="${a.tip}">
-          <span class="coin sm" style="--c:${a.color}">${a.icon}</span><span class="mk-n"><b>${a.short === "OR" ? "OR/USD" : a.short + "/USD"}</b><small>${a.name}</small></span>
-          <span class="mono mk-p">${d ? M.Market.fmtPrice(d.last) : "—"}</span>
-          <span class="mono mk-c ${d ? (d.chg >= 0 ? "up" : "dn") : ""}">${d ? (d.chg >= 0 ? "▲ " : "▼ ") + pctTxt(d.chg) : ""}</span></button>`;
-      }).join("");
+      const [fa, fq] = TABS[tab];
+      const syms = (fq ? M.Quotes.items.filter(fq).map(q => "Q:" + q.id) : []).concat(fa ? M.Market.ASSETS.filter(fa).map(a => a.sym) : []);
+      const list = syms.map(x => info(x, tick)).filter(Boolean);
+      $("#mk-rows", el).innerHTML = list.length ? list.map(a => `<button class="mk-r ${a.sym === sym ? "on" : ""}" data-s="${a.sym}" ${a.tip ? `data-tip="${a.tip}"` : `data-tip-text="${esc(a.name)} · ${esc(a.delay || "")} · source : ${esc(a.src || "")}"`}>
+          <span class="coin sm" style="--c:${a.color}">${a.icon}</span><span class="mk-n"><b>${esc(a.label)}</b><small>${esc(a.sub)}</small></span>
+          <span class="mono mk-p">${a.price != null ? a.fmt(a.price) : "—"}</span>
+          <span class="mono mk-c ${a.chg != null ? (a.chg >= 0 ? "up" : "dn") : ""}">${a.chg != null ? (a.chg >= 0 ? "▲ " : "▼ ") + pctTxt(a.chg) : ""}</span></button>`).join("")
+        : `<p class="muted small pad">${M.Quotes.loaded ? "Cours indisponibles pour l'instant : le robot de collecte n'a pas encore tourné ou la connexion a échoué." : "Chargement des cours…"}</p>`;
       $$(".mk-r", el).forEach(b => b.onclick = () => { sym = b.dataset.s; s.homeSym = sym; M.save(); drawRows(); loadChart(); });
     }
-    $$("#mk-tabs button", el).forEach(b => b.onclick = () => { tab = b.dataset.t; $$("#mk-tabs button", el).forEach(x => x.classList.toggle("on", x === b)); drawRows(); });
+    $$("#mk-tabs button", el).forEach(b => b.onclick = () => { tab = b.dataset.t; s.homeTab = tab; M.save(); $$("#mk-tabs button", el).forEach(x => x.classList.toggle("on", x === b)); drawRows(); });
 
     // ----- Graphique -----
     const cv = $("#ch-cv", el);
@@ -255,7 +287,7 @@ window.M = window.M || {};
       if (!W || !H) return;
       cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + "px"; cv.style.height = H + "px";
       const c = cv.getContext("2d"); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
-      if (!bars.length) return;
+      if (!bars.length || (sym.startsWith("Q:") && bars.length < 3)) return;
       const n = Math.min(bars.length, Math.max(30, Math.floor(W / 7))), B = bars.slice(-n);
       const top = 8, vh = H * 0.16, axis = 18, ph = H - vh - axis - top - 6;
       const hi = Math.max(...B.map(b => b.h)), lo = Math.min(...B.map(b => b.l)), vmax = Math.max(...B.map(b => b.v)) || 1;
@@ -278,7 +310,7 @@ window.M = window.M || {};
         c.stroke();
       });
       c.fillStyle = css("--mut") || "#888"; c.font = "10px " + (css("--mono") || "monospace"); c.textAlign = "center";
-      const tf = RANGES[range][0];
+      const tf = sym.startsWith("Q:") ? (B[B.length - 1].t - B[0].t < 2 * 864e5 ? "15m" : "1d") : RANGES[range][0];
       for (let i = 0; i < 6; i++) {
         const b = B[Math.floor((i + 0.5) * n / 6)]; if (!b) continue;
         const d = new Date(b.t);
@@ -287,18 +319,23 @@ window.M = window.M || {};
       }
     }
     function drawHead() {
-      const a = M.Market.asset(sym), d = tick[sym];
+      const a = info(sym, tick) || info("BTCUSDT", tick);
       $("#ch-ic", el).innerHTML = a.icon; $("#ch-ic", el).style.setProperty("--c", a.color);
-      $("#ch-n", el).innerHTML = `${esc(a.name)} <span class="muted">(${a.short})</span>`;
-      $("#ch-go", el).setAttribute("href", "#/live/" + sym);
-      const last = d ? d.last : bars.length ? bars[bars.length - 1].c : null;
-      $("#ch-p", el).textContent = last != null ? M.Market.fmtPrice(last) + " $" : "—";
+      $("#ch-n", el).innerHTML = `${esc(a.name)} <span class="muted">(${esc(a.short)})</span>`;
+      const go = $("#ch-go", el), dl = $("#ch-dl", el);
+      go.hidden = a.q; go.setAttribute("href", "#/live/" + sym);
+      dl.hidden = !a.q;
+      if (a.q) { dl.textContent = (a.rt ? "● Temps réel" : "● Différé") + " · " + a.src; dl.className = "pill " + (a.rt ? "live" : "demo"); dl.setAttribute("data-tip-text", `Cours gratuit collecté toutes les 5 min (${a.delay}). Pas encore échangeable dans le terminal Live.`); }
+      const last = a.price != null ? a.price : bars.length ? bars[bars.length - 1].c : null;
+      $("#ch-p", el).textContent = last != null ? a.fmt(last) + a.cur : "—";
       const cc = $("#ch-c", el);
-      if (d) { cc.textContent = (d.chg >= 0 ? "▲ " : "▼ ") + pctTxt(d.chg) + " (24 h)"; cc.className = "mono " + (d.chg >= 0 ? "up" : "dn"); }
+      if (a.chg != null) { cc.textContent = (a.chg >= 0 ? "▲ " : "▼ ") + pctTxt(a.chg) + (a.q ? " (séance)" : " (24 h)"); cc.className = "mono " + (a.chg >= 0 ? "up" : "dn"); }
+      else cc.textContent = "";
+      $("#ch-empty", el).hidden = !(a.q && bars.length < 3);
       if (bars.length) {
         const n = Math.min(bars.length, Math.max(30, Math.floor(cv.parentElement.clientWidth / 7))), B = bars.slice(-n);
-        $("#ch-h", el).textContent = M.Market.fmtPrice(Math.max(...B.map(b => b.h)));
-        $("#ch-l", el).textContent = M.Market.fmtPrice(Math.min(...B.map(b => b.l)));
+        $("#ch-h", el).textContent = a.fmt(Math.max(...B.map(b => b.h)));
+        $("#ch-l", el).textContent = a.fmt(Math.min(...B.map(b => b.l)));
         const v = B.reduce((t, b) => t + b.v * b.c, 0);
         $("#ch-v", el).textContent = v >= 1e9 ? num(v / 1e9, 1) + " Md" : v >= 1e6 ? num(v / 1e6, 1) + " M" : num(v / 1e3, 0) + " k";
       }
@@ -306,10 +343,12 @@ window.M = window.M || {};
     let req = 0;
     async function loadChart() {
       const my = ++req, [tf, n] = RANGES[range];
-      drawHead();
-      const r = await M.Market.klines(sym, tf, { limit: n });
+      if (sym.startsWith("Q:") && !M.Quotes.loaded) await M.Quotes.load();
+      if (sym.startsWith("Q:") && !M.Quotes.byId[sym.slice(2)]) sym = "BTCUSDT";
+      bars = []; drawHead(); drawChart();
+      const nb = sym.startsWith("Q:") ? await M.Quotes.bars(sym.slice(2), range) : (await M.Market.klines(sym, tf, { limit: n })).bars;
       if (!alive || my !== req) return;
-      bars = r.bars; drawHead(); drawChart();
+      bars = nb; drawHead(); drawChart();
     }
     $$("#ch-r button", el).forEach(b => b.onclick = () => { range = b.dataset.r; $$("#ch-r button", el).forEach(x => x.classList.toggle("on", x === b)); loadChart(); });
 
@@ -361,14 +400,16 @@ window.M = window.M || {};
     // ----- Rafraîchissement -----
     const syms = M.Market.ASSETS.map(a => a.sym);
     async function refresh() {
+      if (!M.Quotes.loaded) await M.Quotes.load();
       const r = await M.Market.tickers(syms);
       if (!alive) return;
       tick = r.data;
       if (r.live && r.data.EURUSDT) M.setEurUsd(r.data.EURUSDT.last);
       const mode = $("#mk-mode", el);
-      mode.textContent = r.live ? "● Binance live" : "● Démo (hors ligne)";
+      mode.textContent = (r.live ? "● Crypto en direct" : "● Crypto : démo") + (M.Quotes.live ? " · Bourses " + M.Quotes.age(Date.parse(M.Quotes.generatedAt)) : "");
       mode.className = "pill " + (r.live ? "live" : "demo");
-      mode.setAttribute("data-tip-text", r.live ? "Prix réels de l'API publique Binance, rafraîchis toutes les 15 s." : "Impossible de joindre le marché : les prix affichés sont simulés.");
+      mode.setAttribute("data-tip-text", (r.live ? "Cryptos : prix réels de l'API publique Binance, rafraîchis toutes les 15 s." : "Cryptos : marché injoignable, prix simulés.")
+        + (M.Quotes.live ? " Bourses, matières premières, devises et BRVM : cours gratuits collectés toutes les 5 min (CNBC, brvm.org), différés de quelques minutes." : ""));
       drawRows(); drawHead(); drawPf();
     }
     drawRows(); drawPf(); refresh(); loadChart();
