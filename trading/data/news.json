@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T19:36:09.764Z",
+ "generatedAt": "2026-10-25T22:00:22.959Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 429"
+   "error": "HTTP 404"
   },
   {
    "id": "wb",
@@ -1431,17 +1431,6 @@
    "sid": "un",
    "cat": "Institutions",
    "date": "2026-09-28T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "3513f102fba66f73",
-   "title": "Federal Reserve Board announces approval of application by Peoples Bancorp Inc.",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/orders20260925a.htm",
-   "summary": "Federal Reserve Board announces approval of application by Peoples Bancorp Inc.",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-09-25T20:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
