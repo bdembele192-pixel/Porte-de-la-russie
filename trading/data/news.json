@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T04:32:53.588Z",
+ "generatedAt": "2026-10-25T09:20:13.896Z",
  "sources": [
   {
    "id": "fed",
@@ -1453,17 +1453,6 @@
    "sid": "eia",
    "cat": "Énergie",
    "date": "2026-09-25T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "c3b6869646e17f37",
-   "title": "Minutes of the Market Participants Group meeting – 24 September 2026",
-   "url": "https://www.bankofengland.co.uk/minutes/2026/september/market-participants-group-meeting-25-september-2026",
-   "summary": "The Market Participants Group (MPG) is a senior-level forum for financial market participants to share their views on relevant themes and narratives in financial markets with members of the Bank of England’s Monetary Policy Committee.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-09-25T06:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
