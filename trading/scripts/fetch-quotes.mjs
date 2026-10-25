@@ -87,11 +87,11 @@ async function cnbcBars(sym, span) {
   return bars.map(b => [b.tradeTimeinMills, num(b.open), num(b.high), num(b.low), num(b.close), b.volume || 0])
     .filter(b => b[0] && b[4] != null);
 }
-// Regroupe des barres minute en bougies de 15 min et garde la dernière séance
+// Regroupe en bougies de 15 min et garde les 24 h qui précèdent la dernière cotation (= dernière séance)
 function to15m(bars, prec) {
   if (!bars.length) return [];
-  const lastDay = new Date(bars[bars.length - 1][0]).toISOString().slice(0, 10);
-  const day = bars.filter(b => Date.now() - b[0] < 26 * 3600e3 || new Date(b[0]).toISOString().slice(0, 10) === lastDay);
+  const end = bars[bars.length - 1][0];
+  const day = bars.filter(b => end - b[0] < 24 * 3600e3);
   const out = [];
   for (const b of day) {
     const t = Math.floor(b[0] / 900e3) * 900e3, o = out[out.length - 1];
@@ -169,7 +169,7 @@ for (const [id, cs, tv, name, type, cur] of WORLD) {
   } else if (prevById[id]) { it = { ...prevById[id], stale: true }; }
   if (!it) continue;
   const prec = it.price >= 1000 ? 7 : 6;
-  try { it.bars = to15m(await cnbcBars(cs, "1D"), prec); } catch (e) { it.bars = prevById[id] && prevById[id].bars || []; }
+  try { it.bars = to15m(await cnbcBars(cs, "5D"), prec); } catch (e) { it.bars = prevById[id] && prevById[id].bars || []; }
   ["price", "prev", "open", "high", "low"].forEach(k => it[k] = round(it[k], prec));
   it.chg = round(it.chg, 4);
   items.push(it);
@@ -200,6 +200,43 @@ if (histDue) {
   sources.push({ name: "CNBC historique", ok: ok > 0, count: ok });
   hist.generatedAt = new Date().toISOString(); histChanged = true;
 }
+// Amorçage : un an d'historique BRVM depuis Sikafinance (une seule fois par titre)
+function sikaTicker(sym) {
+  if (/^BRVM-/.test(sym)) return { "BRVM-C": "BRVMC", "BRVM-30": "BRVM30", "BRVM-PRES": "BRVMPRES" }[sym];
+  if (/BF$/.test(sym)) return sym + ".bf";
+  return sym + "." + ({ C: "ci", S: "sn", B: "bj", M: "ml", N: "ne", T: "tg" }[sym.slice(-1)] || "ci");
+}
+const isoDay = t => new Date(t).toISOString().slice(0, 10);
+async function sikaHistory(sym) {
+  const tk = sikaTicker(sym);
+  if (!tk) return [];
+  const out = {};
+  for (let k = 3; k >= 0; k--) {
+    const fin = Date.now() - k * 91 * 864e5, deb = fin - 90 * 864e5;
+    const r = await get("https://www.sikafinance.com/api/general/GetHistos", {
+      method: "POST", headers: { "content-type": "application/json" },
+      body: JSON.stringify({ ticker: tk, datedeb: isoDay(deb), datefin: isoDay(fin), xperiod: "0" })
+    });
+    const d = await r.json();
+    (d.lst || []).forEach(x => {
+      const [dd, mm, yy] = String(x.Date).split("/").map(Number);
+      if (!yy) return;
+      const t = Date.UTC(yy, mm - 1, dd);
+      out[t] = [t, +x.Open, +x.High, +x.Low, +x.Close, +x.Volume || 0];
+    });
+  }
+  return Object.values(out).filter(b => b[4] > 0).sort((a, b) => a[0] - b[0]);
+}
+let seeded = 0, seedErr = null;
+for (const it of items.filter(i => /^BRVM/.test(i.type) && !i.stale)) {
+  if ((hist.items[it.id] || []).length >= 20 || seeded >= 60) continue;
+  try {
+    const h = await sikaHistory(it.short);
+    if (h.length >= 20) { hist.items[it.id] = h.slice(-262); histChanged = true; seeded++; }
+    else if (DRY && !seedErr) seedErr = it.short + " : " + h.length + " jours";
+  } catch (e) { seedErr = seedErr || it.short + " : " + e.message; }
+}
+if (seeded || seedErr) sources.push({ name: "Sikafinance (historique BRVM)", ok: seeded > 0, count: seeded, error: seedErr || undefined });
 for (const it of items.filter(i => /^BRVM/.test(i.type) && !i.stale)) {
   const day = Date.UTC(...new Date(it.time).toISOString().slice(0, 10).split("-").map((v, i) => i === 1 ? v - 1 : +v));
   const h = hist.items[it.id] = hist.items[it.id] || [];
@@ -216,7 +253,8 @@ console.log(sources.map(s => `${s.ok ? "OK " : "KO "}${s.name} ${s.ok ? s.count 
 console.log(`${items.length} cours (${items.filter(i => i.rt).length} temps réel), ${items.filter(i => i.bars && i.bars.length).length} avec graphique du jour`);
 if (DRY) {
   items.slice(0, 40).forEach(i => console.log(i.id.padEnd(12), String(i.price).padStart(12), (i.chg >= 0 ? "+" : "") + i.chg.toFixed(2) + "%", i.delay, i.bars ? i.bars.length + " barres" : ""));
-  console.log("historique", Object.keys(hist.items).length, "séries ; ex. SPX", (hist.items.SPX || []).length, "jours");
+  console.log("historique", Object.keys(hist.items).length, "séries ; ex. SPX", (hist.items.SPX || []).length, "jours ; SNTS", (hist.items["BRVM:SNTS"] || []).length, "jours ; BRVM-C", (hist.items["BRVM:BRVM-C"] || []).length);
+  console.log("SNTS fin", JSON.stringify((hist.items["BRVM:SNTS"] || []).slice(-3)), "| AAPL 1J", JSON.stringify((items.find(i => i.id === "AAPL") || {}).bars?.slice(-2)), (items.find(i => i.id === "AAPL") || {}).bars?.length);
 } else {
   // Rien de neuf (marché fermé) : on ne réécrit pas le fichier, donc pas de commit inutile
   if (!same) await writeFile(OUT, JSON.stringify(data).replace(/\},\{"id"/g, '},\n{"id"') + "\n");
