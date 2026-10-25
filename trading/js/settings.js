@@ -10,15 +10,16 @@ window.M = window.M || {};
 
   M.SETTINGS_DEFAULT = {
     tips: true, tipDelay: 280,
-    theme: "panthere", accent: null, font: "inter", fontHead: "grotesk", fs: 1, blur: 14, radius: 18, motion: true,
-    wall: null, wallDim: 0.7, icon: "logo", iconImg: null, appName: "Mèche",
+    theme: "ornoir", accent: null, font: "inter", fontHead: "grotesk", fs: 1, blur: 14, radius: 18, motion: true,
+    wall: null, wallDim: 0.7, heroImg: null, icon: "logo", iconImg: null, appName: "Mèche",
     lang: "fr", currency: "USD", startCash: 10000,
     maxLev: 20, defSl: 2, defTp: 4, confirm: false, dayLoss: 0,
     sound: true, haptic: true, discreet: false
   };
 
   const THEMES = [
-    { id: "panthere", n: "Bogolan Néon (défaut)", c: ["#07060A", "#A855F7", "#E0A458", "#FF3D9A"] },
+    { id: "ornoir", n: "Or noir (défaut)", c: ["#060606", "#E8B64C", "#F5D98B", "#2BEA8B"] },
+    { id: "panthere", n: "Bogolan Néon", c: ["#07060A", "#A855F7", "#E0A458", "#FF3D9A"] },
     { id: "neon", n: "Néon nuit", c: ["#07070C", "#C6FF3D", "#8B5CFF", "#FF4DA6"] },
     { id: "minuit", n: "Minuit violet", c: ["#0B0716", "#B794FF", "#FF4DA6", "#7DD3FC"] },
     { id: "ocean", n: "Océan", c: ["#04111A", "#3DF5FF", "#2D7FF9", "#2BEA8B"] },
@@ -121,7 +122,7 @@ window.M = window.M || {};
   };
 
   function iconDataURL(size) {
-    return "data:image/svg+xml," + encodeURIComponent(M.appIconSVG(ICONS.includes(S().icon) ? S().icon : "logo", size).replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" '));
+    return "data:image/svg+xml," + encodeURIComponent(M.appIconSVG(ICONS.includes(S().icon) ? S().icon : "logo", size, true).replace("<svg ", '<svg xmlns="http://www.w3.org/2000/svg" '));
   }
 
   function applyIcon() {
@@ -134,10 +135,8 @@ window.M = window.M || {};
     };
     set("icon", href);
     set("apple-touch-icon", href);
-    const logo = $(".logo-i");
-    if (logo) logo.innerHTML = s.iconImg ? `<img src="${s.iconImg}" alt="">` : M.appIconSVG(ICONS.includes(s.icon) ? s.icon : "logo", 34);
-    const name = $(".logo .logo-t");
-    if (name) name.textContent = s.appName || "Mèche";
+    $$(".logo-i").forEach(l => { const z = l.closest(".foot") ? 26 : 40; l.innerHTML = s.iconImg ? `<img src="${s.iconImg}" alt="">` : M.appIconSVG(ICONS.includes(s.icon) ? s.icon : "logo", z); });
+    $$(".logo .logo-t").forEach(n => n.textContent = s.appName || "Mèche");
     // Manifeste dynamique : l'icône choisie est utilisée si l'app est installée sur l'écran d'accueil
     try {
       const man = {
@@ -296,6 +295,8 @@ window.M = window.M || {};
             ${row("Animations", "Désactive les mouvements (confort visuel, économie de batterie).", sw("motion", s.motion !== false))}
             ${row("Fond d'écran", "Ta propre image en arrière-plan, assombrie pour rester lisible.",
               `<label class="btn ghost sm file-btn">🖼 Choisir une image<input type="file" accept="image/*" id="wall"></label>${s.wall ? `<button class="btn ghost sm" id="wall-x">Retirer</button>` : ""}`)}
+            ${row("Image de la bannière", "Remplace l'illustration de l'accueil par ta propre image (ex. un visuel de ta marque).",
+              `<label class="btn ghost sm file-btn">${M.icon("image")} Choisir une image<input type="file" accept="image/*" id="heroImg"></label>${s.heroImg ? `<button class="btn ghost sm" id="hero-x">Illustration par défaut</button>` : ""}`)}
             ${s.wall ? row("Assombrissement du fond", "", range("wallDim", 0.2, 0.95, 0.05, s.wallDim, v => Math.round(v * 100) + " %")) : ""}
             <div class="preview-box"><h3 style="margin:0 0 4px">Aperçu du titre</h3><p style="margin:0">Le texte ressemblera à ça. <span class="term" data-tip="rsi">RSI</span>, <span class="mono">98 450,20 $</span>.</p></div>
             <div style="margin-top:14px"><button class="btn ghost sm" id="reset-look">↺ Réinitialiser l'apparence</button></div>
@@ -407,8 +408,13 @@ window.M = window.M || {};
       catch (e) { s.wall = null; M.toast("Image trop lourde pour ce navigateur.", "err"); }
     });
     const wx = $("#wall-x", el); if (wx) wx.onclick = () => save("wall", null, true);
+    upload("heroImg", 1400, false, url => {
+      try { save("heroImg", url, true); M.toast("Bannière mise à jour"); }
+      catch (e) { s.heroImg = null; M.toast("Image trop lourde pour ce navigateur.", "err"); }
+    });
+    const hx = $("#hero-x", el); if (hx) hx.onclick = () => save("heroImg", null, true);
     $("#reset-look", el).onclick = () => {
-      ["theme", "accent", "font", "fontHead", "fs", "blur", "radius", "motion", "wall", "wallDim"].forEach(k => s[k] = M.SETTINGS_DEFAULT[k]);
+      ["theme", "accent", "font", "fontHead", "fs", "blur", "radius", "motion", "wall", "wallDim", "heroImg"].forEach(k => s[k] = M.SETTINGS_DEFAULT[k]);
       M.save(); M.applySettings(); rerender();
     };
 

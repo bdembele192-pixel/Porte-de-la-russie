@@ -75,6 +75,11 @@ window.M = window.M || {};
     phone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
     cloud: '<path d="M7 18a5 5 0 1 1 1-9.9A6 6 0 0 1 19 10a4 4 0 0 1-1 8z"/>',
     pause: '<circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+    chevron: '<path d="m6 9 6 6 6-6"/>',
+    arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+    wallet: '<path d="M3 7a2 2 0 0 1 2-2h12v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15V9H5a2 2 0 0 1-2-2z"/><circle cx="16" cy="14.5" r="1.3"/>',
+    eyeo: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
     star: '<path d="m12 2 3 6.5 7 .9-5.2 4.8 1.4 7L12 17.8 5.8 21.2l1.4-7L2 9.4l7-.9z"/>'
   };
   const sprite = '<svg xmlns="http://www.w3.org/2000/svg" style="display:none">' +
@@ -89,13 +94,15 @@ window.M = window.M || {};
   };
   M.iconPath = n => P[n];
   // Icône d'app : le logo, ou une icône au trait sur fond sombre avec dégradé
-  M.appIconSVG = (name, size = 64) => {
-    if (!name || name === "logo" || !P[name]) return M.logoSVG(size);
-    return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lga" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2C46B"/><stop offset=".55" stop-color="#A855F7"/><stop offset="1" stop-color="#FF3D9A"/></linearGradient></defs><rect x="5" y="5" width="54" height="54" rx="15" fill="#0B0910" stroke="url(#lga)" stroke-width="2.5"/><g transform="translate(14 14) scale(1.5)" fill="none" stroke="url(#lga)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[name]}</g></svg>`;
+  M.appIconSVG = (name, size = 64, tile) => {
+    if (!name || name === "logo" || !P[name]) return tile
+      ? `<svg width="${size}" height="${size}" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#0A0806"/>${M.logoSVG(46).replace("<svg ", '<svg x="9" y="8" ')}</svg>`
+      : M.logoSVG(size);
+    return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE3A1"/><stop offset=".5" stop-color="#E8B64C"/><stop offset="1" stop-color="#A9761F"/></linearGradient></defs><rect x="5" y="5" width="54" height="54" rx="15" fill="#0A0806" stroke="url(#lga)" stroke-width="2.5"/><g transform="translate(14 14) scale(1.5)" fill="none" stroke="url(#lga)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[name]}</g></svg>`;
   };
   M.ico = (kind, id, cls = "") => M.icon((M.IC[kind] && M.IC[kind][id]) || "star", cls);
   // Logo : flamme (la « mèche ») dans un losange, liseré façon bogolan
-  M.logoSVG = (size = 32) => `<svg class="logo-svg" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lgm" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F2C46B"/><stop offset=".55" stop-color="#A855F7"/><stop offset="1" stop-color="#FF3D9A"/></linearGradient></defs><rect x="5" y="5" width="54" height="54" rx="15" fill="#0B0910" stroke="url(#lgm)" stroke-width="2.5"/><path d="M32 11c4 7 12 12 12 23a12 12 0 0 1-24 0c0-6 4-9 6-13 1 4 3 6 5 6-1-5 0-10 1-16z" fill="url(#lgm)"/><path d="M32 30c2 3 5 5 5 9a5 5 0 0 1-10 0c0-3 3-5 5-9z" fill="#0B0910"/><path d="M13 52l4-4 4 4 4-4 4 4 4-4 4 4 4-4 4 4 4-4 4 4" stroke="#F2C46B" stroke-width="1.6" fill="none" opacity=".85"/></svg>`;
+  M.logoSVG = (size = 32) => `<svg class="logo-svg" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lgm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FBE3A1"/><stop offset=".5" stop-color="#E8B64C"/><stop offset="1" stop-color="#A9761F"/></linearGradient></defs><path d="M10 56V18q3 8 10 12l12 14 12-14q7-4 10-12v38" fill="none" stroke="url(#lgm)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="M19 56V40l13 13 13-13v16" fill="none" stroke="url(#lgm)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/><path d="M32 4c3 6 8 9 8 16a8 8 0 0 1-16 0c0-4 3-6 4-9 1 3 2 4 3 4-1-4 0-7 1-11z" fill="url(#lgm)"/></svg>`;
   M.icon = (name, cls = "") => `<svg class="ic ${cls}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
   /* Remplace automatiquement les emojis de l'interface par des icônes vectorielles. */
   const EMO = {
