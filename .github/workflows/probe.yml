@@ -1,0 +1,15 @@
+name: Sonde des sources de cours
+on:
+  push:
+    branches: [claude/trading-app-gen-z-courses-a1v2x8]
+    paths: [".github/workflows/probe.yml", "trading/scripts/probe.mjs"]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node trading/scripts/probe.mjs
