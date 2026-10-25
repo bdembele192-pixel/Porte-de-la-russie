@@ -13,8 +13,11 @@ Application web statique (HTML/CSS/JS, aucune dépendance, aucun build) : ouvre 
 | 🧪 **Algo Lab** | Backtest de 4 algos (Trend Following EMA+ATR, Breakout Donchian/Turtles, Mean Reversion Bollinger+RSI, Pairs Trading ETH/BTC) sur données réelles, frais inclus, sans biais d'anticipation. Comparateur des 4 algos. |
 | 🎓 **Académie** | 18 modules / 78 chapitres + quiz : marché, instruments, styles, analyse technique et fondamentale, indicateurs, stratégies, algos, options, crypto avancé, forex, risque, psychologie, macro 2024-2026, BRVM & UEMOA, plan de trading, finances perso, passer en réel sans arnaque. |
 | 🦉 **Quiz** | Parcours façon Duolingo : 11 unités, 88 questions + exercices pratiques générés à l'infini (calculs de risque, lecture de bougies, tendances, RSI), 3 vies, combos, étoiles. |
-| ⚙️ **Paramètres** | 7 thèmes (dont clair et « Bamako »), couleur d'accent, police du texte et des titres, taille du texte, flou, arrondis, animations, fond d'écran perso, photo de profil, icône et nom de l'app, langue (FR, EN, 中文, Русский pour l'interface), devise (USD, EUR, FCFA, RUB, JPY, CNY), capital de départ et ajout de fonds, levier max, stop/objectif par défaut, limite de perte du jour, sons, vibrations, mode discret, export/import de la progression. |
+| ⚙️ **Paramètres** | 8 thèmes dont « Panthère » (thème principal : noir, violet vibrant, argent), clair et « Bamako », couleur d'accent, police du texte et des titres, taille du texte, flou, arrondis, animations, fond d'écran perso, photo de profil, icône et nom de l'app, langue (FR, EN, 中文, Русский pour l'interface), devise (USD, EUR, FCFA, RUB, JPY, CNY), capital de départ et ajout de fonds, levier max, stop/objectif par défaut, limite de perte du jour, sons, vibrations, mode discret, export/import de la progression. |
 | 🤖 **Mèche IA** | Modèle d'apprentissage (régression logistique) entraîné automatiquement sur les vraies bougies Binance (8 actifs, 1h et 4h) à chaque ouverture en ligne, validé honnêtement sur la période la plus récente, et affiné par les trades live des utilisateurs (pondérés par leur discipline). **Copilote** : analyse chaque ordre Live avant envoi (stop, risque, levier, liquidation, tendance, RSI, volatilité, revenge trading, historique perso, probabilité du modèle), bloque les ordres risqués et propose une version plus sûre ; alertes sur les positions ouvertes (notifications). N'intervient jamais dans les missions, le Swipe ni le quiz. **Chat** : glossaire + cours + base multi-domaines (économie, finance, politique, droit, écologie, géopolitique, psychologie, commerce, théorie) + apprentissage sur Wikipédia ; cerveau Claude optionnel (clé API Anthropic, recherche web). |
+| 📰 **Actus** | Communiqués officiels (Fed, BCE, Banque d'Angleterre, Banque du Japon, BRI, FMI, Banque mondiale, OMC, ONU, BAD, SEC, CFTC, BLS, BEA, EIA) collectés toutes les 5 min par un robot GitHub Actions (`.github/workflows/news.yml` → `data/news.json`), relus par l'app toutes les 2 min, avec alertes ; mouvements des marchés en direct ; Mèche IA les connaît et les explique. |
+| 🔐 **Comptes** | Connexion sans mot de passe (code e-mail ou SMS), réseaux (Google, Apple, GitHub, Facebook), double authentification TOTP, synchronisation de la progression, données cloisonnées par utilisateur. Nécessite un projet Supabase : voir `docs/COMPTES.md`. |
+| 🧭 **Tutoriel** | Visite guidée à la première ouverture, relançable dans Paramètres → Aide & tutoriel. |
 | 💬 **Infobulles** | Survole n'importe quel bouton ou terme souligné (appui long sur mobile) : ~125 définitions du glossaire. |
 | 🏆 **Progression** | XP, 8 niveaux, 20 badges, série de jours, coach qui note la discipline (stop, taille, levier, revenge trading, surtrading). |
 
@@ -42,6 +45,12 @@ js/icons.js           icônes vectorielles
 js/i18n.js            traductions EN / 中文 / Русский
 js/kb.js              base de connaissances du chat
 js/ai.js              Mèche IA : modèle, copilote, alertes, chat
+js/config.js          URLs des actus, configuration des comptes
+js/news.js            section Actus
+js/account.js         comptes et synchronisation
+js/tour.js            tutoriel guidé
+scripts/fetch-news.mjs  robot de collecte des actus
+supabase/schema.sql   table et règles de sécurité des comptes
 js/app.js             état, XP, badges, routeur, accueil, académie, profil
 js/live.js            terminal live
 js/play.js            missions + swipe

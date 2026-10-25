@@ -4,6 +4,7 @@ window.M = window.M || {};
 M.I18N = {
   // Libellés ajoutés avec Mèche IA (l'anglais de base est dans settings.js)
   en: {
+    "Actus": "News", "Compte & sécurité": "Account & security", "Aide & tutoriel": "Help & tour", "Relancer le tutoriel": "Restart the tour", "Gérer mon compte": "Manage my account", "Mon compte": "My account", "Communiqués officiels": "Official releases", "Mouvements": "Market moves",
     "IA": "AI", "Mèche IA": "Mèche AI", "Copilote": "Copilot", "Chat": "Chat", "Envoyer": "Send",
     "Entraîner maintenant": "Train now", "Appliquer la proposition": "Apply the proposal", "Garder mon ordre": "Keep my order", "Annuler": "Cancel",
     "Ton ordre": "Your order", "Proposition IA": "AI proposal", "Alerte du copilote": "Copilot alert", "État du modèle": "Model status",
@@ -11,6 +12,7 @@ M.I18N = {
     "Ce qu'il surveille": "What it watches", "Cerveau Claude (optionnel)": "Claude brain (optional)", "Effacer la conversation": "Clear conversation"
   },
   zh: {
+    "Actus": "资讯", "Compte & sécurité": "账户与安全", "Aide & tutoriel": "帮助与教程", "Relancer le tutoriel": "重新开始教程", "Gérer mon compte": "管理我的账户", "Mon compte": "我的账户", "Communiqués officiels": "官方公告", "Mouvements": "市场动态",
     "Accueil": "首页", "Live": "实盘行情", "Missions": "任务", "Swipe": "滑动", "Algo Lab": "算法实验室", "Académie": "学院", "Quiz": "测验", "Profil": "个人资料", "Paramètres": "设置",
     "Apprends à trader.": "学会交易。", "Sans te brûler.": "不再亏到怀疑人生。", "Trader en live": "实时交易", "Rejouer un krach": "重温一次暴跌",
     "Portefeuille": "资产", "Trades": "交易", "Cours": "课程", "Badges": "徽章", "Marchés": "市场", "en direct": "实时",
@@ -44,6 +46,7 @@ M.I18N = {
     "Ce qu'il surveille": "监控内容", "Cerveau Claude (optionnel)": "Claude 大脑（可选）", "Effacer la conversation": "清空对话"
   },
   ru: {
+    "Actus": "Новости", "Compte & sécurité": "Аккаунт и безопасность", "Aide & tutoriel": "Помощь и обучение", "Relancer le tutoriel": "Пройти обучение заново", "Gérer mon compte": "Управление аккаунтом", "Mon compte": "Мой аккаунт", "Communiqués officiels": "Официальные сообщения", "Mouvements": "Движения рынка",
     "Accueil": "Главная", "Live": "Онлайн", "Missions": "Миссии", "Swipe": "Свайп", "Algo Lab": "Алго-лаб", "Académie": "Академия", "Quiz": "Квиз", "Profil": "Профиль", "Paramètres": "Настройки",
     "Apprends à trader.": "Научись торговать.", "Sans te brûler.": "И не сгори.", "Trader en live": "Торговать онлайн", "Rejouer un krach": "Пережить обвал заново",
     "Portefeuille": "Портфель", "Trades": "Сделки", "Cours": "Курсы", "Badges": "Значки", "Marchés": "Рынки", "en direct": "в реальном времени",

@@ -337,6 +337,8 @@ window.M = window.M || {};
     })));
     M.KB.forEach(e => docs.push({ t: e.t, d: e.d, text: e.a, key: e.k + " " + e.t }));
     st().learned.forEach(e => docs.push({ t: e.t, d: "Appris en ligne", text: e.a, key: e.t, src: e.url, ext: true }));
+    // Communiqués officiels récents (section Actus)
+    ((M.News && M.News.items) || []).slice(0, 120).forEach(n => docs.push({ t: n.title, d: "Actualité · " + n.source, text: (n.summary || n.title) + ` (${new Date(n.date).toLocaleDateString("fr-FR")})`, key: n.source + " " + n.title, src: n.url, ext: true }));
     docs.forEach(d => { d.tk = toks(d.key + " " + d.key + " " + d.t + " " + d.text); d.len = d.tk.length; });
     const df = {};
     docs.forEach(d => new Set(d.tk).forEach(w => df[w] = (df[w] || 0) + 1));
@@ -479,6 +481,13 @@ ${context}`;
     if (/^(bonjour|salut|hello|hey|yo|cc|coucou|bonsoir|slt)\b/.test(n) && n.length < 25)
       return { html: `Salut ${esc(M.state.name || "")} 👋 Je suis <b>Mèche IA</b>. Je peux :<br>• analyser un marché (« analyse le BTC »),<br>• donner un prix (« prix de l'ETH »),<br>• expliquer une notion d'économie, finance, droit, géopolitique, écologie, psychologie, commerce…,<br>• faire le bilan de tes trades (« mes stats »).<br>En Live, je surveille aussi tes ordres et je te propose une version plus sûre quand un trade est risqué.` };
     if (/\b(mes stats|mes trades|mon bilan|mes erreurs|mes performances)\b/.test(n)) return { html: stats() };
+    // Décryptage d'un communiqué de la section Actus (mode local)
+    const nm = !a.cfg.claudeKey && q.match(/«\s*(.+?)\s*»/);
+    const item = nm && ((M.News && M.News.items) || []).find(i => i.title === nm[1]);
+    if (item) return { html: explainNews(item) };
+    const askNews = /\b(actu|actus|actualite|actualites|news|nouvelles|quoi de neuf|annonce|annonces|communique|communiques)\b/.test(n) ||
+      (/(que dit|qu'a dit|derniere|dernieres|decision|vient de)/.test(n) && INST.some(([rx]) => rx.test(n)));
+    if (askNews && !a.cfg.claudeKey) return { html: headlines(n) };
     const wantsClaude = a.cfg.claudeKey;
     if (sym && /\b(prix|cours|combien|vaut|coute|price)\b/.test(n) && !wantsClaude) {
       const r = await M.Market.tickers([sym]); const d = r.data[sym];
@@ -492,6 +501,8 @@ ${context}`;
       if (sym) {
         try { ctx += "\n\nAnalyse technique calculée par l'app :\n" + (await analysis(sym)).replace(/<br>/g, "\n").replace(/<[^>]+>/g, ""); } catch (e) { /* ignoré */ }
       }
+      const hl = ((M.News && M.News.items) || []).slice(0, 10);
+      if (hl.length) ctx += "\n\nDerniers communiqués officiels collectés par l'app :\n" + hl.map(i => `- ${new Date(i.date).toLocaleString("fr-FR")} · ${i.source} : ${i.title}${i.summary ? " — " + i.summary.slice(0, 200) : ""} (${i.url})`).join("\n");
       if (a.metrics) ctx += `\n\nModèle interne : précision ${pct(a.metrics.acc)}, compétence ${a.metrics.skill.toFixed(3)} sur ${a.metrics.nVal} cas récents.`;
       try {
         const txt = await claude(q, ctx || "(aucun)");
@@ -520,7 +531,50 @@ ${context}`;
   }
 
   // ---------- Interface du chat ----------
-  const SUGG = ["Analyse le BTC", "C'est quoi l'inflation ?", "Explique l'OHADA", "Qu'est-ce que l'AES ?", "Comment éviter le FOMO ?", "Mes stats", "Prix de l'or", "C'est quoi l'avantage comparatif ?"];
+  const SUGG = ["Analyse le BTC", "Les dernières actus", "Que dit la Fed ?", "C'est quoi l'inflation ?", "Explique l'OHADA", "Qu'est-ce que l'AES ?", "Comment éviter le FOMO ?", "Mes stats", "Prix de l'or", "C'est quoi l'avantage comparatif ?"];
+  const INST = [[/\bfed\b|reserve federale/, "fed"], [/\bbce\b|ecb|banque centrale europeenne/, "ecb"], [/\bfmi\b|\bimf\b/, "imf"], [/banque mondiale|world bank/, "wb"],
+    [/\bomc\b|\bwto\b/, "wto"], [/\bsec\b/, "sec"], [/cftc/, "cftc"], [/emploi|chomage|inflation|\bcpi\b|\bbls\b/, "bls"], [/japon|\bboj\b/, "boj"], [/angleterre|\bboe\b/, "boe"],
+    [/\bbri\b|\bbis\b/, "bis"], [/afrique|\bbad\b|afdb/, "afdb"], [/\bonu\b|nations unies/, "un"], [/energie|petrole|\beia\b/, "eia"]];
+  function headlines(n) {
+    const all = (M.News && M.News.items) || [];
+    if (!all.length) return "Je n'ai pas encore reçu de communiqués officiels (la collecte automatique démarre une fois l'app en ligne). Ouvre la section <a href=\"#/news\">Actus</a>.";
+    const hit = INST.find(([rx]) => rx.test(n));
+    const list = (hit ? all.filter(i => i.sid === hit[1]) : all).slice(0, 6);
+    if (!list.length) return `Aucun communiqué récent de cette institution dans mes sources. Voir toutes les <a href="#/news">Actus</a>.`;
+    return `<b>Derniers communiqués officiels${hit ? " · " + esc(list[0].source) : ""}</b><br>` + list.map(i => `• <a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.title)}</a> <small class="muted">${esc(i.source)} · ${M.News.ago(i.date)}</small>`).join("<br>") +
+      `<br><br><small class="muted">Clique sur « Expliquer avec l'IA » dans la section Actus pour un décryptage.</small>`;
+  }
+
+  const SID_KB = { fed: "Fed (Réserve fédérale américaine)", ecb: "BCE (Banque centrale européenne)", imf: "FMI (Fonds monétaire international)", wb: "Banque mondiale", wto: "OMC (Organisation mondiale du commerce)", bis: "BRI (Banque des règlements internationaux)", sec: "SEC et CFTC (régulateurs américains)", cftc: "SEC et CFTC (régulateurs américains)", afdb: "BAD (Banque africaine de développement)" };
+  /* Explication locale d'un communiqué : qui parle, ce que ça dit, et les effets habituels sur les marchés. */
+  function explainNews(it) {
+    const t = norm(it.title + " " + it.summary);
+    const kb = M.KB.find(k => k.t === SID_KB[it.sid]);
+    const rules = [
+      [/(lower|cut|reduc|baiss|decrease).{0,40}(rate|taux)|(rate|taux).{0,40}(lower|cut|reduc|baiss)/, "Une <b>baisse des taux</b> rend l'argent moins cher : historiquement, cela tend à soutenir les actions, l'or et la crypto, et à affaiblir la devise concernée. L'effet dépend de ce que le marché anticipait déjà."],
+      [/(rais|increas|hike|hausse|relev).{0,40}(rate|taux)|(rate|taux).{0,40}(rais|increas|hausse)/, "Une <b>hausse des taux</b> rend l'argent plus cher : elle pèse souvent sur les actions de croissance et la crypto, et renforce la devise concernée."],
+      [/(maintain|unchanged|keep|hold|inchang|maintien)/, "Un <b>statu quo</b> est souvent déjà anticipé ; le marché réagit surtout au ton du communiqué (indices sur les prochaines décisions)."],
+      [/(inflation|consumer price|cpi|prix a la consommation)/, "Un chiffre d'<b>inflation</b> plus élevé que prévu fait craindre des taux hauts plus longtemps (négatif pour les actifs risqués) ; plus bas que prévu, l'inverse."],
+      [/(employment|payroll|jobs|unemployment|emploi|chomage)/, "Les chiffres de l'<b>emploi</b> renseignent sur la santé de l'économie et donc sur les prochaines décisions de taux de la banque centrale."],
+      [/(minutes|compte rendu)/, "Les <b>minutes</b> détaillent les débats de la dernière réunion : le marché y cherche des indices sur la suite (combien de membres veulent baisser ou monter les taux)."],
+      [/(review|program|programme|loan|pret|financ|disburse|decaiss)/, "Un accord ou une revue de <b>programme de financement</b> rassure généralement les investisseurs sur la capacité du pays à payer ses dettes, et peut débloquer d'autres financements."],
+      [/(enforcement|charges|fraud|sanction|penalt|amende)/, "Une <b>sanction d'un régulateur</b> vise un acteur précis ; elle peut faire chuter l'actif ou la plateforme concernés et rappelle l'importance d'utiliser des intermédiaires régulés."],
+      [/(etf|crypto|bitcoin|digital asset)/, "Une décision réglementaire sur la <b>crypto</b> peut faire bouger tout le marché crypto en quelques minutes."],
+      [/(oil|petrol|crude|natural gas|energy|gaz)/, "Une information sur l'<b>énergie</b> influence le prix du pétrole et du gaz, donc l'inflation et les budgets des pays importateurs et exportateurs."]
+    ];
+    const impact = rules.filter(([rx]) => rx.test(t)).slice(0, 2).map(r => "• " + r[1]).join("<br>") ||
+      "• Les communiqués officiels peuvent provoquer des mouvements rapides : évite d'ouvrir une position juste avant ou juste après, le temps que le marché digère l'information.";
+    return `<b>${esc(it.title)}</b><br><small class="muted">${esc(it.source)} · ${new Date(it.date).toLocaleString("fr-FR")}</small><br><br>
+      <b>Ce que dit le communiqué</b><br>${esc(it.summary || "Le résumé n'est pas fourni par la source : ouvre le lien officiel pour le texte complet.")}<br><br>
+      ${kb ? `<b>Qui parle ?</b><br>${esc(kb.a)}<br><br>` : ""}
+      <b>Effets habituels sur les marchés</b><br>${impact}<br><br>
+      <a href="${esc(it.url)}" target="_blank" rel="noopener">Lire le communiqué officiel →</a><br>
+      <small class="muted">Explication générale et éducative. Pour une analyse détaillée de ce texte précis, active le cerveau Claude (onglet Copilote).</small>`;
+  }
+
+  let pendingQ = null;
+  function openChat(q) { pendingQ = q; if (location.hash.startsWith("#/ai") && !location.hash.includes("copilote")) M.views.ai(document.getElementById("view"), []); else M.go("#/ai"); }
+
   function chatUI(el, { compact } = {}) {
     const a = st();
     el.innerHTML = `
@@ -554,6 +608,7 @@ ${context}`;
     };
     $("#chat-form", el).onsubmit = e => { e.preventDefault(); const i = $("#chat-q", el); const q = i.value; i.value = ""; ask(q); };
     $$(".chip-b", el).forEach(b => b.onclick = () => ask(b.textContent));
+    if (pendingQ && !compact) { const q0 = pendingQ; pendingQ = null; setTimeout(() => ask(q0), 50); }
     draw();
   }
 
@@ -658,5 +713,5 @@ ${context}`;
     setTimeout(() => { if (navigator.onLine !== false) train().catch(() => {}); }, 4000);
   });
 
-  M.AI = { train, review, advise, monitor, snapshot, learnFromTrade, predict, answer, search, notify, state: st };
+  M.AI = { train, review, advise, monitor, snapshot, learnFromTrade, predict, answer, search, notify, openChat, resetIndex: () => { index = null; }, state: st };
 })();
