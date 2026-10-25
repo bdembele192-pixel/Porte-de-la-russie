@@ -10,7 +10,7 @@ window.M = window.M || {};
 
   M.SETTINGS_DEFAULT = {
     tips: true, tipDelay: 280,
-    theme: "neon", accent: null, font: "inter", fontHead: "grotesk", fs: 1, blur: 14, radius: 18, motion: true,
+    theme: "panthere", accent: null, font: "inter", fontHead: "grotesk", fs: 1, blur: 14, radius: 18, motion: true,
     wall: null, wallDim: 0.7, icon: "🕯️", iconImg: null, appName: "Mèche",
     lang: "fr", currency: "USD", startCash: 10000,
     maxLev: 20, defSl: 2, defTp: 4, confirm: false, dayLoss: 0,
@@ -18,6 +18,7 @@ window.M = window.M || {};
   };
 
   const THEMES = [
+    { id: "panthere", n: "Panthère (défaut)", c: ["#050507", "#A855F7", "#C9C7D6", "#7C3AED"] },
     { id: "neon", n: "Néon nuit", c: ["#07070C", "#C6FF3D", "#8B5CFF", "#FF4DA6"] },
     { id: "minuit", n: "Minuit violet", c: ["#0B0716", "#B794FF", "#FF4DA6", "#7DD3FC"] },
     { id: "ocean", n: "Océan", c: ["#04111A", "#3DF5FF", "#2D7FF9", "#2BEA8B"] },
@@ -287,7 +288,7 @@ window.M = window.M || {};
       <div class="set-layout">
         <nav class="set-nav glass">
           <a href="#/settings/apparence">${M.icon("palette")}<span>Apparence</span></a><a href="#/settings/profil">${M.icon("profile")}<span>Profil & icône</span></a><a href="#/settings/langue">${M.icon("globe")}<span>Langue & devise</span></a>
-          <a href="#/settings/trading">${M.icon("chart")}<span>Trading</span></a><a href="#/settings/confort">${M.icon("bell")}<span>Sons & confort</span></a><a href="#/settings/donnees">${M.icon("database")}<span>Données</span></a>
+          <a href="#/settings/trading">${M.icon("chart")}<span>Trading</span></a><a href="#/settings/confort">${M.icon("bell")}<span>Sons & confort</span></a><a href="#/settings/compte">${M.icon("shield")}<span>Compte & sécurité</span></a><a href="#/settings/aide">${M.icon("book")}<span>Aide & tutoriel</span></a><a href="#/settings/donnees">${M.icon("database")}<span>Données</span></a>
         </nav>
         <div>
           <section class="set-sec glass" id="apparence">
@@ -355,6 +356,22 @@ window.M = window.M || {};
             ${row("Infobulles explicatives", "Les bulles qui expliquent chaque bouton et chaque terme.", sw("tips", s.tips !== false))}
             ${row("Délai des infobulles", "", range("tipDelay", 0, 1200, 50, s.tipDelay, v => v + " ms"))}
             ${row("Mode discret", "Floute les montants (pratique pour filmer ou montrer ton écran).", sw("discreet", s.discreet))}
+          </section>
+
+          <section class="set-sec glass" id="compte">
+            <h2>${M.icon("shield")} Compte & sécurité</h2>
+            <p class="muted">${M.Account && M.Account.enabled() ? (M.Account.session() ? "Tu es connecté : ta progression est synchronisée dans le cloud." : "Crée un compte pour retrouver ta progression sur tous tes appareils.") : "Mode local : ta progression reste dans ce navigateur (aucun compte)."}</p>
+            <div class="set-ctl"><a class="btn primary" href="#/account">${M.icon("profile")} Gérer mon compte</a></div>
+            ${row("Alertes d'actualité", "Notification quand un nouveau communiqué officiel arrive (banques centrales, FMI…).", sw("newsAlerts", s.newsAlerts !== false))}
+          </section>
+
+          <section class="set-sec glass" id="aide">
+            <h2>${M.icon("book")} Aide & tutoriel</h2>
+            <p class="muted">Revois la visite guidée de l'app, partie par partie. Les bulles d'info restent disponibles partout.</p>
+            <div class="set-ctl">
+              <button class="btn primary" id="tour-go">${M.icon("target")} Relancer le tutoriel</button>
+              <button class="btn ghost" id="onb-go">Revoir l'écran de bienvenue</button>
+            </div>
           </section>
 
           <section class="set-sec glass" id="donnees">
@@ -442,6 +459,9 @@ window.M = window.M || {};
     bindSw("tips");
     bindRange("tipDelay", v => v + " ms");
     bindSw("discreet");
+    bindSw("newsAlerts");
+    $("#tour-go", el).onclick = () => M.startTour && M.startTour();
+    $("#onb-go", el).onclick = () => { M.state.onboarded = false; M.save(true); location.hash = "#/home"; location.reload(); };
 
     $("#export", el).onclick = () => {
       const blob = new Blob([JSON.stringify(M.state, null, 1)], { type: "application/json" });
@@ -475,7 +495,7 @@ window.M = window.M || {};
     };
 
     // Sommaire : défile vers la section demandée
-    const secs = ["apparence", "profil", "langue", "trading", "confort", "donnees"];
+    const secs = ["apparence", "profil", "langue", "trading", "confort", "compte", "aide", "donnees"];
     $$(".set-nav a", el).forEach(a => a.classList.toggle("on", a.getAttribute("href").endsWith("/" + (section || "apparence"))));
     if (section && secs.includes(section)) setTimeout(() => { const t = $("#" + section, el); if (t) t.scrollIntoView({ behavior: "smooth", block: "start" }); }, 30);
   };

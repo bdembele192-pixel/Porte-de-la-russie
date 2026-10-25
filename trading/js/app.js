@@ -31,6 +31,8 @@ window.M = window.M || {};
       if (s && typeof s === "object") {
         const st = Object.assign(fresh(), s);
         st.settings = Object.assign({}, M.SETTINGS_DEFAULT, s.settings || {});
+        // Migration : le thème « Panthère » devient le thème principal (une seule fois)
+        if (!st.themeV2) { if (!st.settings.theme || st.settings.theme === "neon") st.settings.theme = "panthere"; st.themeV2 = true; }
         return st;
       }
     } catch (e) { /* stockage indisponible : on repart de zéro */ }
@@ -203,7 +205,7 @@ window.M = window.M || {};
     const el = $("#view");
     el.innerHTML = "";
     el.className = "view view-" + view;
-    const navKey = { mission: "missions", course: "academy", glossary: "academy" }[view] || view;
+    const navKey = { mission: "missions", course: "academy", glossary: "academy", account: "profile" }[view] || view;
     $$(".nav a, .tb-gear").forEach(a => a.classList.toggle("on", a.dataset.nav === navKey));
     window.scrollTo(0, 0);
     cleanup = M.views[view](el, params.map(decodeURIComponent)) || null;
@@ -501,7 +503,7 @@ window.M = window.M || {};
           <div class="xpbar big"><i style="width:${Math.round(L.progress * 100)}%"></i></div>
           <small class="muted">${L.nextName ? `Encore ${L.to - s.xp} XP pour « ${L.nextName} »` : "Niveau maximum. Respect."}</small>
         </div>
-        <a class="btn ghost" href="#/settings">⚙️ Paramètres</a>
+        <div class="cta" style="margin:0;flex-direction:column"><a class="btn ghost" href="#/account">${M.icon("shield")} Mon compte</a><a class="btn ghost" href="#/settings">${M.icon("settings")} Paramètres</a></div>
       </div>
       <div class="stats">
         ${stat("Portefeuille", M.fmt$(s.wallet.cash + (s.wallet.pos ? s.wallet.pos.margin : 0)), "Cash + marge engagée (hors PnL latent).", "equity")}
@@ -550,6 +552,8 @@ window.M = window.M || {};
         if (v) M.state.name = v.trim().slice(0, 20);
         M.state.onboarded = true; M.save(true);
         if (location.hash === "" || location.hash === "#/home" || location.hash === "#/") route();
+        // Première ouverture : visite guidée de toutes les parties de l'app
+        if (!M.state.tourDone && M.startTour) M.startTour();
       }
     });
     setTimeout(() => { const i = $("#onb-name", m.el); i && i.focus(); }, 300);
