@@ -178,7 +178,7 @@ window.M = window.M || {};
       const { data: f } = await sb.auth.mfa.listFactors();
       const totp = (f && f.totp || []).filter(x => x.status === "verified");
       box.innerHTML = `
-        <div class="acc-user"><span class="av" style="width:56px;height:56px;font-size:26px">${M.state.photo ? `<img src="${M.state.photo}" alt="">` : M.level().emoji}</span>
+        <div class="acc-user"><span class="av" style="width:56px;height:56px;font-size:26px">${M.state.photo ? `<img src="${M.state.photo}" alt="">` : M.icon("profile")}</span>
           <div><b>${esc(M.state.name || "Trader")}</b><small class="muted">${esc(u.email || u.phone || "")} · connecté via ${esc((u.app_metadata && u.app_metadata.provider) || "code")}</small>
           <small class="muted">${M.state.cloudSyncedAt ? "Synchronisé " + new Date(M.state.cloudSyncedAt).toLocaleString("fr-FR") : "Pas encore synchronisé"}</small></div></div>
         <div class="set-ctl" style="margin:14px 0"><button class="btn primary sm" id="a-sync">${M.icon("refresh")} Synchroniser maintenant</button><button class="btn ghost sm" id="a-out">Se déconnecter</button></div>

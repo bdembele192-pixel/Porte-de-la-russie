@@ -73,7 +73,7 @@ window.M = window.M || {};
     if (after.idx > before) {
       setTimeout(() => {
         confetti(); M.sfx && M.sfx("level");
-        toast(`${after.emoji} Niveau ${after.idx} : ${after.name} !`, "level");
+        toast(`Niveau ${after.idx} : ${after.name} !`, "level");
       }, 500);
     }
     updateTopbar();
@@ -108,7 +108,7 @@ window.M = window.M || {};
     if (!b) return;
     M.state.badges[id] = Date.now();
     M.save();
-    setTimeout(() => { confetti(); M.sfx && M.sfx("win"); toast(`${b.e} Badge débloqué : ${b.n}`, "badge"); }, 300);
+    setTimeout(() => { confetti(); M.sfx && M.sfx("win"); toast(`Badge débloqué : ${b.n}`, "badge"); }, 300);
   };
 
   // ---------- Série de jours ----------
@@ -185,12 +185,12 @@ window.M = window.M || {};
     const L = M.level();
     const el = $("#tb-level");
     if (!el) return;
-    el.innerHTML = `<span class="lv-emoji">${L.emoji}</span><span class="lv-txt"><b>Niv. ${L.idx}</b> ${L.name}</span>
+    el.innerHTML = `<span class="lv-emoji">${M.ico("level", L.idx - 1)}</span><span class="lv-txt"><b>Niv. ${L.idx}</b> ${L.name}</span>
       <span class="xpbar"><i style="width:${Math.round(L.progress * 100)}%"></i></span>`;
     el.setAttribute("data-tip-text", L.nextName ? `${M.state.xp} XP — encore ${L.to - M.state.xp} XP pour devenir « ${L.nextName} ». Gagne de l'XP en lisant des cours, en réussissant des quiz et des missions.` : `${M.state.xp} XP — niveau max atteint. Légende.`);
     $("#tb-streak").innerHTML = `${M.icon("flame")} ${M.state.streak.days}`;
     const av = $("#tb-av");
-    if (av) av.innerHTML = M.state.photo ? `<img src="${M.state.photo}" alt="">` : L.emoji;
+    if (av) av.innerHTML = M.state.photo ? `<img src="${M.state.photo}" alt="">` : M.icon("profile");
   }
   M.updateTopbar = updateTopbar;
 
@@ -232,7 +232,7 @@ window.M = window.M || {};
           </div>
         </div>
         <div class="hero-card glass">
-          <div class="hc-row"><a class="hc-emoji av" href="#/settings/profil" style="border-radius:16px" data-tip-text="Change ta photo dans Paramètres → Profil">${s.photo ? `<img src="${s.photo}" alt="">` : L.emoji}</a><div><small>Niveau ${L.idx}</small><b>${L.name}</b></div><span class="pill" data-tip-text="Jours d'affilée où tu as ouvert l'app. Reviens demain pour garder la flamme.">${M.icon("flame")} ${s.streak.days} j</span></div>
+          <div class="hc-row"><a class="hc-emoji av" href="#/settings/profil" style="border-radius:16px" data-tip-text="Change ta photo dans Paramètres → Profil">${s.photo ? `<img src="${s.photo}" alt="">` : M.ico("level", L.idx - 1)}</a><div><small>Niveau ${L.idx}</small><b>${L.name}</b></div><span class="pill" data-tip-text="Jours d'affilée où tu as ouvert l'app. Reviens demain pour garder la flamme.">${M.icon("flame")} ${s.streak.days} j</span></div>
           <div class="xpbar big" data-tip-text="${s.xp} XP. ${L.nextName ? "Prochain niveau : " + L.nextName : "Niveau max"}"><i style="width:${Math.round(L.progress * 100)}%"></i></div>
           <div class="hc-grid">
             <div data-tip="equity"><small>Portefeuille</small><b class="mono" id="h-eq">${eq != null ? M.fmt$(eq) : "…"}</b></div>
@@ -290,7 +290,7 @@ window.M = window.M || {};
           <div class="xpbar"><i style="width:${Math.round(coursesDone / M.COURSES.length * 100)}%"></i></div>
         </a>
         <a class="tile t-daily" href="#/mission/${dm.id}">
-          <span class="t-tag">${M.icon("target")} DÉFI DU JOUR</span><h3>${dm.emoji} ${dm.title}</h3>
+          <span class="t-tag">${M.icon("target")} DÉFI DU JOUR</span><h3>${M.ico("mission", dm.id)} ${dm.title}</h3>
           <p>Termine cette mission avec un score Coach d'au moins 70 → <b>+60 XP bonus</b>.</p>
           <span class="t-go">${s.daily[today()] ? "✅ Défi réussi aujourd'hui" : "Relever le défi →"}</span>
         </a>
@@ -356,7 +356,7 @@ window.M = window.M || {};
       <div class="courses">${M.COURSES.map((c, i) => {
         const p = courseProgress(c), q = M.state.quiz[c.id];
         return `<a class="course glass" href="#/course/${c.id}">
-          <div class="c-top"><span class="c-emoji">${c.emoji}</span><span class="c-num">${String(i + 1).padStart(2, "0")}</span></div>
+          <div class="c-top"><span class="c-emoji">${M.ico("course", c.id)}</span><span class="c-num">${String(i + 1).padStart(2, "0")}</span></div>
           <h3>${c.title}</h3><p>${c.sub}</p>
           <div class="c-meta"><span class="chip lvl-${c.level}">${c.level}</span><span class="chip" data-tip-text="Temps de lecture estimé">⏱ ${c.mins} min</span>
           ${q != null ? `<span class="chip ${q === 1 ? "ok" : ""}" data-tip-text="Ton meilleur score au quiz de ce module">Quiz ${Math.round(q * 100)} %</span>` : ""}</div>
@@ -390,7 +390,7 @@ window.M = window.M || {};
         <a class="back" href="#/academy">← Académie</a>
         <div class="course-layout">
           <aside class="toc glass">
-            <div class="toc-head"><span class="c-emoji">${c.emoji}</span><b>${c.title}</b></div>
+            <div class="toc-head"><span class="c-emoji">${M.ico("course", c.id)}</span><b>${c.title}</b></div>
             ${c.lessons.map((l, k) => `<button class="toc-i ${k === i ? "on" : ""} ${read[k] ? "done" : ""}" data-k="${k}">
               <span>${read[k] ? "✓" : k + 1}</span>${l.h}</button>`).join("")}
             <button class="toc-i quiz ${isQuiz ? "on" : ""}" data-k="${c.lessons.length}"><span>?</span>Quiz final</button>
@@ -453,7 +453,7 @@ window.M = window.M || {};
             <div class="keys"><h4>À retenir</h4><ul>${c.key.map(k => `<li>${k}</li>`).join("")}</ul></div>
             <div class="cta">
               <a class="btn primary" href="${t[0]}">${t[1]}</a>
-              ${nextC ? `<a class="btn ghost" href="#/course/${nextC.id}">Module suivant : ${nextC.emoji} ${nextC.title}</a>` : ""}
+              ${nextC ? `<a class="btn ghost" href="#/course/${nextC.id}">Module suivant : ${M.ico("course", nextC.id)} ${nextC.title}</a>` : ""}
               <button class="btn ghost" id="redo">Refaire le quiz</button>
             </div>
           </div>`;
@@ -495,7 +495,7 @@ window.M = window.M || {};
     const qs = s.qstats || { right: 0, total: 0, done: 0 };
     el.innerHTML = `
       <div class="profile-top glass">
-        <div class="avatar">${s.photo ? `<img src="${s.photo}" alt="Photo de profil">` : L.emoji}
+        <div class="avatar">${s.photo ? `<img src="${s.photo}" alt="Photo de profil">` : M.ico("level", L.idx - 1)}
           <label class="avatar-edit file-btn" data-tip-text="Choisis une photo depuis ton téléphone ou ton ordinateur.">📷 Modifier<input type="file" accept="image/*" id="pphoto"></label></div>
         <div class="pf-id">
           <input id="pname" value="${esc(s.name)}" placeholder="Ton pseudo" maxlength="20" data-tip-text="Clique pour changer ton pseudo.">
@@ -516,7 +516,7 @@ window.M = window.M || {};
       </div>
       <div class="sec-head"><h2>Tes badges <span class="muted">${Object.keys(s.badges).length}/${M.BADGES.length}</span></h2></div>
       <div class="badges">${M.BADGES.map(b => `<div class="badge ${s.badges[b.id] ? "got" : ""}" data-tip-title="${b.n}" data-tip-text="${s.badges[b.id] ? "Débloqué le " + new Date(s.badges[b.id]).toLocaleDateString("fr-FR") + ". " : "🔒 "}${b.d}">
-        <span>${b.e}</span><small>${b.n}</small></div>`).join("")}</div>
+        <span>${M.ico("badge", b.id)}</span><small>${b.n}</small></div>`).join("")}</div>
       ${disclaimer()}`;
     $("#pname", el).onchange = e => { s.name = e.target.value.trim().slice(0, 20); M.save(); M.toast("Pseudo enregistré ✓"); };
     $("#pphoto", el).onchange = async e => {
@@ -534,7 +534,7 @@ window.M = window.M || {};
     if (M.state.onboarded) return;
     const m = M.modal(`
       <div class="onb">
-        <div class="onb-logo">🕯️</div>
+        <div class="onb-logo">${M.logoSVG(72)}</div>
         <h2>Bienvenue sur <span class="grad">Mèche</span></h2>
         <p>L'app pour apprendre le trading <b>sur les vrais marchés</b>, avec de l'argent virtuel.</p>
         <div class="onb-grid">

@@ -139,8 +139,8 @@ window.M = window.M || {};
       <div class="page-head"><div><p class="eyebrow">Quiz</p><h1>5 minutes par jour, <span class="grad">et tu progresses.</span></h1>
       <p class="lede">${M.QUIZ_COUNT} questions de théorie + des exercices pratiques illimités (calculs de risque, lecture de bougies, de tendances et d'indicateurs). 3 vies par leçon, les erreurs reviennent à la fin.</p>
       <div class="qtop-btns">
-        <a class="btn ghost" href="#/quiz/play/mix" data-tip-text="10 questions mélangées parmi toutes les unités débloquées.">🔀 Entraînement mixte</a>
-        <a class="btn ghost" href="#/quiz/play/calc" data-tip-text="8 calculs générés au hasard : taille de position, liquidation, R:R, espérance… Infini.">🧮 Défi calcul</a>
+        <a class="btn ghost" href="#/quiz/play/mix" data-tip-text="10 questions mélangées parmi toutes les unités débloquées.">${M.icon("shuffle")} Entraînement mixte</a>
+        <a class="btn ghost" href="#/quiz/play/calc" data-tip-text="8 calculs générés au hasard : taille de position, liquidation, R:R, espérance… Infini.">${M.icon("calculator")} Défi calcul</a>
       </div></div>
       <div class="glass ring-card" data-tip-text="Unités terminées"><div class="ring" style="--p:${Math.round(done / M.QUIZ_UNITS.length * 100)}"><b>${done}/${M.QUIZ_UNITS.length}</b></div>
         <small>${qs.total ? Math.round(qs.right / qs.total * 100) + " % de bonnes réponses" : "Aucune session encore"}</small></div></div>
@@ -150,10 +150,10 @@ window.M = window.M || {};
         const isCur = unlocked && !stars && !currentFound;
         if (isCur) currentFound = true;
         const x = Math.round(Math.sin(i * 1.1) * 90);
-        return `<div class="unit-h"><span class="u-e">${u.e}</span><div><b>Unité ${i + 1} · ${u.t}</b><small>${u.sub} · ${u.q.length} questions + pratique</small></div></div>
+        return `<div class="unit-h"><span class="u-e">${M.ico("unit", u.id)}</span><div><b>Unité ${i + 1} · ${u.t}</b><small>${u.sub} · ${u.q.length} questions + pratique</small></div></div>
           <button class="qnode ${unlocked ? "" : "locked"} ${stars ? "done" : ""} ${isCur ? "current" : ""}" style="--x:${x}px" data-u="${u.id}" ${unlocked ? "" : "disabled"}
             data-tip-text="${unlocked ? (stars ? "Terminé — rejoue pour améliorer ton score." : "Commencer l'unité") : "🔒 Termine l'unité précédente pour débloquer."}">
-            ${unlocked ? (stars ? "★" : u.e) : "🔒"}${stars ? `<span class="stars">${"⭐".repeat(stars)}</span>` : ""}</button>`;
+            ${unlocked ? (stars ? M.icon("star") : M.ico("unit", u.id)) : M.icon("lock")}${stars ? `<span class="stars">${"⭐".repeat(stars)}</span>` : ""}</button>`;
       }).join("")}</div>
       ${M.disclaimer()}`;
     $$(".qnode", el).forEach(b => b.onclick = () => { if (!b.disabled) M.go("#/quiz/play/" + b.dataset.u); });
@@ -294,7 +294,7 @@ window.M = window.M || {};
             ${M.stat("Meilleur combo", "🔥 " + bestCombo, "Bonnes réponses d'affilée.")}
           </div>
           <div class="cta" style="justify-content:center">
-            ${win && nextU ? `<a class="btn primary" href="#/quiz/play/${nextU.id}">Unité suivante : ${nextU.e} ${esc(nextU.t)}</a>` : ""}
+            ${win && nextU ? `<a class="btn primary" href="#/quiz/play/${nextU.id}">Unité suivante : ${M.ico("unit", nextU.id)} ${esc(nextU.t)}</a>` : ""}
             <a class="btn ${win && nextU ? "ghost" : "primary"}" href="#/quiz/play/${uid}">🔁 Rejouer</a>
             <a class="btn ghost" href="#/quiz">Retour au parcours</a>
           </div>

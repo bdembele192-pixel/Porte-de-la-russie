@@ -35,6 +35,8 @@ window.M = window.M || {};
         // On garde la version la plus récente entre les sources
         if (N.generatedAt && d.generatedAt && Date.parse(d.generatedAt) < Date.parse(N.generatedAt)) continue;
         N.items = d.items; N.sources = d.sources || []; N.generatedAt = d.generatedAt; N.loaded = true; N.error = null;
+        // Premier chargement : on ne compte comme « nouveaux » que les communiqués publiés après l'installation
+        if (!M.state.newsSeen) { M.state.newsSeen = Date.now(); M.save(); }
         onUpdate();
         return true;
       } catch (e) { N.error = e.message; }

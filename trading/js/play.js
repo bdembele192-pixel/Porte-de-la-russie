@@ -14,7 +14,7 @@ window.M = window.M || {};
       <div class="missions">${M.MISSIONS.map(m => {
         const r = M.state.missions[m.id];
         return `<a class="mission glass ${m.id === dm.id ? "daily" : ""}" href="#/mission/${m.id}">
-          <div class="m-top"><span class="m-emoji">${m.emoji}</span>
+          <div class="m-top"><span class="m-emoji">${M.ico("mission", m.id)}</span>
             <span class="chip d-${DIFF[m.diff]}" data-tip-text="Difficulté : volatilité et pièges du scénario.">${m.diff}</span>
             ${m.id === dm.id ? `<span class="chip daily" data-tip-text="Score coach ≥ 70 sur cette mission aujourd'hui = +60 XP bonus.">🎯 Défi du jour</span>` : ""}</div>
           <h3>${m.title}</h3><p class="m-year">${m.year} · ${M.Market.asset(m.sym).short} · bougies ${m.tf}</p>
@@ -39,7 +39,7 @@ window.M = window.M || {};
       <div class="mission-play">
         <section class="chartcol">
           <div class="chart-top glass">
-            <div class="ct-l"><span class="m-emoji">${m.emoji}</span><div><b>${m.title}</b><small>${m.year} · ${M.Market.asset(m.sym).name} · ${m.tf}</small></div>
+            <div class="ct-l"><span class="m-emoji">${M.ico("mission", m.id)}</span><div><b>${m.title}</b><small>${m.year} · ${M.Market.asset(m.sym).name} · ${m.tf}</small></div>
               <span class="pill" id="mm">chargement…</span></div>
             <div class="ct-r">
               <div class="prog" data-tip-text="Bougies révélées sur le total de la mission."><i id="pr"></i></div>
@@ -152,7 +152,7 @@ window.M = window.M || {};
       M.modal(`
         <div class="debrief">
           <p class="eyebrow">Mission terminée ${live ? "" : "· reconstitution simulée"}</p>
-          <h2>${m.emoji} ${m.title}</h2>
+          <h2>${M.ico("mission", m.id)} ${m.title}</h2>
           <div class="db-grid">
             <div class="ring big" style="--p:${score}" data-tip-text="60 % discipline (coach) + 40 % performance."><b>${score}</b><small>/100</small></div>
             <div class="db-stats">
