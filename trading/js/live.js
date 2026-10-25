@@ -8,7 +8,10 @@ window.M = window.M || {};
   /* Ticket d'ordre réutilisable.
      opts : { trader, price(), sym, maxLev, onOpen(tr) } */
   M.ticket = function (el, opts) {
-    const st = { dir: 1, lev: 1, slp: 2, tpp: 4, amt: null };
+    const cfg = M.state.settings;
+    const cur = M.currency();
+    const maxLev = Math.max(1, Math.min(opts.maxLev || 20, cfg.maxLev || 20));
+    const st = { dir: 1, lev: 1 };
     el.innerHTML = `
       <div class="ticket">
         <div class="seg">
@@ -16,15 +19,16 @@ window.M = window.M || {};
           <button class="seg-b short" data-d="-1" data-tip="short">▼ Short</button>
         </div>
         <label class="fld" data-tip="marge"><span>Mise</span>
-          <span class="inp"><input type="number" id="t-amt" min="0" step="10" inputmode="decimal"><em>$</em></span></label>
+          <span class="inp"><input type="number" id="t-amt" min="0" step="any" inputmode="decimal"><em>${cur.sym}</em></span></label>
         <div class="chips-row">${[10, 25, 50, 100].map(p => `<button class="mini" data-p="${p}" data-tip-text="Miser ${p} % du cash disponible.">${p}%</button>`).join("")}</div>
+        <small class="muted" id="t-hint" style="margin-top:-6px">Tape le montant que tu veux, ou utilise les raccourcis.</small>
         <label class="fld" data-tip="levier"><span>Levier <b id="t-levv">×1</b></span>
-          <input type="range" id="t-lev" min="1" max="${opts.maxLev || 20}" step="1" value="1"></label>
+          <input type="range" id="t-lev" min="1" max="${maxLev}" step="1" value="1"></label>
         <div class="two">
           <label class="fld" data-tip="stop-loss"><span>Stop-loss</span>
-            <span class="inp"><input type="number" id="t-sl" min="0" step="0.1" value="2" inputmode="decimal"><em>%</em></span><small id="t-slp">—</small></label>
+            <span class="inp"><input type="number" id="t-sl" min="0" step="0.1" value="${cfg.defSl}" inputmode="decimal"><em>%</em></span><small id="t-slp">—</small></label>
           <label class="fld" data-tip="take-profit"><span>Objectif</span>
-            <span class="inp"><input type="number" id="t-tp" min="0" step="0.1" value="4" inputmode="decimal"><em>%</em></span><small id="t-tpp">—</small></label>
+            <span class="inp"><input type="number" id="t-tp" min="0" step="0.1" value="${cfg.defTp}" inputmode="decimal"><em>%</em></span><small id="t-tpp">—</small></label>
         </div>
         <div class="riskbox" id="t-risk"></div>
         <button class="go long" id="t-go" data-tip-text="Envoie l'ordre au prix actuel du marché." data-tip-kbd="B = long · S = short">Acheter</button>
@@ -40,14 +44,16 @@ window.M = window.M || {};
       refresh();
     }
     $$(".seg-b", el).forEach(b => b.onclick = () => setDir(+b.dataset.d));
-    $$(".mini", el).forEach(b => b.onclick = () => { amt.value = Math.floor(tr.s.cash * (+b.dataset.p / 100) / (1 + M.FEE * st.lev)); refresh(); });
+    // Le champ « Mise » est dans la devise d'affichage ; le moteur travaille en dollars.
+    const toInput = usd => { const v = usd * cur.rate; return cur.dec ? Math.floor(v * 100) / 100 : Math.floor(v); };
+    $$(".mini", el).forEach(b => b.onclick = () => { amt.value = toInput(tr.s.cash * (+b.dataset.p / 100) / (1 + M.FEE * st.lev)); refresh(); });
     lev.oninput = () => { st.lev = +lev.value; refresh(); };
     [amt, sl, tp].forEach(i => i.oninput = refresh);
-    if (!amt.value) amt.value = Math.floor(tr.s.cash * 0.1);
+    if (!amt.value) amt.value = toInput(tr.s.cash * 0.1);
 
     function calc() {
       const price = opts.price();
-      const m = Math.max(0, +amt.value || 0), L = st.lev;
+      const m = Math.max(0, (parseFloat(amt.value) || 0) / cur.rate), L = st.lev;
       const slp = parseFloat(sl.value), tpp = parseFloat(tp.value);
       const slPrice = slp > 0 ? price * (1 - st.dir * slp / 100) : null;
       const tpPrice = tpp > 0 ? price * (1 + st.dir * tpp / 100) : null;
@@ -88,8 +94,12 @@ window.M = window.M || {};
       if (d) setDir(d);
       const c = calc();
       if (tr.pos || !(c.price > 0)) return;
+      if (c.m > tr.s.cash) { M.toast("Mise supérieure à ton cash (" + M.fmt$(tr.s.cash) + "). Ajoute des fonds dans Paramètres → Trading.", "err"); return; }
+      if (opts.guard) { const why = opts.guard(c); if (why) { M.toast(why, "err"); M.sfx("ko"); return; } }
+      if (cfg.confirm && !confirm(`${st.dir > 0 ? "Acheter (long)" : "Vendre (short)"} pour ${M.fmt$(c.m)}${c.L > 1 ? " ×" + c.L : ""} ?\nStop : ${c.slPrice ? M.Market.fmtPrice(c.slPrice) : "aucun"} · Objectif : ${c.tpPrice ? M.Market.fmtPrice(c.tpPrice) : "aucun"}`)) return;
       const r = tr.open({ dir: st.dir, margin: c.m, lev: c.L, sl: c.slPrice, tp: c.tpPrice, price: c.price, at: opts.at ? opts.at() : Date.now(), sym: opts.sym ? opts.sym() : "" });
       if (r.err) { M.toast(r.err, "err"); return; }
+      M.sfx("open");
       M.unlock("first_trade");
       if (c.slPrice) M.unlock("first_stop");
       opts.onOpen && opts.onOpen(r.pos);
@@ -137,6 +147,7 @@ window.M = window.M || {};
     if (!tr) return;
     const r = { sl: "Stop-loss touché", tp: "Objectif atteint 🎯", liq: "LIQUIDÉ 💀", manual: "Position clôturée", end: "Fin de session" }[tr.reason] || "Clôturé";
     M.toast(`${r} · ${tr.pnl >= 0 ? "+" : ""}${M.fmt$(tr.pnl)}`, tr.pnl >= 0 ? "win" : "loss");
+    M.sfx(tr.pnl >= 0 ? "win" : "loss");
     if (tr.reason === "liq") M.unlock("liquidated");
     if (tr.pnl > 0) M.unlock("first_win");
   };
@@ -206,6 +217,13 @@ window.M = window.M || {};
 
     const ticket = M.ticket($("#tk", el), {
       trader, maxLev: 20, price: () => price, sym: () => sym,
+      guard() {
+        const lim = M.state.settings.dayLoss;
+        if (!lim) return null;
+        const d0 = new Date(); d0.setHours(0, 0, 0, 0);
+        const lost = trader.s.log.filter(t => (t.closeAt || 0) >= d0.getTime()).reduce((a, t) => a + t.pnl, 0);
+        return lost <= -M.START_CASH * lim / 100 ? `Limite de perte du jour atteinte (${lim} %). Pause jusqu'à demain 🧘 — c'est ce que font les pros.` : null;
+      },
       onOpen() { M.save(true); posCard.draw(); drawLines(); drawWallet(); watchPos(); }
     });
     const posCard = M.posCard($("#pc", el), {
@@ -400,6 +418,7 @@ window.M = window.M || {};
     async function watchlist() {
       const r = await M.Market.tickers(M.Market.ASSETS.map(a => a.sym));
       if (!alive) return;
+      if (r.live && r.data.EURUSDT) M.setEurUsd(r.data.EURUSDT.last);
       Object.entries(r.data).forEach(([k, d]) => {
         const p = $(`[data-wp="${k}"]`, el), c = $(`[data-wc="${k}"]`, el);
         if (p) p.textContent = M.Market.fmtPrice(d.last);
