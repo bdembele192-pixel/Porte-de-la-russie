@@ -36,8 +36,13 @@ window.M = window.M || {};
   const CURRENCIES = {
     USD: { sym: "$", dec: 2, n: "Dollar US ($)" },
     EUR: { sym: "€", dec: 2, n: "Euro (€)" },
-    XOF: { sym: "FCFA", dec: 0, n: "Franc CFA (FCFA, UEMOA)" }
+    XOF: { sym: "FCFA", dec: 0, n: "Franc CFA (FCFA, UEMOA)" },
+    RUB: { sym: "₽", dec: 2, n: "Rouble russe (₽)" },
+    JPY: { sym: "¥", dec: 0, n: "Yen japonais (¥)" },
+    CNY: { sym: "CN¥", dec: 2, n: "Yuan chinois (CN¥)" }
   };
+  // Taux de repli (unités pour 1 $) si le service de change est injoignable
+  const FX_FALLBACK = { RUB: 80, JPY: 150, CNY: 7.1 };
   const XOF_PER_EUR = 655.957; // parité fixe FCFA / euro
 
   const S = () => (M.state && M.state.settings) || M.SETTINGS_DEFAULT;
@@ -46,11 +51,26 @@ window.M = window.M || {};
   M.currency = function () {
     const code = S().currency || "USD";
     const eurusd = (M.state.fx && M.state.fx.eurusd) || 1.16;
-    const rate = code === "EUR" ? 1 / eurusd : code === "XOF" ? XOF_PER_EUR / eurusd : 1;
-    return Object.assign({ code, rate }, CURRENCIES[code] || CURRENCIES.USD);
+    const fx = (M.state && M.state.fx && M.state.fx.rates) || {};
+    const rate = code === "EUR" ? 1 / eurusd : code === "XOF" ? XOF_PER_EUR / eurusd
+      : FX_FALLBACK[code] ? (fx[code] || FX_FALLBACK[code]) : 1;
+    return Object.assign({ code, rate, approx: !!FX_FALLBACK[code] && !fx[code] }, CURRENCIES[code] || CURRENCIES.USD);
   };
   M.setEurUsd = function (v) {
-    if (v > 0.5 && v < 2) { M.state.fx = { eurusd: v }; M.save(); }
+    if (v > 0.5 && v < 2) { M.state.fx = Object.assign({}, M.state.fx, { eurusd: v }); M.save(); }
+  };
+  /* Taux du rouble, du yen et du yuan (service public gratuit, rafraîchi toutes les 12 h). */
+  M.refreshFx = async function () {
+    const fx = M.state.fx || {};
+    if (fx.at && Date.now() - fx.at < 12 * 3600e3) return;
+    try {
+      const r = await fetch("https://open.er-api.com/v6/latest/USD");
+      const d = await r.json();
+      if (d && d.rates && d.rates.JPY) {
+        M.state.fx = Object.assign({}, M.state.fx, { rates: { RUB: d.rates.RUB, JPY: d.rates.JPY, CNY: d.rates.CNY }, at: Date.now() });
+        M.save();
+      }
+    } catch (e) { /* hors ligne : taux de repli */ }
   };
 
   // ---------- Sons & vibrations ----------
@@ -157,7 +177,7 @@ window.M = window.M || {};
     const s = S(), root = document.documentElement, st = root.style;
     root.setAttribute("data-theme", s.theme || "neon");
     root.setAttribute("data-motion", s.motion === false ? "off" : "on");
-    root.lang = s.lang === "en" ? "en" : "fr";
+    root.lang = ["en", "zh", "ru"].includes(s.lang) ? s.lang : "fr";
     st.removeProperty("--lime");
     if (s.accent) st.setProperty("--lime", s.accent);
     loadFont(s.font); loadFont(s.fontHead);
@@ -213,13 +233,15 @@ window.M = window.M || {};
     const lang = S().lang;
     if (node.__fr == null) node.__fr = node.nodeValue;
     const fr = node.__fr;
-    if (lang !== "en") { if (node.nodeValue !== fr) node.nodeValue = fr; return; }
+    const EN_ALL = Object.assign({}, EN, (M.I18N && M.I18N.en) || {});
+    const DICT = lang === "en" ? EN_ALL : (M.I18N && M.I18N[lang]);
+    if (!DICT) { if (node.nodeValue !== fr) node.nodeValue = fr; return; }
     const t = fr.trim();
     if (!t) return;
-    let out = EN[t];
+    let out = DICT[t];
     if (!out) {
       const m = t.match(RX);
-      if (m && EN[m[2]]) out = m[1] + EN[m[2]] + m[3];
+      if (m && DICT[m[2]]) out = m[1] + DICT[m[2]] + m[3];
     }
     if (out) node.nodeValue = fr.replace(t, out);
   }
@@ -237,7 +259,8 @@ window.M = window.M || {};
       busy = true;
       walk(document.body);
       busy = false;
-      if (S().lang === "en" && !observer) {
+      const on = ["en", "zh", "ru"].includes(S().lang);
+      if (on && !observer) {
         observer = new MutationObserver(muts => {
           if (busy) return;
           busy = true;
@@ -245,7 +268,7 @@ window.M = window.M || {};
           busy = false;
         });
         observer.observe(document.body, { childList: true, subtree: true });
-      } else if (S().lang !== "en" && observer) { observer.disconnect(); observer = null; }
+      } else if (!on && observer) { observer.disconnect(); observer = null; }
     }
   };
 
@@ -263,12 +286,12 @@ window.M = window.M || {};
       <p class="lede">Thème, police, taille, flou, photo, icône, devise, montants, sons… Tout est sauvegardé sur cet appareil.</p></div></div>
       <div class="set-layout">
         <nav class="set-nav glass">
-          <a href="#/settings/apparence">🎨 Apparence</a><a href="#/settings/profil">👤 Profil & icône</a><a href="#/settings/langue">🌍 Langue & devise</a>
-          <a href="#/settings/trading">📊 Trading</a><a href="#/settings/confort">🔔 Sons & confort</a><a href="#/settings/donnees">💾 Données</a>
+          <a href="#/settings/apparence">${M.icon("palette")}<span>Apparence</span></a><a href="#/settings/profil">${M.icon("profile")}<span>Profil & icône</span></a><a href="#/settings/langue">${M.icon("globe")}<span>Langue & devise</span></a>
+          <a href="#/settings/trading">${M.icon("chart")}<span>Trading</span></a><a href="#/settings/confort">${M.icon("bell")}<span>Sons & confort</span></a><a href="#/settings/donnees">${M.icon("database")}<span>Données</span></a>
         </nav>
         <div>
           <section class="set-sec glass" id="apparence">
-            <h2>🎨 Apparence</h2><p class="muted">Les changements s'appliquent immédiatement.</p>
+            <h2>${M.icon("palette")} Apparence</h2><p class="muted">Les changements s'appliquent immédiatement.</p>
             <div class="set-row"><div><b>Thème</b><small>Ambiance de couleurs de toute l'app.</small></div></div>
             <div class="themes">${THEMES.map(t => `<button class="theme-c ${s.theme === t.id ? "on" : ""}" data-theme="${t.id}" style="background:${t.c[0]}">
               <div class="sw">${t.c.slice(1).map((c, i) => `<i style="background:${c};height:${[34, 24, 16][i]}px"></i>`).join("")}</div>
@@ -290,7 +313,7 @@ window.M = window.M || {};
           </section>
 
           <section class="set-sec glass" id="profil">
-            <h2>👤 Profil & icône</h2><p class="muted">Ton identité dans l'app et l'icône sur ton écran d'accueil.</p>
+            <h2>${M.icon("profile")} Profil & icône</h2><p class="muted">Ton identité dans l'app et l'icône sur ton écran d'accueil.</p>
             ${row("Pseudo", "", `<span class="inp"><input id="pname" maxlength="20" value="${esc(M.state.name || "")}" placeholder="Ton pseudo"></span>`)}
             ${row("Photo de profil", "Recadrée en carré et stockée uniquement sur cet appareil.",
               `<span class="av" style="width:56px;height:56px;font-size:28px">${photo ? `<img src="${photo}" alt="">` : M.level().emoji}</span>
@@ -303,15 +326,15 @@ window.M = window.M || {};
           </section>
 
           <section class="set-sec glass" id="langue">
-            <h2>🌍 Langue & devise</h2><p class="muted">Les prix des marchés restent en dollars (USDT) ; ton portefeuille et tes gains s'affichent dans ta devise.</p>
-            ${row("Langue", "L'anglais traduit l'interface ; les cours et quiz restent en français pour l'instant.",
-              `<select id="lang"><option value="fr" ${s.lang !== "en" ? "selected" : ""}>🇫🇷 Français</option><option value="en" ${s.lang === "en" ? "selected" : ""}>🇬🇧 English (interface)</option></select>`)}
-            ${row("Devise d'affichage", `Taux utilisé : 1 $ = ${cur.code === "USD" ? "1 $" : M.fmt$(1)}. Le FCFA suit la parité fixe avec l'euro (1 € = 655,957 FCFA).`,
+            <h2>${M.icon("globe")} Langue & devise</h2><p class="muted">Les prix des marchés restent en dollars (USDT) ; ton portefeuille et tes gains s'affichent dans ta devise.</p>
+            ${row("Langue", "L'anglais, le chinois et le russe traduisent l'interface (menus, boutons) ; les cours et le quiz restent en français pour l'instant.",
+              `<select id="lang">${[["fr", "🇫🇷 Français"], ["en", "🇬🇧 English (interface)"], ["zh", "🇨🇳 中文（界面）"], ["ru", "🇷🇺 Русский (интерфейс)"]].map(([k, n]) => `<option value="${k}" ${(s.lang || "fr") === k ? "selected" : ""}>${n}</option>`).join("")}</select>`)}
+            ${row("Devise d'affichage", `Taux utilisé : 1 $ = ${cur.code === "USD" ? "1 $" : M.fmt$(1)}. Le FCFA suit la parité fixe avec l'euro (1 € = 655,957 FCFA) ; rouble, yen et yuan sont mis à jour en ligne toutes les 12 h${cur.approx ? " (taux approximatif : hors ligne)" : ""}.`,
               `<select id="currency">${Object.keys(CURRENCIES).map(k => `<option value="${k}" ${s.currency === k ? "selected" : ""}>${CURRENCIES[k].n}</option>`).join("")}</select>`)}
           </section>
 
           <section class="set-sec glass" id="trading">
-            <h2>📊 Trading</h2><p class="muted">Choisis tes montants et tes garde-fous.</p>
+            <h2>${M.icon("chart")} Trading</h2><p class="muted">Choisis tes montants et tes garde-fous.</p>
             ${row("Capital de départ", `Utilisé pour les missions et à chaque réinitialisation du portefeuille. Actuellement : <b class="mono">${M.fmt$(M.START_CASH)}</b>`,
               `<span class="inp"><input type="number" id="startCash" min="1" step="any" value="${Math.round(M.START_CASH * cur.rate * 100) / 100}"><em>${cur.sym}</em></span>
                <button class="btn primary sm" id="startCash-ok" data-tip-text="Enregistre ce montant ET remet ton portefeuille live à ce montant (l'historique est effacé).">Appliquer</button>`)}
@@ -326,7 +349,7 @@ window.M = window.M || {};
           </section>
 
           <section class="set-sec glass" id="confort">
-            <h2>🔔 Sons & confort</h2>
+            <h2>${M.icon("bell")} Sons & confort</h2>
             ${row("Sons", "Petits sons sur les trades, les quiz et les niveaux.", sw("sound", s.sound))}
             ${row("Vibrations", "Sur mobile compatible.", sw("haptic", s.haptic))}
             ${row("Infobulles explicatives", "Les bulles qui expliquent chaque bouton et chaque terme.", sw("tips", s.tips !== false))}
@@ -335,7 +358,7 @@ window.M = window.M || {};
           </section>
 
           <section class="set-sec glass" id="donnees">
-            <h2>💾 Données</h2><p class="muted">Ta progression est stockée dans ce navigateur. Exporte-la pour la garder ou la transférer sur un autre appareil.</p>
+            <h2>${M.icon("database")} Données</h2><p class="muted">Ta progression est stockée dans ce navigateur. Exporte-la pour la garder ou la transférer sur un autre appareil.</p>
             <div class="set-ctl">
               <button class="btn ghost" id="export">⬇️ Exporter ma progression</button>
               <label class="btn ghost file-btn">⬆️ Importer une sauvegarde<input type="file" accept="application/json,.json" id="import"></label>
