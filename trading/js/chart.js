@@ -5,8 +5,18 @@ window.M = window.M || {};
 (function () {
   const C = {
     up: "#2BEA8B", dn: "#FF4D6D", grid: "rgba(255,255,255,0.045)", txt: "#8C90A8",
-    cross: "rgba(255,255,255,0.35)", bgLabel: "#1C1C2B", vol: 0.22
+    cross: "rgba(255,255,255,0.35)", bgLabel: "#1C1C2B", fgLabel: "#fff", labelBg: "rgba(10,10,16,0.85)", vol: 0.22
   };
+  /* Couleurs reprises du thème (Paramètres → Apparence). */
+  function setTheme() {
+    const cs = getComputedStyle(document.documentElement);
+    const v = k => cs.getPropertyValue(k).trim();
+    const fg = v("--fg") || "255, 255, 255";
+    C.up = v("--up") || C.up; C.dn = v("--dn") || C.dn;
+    C.grid = `rgba(${fg}, 0.06)`; C.txt = v("--mut") || C.txt; C.cross = `rgba(${fg}, 0.35)`;
+    C.bgLabel = v("--panel-solid") || C.bgLabel; C.fgLabel = v("--ink") || "#fff";
+    C.labelBg = `rgba(${v("--bg-rgb") || "10, 10, 16"}, 0.85)`;
+  }
   const FONT = "11px 'JetBrains Mono', ui-monospace, monospace";
 
   class Chart {
@@ -324,14 +334,14 @@ window.M = window.M || {};
           ctx.beginPath(); ctx.moveTo(0, yy); ctx.lineTo(plotW, yy); ctx.stroke();
           ctx.setLineDash([]);
           const p = hi - (this.hover.y - PT) / mainH * (hi - lo);
-          axisLabel(ctx, M.Market.fmtPrice(p), plotW, yy, C.bgLabel, "#fff");
+          axisLabel(ctx, M.Market.fmtPrice(p), plotW, yy, C.bgLabel, C.fgLabel);
         }
         ctx.setLineDash([]);
         const tl = fmtTime(hb.t, this.opts.tf, false);
         ctx.font = FONT;
         const tw = ctx.measureText(tl).width + 12;
         ctx.fillStyle = C.bgLabel; ctx.fillRect(xx - tw / 2, H - PB + 2, tw, 18);
-        ctx.fillStyle = "#fff"; ctx.textAlign = "center"; ctx.fillText(tl, xx, H - PB + 11);
+        ctx.fillStyle = C.fgLabel; ctx.textAlign = "center"; ctx.fillText(tl, xx, H - PB + 11);
       }
       this._legend(hb, hi_);
     }
@@ -363,7 +373,7 @@ window.M = window.M || {};
   function label(ctx, text, x, y, color, align) {
     ctx.font = FONT;
     const w = ctx.measureText(text).width + 10;
-    ctx.fillStyle = "rgba(10,10,16,0.85)";
+    ctx.fillStyle = C.labelBg;
     ctx.fillRect(x, y - 9, w, 18);
     ctx.strokeStyle = color; ctx.strokeRect(x + 0.5, y - 8.5, w - 1, 17);
     ctx.fillStyle = color; ctx.textAlign = align; ctx.textBaseline = "middle";
@@ -441,6 +451,7 @@ window.M = window.M || {};
   }
 
   M.Chart = Chart;
+  M.Chart.setTheme = setTheme;
   M.lineChart = lineChart;
   M.fmtTime = fmtTime;
 })();

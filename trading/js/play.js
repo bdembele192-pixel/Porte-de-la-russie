@@ -29,7 +29,8 @@ window.M = window.M || {};
   M.views.mission = function (el, [id]) {
     const m = M.MISSIONS.find(x => x.id === id);
     if (!m) { M.go("#/missions"); return; }
-    const wallet = { cash: M.START_CASH, pos: null, log: [] };
+    const CAP = M.START_CASH;
+    const wallet = { cash: CAP, pos: null, log: [] };
     const trader = new M.Trader(wallet);
     let bars = [], shown = 0, end = 0, chart = null, auto = null, alive = true, finished = false, live = true;
 
@@ -78,7 +79,7 @@ window.M = window.M || {};
       if (!cur()) return;
       const e = trader.equity(cur().c);
       $("#w-eq", el).textContent = M.fmt$(e);
-      const r = e / M.START_CASH - 1;
+      const r = e / CAP - 1;
       $("#w-perf", el).textContent = pct(r, 2);
       $("#w-perf", el).className = "mono " + (r >= 0 ? "up" : "dn");
       $("#pr", el).style.width = ((shown - m.ctx) / (end - m.ctx) * 100) + "%";
@@ -127,7 +128,7 @@ window.M = window.M || {};
       const last = bars[end - 1];
       if (trader.pos) { const t = trader.close(last.c, "end", end - 1); M.afterTrade(t); }
       after();
-      const ret = trader.s.cash / M.START_CASH - 1;
+      const ret = trader.s.cash / CAP - 1;
       const bh = last.c / bars[m.ctx - 1].c - 1;
       const c = M.coach(trader.s.log, { bars: end - m.ctx });
       const perfScore = Math.max(0, Math.min(100, 50 + ret * 100 * 4));

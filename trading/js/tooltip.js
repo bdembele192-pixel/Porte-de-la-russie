@@ -57,7 +57,8 @@ window.M = window.M || {};
     if (!el) return;
     current = el;
     lastXY = { x: e.clientX, y: e.clientY };
-    timer = setTimeout(() => show(el), el.classList.contains("term") ? 120 : DELAY);
+    const d = M.state && M.state.settings.tipDelay != null ? M.state.settings.tipDelay : DELAY;
+    timer = setTimeout(() => show(el), el.classList.contains("term") ? Math.min(120, d) : d);
   });
   document.addEventListener("mousemove", e => {
     lastXY = { x: e.clientX, y: e.clientY };

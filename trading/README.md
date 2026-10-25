@@ -11,9 +11,11 @@ Application web statique (HTML/CSS/JS, aucune dépendance, aucun build) : ouvre 
 | ⏳ **Time Machine** | 10 vrais moments de marché rejoués bougie par bougie avec l'historique réel : Covid 2020, Elon/Dogecoin, Terra/Luna, The Merge, FTX, ETF Bitcoin, lundi noir du yen, élection US 2024, choc des tarifs 2025, ruée vers l'or 2025. Débrief avec l'histoire vraie + note du coach. Défi du jour. |
 | 👆 **Swipe** | Mini-jeu « haut ou bas ? » sur de vraies bougies tirées au hasard. |
 | 🧪 **Algo Lab** | Backtest de 4 algos (Trend Following EMA+ATR, Breakout Donchian/Turtles, Mean Reversion Bollinger+RSI, Pairs Trading ETH/BTC) sur données réelles, frais inclus, sans biais d'anticipation. Comparateur des 4 algos. |
-| 🎓 **Académie** | 11 modules / 49 chapitres + quiz : marché, instruments, styles de trading, analyse technique, indicateurs, stratégies, algos, risque, psychologie, macro 2024-2026, passer en réel sans arnaque. |
-| 💬 **Infobulles** | Survole n'importe quel bouton ou terme souligné (appui long sur mobile) : ~110 définitions du glossaire. |
-| 🏆 **Progression** | XP, 8 niveaux, 16 badges, série de jours, coach qui note la discipline (stop, taille, levier, revenge trading, surtrading). |
+| 🎓 **Académie** | 18 modules / 78 chapitres + quiz : marché, instruments, styles, analyse technique et fondamentale, indicateurs, stratégies, algos, options, crypto avancé, forex, risque, psychologie, macro 2024-2026, BRVM & UEMOA, plan de trading, finances perso, passer en réel sans arnaque. |
+| 🦉 **Quiz** | Parcours façon Duolingo : 11 unités, 88 questions + exercices pratiques générés à l'infini (calculs de risque, lecture de bougies, tendances, RSI), 3 vies, combos, étoiles. |
+| ⚙️ **Paramètres** | 7 thèmes (dont clair et « Bamako »), couleur d'accent, police du texte et des titres, taille du texte, flou, arrondis, animations, fond d'écran perso, photo de profil, icône et nom de l'app, langue (FR / EN interface), devise (USD / EUR / FCFA), capital de départ et ajout de fonds, levier max, stop/objectif par défaut, limite de perte du jour, sons, vibrations, mode discret, export/import de la progression. |
+| 💬 **Infobulles** | Survole n'importe quel bouton ou terme souligné (appui long sur mobile) : ~125 définitions du glossaire. |
+| 🏆 **Progression** | XP, 8 niveaux, 19 badges, série de jours, coach qui note la discipline (stop, taille, levier, revenge trading, surtrading). |
 
 Si l'API de marché est injoignable (réseau d'entreprise, pays bloqué…), l'app bascule automatiquement sur des données simulées, signalées par un badge **DÉMO**.
 
@@ -31,6 +33,10 @@ js/chart.js           graphique chandeliers (canvas)
 js/algos.js           4 algos + moteur de backtest
 js/trader.js          moteur de paper trading + coach
 js/tooltip.js         infobulles
+js/settings.js        paramètres, thèmes, devise, langue, sons
+js/quizbank.js        questions du parcours Quiz
+js/quiz.js            parcours Quiz (façon Duolingo)
+js/courses2.js        modules supplémentaires de l'Académie
 js/app.js             état, XP, badges, routeur, accueil, académie, profil
 js/live.js            terminal live
 js/play.js            missions + swipe

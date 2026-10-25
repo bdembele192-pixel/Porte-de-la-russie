@@ -21,13 +21,18 @@ window.M = window.M || {};
       wallet: { cash: START_CASH, pos: null, log: [] },
       lessons: {}, quiz: {}, missions: {}, swipe: { games: 0, best: 0, right: 0, total: 0 },
       lab: { runs: 0 }, badges: {}, streak: { last: null, days: 0 }, daily: {},
-      settings: { tips: true }, lastSym: "BTCUSDT", lastTf: "15m"
+      settings: Object.assign({}, M.SETTINGS_DEFAULT), lastSym: "BTCUSDT", lastTf: "15m",
+      photo: null, fx: { eurusd: 1.16 }, qpath: {}, qstats: { done: 0, right: 0, total: 0 }
     };
   }
   function load() {
     try {
       const s = JSON.parse(localStorage.getItem(KEY));
-      if (s && typeof s === "object") return Object.assign(fresh(), s);
+      if (s && typeof s === "object") {
+        const st = Object.assign(fresh(), s);
+        st.settings = Object.assign({}, M.SETTINGS_DEFAULT, s.settings || {});
+        return st;
+      }
     } catch (e) { /* stockage indisponible : on repart de zéro */ }
     return fresh();
   }
@@ -38,7 +43,8 @@ window.M = window.M || {};
     const w = () => { try { localStorage.setItem(KEY, JSON.stringify(M.state)); } catch (e) { /* mode privé */ } };
     if (now) w(); else saveT = setTimeout(w, 400);
   };
-  M.START_CASH = START_CASH;
+  // Capital de départ réglable (Paramètres → Trading), en dollars
+  Object.defineProperty(M, "START_CASH", { get: () => M.state.settings.startCash || START_CASH });
 
   // ---------- Niveaux & XP ----------
   const LEVELS = [
@@ -64,7 +70,7 @@ window.M = window.M || {};
     const after = M.level();
     if (after.idx > before) {
       setTimeout(() => {
-        confetti();
+        confetti(); M.sfx && M.sfx("level");
         toast(`${after.emoji} Niveau ${after.idx} : ${after.name} !`, "level");
       }, 500);
     }
@@ -88,7 +94,10 @@ window.M = window.M || {};
     { id: "course_all", e: "🧠", n: "Diplômé", d: "Termine tous les modules de l'Académie." },
     { id: "quiz_perfect", e: "💯", n: "Sans faute", d: "Réussis un quiz à 100 %." },
     { id: "coach_90", e: "🧘", n: "Moine du trading", d: "Obtiens 90+ au Coach sur au moins 3 trades." },
-    { id: "streak_3", e: "🔥", n: "On fire", d: "Reviens 3 jours d'affilée." }
+    { id: "streak_3", e: "🔥", n: "On fire", d: "Reviens 3 jours d'affilée." },
+    { id: "quiz_first", e: "🦉", n: "Première leçon", d: "Termine une leçon du parcours Quiz." },
+    { id: "quiz_combo", e: "⚡", n: "Combo x8", d: "Enchaîne 8 bonnes réponses d'affilée au Quiz." },
+    { id: "quiz_all", e: "🏅", n: "Parcours complet", d: "Termine toutes les unités du Quiz." }
   ];
   M.unlock = function (id) {
     if (M.state.badges[id]) return;
@@ -96,7 +105,7 @@ window.M = window.M || {};
     if (!b) return;
     M.state.badges[id] = Date.now();
     M.save();
-    setTimeout(() => { confetti(); toast(`${b.e} Badge débloqué : ${b.n}`, "badge"); }, 300);
+    setTimeout(() => { confetti(); M.sfx && M.sfx("win"); toast(`${b.e} Badge débloqué : ${b.n}`, "badge"); }, 300);
   };
 
   // ---------- Série de jours ----------
@@ -142,6 +151,7 @@ window.M = window.M || {};
   };
 
   function confetti() {
+    if (M.state.settings.motion === false) return;
     const cv = document.createElement("canvas");
     cv.className = "confetti";
     document.body.appendChild(cv);
@@ -176,11 +186,13 @@ window.M = window.M || {};
       <span class="xpbar"><i style="width:${Math.round(L.progress * 100)}%"></i></span>`;
     el.setAttribute("data-tip-text", L.nextName ? `${M.state.xp} XP — encore ${L.to - M.state.xp} XP pour devenir « ${L.nextName} ». Gagne de l'XP en lisant des cours, en réussissant des quiz et des missions.` : `${M.state.xp} XP — niveau max atteint. Légende.`);
     $("#tb-streak").innerHTML = `🔥 ${M.state.streak.days}`;
+    const av = $("#tb-av");
+    if (av) av.innerHTML = M.state.photo ? `<img src="${M.state.photo}" alt="">` : L.emoji;
   }
   M.updateTopbar = updateTopbar;
 
   // ---------- Routeur ----------
-  M.views = {};
+  M.views = M.views || {};
   let cleanup = null;
   function route() {
     const [name = "home", ...params] = location.hash.replace(/^#\/?/, "").split("/");
@@ -191,7 +203,7 @@ window.M = window.M || {};
     el.innerHTML = "";
     el.className = "view view-" + view;
     const navKey = { mission: "missions", course: "academy", glossary: "academy" }[view] || view;
-    $$(".nav a").forEach(a => a.classList.toggle("on", a.dataset.nav === navKey));
+    $$(".nav a, .tb-gear").forEach(a => a.classList.toggle("on", a.dataset.nav === navKey));
     window.scrollTo(0, 0);
     cleanup = M.views[view](el, params.map(decodeURIComponent)) || null;
   }
@@ -217,7 +229,7 @@ window.M = window.M || {};
           </div>
         </div>
         <div class="hero-card glass">
-          <div class="hc-row"><span class="hc-emoji">${L.emoji}</span><div><small>Niveau ${L.idx}</small><b>${L.name}</b></div><span class="pill" data-tip-text="Jours d'affilée où tu as ouvert l'app. Reviens demain pour garder la flamme.">🔥 ${s.streak.days} j</span></div>
+          <div class="hc-row"><a class="hc-emoji av" href="#/settings/profil" style="border-radius:16px" data-tip-text="Change ta photo dans Paramètres → Profil">${s.photo ? `<img src="${s.photo}" alt="">` : L.emoji}</a><div><small>Niveau ${L.idx}</small><b>${L.name}</b></div><span class="pill" data-tip-text="Jours d'affilée où tu as ouvert l'app. Reviens demain pour garder la flamme.">🔥 ${s.streak.days} j</span></div>
           <div class="xpbar big" data-tip-text="${s.xp} XP. ${L.nextName ? "Prochain niveau : " + L.nextName : "Niveau max"}"><i style="width:${Math.round(L.progress * 100)}%"></i></div>
           <div class="hc-grid">
             <div data-tip="equity"><small>Portefeuille</small><b class="mono" id="h-eq">${eq != null ? M.fmt$(eq) : "…"}</b></div>
@@ -259,9 +271,14 @@ window.M = window.M || {};
           <p>Trend following, Turtles, mean reversion, pairs trading. Sur de vraies données, frais inclus.</p>
           <span class="t-go">Lancer un test →</span>
         </a>
+        <a class="tile t-quiz" href="#/quiz">
+          <span class="t-tag">QUIZ · ${M.QUIZ_COUNT || 80}+ QUESTIONS</span><h3>Apprends en 5 min/jour</h3>
+          <p>Un parcours façon Duolingo : théorie, calculs et lecture de graphiques. Garde ta série 🔥</p>
+          <span class="t-go">Commencer →</span>
+        </a>
         <a class="tile t-acad" href="#/academy">
           <span class="t-tag">ACADÉMIE</span><h3>${M.COURSES.length} modules à jour</h3>
-          <p>Instruments, styles, stratégies, algos, macro 2025-2026, arnaques à éviter. Avec quiz.</p>
+          <p>Instruments, styles, stratégies, algos, BRVM & UEMOA, options, crypto, macro 2025-2026, arnaques à éviter.</p>
           <div class="xpbar"><i style="width:${Math.round(coursesDone / M.COURSES.length * 100)}%"></i></div>
         </a>
         <a class="tile t-daily" href="#/mission/${dm.id}">
@@ -277,6 +294,7 @@ window.M = window.M || {};
     async function refresh() {
       const r = await M.Market.tickers(syms);
       if (!alive) return;
+      if (r.live && r.data.EURUSDT) M.setEurUsd(r.data.EURUSDT.last);
       const mode = $("#mk-mode");
       mode.textContent = r.live ? "● Binance live" : "● Démo (hors ligne)";
       mode.className = "pill " + (r.live ? "live" : "demo");
@@ -418,7 +436,7 @@ window.M = window.M || {};
         if (prev == null || sc > prev) M.addXP(xp, "quiz");
         if (sc === 1) M.unlock("quiz_perfect");
         const nextC = M.COURSES[M.COURSES.indexOf(c) + 1];
-        const tryMap = { live: ["#/live", "⚡ Pratiquer en live"], missions: ["#/missions", "⏳ Tester sur un vrai krach"], swipe: ["#/swipe", "👆 Jouer au Swipe"], lab: ["#/lab", "🧪 Ouvrir l'Algo Lab"], profil: ["#/profile", "👤 Voir mon profil"] };
+        const tryMap = { live: ["#/live", "⚡ Pratiquer en live"], missions: ["#/missions", "⏳ Tester sur un vrai krach"], swipe: ["#/swipe", "👆 Jouer au Swipe"], lab: ["#/lab", "🧪 Ouvrir l'Algo Lab"], quiz: ["#/quiz", "🦉 S'entraîner au Quiz"], profil: ["#/profile", "👤 Voir mon profil"] };
         const t = tryMap[c.try] || tryMap.live;
         box.innerHTML = `
           <div class="quiz-end">
@@ -466,15 +484,18 @@ window.M = window.M || {};
     const best = log.reduce((m, t) => Math.max(m, t.pnl), 0);
     const realized = log.reduce((m, t) => m + t.pnl, 0);
     const missionsDone = Object.keys(s.missions).length;
+    const qs = s.qstats || { right: 0, total: 0, done: 0 };
     el.innerHTML = `
       <div class="profile-top glass">
-        <div class="avatar">${L.emoji}</div>
+        <div class="avatar">${s.photo ? `<img src="${s.photo}" alt="Photo de profil">` : L.emoji}
+          <label class="avatar-edit file-btn" data-tip-text="Choisis une photo depuis ton téléphone ou ton ordinateur.">📷 Modifier<input type="file" accept="image/*" id="pphoto"></label></div>
         <div class="pf-id">
           <input id="pname" value="${esc(s.name)}" placeholder="Ton pseudo" maxlength="20" data-tip-text="Clique pour changer ton pseudo.">
           <p>Niveau ${L.idx} · <b>${L.name}</b> · ${s.xp} XP</p>
           <div class="xpbar big"><i style="width:${Math.round(L.progress * 100)}%"></i></div>
           <small class="muted">${L.nextName ? `Encore ${L.to - s.xp} XP pour « ${L.nextName} »` : "Niveau maximum. Respect."}</small>
         </div>
+        <a class="btn ghost" href="#/settings">⚙️ Paramètres</a>
       </div>
       <div class="stats">
         ${stat("Portefeuille", M.fmt$(s.wallet.cash + (s.wallet.pos ? s.wallet.pos.margin : 0)), "Cash + marge engagée (hors PnL latent).", "equity")}
@@ -482,28 +503,17 @@ window.M = window.M || {};
         ${stat("Taux de réussite", log.length ? Math.round(wins / log.length * 100) + " %" : "—", "", "win-rate")}
         ${stat("Meilleur trade", M.fmt$(best), "Ton plus gros gain sur un seul trade.")}
         ${stat("Missions", missionsDone + "/" + M.MISSIONS.length, "Missions Time Machine terminées.")}
+        ${stat("Quiz", qs.total ? Math.round(qs.right / qs.total * 100) + " %" : "—", "Bonnes réponses sur toutes tes sessions de quiz.")}
         ${stat("Swipe", s.swipe.total ? Math.round(s.swipe.right / s.swipe.total * 100) + " %" : "—", "Pourcentage de bonnes prédictions sur toutes tes parties de Swipe.")}
       </div>
-      <div class="sec-head"><h2>Badges <span class="muted">${Object.keys(s.badges).length}/${M.BADGES.length}</span></h2></div>
+      <div class="sec-head"><h2>Tes badges <span class="muted">${Object.keys(s.badges).length}/${M.BADGES.length}</span></h2></div>
       <div class="badges">${M.BADGES.map(b => `<div class="badge ${s.badges[b.id] ? "got" : ""}" data-tip-title="${b.n}" data-tip-text="${s.badges[b.id] ? "Débloqué le " + new Date(s.badges[b.id]).toLocaleDateString("fr-FR") + ". " : "🔒 "}${b.d}">
         <span>${b.e}</span><small>${b.n}</small></div>`).join("")}</div>
-      <div class="sec-head"><h2>Réglages</h2></div>
-      <div class="settings glass">
-        <label class="switch" data-tip-text="Active ou désactive les bulles d'explication qui apparaissent au survol des boutons et des termes.">
-          <input type="checkbox" id="tips" ${s.settings.tips !== false ? "checked" : ""}><i></i> Infobulles explicatives</label>
-        <button class="btn ghost" id="rw" data-tip-text="Remet ton portefeuille live à 10 000 $ et efface l'historique des trades. Ton XP et tes badges sont conservés.">💸 Réinitialiser le portefeuille</button>
-        <button class="btn danger" id="ra" data-tip-text="Efface toute ta progression : XP, badges, cours, missions, portefeuille.">🗑 Tout effacer</button>
-      </div>
       ${disclaimer()}`;
     $("#pname", el).onchange = e => { s.name = e.target.value.trim().slice(0, 20); M.save(); M.toast("Pseudo enregistré ✓"); };
-    $("#tips", el).onchange = e => { s.settings.tips = e.target.checked; M.save(); };
-    $("#rw", el).onclick = () => {
-      if (!confirm("Remettre le portefeuille à 10 000 $ et effacer l'historique de trades ?")) return;
-      s.wallet = { cash: START_CASH, pos: null, log: [] }; M.save(true); M.toast("Portefeuille réinitialisé"); M.go("#/profile");
-    };
-    $("#ra", el).onclick = () => {
-      if (!confirm("Effacer TOUTE ta progression ? C'est irréversible.")) return;
-      M.state = fresh(); M.state.onboarded = true; M.save(true); M.updateTopbar(); M.go("#/home");
+    $("#pphoto", el).onchange = async e => {
+      try { s.photo = await M.imgToDataURL(e.target.files[0], 320, true); M.save(true); updateTopbar(); M.toast("Photo de profil mise à jour 📷"); M.go("#/profile"); }
+      catch (err) { M.toast(err.message, "err"); }
     };
   };
   function stat(label, value, tip, key, cls = "") {
@@ -523,7 +533,7 @@ window.M = window.M || {};
           <div><b>⚡ Live</b><span>Vrais prix, en temps réel</span></div>
           <div><b>⏳ Time Machine</b><span>Rejoue les krachs historiques</span></div>
           <div><b>🧪 Algo Lab</b><span>Teste 4 algos de trading</span></div>
-          <div><b>🎓 Académie</b><span>11 modules + quiz</span></div>
+          <div><b>🎓 Académie</b><span>${M.COURSES.length} modules + quiz Duolingo</span></div>
         </div>
         <p class="hint">💡 <b>Astuce</b> : survole n'importe quel bouton ou <span class="term" data-tip="spread">terme souligné</span> pour obtenir une explication (appui long sur mobile).</p>
         <input id="onb-name" placeholder="Ton pseudo (optionnel)" maxlength="20">
@@ -541,6 +551,7 @@ window.M = window.M || {};
 
   // ---------- Démarrage ----------
   document.addEventListener("DOMContentLoaded", () => {
+    M.applySettings();
     updateTopbar();
     route();
     onboarding();

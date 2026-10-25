@@ -147,7 +147,12 @@ window.M = window.M || {};
   }
 
   function pctFr(v) { return (v * 100).toFixed(1).replace(".", ",") + " %"; }
-  function fmt$(v) { return (v < 0 ? "−" : "") + Math.abs(v).toLocaleString("fr-FR", { maximumFractionDigits: 2, minimumFractionDigits: 2 }) + " $"; }
+  function fmt$(v) {
+    // v est en dollars ; affichage dans la devise choisie (Paramètres → Montants)
+    const c = M.currency ? M.currency() : { rate: 1, sym: "$", dec: 2 };
+    const x = v * c.rate;
+    return (x < 0 ? "−" : "") + Math.abs(x).toLocaleString("fr-FR", { maximumFractionDigits: c.dec, minimumFractionDigits: c.dec }) + " " + c.sym;
+  }
 
   M.Trader = Trader;
   M.coach = coach;
