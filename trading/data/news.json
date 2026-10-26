@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-25T22:00:22.959Z",
+ "generatedAt": "2026-10-26T07:03:23.300Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "d352f951c7e4f764",
+   "title": "Frank Elderson: Taking action for nature – investing in economic resilience and prosperity",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261026~d903d7ad85.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-26T05:00:00.000Z",
+   "firstSeen": "2026-10-26T07:03:23.300Z"
+  },
   {
    "id": "bfff58d568dfee6a",
    "title": "Piero Cipollone: Interview with Milano Finanza",
