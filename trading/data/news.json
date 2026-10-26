@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-26T07:03:23.300Z",
+ "generatedAt": "2026-10-26T14:06:44.351Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "86656f9a0027efa6",
+   "title": "Survey on the Access to Finance of Enterprises: lending conditions tightened",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261026~bde7b6d11a.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-26T09:00:00.000Z",
+   "firstSeen": "2026-10-26T14:06:44.351Z"
+  },
   {
    "id": "d352f951c7e4f764",
    "title": "Frank Elderson: Taking action for nature – investing in economic resilience and prosperity",
@@ -244,6 +255,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-22T01:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
+  },
+  {
+   "id": "f3c9eead7a76b710",
+   "title": "Zimbabwe initiates safeguard investigation on pasta products",
+   "url": "https://www.wto.org/english/news_e/news26_e/safe_zwe_22oct26_523_e.htm",
+   "summary": "On 22 October 2026, Zimbabwe notified the WTO’s Committee on Safeguards that it had initiated on 18 September 2026 a safeguard investigation on imports of certain pasta products.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-22T00:00:00.000Z",
+   "firstSeen": "2026-10-26T14:06:44.351Z"
   },
   {
    "id": "ed0a33350e1ea1d4",
