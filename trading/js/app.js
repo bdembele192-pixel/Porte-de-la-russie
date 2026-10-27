@@ -446,7 +446,7 @@ window.M = window.M || {};
         if (prev == null || sc > prev) M.addXP(xp, "quiz");
         if (sc === 1) M.unlock("quiz_perfect");
         const nextC = M.COURSES[M.COURSES.indexOf(c) + 1];
-        const tryMap = { live: ["#/live", "⚡ Pratiquer en live"], missions: ["#/missions", "⏳ Tester sur un vrai krach"], swipe: ["#/swipe", "👆 Jouer au Swipe"], lab: ["#/lab", "🧪 Ouvrir l'Algo Lab"], quiz: ["#/quiz", "🦉 S'entraîner au Quiz"], profil: ["#/profile", "👤 Voir mon profil"] };
+        const tryMap = { live: ["#/live", "⚡ Pratiquer en live"], missions: ["#/missions", "⏳ Tester sur un vrai krach"], swipe: ["#/swipe", "👆 Jouer au Swipe"], lab: ["#/lab", "🧪 Ouvrir l'Algo Lab"], options: ["#/options", "Ouvrir le Labo options"], quiz: ["#/quiz", "🦉 S'entraîner au Quiz"], profil: ["#/profile", "👤 Voir mon profil"] };
         const t = tryMap[c.try] || tryMap.live;
         box.innerHTML = `
           <div class="quiz-end">

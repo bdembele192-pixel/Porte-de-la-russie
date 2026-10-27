@@ -11,6 +11,7 @@ window.M = window.M || {};
     { s: '.nav a[data-nav="missions"]', t: "Missions : la machine à remonter le temps", d: "Rejoue de vrais krachs et rallyes (Covid, FTX, tarifs 2025…) bougie par bougie, puis découvre ce qui s'est réellement passé." },
     { s: '.nav a[data-nav="swipe"]', t: "Swipe", d: "Mini-jeu : la prochaine bougie sera-t-elle verte ou rouge ? Parfait pour comprendre pourquoi la gestion du risque compte plus que la prédiction." },
     { s: '.nav a[data-nav="lab"]', t: "Algo Lab", d: "Teste 4 algorithmes de trading célèbres sur de vraies données, frais inclus, et compare-les au simple « acheter et garder »." },
+    { s: '.nav a[data-nav="options"]', t: "Labo options", d: "Manipule des options : prix, gains et pertes possibles selon le prix final, grecques expliquées simplement, 7 stratégies classiques." },
     { s: '.nav a[data-nav="quiz"]', t: "Quiz façon Duolingo", d: "5 minutes par jour : théorie, calculs et lecture de graphiques, avec des vies, des combos et des étoiles." },
     { s: '.nav a[data-nav="ai"]', t: "Mèche IA", d: "Ton copilote : il s'entraîne chaque jour sur les vrais marchés, bloque tes trades dangereux en Live et te propose une option plus sûre. Il répond aussi à tes questions d'économie, de droit, de géopolitique…" },
     { s: '.nav a[data-nav="news"]', t: "Actus", d: "Les communiqués officiels des banques centrales, du FMI, de la Banque mondiale, de l'OMC, des régulateurs… collectés automatiquement à la source." },

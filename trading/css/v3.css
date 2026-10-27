@@ -278,3 +278,49 @@ kbd { font: 600 calc(11px * var(--fs)) var(--mono); padding: 3px 7px; border-rad
 #ch-dl { white-space: nowrap; }
 [hidden] { display: none !important; }
 #ch-p { white-space: nowrap; }
+
+/* ---------- Labo options ---------- */
+.opt-strats { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; margin-bottom: 14px; }
+.opt-s { display: flex; flex-direction: column; align-items: flex-start; gap: 3px; padding: 14px 16px; text-align: left; transition: border-color .15s, background .15s; }
+.opt-s:hover { border-color: var(--line2); }
+.opt-s.on { border-color: var(--lime); background: color-mix(in srgb, var(--lime) 7%, transparent); }
+.opt-s small { color: var(--mut); font-size: calc(12.5px * var(--fs)); line-height: 1.35; }
+.opt input[type=range] { width: 100%; accent-color: var(--lime); }
+.opt-legs { display: flex; flex-direction: column; gap: 4px; font-size: calc(13px * var(--fs)); }
+.opt-leg span { font-weight: 700; }
+.lab-out .opt-chart { height: auto; padding: 12px 10px 8px; }
+.opt-svg text { font: calc(11px * var(--fs)) var(--mono); fill: var(--mut); }
+.opt-svg .grid { stroke: var(--line); }
+.opt-svg .zero { stroke: var(--line2); stroke-width: 1.2; }
+.opt-svg .spot { stroke: var(--ink2); stroke-dasharray: 3 4; opacity: .6; }
+.opt-svg .lbl { fill: var(--ink2); }
+.opt-svg .a-up { fill: color-mix(in srgb, var(--up) 16%, transparent); }
+.opt-svg .a-dn { fill: color-mix(in srgb, var(--dn) 16%, transparent); }
+.opt-svg .pay { fill: none; stroke: var(--lime); stroke-width: 2.4; }
+.opt-svg .now { fill: none; stroke: var(--ink2); stroke-width: 1.6; stroke-dasharray: 6 5; }
+.opt-svg .be { fill: var(--gold); }
+.opt-leg-k { display: flex; flex-wrap: wrap; gap: 16px; padding: 6px 8px 2px; font-size: calc(12px * var(--fs)); color: var(--mut); }
+.opt-leg-k i { display: inline-block; width: 18px; height: 0; margin-right: 6px; vertical-align: middle; border-top: 2.4px solid var(--lime); }
+.opt-leg-k .k-now { border-top: 1.6px dashed var(--ink2); }
+.opt-leg-k .k-be { width: 8px; height: 8px; border: 0; border-radius: 50%; background: var(--gold); }
+.opt-greeks { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-top: 8px; }
+.opt-greeks p { margin: 4px 0 0; color: var(--ink2); font-size: calc(13.5px * var(--fs)); line-height: 1.5; }
+.opt-explain h4 { margin: 0 0 6px; }
+.opt-explain p { margin: 6px 0; color: var(--ink2); line-height: 1.55; }
+
+/* ---------- « Et si ? » sur la position ouverte ---------- */
+.whatif { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 8px; }
+.whatif > button { display: flex; width: 100%; justify-content: space-between; align-items: center; font-weight: 600; color: var(--ink2); padding: 4px 0; }
+.whatif > button em { font-style: normal; color: var(--mut); font-size: calc(12px * var(--fs)); }
+.wi-rows { display: grid; gap: 4px; margin-top: 6px; }
+.wi-r { display: grid; grid-template-columns: 52px 1fr auto; gap: 8px; align-items: baseline; font-size: calc(12.5px * var(--fs)); }
+.wi-r small { color: var(--mut); }
+.wi-note { margin: 8px 0 0; color: var(--mut); font-size: calc(12px * var(--fs)); line-height: 1.45; }
+
+/* ---------- Journal de trading (ticket) ---------- */
+.t-why .why-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.t-why .why-chips button { padding: 4px 10px; border-radius: 999px; background: rgba(var(--fg), 0.05); color: var(--mut); font-size: calc(12px * var(--fs)); font-weight: 600; }
+.t-why .why-chips button.on { background: color-mix(in srgb, var(--lime) 18%, transparent); color: var(--ink); }
+.t-why input { width: 100%; padding: 9px 12px; border-radius: 12px; border: 1px solid var(--line2); background: rgba(var(--sink), 0.25); outline: none; font-size: calc(13px * var(--fs)); }
+.t-why input:focus { border-color: var(--lime); }
+.h-why { grid-column: 1 / -1; color: var(--mut); font-size: calc(12px * var(--fs)); font-style: italic; margin-top: -2px; }

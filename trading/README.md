@@ -11,6 +11,7 @@ Application web statique (HTML/CSS/JS, aucune dépendance, aucun build) : ouvre 
 | ⏳ **Time Machine** | 10 vrais moments de marché rejoués bougie par bougie avec l'historique réel : Covid 2020, Elon/Dogecoin, Terra/Luna, The Merge, FTX, ETF Bitcoin, lundi noir du yen, élection US 2024, choc des tarifs 2025, ruée vers l'or 2025. Débrief avec l'histoire vraie + note du coach. Défi du jour. |
 | 👆 **Swipe** | Mini-jeu « haut ou bas ? » sur de vraies bougies tirées au hasard. |
 | 🧪 **Algo Lab** | Backtest de 4 algos (Trend Following EMA+ATR, Breakout Donchian/Turtles, Mean Reversion Bollinger+RSI, Pairs Trading ETH/BTC) sur données réelles, frais inclus, sans biais d'anticipation. Comparateur des 4 algos. |
+| **Labo options** | Prix d'une option (Black-Scholes), courbe de gain à l'échéance et avant, grecques expliquées simplement, 7 stratégies (call, put, assurance, call couvert, spread, straddle, vente de put). |
 | 🎓 **Académie** | 18 modules / 78 chapitres + quiz : marché, instruments, styles, analyse technique et fondamentale, indicateurs, stratégies, algos, options, crypto avancé, forex, risque, psychologie, macro 2024-2026, BRVM & UEMOA, plan de trading, finances perso, passer en réel sans arnaque. |
 | 🦉 **Quiz** | Parcours façon Duolingo : 11 unités, 88 questions + exercices pratiques générés à l'infini (calculs de risque, lecture de bougies, tendances, RSI), 3 vies, combos, étoiles. |
 | ⚙️ **Paramètres** | 8 thèmes dont « Panthère » (thème principal : noir, violet vibrant, argent), clair et « Bamako », couleur d'accent, police du texte et des titres, taille du texte, flou, arrondis, animations, fond d'écran perso, photo de profil, icône et nom de l'app, langue (FR, EN, 中文, Русский pour l'interface), devise (USD, EUR, FCFA, RUB, JPY, CNY), capital de départ et ajout de fonds, levier max, stop/objectif par défaut, limite de perte du jour, sons, vibrations, mode discret, export/import de la progression. |
@@ -55,6 +56,7 @@ js/app.js             état, XP, badges, routeur, accueil, académie, profil
 js/live.js            terminal live
 js/play.js            missions + swipe
 js/lab.js             Algo Lab
+js/options.js         Labo options
 ```
 
 La progression est sauvegardée dans le `localStorage` du navigateur (clé `meche:v1`).
