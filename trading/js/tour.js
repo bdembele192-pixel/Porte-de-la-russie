@@ -13,7 +13,7 @@ window.M = window.M || {};
     { s: '.nav a[data-nav="lab"]', t: "Algo Lab", d: "Teste 4 algorithmes de trading célèbres sur de vraies données, frais inclus, et compare-les au simple « acheter et garder »." },
     { s: '.nav a[data-nav="quiz"]', t: "Quiz façon Duolingo", d: "5 minutes par jour : théorie, calculs et lecture de graphiques, avec des vies, des combos et des étoiles." },
     { s: '.nav a[data-nav="ai"]', t: "Mèche IA", d: "Ton copilote : il s'entraîne chaque jour sur les vrais marchés, bloque tes trades dangereux en Live et te propose une option plus sûre. Il répond aussi à tes questions d'économie, de droit, de géopolitique…" },
-    { s: '.nav a[data-nav="news"]', t: "Actus", d: "Les communiqués officiels des banques centrales, du FMI, de la Banque mondiale, de l'OMC, des régulateurs… collectés automatiquement toutes les 5 minutes." },
+    { s: '.nav a[data-nav="news"]', t: "Actus", d: "Les communiqués officiels des banques centrales, du FMI, de la Banque mondiale, de l'OMC, des régulateurs… collectés automatiquement à la source." },
     { s: '.nav a[data-nav="academy"]', t: "Académie", d: "Les cours complets : instruments, stratégies, algos, BRVM & UEMOA, options, crypto, psychologie, et un glossaire de plus de 120 termes." },
     { s: '.nav a[data-nav="profile"]', t: "Profil", d: "Ta photo, ton pseudo, tes statistiques et tes badges." },
     { s: "#tb-level", t: "Niveau et XP", d: "Chaque cours lu, quiz réussi, mission ou trade discipliné te rapporte de l'XP. 8 niveaux, du Bébé trader à la Market Legend." },

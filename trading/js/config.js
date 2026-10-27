@@ -2,15 +2,15 @@
 window.M = window.M || {};
 
 M.CONFIG = {
-  // Actualités : fichier mis à jour toutes les 5 min par le robot GitHub (.github/workflows/news.yml).
-  // La copie « raw » de GitHub est servie en premier (rafraîchie en ~5 min), le fichier du site en secours.
+  // Actualités : fichier mis à jour par le robot GitHub (.github/workflows/news.yml). GitHub lance ce robot
+  // quand ses serveurs le permettent (souvent toutes les quelques heures) : le relais (relayUrl) est plus frais.
   newsUrls: [
     "https://raw.githubusercontent.com/bdembele192-pixel/Porte-de-la-russie/main/trading/data/news.json",
     "data/news.json"
   ],
 
-  // Cours gratuits (bourses mondiales, matières premières, devises, BRVM), différés de quelques minutes :
-  // collectés toutes les 5 min par le robot GitHub (.github/workflows/quotes.yml).
+  // Copie de secours des cours (bourses mondiales, matières premières, devises, BRVM) écrite par le robot GitHub
+  // (.github/workflows/quotes.yml). En temps normal l'app lit les cours en direct (js/quotes.js).
   quotesUrls: [
     "https://raw.githubusercontent.com/bdembele192-pixel/Porte-de-la-russie/main/trading/data/quotes.json",
     "data/quotes.json"
@@ -19,6 +19,10 @@ M.CONFIG = {
     "https://raw.githubusercontent.com/bdembele192-pixel/Porte-de-la-russie/main/trading/data/history.json",
     "data/history.json"
   ],
+
+  // Relais Cloudflare (gratuit, voir relay/README.md) : BRVM et actualités en direct, et Mèche IA par Claude
+  // pour tous les utilisateurs. Exemple : "https://meche-relais.<ton-compte>.workers.dev". Vide = sans relais.
+  relayUrl: "",
 
   // Comptes utilisateurs (Supabase). Laisse vide pour rester en mode local (sans compte).
   supabaseUrl: "",

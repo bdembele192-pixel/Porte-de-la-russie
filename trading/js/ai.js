@@ -352,6 +352,9 @@ window.M = window.M || {};
     const { docs, df, avg, N } = index;
     return docs.map(d => {
       let s = 0;
+      const tt = d.tt || (d.tt = [...new Set(toks(d.t))]);
+      const inTitle = tt.filter(w => qt.includes(w)).length;
+      if (inTitle && tt.length) s += 1.5 * inTitle / tt.length * (inTitle / qt.length);
       qt.forEach(w => {
         const f = d.tk.filter(x => x === w).length;
         if (!f) return;
@@ -441,7 +444,7 @@ window.M = window.M || {};
   let sdk = null;
   async function claude(question, context) {
     const a = st();
-    if (!sdk) sdk = (await import("https://esm.sh/@anthropic-ai/sdk")).default;
+    if (!sdk) sdk = (await import("https://esm.sh/@anthropic-ai/sdk@1.3.0")).default;
     const client = new sdk({ apiKey: a.cfg.claudeKey, dangerouslyAllowBrowser: true });
     const model = a.cfg.claudeModel || "claude-opus-5-5";
     const isHaiku = /haiku/.test(model);
@@ -474,53 +477,185 @@ ${context}`;
     return esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>").replace(/^#+\s*(.+)$/gm, "<b>$1</b>").replace(/^[-*]\s+/gm, "• ").replace(/\n/g, "<br>");
   }
 
-  async function answer(q) {
+  // ---------- Compréhension de la question ----------
+  // Écriture SMS courante → français standard (avant toute analyse)
+  const SMS = [[/\bc koi\b|\bc quoi\b|\bcest koi\b/g, "c'est quoi"], [/\bkoi\b/g, "quoi"], [/\bpk\b|\bpq\b|\bpkoi\b/g, "pourquoi"], [/\bcmt\b|\bcomen\b/g, "comment"],
+    [/\bbcp\b/g, "beaucoup"], [/\bqd\b/g, "quand"], [/\bjsp\b/g, "je ne sais pas"], [/\bstp\b|\bsvp\b/g, ""], [/\bdc\b/g, "donc"], [/\bpr\b/g, "pour"], [/\bds\b/g, "dans"], [/\bya\b/g, "il y a"]];
+  const expand = q => SMS.reduce((t, [rx, r]) => t.replace(rx, r), " " + q.toLowerCase() + " ").replace(/\s+/g, " ").trim();
+
+  // Cours mondiaux et BRVM (M.Quotes) cités dans la question
+  const Q_ALIAS = { SPX: "s&p|sp500|s p 500|sp 500|s&p500", NDX: "nasdaq", DJI: "dow jones|dow", CAC: "cac 40|cac40|\\bcac\\b", DAX: "\\bdax\\b", FTSE: "ftse|footsie", N225: "nikkei", HSI: "hang seng",
+    BRENT: "brent|petrole|baril", WTI: "\\bwti\\b", GOLD: "once d'or\\b|cours de l'or\\b|prix de l'or\\b", SILVER: "once d'argent|metal argent", COTTON: "coton", COCOA: "cacao", COFFEE: "\\bcafe\\b",
+    USDNGN: "naira", USDZAR: "\\brand\\b", USDJPY: "\\byen\\b", USDCNY: "yuan|renminbi", GBPUSD: "livre sterling|\\bgbp\\b", US10Y: "taux (americain|us) (a )?10 ans|10 ans americain|treasury",
+    "BRVM:BRVM-C": "brvm composite|brvm-c|indice brvm|la brvm aujourd", "BRVM:BRVM-30": "brvm 30|brvm-30" };
+  const GENERIC = new Set("cote ivoire senegal mali burkina faso niger togo benin bank banque africa afrique of the de du group groupe sa holding compagnie societe".split(" "));
+  function quoteOf(q) {
+    const items = (M.Quotes && M.Quotes.items) || [];
+    if (!items.length) return null;
+    const n = " " + norm(q) + " ";
+    for (const [id, rx] of Object.entries(Q_ALIAS)) if (new RegExp(rx).test(n) && M.Quotes.byId[id]) return M.Quotes.byId[id];
+    const COUNTRY = /^(cote|ivoire|senegal|mali|burkina|faso|niger|togo|benin|ci)$/;
+    const acro = i => { const w = norm(i.name).split(/[^a-z0-9]+/).filter(Boolean), k = w.findIndex(x => COUNTRY.test(x)); return k > 1 ? w.slice(0, k).map(x => x[0]).join("") + " " + w.slice(k).join(" ") : null; };
+    return items.find(i => i.type === "BRVM" && acro(i) && n.includes(" " + acro(i).split(" ").slice(0, 2).join(" "))) ||
+      items.find(i => i.type === "BRVM" && (new RegExp("\\b" + i.short.toLowerCase() + "\\b").test(n) ||
+      norm(i.name).split(/[^a-z0-9]+/).some(w => w.length >= 4 && !GENERIC.has(w) && new RegExp("\\b" + w + "\\b").test(n)))) ||
+      items.find(i => i.type === "Action" && new RegExp("\\b(" + norm(i.name) + "|" + i.id.toLowerCase() + ")\\b").test(n)) || null;
+  }
+  const qFmt = q => (q.cur === "XOF" ? Math.round(q.price).toLocaleString("fr-FR") + " FCFA" : M.Quotes.fmt(q.price) + ({ USD: " $", EUR: " €", GBP: " £", JPY: " ¥", pts: " points", "%": " %" }[q.cur] || " " + q.cur));
+  function quoteLine(q) {
+    return `<b>${esc(q.name)}</b> : ${qFmt(q)} (${q.chg >= 0 ? "+" : ""}${(+q.chg).toFixed(2).replace(".", ",")} % ${/^BRVM/.test(q.type) ? "sur la séance" : "depuis la veille"}) · <small class="muted">${esc(M.Quotes.fresh(q))}, source ${esc(q.src || (/^BRVM/.test(q.type) ? "brvm.org" : "CNBC"))}</small>`;
+  }
+
+  // Actualités récentes qui parlent d'un sujet
+  function newsAbout(words, n = 3) {
+    const all = (M.News && M.News.items) || [];
+    const rx = new RegExp("\\b(" + words.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|") + ")", "i");
+    return all.filter(i => rx.test(norm(i.title + " " + (i.summary || "")))).slice(0, n);
+  }
+  const DRIVERS = {
+    crypto: ["l'humeur générale envers les actifs risqués (quand les bourses baissent, la crypto suit souvent, en plus fort)", "les décisions et discours de la Fed sur les taux d'intérêt et la force du dollar", "les flux des ETF Bitcoin et les gros portefeuilles (« baleines »)", "les liquidations en cascade de positions à effet de levier", "la réglementation et les incidents (piratages, faillites de plateformes)"],
+    Indice: ["les résultats des grandes entreprises", "les taux d'intérêt et les chiffres d'inflation et d'emploi", "les tensions géopolitiques et commerciales (droits de douane)", "les prévisions des banques centrales"],
+    Action: ["les résultats trimestriels et les prévisions de l'entreprise", "les annonces (produits, contrats, procès, dirigeants)", "le mouvement général du marché et de son secteur", "les taux d'intérêt"],
+    "Matière première": ["l'offre (production, OPEP+, météo et récoltes pour le coton, le cacao ou le café)", "la demande mondiale (croissance de la Chine, des États-Unis)", "le dollar (une hausse du dollar pèse souvent sur les matières premières)", "les stocks et les tensions géopolitiques"],
+    Forex: ["l'écart de taux d'intérêt entre les deux pays", "l'inflation et la croissance relatives", "les réserves de change et les interventions de la banque centrale", "la demande de dollars pour le commerce et la dette"],
+    BRVM: ["la faible liquidité : quelques ordres suffisent à faire bouger un titre", "les résultats annuels et les annonces de dividendes (détachement du dividende)", "la limite de variation quotidienne de la BRVM (±7,5 %)", "la conjoncture des pays de l'UEMOA"]
+  };
+  async function whyMove(q, sym, quote) {
+    const up = /(monte|hausse|grimpe|augmente|s'envole|remonte|progresse)/.test(norm(q));
+    let fact = "", type, words;
+    if (sym) {
+      const r = await M.Market.tickers([sym]); const d = r.data[sym], as = M.Market.asset(sym);
+      fact = `<b>${as.name}</b> : ${M.Market.fmtPrice(d.last)} $, ${d.chg >= 0 ? "+" : ""}${d.chg.toFixed(2).replace(".", ",")} % sur 24 h${r.live ? " (Binance, en direct)" : " (prix simulé : marché injoignable)"}.`;
+      type = as.type === "Forex" ? "Forex" : as.type === "Matière première" ? "Matière première" : "crypto";
+      words = [as.short.toLowerCase(), norm(as.name), "crypto", "bitcoin", "digital asset", "fed", "rate", "taux"];
+    } else {
+      fact = quoteLine(quote);
+      type = quote.type === "BRVM indice" ? "BRVM" : quote.type === "Taux" ? "Forex" : quote.type;
+      words = [norm(quote.name), quote.short.toLowerCase(), ...(type === "BRVM" ? ["uemoa", "bceao", "brvm"] : ["rate", "taux", "inflation"])];
+    }
+    const hl = newsAbout(words, 3);
+    return `${fact}<br><br>Je ne peux pas affirmer la cause exacte d'un mouvement : elle est rarement unique. Ce qui fait le plus souvent ${up ? "monter" : "baisser"} ce type d'actif :<br>` +
+      (DRIVERS[type] || DRIVERS.Indice).map(x => "• " + x).join("<br>") +
+      (hl.length ? `<br><br><b>Communiqués récents qui peuvent jouer</b><br>` + hl.map(i => `• <a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.title)}</a> <small class="muted">${esc(i.source)} · ${M.News.ago(i.date)}</small>`).join("<br>") : "") +
+      `<br><br><small class="muted">Pour une explication à partir de l'actualité du jour, active le cerveau Claude (onglet Copilote).</small>`;
+  }
+
+  // « Différence entre A et B », « A ou B ? », « A vs B »
+  function comparison(q) {
+    const n = norm(q).replace(/[?!.]/g, " ");
+    const m = n.match(/difference(?:s)? entre (?:une? |les? |la |l')?(.+?) et (?:une? |les? |la |l')?(.+)$/) || n.match(/^(?:c'est quoi |quelle est )?(?:la difference )?(.+?) (?:vs|versus|contre|ou bien) (.+)$/);
+    if (!m) return null;
+    const pick = t => { const h = search(t, 1)[0]; return h && h.s > 1.2 && toks(h.d.t + " " + h.d.key).some(w => toks(t).includes(w)) ? h.d : null; };
+    const A = pick(m[1].trim()), B = pick(m[2].trim());
+    if (!A || !B || A === B) return null;
+    const cut = t => t.length > 420 ? t.slice(0, 420) + "…" : t;
+    return `<b>${esc(A.t)}</b><br>${esc(cut(A.text))}<br><br><b>${esc(B.t)}</b><br>${esc(cut(B.text))}`;
+  }
+
+  // Petite conversation
+  function smallTalk(n) {
+    if (/^(merci|thanks|thank you|nickel|super merci|parfait)\b/.test(n)) return "Avec plaisir ! Une autre question ? Je peux aussi analyser un marché ou faire le bilan de tes trades (« mes stats »).";
+    if (/^(ca va|comment vas tu|comment tu vas|la forme)\b/.test(n)) return "Ça va bien, merci ! Prêt à parler marchés. Qu'est-ce que tu veux comprendre aujourd'hui ?";
+    if (/^(qui es tu|t'es qui|tu es qui|c'est quoi meche ia|que sais tu faire|tu sers a quoi)\b/.test(n)) return "Je suis <b>Mèche IA</b>, l'assistant de l'app. J'explique le trading, la finance, l'économie, le droit des affaires et la géopolitique, je donne les cours (cryptos, bourses mondiales, BRVM), j'analyse un marché et je surveille tes ordres en Live pour t'éviter les erreurs coûteuses.";
+    if (/^(au revoir|bye|a plus|a\+|bonne nuit|ciao)\b/.test(n)) return "À plus ! Et n'oublie pas : un stop-loss sur chaque trade.";
+    if (/^(ok|d'accord|dac|cool|top|compris|ah ok)\b/.test(n) && n.length < 20) return "Parfait. Si tu veux aller plus loin, demande-moi par exemple « c'est quoi le levier ? » ou « analyse le BTC ».";
+    return null;
+  }
+
+  // Questions dont la réponse change avec le temps : ne jamais répondre avec une définition à la place
+  const TIMELY = /\b(qui est|qui dirige|quel est le (taux|cours|prix|niveau)|quelle est la (valeur|decision)|actuel(le)?|actuellement|aujourd'hui|en ce moment|cette (semaine|annee)|ce mois|recemment|derniere?s? (decision|chiffre|annonce))\b/;
+
+  async function answer(q0) {
+    const q = expand(q0);
     const n = norm(q).trim();
     const sym = assetOf(q);
     const a = st();
-    if (/^(bonjour|salut|hello|hey|yo|cc|coucou|bonsoir|slt)\b/.test(n) && n.length < 25)
-      return { html: `Salut ${esc(M.state.name || "")} 👋 Je suis <b>Mèche IA</b>. Je peux :<br>• analyser un marché (« analyse le BTC »),<br>• donner un prix (« prix de l'ETH »),<br>• expliquer une notion d'économie, finance, droit, géopolitique, écologie, psychologie, commerce…,<br>• faire le bilan de tes trades (« mes stats »).<br>En Live, je surveille aussi tes ordres et je te propose une version plus sûre quand un trade est risqué.` };
+    if (/^(bonjour|salut|hello|hey|yo|cc|coucou|bonsoir|slt|salam|bjr)\b/.test(n) && n.length < 25)
+      return { html: `Salut ${esc(M.state.name || "")} ! Je suis <b>Mèche IA</b>. Je peux :<br>• analyser un marché (« analyse le BTC »),<br>• donner un cours (« prix de l'ETH », « cours de la Sonatel », « S&P 500 »),<br>• expliquer une notion d'économie, finance, droit, géopolitique, écologie, psychologie, commerce…,<br>• comparer deux notions (« différence entre action et obligation »),<br>• faire le bilan de tes trades (« mes stats »).<br>En Live, je surveille aussi tes ordres et je te propose une version plus sûre quand un trade est risqué.` };
+    const talk = smallTalk(n);
+    if (talk) return { html: talk };
     if (/\b(mes stats|mes trades|mon bilan|mes erreurs|mes performances)\b/.test(n)) return { html: stats() };
+    const brain = a.cfg.claudeKey ? "key" : relayUrl() ? "relay" : null;
     // Décryptage d'un communiqué de la section Actus (mode local)
-    const nm = !a.cfg.claudeKey && q.match(/«\s*(.+?)\s*»/);
+    const nm = !brain && q0.match(/«\s*(.+?)\s*»/);
     const item = nm && ((M.News && M.News.items) || []).find(i => i.title === nm[1]);
     if (item) return { html: explainNews(item) };
-    const askNews = /\b(actu|actus|actualite|actualites|news|nouvelles|quoi de neuf|annonce|annonces|communique|communiques)\b/.test(n) ||
-      (/(que dit|qu'a dit|derniere|dernieres|decision|vient de)/.test(n) && INST.some(([rx]) => rx.test(n)));
-    if (askNews && !a.cfg.claudeKey) return { html: headlines(n) };
-    const wantsClaude = a.cfg.claudeKey;
-    if (sym && /\b(prix|cours|combien|vaut|coute|price)\b/.test(n) && !wantsClaude) {
-      const r = await M.Market.tickers([sym]); const d = r.data[sym];
-      return { html: `<b>${M.Market.asset(sym).name}</b> : ${M.Market.fmtPrice(d.last)} $ (${d.chg >= 0 ? "+" : ""}${d.chg.toFixed(2).replace(".", ",")} % sur 24 h)${r.live ? " · source Binance, temps réel" : " · <i>prix simulé (marché injoignable)</i>"}.` };
+    if (M.Quotes && !M.Quotes.loaded) await M.Quotes.load();
+    const quote = sym ? null : quoteOf(q);
+    const priceAsk = /\b(prix|cours|combien|vaut|coute|price|niveau|valeur)\b/.test(n) || n.split(" ").length <= 3;
+    const whyAsk = /\bpourquoi\b/.test(n) && /(baisse|chute|recule|degringole|s'effondre|plonge|monte|hausse|grimpe|augmente|s'envole|remonte|progresse)/.test(n);
+    if (!brain) {
+      const askNews = /\b(actu|actus|actualite|actualites|news|nouvelles|quoi de neuf|annonce|annonces|communique|communiques)\b/.test(n) ||
+        (/(que dit|qu'a dit|derniere|dernieres|decision|vient de)/.test(n) && INST.some(([rx]) => rx.test(n)));
+      if (askNews) return { html: headlines(n) };
+      if ((sym || quote) && whyAsk) return { html: await whyMove(q, sym, quote) };
+      if (quote && priceAsk) return { html: quoteLine(quote) };
+      if (sym && priceAsk && !/\b(analyse|analyser|acheter|vendre)\b/.test(n)) {
+        const r = await M.Market.tickers([sym]); const d = r.data[sym];
+        return { html: `<b>${M.Market.asset(sym).name}</b> : ${M.Market.fmtPrice(d.last)} $ (${d.chg >= 0 ? "+" : ""}${d.chg.toFixed(2).replace(".", ",")} % sur 24 h)${r.live ? " · source Binance, en direct" : " · <i>prix simulé (marché injoignable)</i>"}.` };
+      }
+      if (sym && /\b(analyse|analyser|acheter|vendre|long|short|avis|penses|trader|entrer|signal|prevision|tendance|setup)\b/.test(n))
+        return { html: await analysis(sym) };
+      const cmp = comparison(q);
+      if (cmp) return { html: cmp };
     }
-    if (sym && /\b(analyse|analyser|acheter|vendre|long|short|avis|penses|trader|entrer|signal|prevision|tendance|setup)\b/.test(n) && !wantsClaude)
-      return { html: await analysis(sym) };
     const hits = search(q, 3);
-    if (wantsClaude) {
+    if (brain) {
       let ctx = hits.map(h => `- ${h.d.t} (${h.d.d}) : ${h.d.text.slice(0, 500)}`).join("\n");
       if (sym) {
         try { ctx += "\n\nAnalyse technique calculée par l'app :\n" + (await analysis(sym)).replace(/<br>/g, "\n").replace(/<[^>]+>/g, ""); } catch (e) { /* ignoré */ }
       }
+      if (quote) ctx += `\n\nCours dans l'app : ${quote.name} ${qFmt(quote)}, ${quote.chg >= 0 ? "+" : ""}${quote.chg} % (${M.Quotes.fresh(quote)}, source ${quote.src}).`;
       const hl = ((M.News && M.News.items) || []).slice(0, 10);
       if (hl.length) ctx += "\n\nDerniers communiqués officiels collectés par l'app :\n" + hl.map(i => `- ${new Date(i.date).toLocaleString("fr-FR")} · ${i.source} : ${i.title}${i.summary ? " — " + i.summary.slice(0, 200) : ""} (${i.url})`).join("\n");
       if (a.metrics) ctx += `\n\nModèle interne : précision ${pct(a.metrics.acc)}, compétence ${a.metrics.skill.toFixed(3)} sur ${a.metrics.nVal} cas récents.`;
       try {
-        const txt = await claude(q, ctx || "(aucun)");
-        return { html: mdLite(txt), plain: txt, src: "Claude" };
+        const r = brain === "key" ? { text: await claude(q0, ctx || "(aucun)"), sources: [] } : await relayAsk(q0, ctx);
+        const links = (r.sources || []).map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join(" · ");
+        return { html: mdLite(r.text) + (links ? `<br><small class="muted">Sources : ${links}</small>` : ""), plain: r.text, src: "Claude" };
       } catch (e) {
-        const why = /401|authentication/i.test(e.message) ? "clé API invalide" : /import|fetch|network/i.test(e.message) ? "connexion impossible" : e.message;
-        if (!hits.length) return { html: `Le cerveau Claude n'a pas répondu (${esc(why)}) et je n'ai rien trouvé dans mes connaissances locales.` };
-        return { html: `<small class="muted">Cerveau Claude indisponible (${esc(why)}) — réponse locale :</small><br>` + fromHits(hits) };
+        const why = /401|authentication|cle api/i.test(e.message) ? "clé API invalide" : /import|fetch|network|failed/i.test(e.message) ? "connexion impossible" : e.message;
+        const local = await localAnswer(q, n, hits, sym, quote, whyAsk, priceAsk);
+        return { html: `<small class="muted">Cerveau Claude indisponible (${esc(why)}) — réponse locale :</small><br>` + local.html };
       }
     }
-    if (hits.length && hits[0].s > 2.2) return { html: fromHits(hits) };
-    // Pas trouvé localement : on apprend en ligne (Wikipédia), puis on retient la réponse.
+    return localAnswer(q, n, hits, sym, quote, whyAsk, priceAsk);
+  }
+
+  // Réponse sans cerveau Claude : connaissances de l'app, puis Wikipédia, en refusant de répondre à côté
+  async function localAnswer(q, n, hits, sym, quote, whyAsk, priceAsk) {
+    if (quote && (priceAsk || whyAsk)) return { html: whyAsk ? await whyMove(q, null, quote) : quoteLine(quote) };
+    const qt = [...new Set(toks(q))];
+    // Pertinent = score suffisant ET au moins un mot important de la question dans le titre ou les mots-clés de la fiche
+    // (comparaison sur les 6 premières lettres : « diversifier » ↔ « diversification »)
+    const stem = w => w.length > 6 ? w.slice(0, 6) : w;
+    const onTopic = h => h && qt.some(w => toks(h.d.t + " " + h.d.key).some(x => x === w || stem(x) === stem(w)));
+    const best = hits.find(h => h.s > 1.6 && onTopic(h));
+    const timely = TIMELY.test(n);
+    if (best && !timely) return { html: fromHits([best].concat(hits.filter(h => h !== best))) };
+    // Pas trouvé localement (ou question d'actualité) : Wikipédia, si la page correspond vraiment à la question
     try {
       const w = await wiki(q);
-      if (w) return { html: `${esc(w.a)}<br><br><small class="muted">📚 Appris à l'instant sur Wikipédia : <a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.t)}</a>. Je m'en souviendrai.</small>${hits.length ? "<br><small>Voir aussi : " + hits.map(h => esc(h.d.t)).join(", ") + "</small>" : ""}` };
+      if (w && toks(w.t + " " + w.a).filter(x => qt.includes(x)).length >= Math.min(2, qt.length))
+        return { html: `${esc(w.a)}<br><br><small class="muted">Appris à l'instant sur Wikipédia : <a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.t)}</a>${timely ? " (vérifie la date : l'information a pu changer)" : ""}. Je m'en souviendrai.</small>` };
     } catch (e) { /* hors ligne */ }
-    if (hits.length) return { html: `<small class="muted">Je ne suis pas certain d'avoir compris ; voici le plus proche :</small><br>` + fromHits(hits) };
+    if (timely) return { html: `C'est une information qui change avec le temps, et je n'ai pas de source à jour en ce moment : je préfère ne pas te répondre au hasard.${best ? `<br><br>Ce que je peux t'expliquer :<br>` + fromHits([best]) : ""}<br><br><small class="muted">Active le cerveau Claude (onglet Copilote) pour les questions d'actualité : il cherche sur le web et cite ses sources.</small>` };
+    if (best) return { html: fromHits([best]) };
+    if (hits.length) return { html: `Je ne suis pas sûr d'avoir compris. Tu parles peut-être de : ${hits.map(h => `<b>${esc(h.d.t)}</b>`).join(", ")} ? Reformule avec le mot exact et je t'explique.` };
     return { html: "Je ne sais pas encore répondre à ça, et je n'ai pas pu chercher en ligne. Reformule avec un mot-clé (ex. « inflation », « OHADA », « levier »), ou active le cerveau Claude dans l'onglet Copilote pour des réponses complètes." };
+  }
+
+  // ---------- Cerveau Claude via le relais (sans clé pour l'utilisateur) ----------
+  const relayUrl = () => (M.CONFIG && M.CONFIG.relayUrl || "").replace(/\/$/, "");
+  async function relayAsk(q, context) {
+    const history = st().chat.slice(-9, -1).filter(x => x.plain || x.text).map(x => ({ role: x.role, content: x.plain || x.text.replace(/<[^>]+>/g, " ") }));
+    const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 90000);
+    try {
+      const r = await fetch(relayUrl() + "/ai", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ q, context, history }), signal: ctl.signal });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.text) throw new Error(d.error || "HTTP " + r.status);
+      return d;
+    } finally { clearTimeout(to); }
   }
   function fromHits(hits) {
     const h = hits[0].d;
@@ -653,7 +788,7 @@ ${context}`;
       </div>
       <div class="glass pad set-sec" style="margin-top:14px">
         <h2>${M.icon("ai")} Cerveau Claude (optionnel)</h2>
-        <p class="muted">Sans clé, le chat répond avec ses connaissances locales et apprend sur Wikipédia. Avec une clé API Anthropic, il utilise Claude avec recherche web pour des réponses complètes sur tous les sujets. La clé reste sur cet appareil ; pour une app publique, il faudra passer par un serveur.</p>
+        <p class="muted">${relayUrl() ? "<b>Activé pour tous par l'app</b> : le chat répond avec Claude et la recherche web, sans clé de ta part. Une clé personnelle reste possible (elle passe alors en priorité)." : "Sans clé, le chat répond avec ses connaissances locales et apprend sur Wikipédia. Avec une clé API Anthropic, il utilise Claude avec recherche web pour des réponses complètes sur tous les sujets. La clé reste sur cet appareil. Pour l'activer pour tous les utilisateurs sans clé, installe le relais (relay/README.md)."}</p>
         <div class="set-row"><div><b>Clé API Anthropic</b><small>À créer sur console.anthropic.com (payant à l'usage).</small></div><div class="set-ctl"><span class="inp"><input type="password" id="c-key" value="${esc(a.cfg.claudeKey)}" placeholder="sk-ant-…" autocomplete="off"></span></div></div>
         <div class="set-row"><div><b>Modèle</b></div><div class="set-ctl"><select id="c-model">${[["claude-opus-5-5", "Claude Opus 5.5 (le plus précis)"], ["claude-sonnet-5-5", "Claude Sonnet 5.5 (plus rapide)"], ["claude-haiku-5-5", "Claude Haiku 5.5 (le moins cher)"]].map(([k, t]) => `<option value="${k}" ${a.cfg.claudeModel === k ? "selected" : ""}>${t}</option>`).join("")}</select></div></div>
       </div>

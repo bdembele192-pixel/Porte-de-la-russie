@@ -25,7 +25,9 @@ window.M = window.M || {};
   N.unseen = () => N.items.filter(i => Date.parse(i.date) > seenAt()).length;
 
   async function load() {
-    const urls = (M.CONFIG && M.CONFIG.newsUrls) || ["data/news.json"];
+    // Relais (s'il est installé) : communiqués de moins de 5 min ; sinon fichier du robot GitHub
+    const relay = M.CONFIG && M.CONFIG.relayUrl ? [M.CONFIG.relayUrl.replace(/\/$/, "") + "/news"] : [];
+    const urls = relay.concat((M.CONFIG && M.CONFIG.newsUrls) || ["data/news.json"]);
     for (const u of urls) {
       try {
         const r = await fetch(u + (u.includes("?") ? "&" : "?") + "t=" + Math.floor(Date.now() / 60000), { cache: "no-store" });
@@ -81,7 +83,7 @@ window.M = window.M || {};
     M.state.newsSeen = Date.now(); M.save(); badge();
     el.innerHTML = `
       <div class="page-head"><div><p class="eyebrow">${M.icon("globe")} <span>Actus</span></p><h1>L'actu des marchés, <span class="grad">à la source</span></h1>
-      <p class="lede">Communiqués officiels des banques centrales, du FMI, de la Banque mondiale, de l'OMC, de l'ONU, des régulateurs et des instituts de statistiques. Collectés automatiquement toutes les 5 minutes, sans intermédiaire.</p></div></div>
+      <p class="lede">Communiqués officiels des banques centrales, du FMI, de la Banque mondiale, de l'OMC, de l'ONU, des régulateurs et des instituts de statistiques. Collectés automatiquement à la source, sans intermédiaire : toutes les 4 minutes avec le relais, sinon plusieurs fois par jour par le robot GitHub.</p></div></div>
       <div class="glass pad news-status" id="n-status"></div>
       <div class="sec-head"><h2>Mouvements <span class="muted">en direct</span></h2><span class="pill" id="mv-mode">…</span></div>
       <div class="movers" id="movers"></div>
@@ -99,7 +101,7 @@ window.M = window.M || {};
         ? `<div class="ns-row"><span>${M.icon("refresh")} Dernière collecte <b>${ago(N.generatedAt)}</b> · <b>${ok}/${N.sources.length}</b> sources actives · ${N.items.length} communiqués</span>
             <button class="btn ghost sm" id="n-src">Voir les sources</button></div>
            <div class="ns-src" id="ns-src" hidden>${N.sources.map(s => `<span class="chip ${s.ok ? "ok" : "d-ext"}" data-tip-text="${esc(s.ok ? s.count + " articles récupérés" : "Indisponible : " + (s.error || "erreur"))}">${s.ok ? "●" : "○"} ${esc(s.name)}</span>`).join("")}</div>`
-        : `<div class="ns-row"><span>${M.icon("refresh")} ${N.error && !N.loaded ? "Chargement…" : "La première collecte n'a pas encore eu lieu : elle démarre automatiquement dès la mise en ligne (robot GitHub, toutes les 5 minutes)."}</span></div>`;
+        : `<div class="ns-row"><span>${M.icon("refresh")} ${N.error && !N.loaded ? "Chargement…" : "La première collecte n'a pas encore eu lieu : elle démarre automatiquement dès la mise en ligne (relais, ou robot GitHub)."}</span></div>`;
       const b = $("#n-src", el); if (b) b.onclick = () => { const x = $("#ns-src", el); x.hidden = !x.hidden; };
     }
     function drawList() {
