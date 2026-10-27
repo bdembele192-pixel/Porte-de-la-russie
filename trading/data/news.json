@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-27T07:45:14.071Z",
+ "generatedAt": "2026-10-27T13:35:57.556Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 429"
+   "error": "HTTP 404"
   },
   {
    "id": "wb",
@@ -123,6 +123,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-27T05:00:00.000Z",
    "firstSeen": "2026-10-27T07:45:14.071Z"
+  },
+  {
+   "id": "d40dd902446a28fb",
+   "title": "October 2026 euro area bank lending survey",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261027~506ef03145.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-27T00:00:00.000Z",
+   "firstSeen": "2026-10-27T13:35:57.556Z"
   },
   {
    "id": "48983319ee95a1ba",
