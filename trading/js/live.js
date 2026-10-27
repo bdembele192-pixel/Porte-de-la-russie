@@ -7,6 +7,9 @@ window.M = window.M || {};
 
   /* Ticket d'ordre réutilisable.
      opts : { trader, price(), sym, maxLev, onOpen(tr) } */
+  // Raisons proposées dans le journal du ticket
+  const WHY = ["Tendance", "Support / résistance", "Cassure", "Actualité", "Intuition"];
+
   M.ticket = function (el, opts) {
     const cfg = M.state.settings;
     const cur = M.currency();
@@ -30,11 +33,22 @@ window.M = window.M || {};
           <label class="fld" data-tip="take-profit"><span>Objectif</span>
             <span class="inp"><input type="number" id="t-tp" min="0" step="0.1" value="${cfg.defTp}" inputmode="decimal"><em>%</em></span><small id="t-tpp">—</small></label>
         </div>
+        ${opts.journal ? `<div class="fld t-why" data-tip-text="Ton journal de trading : note pourquoi tu entres. Le coach compare ensuite tes raisons à tes résultats.">
+          <span>Pourquoi ce trade ? <small>journal</small></span>
+          <div class="why-chips">${WHY.map(w => `<button type="button" data-w="${w}">${w}</button>`).join("")}</div>
+          <input type="text" id="t-why" maxlength="140" placeholder="Ex. : rebond sur le support, stop sous le dernier creux">
+        </div>` : ""}
         <div class="riskbox" id="t-risk"></div>
         <button class="go long" id="t-go" data-tip-text="Envoie l'ordre au prix actuel du marché." data-tip-kbd="B = long · S = short">Acheter</button>
       </div>`;
     const amt = $("#t-amt", el), lev = $("#t-lev", el), sl = $("#t-sl", el), tp = $("#t-tp", el);
     const tr = opts.trader;
+    const why = $("#t-why", el);
+    let whyTag = "";
+    $$(".why-chips button", el).forEach(b => b.onclick = () => {
+      whyTag = whyTag === b.dataset.w ? "" : b.dataset.w;
+      $$(".why-chips button", el).forEach(x => x.classList.toggle("on", x.dataset.w === whyTag));
+    });
 
     function setDir(d) {
       st.dir = d;
@@ -99,8 +113,10 @@ window.M = window.M || {};
       // Copilote IA (trading live uniquement) : peut proposer une version plus sûre de l'ordre
       if (opts.advisor && !bypass && opts.advisor(c, st.dir, { keep: () => send(null, true), apply: p => { apply(p); send(null, true); } })) return;
       if (cfg.confirm && !confirm(`${st.dir > 0 ? "Acheter (long)" : "Vendre (short)"} pour ${M.fmt$(c.m)}${c.L > 1 ? " ×" + c.L : ""} ?\nStop : ${c.slPrice ? M.Market.fmtPrice(c.slPrice) : "aucun"} · Objectif : ${c.tpPrice ? M.Market.fmtPrice(c.tpPrice) : "aucun"}`)) return;
-      const r = tr.open({ dir: st.dir, margin: c.m, lev: c.L, sl: c.slPrice, tp: c.tpPrice, price: c.price, at: opts.at ? opts.at() : Date.now(), sym: opts.sym ? opts.sym() : "" });
+      const r = tr.open({ dir: st.dir, margin: c.m, lev: c.L, sl: c.slPrice, tp: c.tpPrice, price: c.price, at: opts.at ? opts.at() : Date.now(), sym: opts.sym ? opts.sym() : "",
+        why: why ? { tag: whyTag, note: why.value.trim() } : null });
       if (r.err) { M.toast(r.err, "err"); return; }
+      if (why) { why.value = ""; whyTag = ""; $$(".why-chips button", el).forEach(x => x.classList.remove("on")); }
       M.sfx("open");
       M.unlock("first_trade");
       if (c.slPrice) M.unlock("first_stop");
@@ -121,6 +137,20 @@ window.M = window.M || {};
 
   /* Carte de la position ouverte. */
   M.posCard = function (el, { trader, price, onClose }) {
+    let wiOpen = false;
+    // « Et si ? » : résultat de la position si le prix bougeait maintenant de X %, stop et liquidation compris
+    function whatIf(p, px) {
+      const eq = trader.equity(px);
+      return [-10, -5, -2, 2, 5, 10].map(m => {
+        const t = px * (1 + m / 100), long = p.dir > 0;
+        let exit = t, why = "";
+        if (p.liq && (long ? t <= p.liq : t >= p.liq) && !(p.sl && (long ? p.sl > p.liq : p.sl < p.liq))) { return { m, pnl: -p.margin - p.fees, why: "liquidé : toute la mise perdue", eq }; }
+        if (p.sl && (long ? t <= p.sl : t >= p.sl)) { exit = p.sl; why = "stop touché, perte limitée"; }
+        else if (p.tp && (long ? t >= p.tp : t <= p.tp)) { exit = p.tp; why = "objectif atteint"; }
+        const pnl = p.dir * (exit - p.entry) * p.qty - p.fees - p.qty * exit * M.FEE;
+        return { m, pnl, why, eq };
+      });
+    }
     function draw() {
       const p = trader.pos;
       if (!p) { el.innerHTML = `<div class="nopos">Aucune position ouverte.<br><small>Choisis un sens, une mise, un stop… et lance-toi.</small></div>`; return; }
@@ -143,7 +173,14 @@ window.M = window.M || {};
             <button class="btn ghost sm" id="p-be" data-tip-text="Déplace le stop-loss à ton prix d'entrée : le trade ne peut plus être perdant (hors frais et gap). Possible seulement si tu es en gain." ${u > 0 ? "" : "disabled"}>🔒 Stop au point mort</button>
             <button class="btn sm closeb" id="p-x" data-tip-text="Ferme toute la position au prix du marché." data-tip-kbd="X">Clôturer</button>
           </div>
+          ${p.why && (p.why.tag || p.why.note) ? `<p class="wi-note">Journal : ${esc([p.why.tag, p.why.note].filter(Boolean).join(" — "))}</p>` : ""}
+          <div class="whatif">
+            <button type="button" id="p-wi" aria-expanded="${wiOpen}" data-tip-text="Teste ta position : ce que tu gagnes ou perds si le prix bouge d'un coup, stop et liquidation compris.">Et si le prix bougeait ? <em>${wiOpen ? "masquer" : "tester"}</em></button>
+            ${wiOpen ? `<div class="wi-rows">${whatIf(p, px).map(r => `<div class="wi-r"><b class="mono ${r.m > 0 ? "up" : "dn"}">${r.m > 0 ? "+" : "−"}${Math.abs(r.m)} %</b><small>${r.why || "position toujours ouverte"}</small><b class="mono ${r.pnl >= 0 ? "up" : "dn"}">${r.pnl >= 0 ? "+" : ""}${M.fmt$(r.pnl)} <small>${pct(r.pnl / Math.max(r.eq, 1), 1)}</small></b></div>`).join("")}</div>
+            <p class="wi-note">Le pourcentage est rapporté à la valeur de ton compte. Un mouvement brutal peut sauter ton stop (gap) : la perte réelle serait alors plus grande.</p>` : ""}
+          </div>
         </div>`;
+      $("#p-wi", el).onclick = () => { wiOpen = !wiOpen; draw(); };
       $("#p-x", el).onclick = () => onClose("manual");
       $("#p-be", el).onclick = () => { p.sl = p.entry; M.save(); M.toast("Stop déplacé au point mort 🔒"); draw(); onClose(null); };
     }
@@ -227,7 +264,7 @@ window.M = window.M || {};
       ${M.disclaimer()}`;
 
     const ticket = M.ticket($("#tk", el), {
-      trader, maxLev: 20, price: () => price, sym: () => sym,
+      trader, maxLev: 20, journal: true, price: () => price, sym: () => sym,
       guard() {
         const lim = M.state.settings.dayLoss;
         if (!lim) return null;
@@ -276,7 +313,8 @@ window.M = window.M || {};
       $("#hist", el).innerHTML = log.length ? log.map(t => `
         <div class="h-i"><span class="${t.dir > 0 ? "up" : "dn"}">${t.dir > 0 ? "▲" : "▼"} ${M.Market.asset(t.sym).short}${t.lev > 1 ? " ×" + t.lev : ""}</span>
         <span class="muted">${{ sl: "stop", tp: "objectif", liq: "liquidé", manual: "manuel" }[t.reason] || ""}</span>
-        <b class="mono ${t.pnl >= 0 ? "up" : "dn"}">${t.pnl >= 0 ? "+" : ""}${M.fmt$(t.pnl)}</b></div>`).join("")
+        <b class="mono ${t.pnl >= 0 ? "up" : "dn"}">${t.pnl >= 0 ? "+" : ""}${M.fmt$(t.pnl)}</b>
+        ${t.why && (t.why.tag || t.why.note) ? `<span class="h-why">${esc([t.why.tag, t.why.note].filter(Boolean).join(" — "))}</span>` : ""}</div>`).join("")
         : `<p class="muted small">Tes trades clôturés apparaîtront ici.</p>`;
     }
     function drawLines() {

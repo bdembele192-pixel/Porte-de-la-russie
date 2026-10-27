@@ -27,7 +27,7 @@ window.M = window.M || {};
     }
 
     /* Ouvre une position. margin = mise en $, lev = levier, sl/tp = prix (ou null). */
-    open({ dir, margin, lev, sl, tp, price, at, sym }) {
+    open({ dir, margin, lev, sl, tp, price, at, sym, why }) {
       if (this.s.pos) return { err: "Une position est déjà ouverte." };
       margin = Math.min(margin, this.s.cash / (1 + FEE * lev));
       if (!(margin > 0.5)) return { err: "Solde insuffisant." };
@@ -37,6 +37,7 @@ window.M = window.M || {};
       const equityBefore = this.s.cash;
       this.s.cash -= margin + fee;
       this.s.pos = { dir, qty, entry: price, margin, lev, sl: sl || null, tp: tp || null, at, sym, fees: fee, equityBefore };
+      if (why && (why.tag || why.note)) this.s.pos.why = why;
       this.s.pos.liq = lev > 1 ? this.liqPrice(this.s.pos) : null;
       return { ok: true, pos: this.s.pos };
     }
@@ -52,7 +53,7 @@ window.M = window.M || {};
       const tr = {
         sym: p.sym, dir: p.dir, entry: p.entry, exit: price, qty: p.qty, lev: p.lev, margin: p.margin,
         sl: p.sl, tp: p.tp, pnl: back - p.margin - p.fees, gross: pnl, fees: p.fees + fee, reason, openAt: p.at, closeAt: at,
-        equityBefore: p.equityBefore, ai: p.ai
+        equityBefore: p.equityBefore, ai: p.ai, why: p.why
       };
       this.s.log.push(tr);
       this.s.pos = null;
@@ -140,6 +141,23 @@ window.M = window.M || {};
       else if (rr < 0.8) { out.score -= 8; out.bad.push(`✂️ Tu coupes tes gains trop tôt : gain moyen ${fmt$(avgW)} vs perte moyenne ${fmt$(avgL)}.`); out.tips.push("Fixe un objectif à au moins 2× la distance de ton stop (R:R 1:2), et laisse-le travailler."); }
     }
     if (log.some(t => t.reason === "tp")) out.good.push("💰 Objectif touché au moins une fois : plan suivi jusqu'au bout.");
+
+    // Journal : raisons notées à l'entrée (trading live)
+    const noted = log.filter(t => t.why);
+    if (n >= 3 && noted.length < n / 2) out.tips.push("Note pourquoi tu entres dans chaque trade (champ « Pourquoi ce trade ? »). Sans journal, impossible de savoir ce qui marche vraiment chez toi.");
+    else if (noted.length >= 3) {
+      const by = {};
+      noted.forEach(t => { const k = t.why.tag || "Autre"; (by[k] = by[k] || []).push(t.pnl); });
+      const rows = Object.entries(by).filter(([, v]) => v.length >= 2).map(([k, v]) => [k, v.reduce((a, b) => a + b, 0), v.length]);
+      rows.sort((a, b) => b[1] - a[1]);
+      if (rows.length) {
+        const best = rows[0], worst = rows[rows.length - 1];
+        if (best[1] > 0) out.good.push(`📓 Journal : tes trades « ${best[0]} » rapportent le plus (${fmt$(best[1])} sur ${best[2]} trades).`);
+        if (worst !== best && worst[1] < 0) out.tips.push(`Journal : tes trades « ${worst[0]} » te coûtent ${fmt$(-worst[1])} sur ${worst[2]} trades. Réduis-les ou revois la méthode.`);
+      }
+      const gut = by.Intuition;
+      if (gut && gut.length >= 2 && gut.reduce((a, b) => a + b, 0) < 0) out.bad.push("🎲 Les trades « à l'intuition » sont dans le rouge : ton plan fait mieux que ton instinct.");
+    }
 
     out.score = Math.max(0, Math.min(100, Math.round(out.score)));
     if (!out.tips.length) out.tips.push(out.score >= 85 ? "Discipline solide. Prochaine étape : tenir un journal pour comprendre POURQUOI tes meilleurs trades marchent." : "Continue à pratiquer avec des petites tailles et un plan écrit.");
