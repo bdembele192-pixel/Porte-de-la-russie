@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-27T02:10:24.464Z",
+ "generatedAt": "2026-10-27T07:45:14.071Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 404"
+   "error": "HTTP 429"
   },
   {
    "id": "wb",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "b567760cd1903493",
+   "title": "Indicators for Core CPI",
+   "url": "http://www.boj.or.jp/en/research/research_data/cpi/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-27T05:00:00.000Z",
+   "firstSeen": "2026-10-27T07:45:14.071Z"
+  },
   {
    "id": "48983319ee95a1ba",
    "title": "Services Producer Price Index (Sept.)",
