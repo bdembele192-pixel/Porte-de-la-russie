@@ -161,7 +161,7 @@ window.M = window.M || {};
       const q = M.Quotes.byId[sym.slice(2)];
       if (!q) return null;
       const st = QSTYLE[q.type] || ["chart", "#E8B64C"];
-      return { q: true, sym, short: q.short, name: q.name, label: q.type === "BRVM" ? q.short : q.name, sub: q.type === "BRVM" ? q.name : (q.rt ? "temps réel" : "différé") + " · " + M.Quotes.age(q.time),
+      return { q: true, sym, short: q.short, name: q.name, label: q.type === "BRVM" ? q.short : q.name, sub: q.type === "BRVM" ? q.name : M.Quotes.fresh(q),
         icon: M.icon(QICON[q.id] || st[0]), color: st[1], price: q.price, chg: q.chg, cur: CUR[q.cur] != null ? CUR[q.cur] : " " + q.cur,
         fmt: q.cur === "XOF" ? (v => Math.round(v).toLocaleString("fr-FR")) : M.Quotes.fmt, delay: q.delay, src: q.src || "brvm.org", rt: q.rt, tip: null };
     }
@@ -325,8 +325,13 @@ window.M = window.M || {};
       const go = $("#ch-go", el), dl = $("#ch-dl", el);
       go.hidden = a.q; go.setAttribute("href", "#/live/" + sym);
       dl.hidden = !a.q;
-      if (a.q) { dl.textContent = (a.rt ? "● Temps réel" : "● Différé") + " · " + a.src; dl.className = "pill " + (a.rt ? "live" : "demo"); dl.setAttribute("data-tip-text", `Cours gratuit collecté toutes les 5 min (${a.delay}). Pas encore échangeable dans le terminal Live.`); }
-      const last = a.price != null ? a.price : bars.length ? bars[bars.length - 1].c : null;
+      if (a.q) {
+        const q = M.Quotes.byId[sym.slice(2)], direct = q && !q.fromFile && q.open_;
+        dl.textContent = "● " + M.Quotes.fresh(q).replace(/^./, c => c.toUpperCase()) + " · " + a.src;
+        dl.className = "pill " + (direct ? "live" : "demo");
+        dl.setAttribute("data-tip-text", `Source : ${a.src} (${a.delay}). Cours gratuit, actualisé toutes les 30 s quand la source le permet. Pas encore échangeable dans le terminal Live.`);
+      }
+      const last = !a.q && livePrice != null ? livePrice : a.price != null ? a.price : bars.length ? bars[bars.length - 1].c : null;
       $("#ch-p", el).textContent = last != null ? a.fmt(last) + a.cur : "—";
       const cc = $("#ch-c", el);
       if (a.chg != null) { cc.textContent = (a.chg >= 0 ? "▲ " : "▼ ") + pctTxt(a.chg) + (a.q ? " (séance)" : " (24 h)"); cc.className = "mono " + (a.chg >= 0 ? "up" : "dn"); }
@@ -340,15 +345,28 @@ window.M = window.M || {};
         $("#ch-v", el).textContent = v >= 1e9 ? num(v / 1e9, 1) + " Md" : v >= 1e6 ? num(v / 1e6, 1) + " M" : num(v / 1e3, 0) + " k";
       }
     }
-    let req = 0;
-    async function loadChart() {
+    let req = 0, live = null, raf = 0, livePrice = null;
+    // Direct : flux Binance pour les cryptos (bougie en cours mise à jour à chaque transaction)
+    function startLive() {
+      if (live) { live.close(); live = null; }
+      livePrice = null;
+      if (sym.startsWith("Q:") || !bars.length) return;
+      live = M.Market.stream(sym, RANGES[range][0], bars[bars.length - 1], b => {
+        const last = bars[bars.length - 1];
+        if (last && b.t === last.t) bars[bars.length - 1] = b;
+        else if (!last || b.t > last.t) { bars.push(b); if (bars.length > 600) bars.shift(); }
+        livePrice = b.c;
+        if (!raf) raf = requestAnimationFrame(() => { raf = 0; if (alive) { drawHead(); drawChart(); } });
+      });
+    }
+    async function loadChart(keep) {
       const my = ++req, [tf, n] = RANGES[range];
       if (sym.startsWith("Q:") && !M.Quotes.loaded) await M.Quotes.load();
       if (sym.startsWith("Q:") && !M.Quotes.byId[sym.slice(2)]) sym = "BTCUSDT";
-      bars = []; drawHead(); drawChart();
+      if (!keep) { bars = []; drawHead(); drawChart(); }
       const nb = sym.startsWith("Q:") ? await M.Quotes.bars(sym.slice(2), range) : (await M.Market.klines(sym, tf, { limit: n })).bars;
       if (!alive || my !== req) return;
-      bars = nb; drawHead(); drawChart();
+      bars = nb; drawHead(); drawChart(); startLive();
     }
     $$("#ch-r button", el).forEach(b => b.onclick = () => { range = b.dataset.r; $$("#ch-r button", el).forEach(x => x.classList.toggle("on", x === b)); loadChart(); });
 
@@ -399,24 +417,34 @@ window.M = window.M || {};
 
     // ----- Rafraîchissement -----
     const syms = M.Market.ASSETS.map(a => a.sym);
+    let cryptoLive = null;
+    function updMode() {
+      const mode = $("#mk-mode", el); if (!mode) return;
+      const bourses = M.Quotes.lastLive && Date.now() - M.Quotes.lastLive < 120e3 ? " · Bourses en direct" : M.Quotes.live ? " · Bourses : copie " + M.Quotes.age(Date.parse(M.Quotes.generatedAt)) : "";
+      mode.textContent = (cryptoLive == null ? "● Connexion…" : cryptoLive ? "● Crypto en direct" : "● Crypto : démo") + bourses;
+      mode.className = "pill " + (cryptoLive ? "live" : "demo");
+    }
     async function refresh() {
       if (!M.Quotes.loaded) await M.Quotes.load();
       const r = await M.Market.tickers(syms);
       if (!alive) return;
-      tick = r.data;
+      tick = r.data; cryptoLive = r.live;
       if (r.live && r.data.EURUSDT) M.setEurUsd(r.data.EURUSDT.last);
+      updMode();
       const mode = $("#mk-mode", el);
-      mode.textContent = (r.live ? "● Crypto en direct" : "● Crypto : démo") + (M.Quotes.live ? " · Bourses " + M.Quotes.age(Date.parse(M.Quotes.generatedAt)) : "");
-      mode.className = "pill " + (r.live ? "live" : "demo");
       mode.setAttribute("data-tip-text", (r.live ? "Cryptos : prix réels de l'API publique Binance, rafraîchis toutes les 15 s." : "Cryptos : marché injoignable, prix simulés.")
-        + (M.Quotes.live ? " Bourses, matières premières, devises et BRVM : cours gratuits collectés toutes les 5 min (CNBC, brvm.org), différés de quelques minutes." : ""));
+        + " Bourses, matières premières et devises : CNBC, lu directement toutes les 30 s (indices US, actions US et devises en temps réel, autres places différées de 15 min). BRVM : brvm.org, cours de la séance.");
       drawRows(); drawHead(); drawPf();
     }
     drawRows(); drawPf(); refresh(); loadChart();
     const iv = setInterval(refresh, 15000);
+    // Bourses : nouveaux cours toutes les 30 s ; le graphique du jour suit
+    let qN = 0;
+    const onQ = () => { if (!alive) return; drawRows(); drawHead(); updMode(); if (sym.startsWith("Q:") && (range === "1J" || range === "1S") && ++qN % 2 === 0) loadChart(true); };
+    document.addEventListener("quotes:update", onQ);
     const onR = () => { drawChart(); drawPf(); };
     window.addEventListener("resize", onR);
-    return () => { alive = false; clearInterval(iv); window.removeEventListener("resize", onR); };
+    return () => { alive = false; clearInterval(iv); if (live) live.close(); document.removeEventListener("quotes:update", onQ); window.removeEventListener("resize", onR); };
   };
 
   document.addEventListener("DOMContentLoaded", () => {

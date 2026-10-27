@@ -1,0 +1,17 @@
+# Relais Mèche : BRVM et actualités en direct + Mèche IA (Claude) pour tous les utilisateurs.
+# Déploiement : voir README.md (npm install, npx wrangler login, npx wrangler deploy).
+name = "meche-relais"
+main = "src/worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Modèle de Claude utilisé pour répondre (voir README.md pour le coût par question)
+MODEL = "claude-opus-5-5"
+# Profondeur de réflexion : low, medium, high
+EFFORT = "medium"
+# Nombre maximal de questions par minute et par adresse IP
+AI_PER_MINUTE = "6"
+# Sites autorisés à utiliser le relais (séparés par des virgules), « * » = tous
+ALLOWED_ORIGINS = "*"
+
+# La clé API Claude ne se met JAMAIS ici : npx wrangler secret put ANTHROPIC_API_KEY
