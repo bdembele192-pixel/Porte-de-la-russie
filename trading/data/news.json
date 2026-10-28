@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-27T13:35:57.556Z",
+ "generatedAt": "2026-10-28T14:07:59.714Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "efeb56b0ea62aed5",
+   "title": "Trade Policy Review: Democratic Republic of the Congo",
+   "url": "https://www.wto.org/english/tratop_e/tpr_e/tpr_cod_28oct26_e.htm",
+   "summary": "The third review of the trade policies and practices of the Democratic Republic of the Congo takes place on 28 and 30 October 2026. The basis for the review is a report by the WTO Secretariat and a report by the Government of the Democratic Republic of the Congo.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-28T00:00:00.000Z",
+   "firstSeen": "2026-10-28T14:07:59.714Z"
+  },
   {
    "id": "b567760cd1903493",
    "title": "Indicators for Core CPI",
@@ -1486,28 +1497,6 @@
    "sid": "sec",
    "cat": "Régulateurs",
    "date": "2026-09-28T17:46:30.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "b08f044c9985751b",
-   "title": "Intelligence artificielle : l’Afrique cherche à tracer sa propre voie",
-   "url": "https://news.un.org/feed/view/fr/story/2026/09/1159566",
-   "summary": "Alors que l’intelligence artificielle se diffuse à grande vitesse sur le continent, l’enjeu n’est plus seulement pour l’Afrique d’accéder aux technologies développées ailleurs, mais de concevoir des outils adaptés à ses propres besoins. Pour Girmaw Abebe Tadesse, membre d’un groupe scientifique international soutenu pa",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-09-28T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "6789000c4c6f75a9",
-   "title": "Restaurer les forêts pour renforcer la sécurité alimentaire",
-   "url": "https://news.un.org/feed/view/fr/story/2026/09/1159561",
-   "summary": "La restauration des forêts et des paysages peut contribuer à relever simultanément les défis de la sécurité alimentaire, de la biodiversité, du climat et du développement rural, estime la FAO dans son rapport annuel. Face à l’ampleur des terres dégradées, l’organisation appelle à accélérer les efforts grâce à davantage",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-09-28T12:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
