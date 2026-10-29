@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-29T08:50:13.941Z",
+ "generatedAt": "2026-10-29T15:37:34.005Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 429"
+   "error": "HTTP 404"
   },
   {
    "id": "wb",
@@ -109,10 +109,120 @@
    "name": "EIA – Énergie (États-Unis)",
    "cat": "Énergie",
    "ok": true,
-   "count": 20
+   "count": 21
   }
  ],
  "items": [
+  {
+   "id": "1bc57f18d04e87a0",
+   "title": "Christine Lagarde, Boris Vujčić: Monetary policy statement",
+   "url": "https://www.ecb.europa.eu//press/press_conference/monetary-policy-statement/2026/html/ecb.is261029~5c5ffe99e5.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T14:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "a84dbbb657b0460c",
+   "title": "Minutes of the Meeting of the Court of Directors held on 17 September 2026",
+   "url": "https://www.bankofengland.co.uk/minutes/2026/september/court-minutes-17-september-2026",
+   "summary": "The Bank's Court of Directors acts as a unitary board, setting the organisation's strategy and budget and taking key decisions on resourcing and appointments. Required to meet a minimum seven times per year, it has five executive members from the Bank and up to nine non-executive members.",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T14:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "ba40075dbde5a774",
+   "title": "LNG imports make up increasing share of Colombia's natural gas supply",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68364",
+   "summary": "Colombia is importing more liquefied natural gas (LNG) as domestic production continues to fall. A potential drought this fall and winter could limit the availability of hydroelectric generation and boost the country's demand for natural gas power generation. Colombia's government has declared a national disaster in an",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-10-29T14:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "2345c011f5cc462b",
+   "title": "Monetary policy decisions",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.mp261029~9a493adf17.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T13:15:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "16f508c1c7e94b3d",
+   "title": "GDP (Advance Estimate), 3rd Quarter 2026",
+   "url": "https://www.bea.gov/news/2026/gdp-advance-estimate-3rd-quarter-2026",
+   "summary": "Real gross domestic product (GDP) increased at an annual rate of 3.4 percent in the third quarter of 2026 (July, August, and September), according to the advance estimate released today by the U.S. Bureau of Economic Analysis (BEA). In the second quarter, real GDP increased 2.2 percent. The contributors to the increase",
+   "source": "Bureau of Economic Analysis",
+   "sid": "bea",
+   "cat": "Statistiques",
+   "date": "2026-10-29T12:30:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "9384d8b08f5b4773",
+   "title": "Personal Income and Outlays, September 2026",
+   "url": "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026",
+   "summary": "Personal income increased $54.5 billion (0.2 percent at a monthly rate) in September, according to estimates released today by the U.S. Bureau of Economic Analysis (BEA). Disposable personal income (DPI)&ndash;personal income less personal current taxes&ndash;increased $52.7 billion (0.2 percent), and personal consumpt",
+   "source": "Bureau of Economic Analysis",
+   "sid": "bea",
+   "cat": "Statistiques",
+   "date": "2026-10-29T12:30:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "d5ee96f993ee9dec",
+   "title": "ECB President Lagarde to step down on 7 February 2027",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261029~abbb6dc64b.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T10:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "9ad0c85064ede32a",
+   "title": "Bank of England sets out approach to tokenised collateral in central clearing",
+   "url": "https://www.bankofengland.co.uk/news/2026/october/bank-of-england-sets-out-approach-to-tokenised-collateral-in-central-clearing",
+   "summary": "The Bank of England has today launched a consultation supporting central counterparties (CCPs) acceptance of tokenised forms of eligible collateral.",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T10:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "20eaa4bb0a114a9d",
+   "title": "CPMI publishes analysis on how central banks support payment system safety and efficiency and trust in money in the rapidly changing payments ecosystem",
+   "url": "https://www.bis.org/media-releases/20261029-cpmi-publishes-analysis-how-central-banks-support-payment-system-safety-and-efficiency-and",
+   "summary": "A new report by the BIS Committee on Payments and Market Infrastructures (CPMI) examines how technological innovation, changing user demand and the emergence of new types of payment service providers and arrangements are transforming payment systems.",
+   "source": "Banque des règlements internationaux",
+   "sid": "bis",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "ff16fe6c85a68537",
+   "title": "Global Review 2026 spotlights partnerships for trade and development",
+   "url": "https://www.wto.org/english/news_e/news26_e/aid_29oct26_526_e.htm",
+   "summary": "\"Developing economies seeking trade success need stronger partnerships with all stakeholders,\" WTO Director-General Ngozi Okonjo-Iweala said in her opening remarks at the 2026 Global Review on 29 October, marking 20 years of the Aid for Trade initiative. Over two days, ministers, heads of international organizations an",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
   {
    "id": "b5df6b697c46404a",
    "title": "Federal Reserve issues FOMC statement",
@@ -202,6 +312,28 @@
    "firstSeen": "2026-10-27T13:35:57.556Z"
   },
   {
+   "id": "6aa6fe3fc92f4b36",
+   "title": "WTO members discuss proposals on key trade and development issues",
+   "url": "https://www.wto.org/english/news_e/news26_e/devel_27oct26_527_e.htm",
+   "summary": "At meetings of the WTO's Committee on Trade and Development on 26-27 October 2026, members continued discussions on proposals covering trade as an engine for economic growth and the integration of trade and investment for industrialization. A group of members introduced a new proposal on capacity building for mutual re",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-27T00:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "fc42f5a7ff97d441",
+   "title": "Members review notifications, anti-dumping actions at committee meeting",
+   "url": "https://www.wto.org/english/news_e/news26_e/anti_27oct26_529_e.htm",
+   "summary": "The WTO’s Committee on Anti-Dumping Practices met on 27 October 2026 to review members’ latest notifications of new, amended or previously reviewed anti-dumping laws and regulations as well as reports on anti-dumping actions.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-27T00:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
    "id": "48983319ee95a1ba",
    "title": "Services Producer Price Index (Sept.)",
    "url": "http://www.boj.or.jp/en/statistics/pi/cspi_release/sppi2609.pdf",
@@ -244,6 +376,17 @@
    "cat": "Institutions",
    "date": "2026-10-26T00:00:00.000Z",
    "firstSeen": "2026-10-28T19:29:13.925Z"
+  },
+  {
+   "id": "7d21b00caa6988e3",
+   "title": "WTO members review, and note increasing resort to, safeguard actions",
+   "url": "https://www.wto.org/english/news_e/news26_e/safe_26oct26_528_e.htm",
+   "summary": "At its regular meeting on 26 October, the WTO Committee on Safeguards reviewed safeguard actions covering 39 products, 11 of which were steel/metal products. Several members expressed their views on the actions of the European Union and the United Kingdom concerning certain steel products. The UK, Japan, the Republic o",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-26T00:00:00.000Z",
+   "firstSeen": "2026-10-29T15:37:34.005Z"
   },
   {
    "id": "bfff58d568dfee6a",
@@ -1530,28 +1673,6 @@
    "sid": "fed",
    "cat": "Banques centrales",
    "date": "2026-09-29T20:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "7643d66659180d39",
-   "title": "SEC Charges Multiple Entities in Fraud Schemes Totaling at Least $15 Million That Used WhatsApp and Other Platforms to Lure Investors",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-95-sec-charges-multiple-entities-fraud-schemes-totaling-least-15-million-used-whatsapp-other-platforms",
-   "summary": "The Securities and Exchange Commission today charged multiple entities that are likely operated by individuals located overseas for defrauding hundreds of retail investors, including many in the U.S., through so-called investment confidence scams where…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-09-29T13:55:53.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "7f276f4b6d598f1e",
-   "title": "L’IA dope l’innovation, mais concentre les investissements",
-   "url": "https://news.un.org/feed/view/fr/story/2026/09/1159578",
-   "summary": "L’intelligence artificielle (IA) transforme les investissements mondiaux dans l’innovation, alors que les dépenses de recherche-développement et les financements en capital-risque repartent à la hausse, selon l’Indice mondial de l’innovation 2026 publié mardi par l’Organisation mondiale de la propriété intellectuelle (",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-09-29T12:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
