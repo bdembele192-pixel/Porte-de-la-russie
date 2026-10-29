@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-29T15:37:34.005Z",
+ "generatedAt": "2026-10-29T20:31:44.207Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,39 @@
  ],
  "items": [
   {
+   "id": "e16e4d1ed4e6b291",
+   "title": "Federal Reserve Board announces approval of application by The Bank of Nova Scotia",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/orders20261029a.htm",
+   "summary": "Federal Reserve Board announces approval of application by The Bank of Nova Scotia",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T20:30:00.000Z",
+   "firstSeen": "2026-10-29T20:31:44.207Z"
+  },
+  {
+   "id": "b835667bb1f04735",
+   "title": "Two Entities Charged in $130 Million Fraud Scheme That Used False SEC Filings to Boost Investor Confidence",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-110-two-entities-charged-130-million-fraud-scheme-used-false-sec-filings-boost-investor-confidence",
+   "summary": "The Securities and Exchange Commission today charged two foreign-operated, Colorado-incorporated entities, BG Wealth Sharing Ltd and DSJ Exchange Pty Ltd, for orchestrating a fraud scheme that used false SEC filings to boost confidence in their…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-10-29T16:42:37.000Z",
+   "firstSeen": "2026-10-29T20:31:44.207Z"
+  },
+  {
+   "id": "a450598163f06dfd",
+   "title": "Piero Cipollone: Next-day securities settlement, tokenisation and the transformation of Europe’s financial infrastructure",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261029~e9b57c3495.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T15:50:00.000Z",
+   "firstSeen": "2026-10-29T20:31:44.207Z"
+  },
+  {
    "id": "1bc57f18d04e87a0",
    "title": "Christine Lagarde, Boris Vujčić: Monetary policy statement",
    "url": "https://www.ecb.europa.eu//press/press_conference/monetary-policy-statement/2026/html/ecb.is261029~5c5ffe99e5.en.html",
@@ -145,6 +178,17 @@
    "cat": "Énergie",
    "date": "2026-10-29T14:00:00.000Z",
    "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "bfd89552618289d0",
+   "title": "Christine Lagarde, Boris Vujčić: Monetary policy statement (with Q&A)",
+   "url": "https://www.ecb.europa.eu//press/press_conference/monetary-policy-statement/2026/html/ecb.is261029~5c5ffe99e5.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-29T14:00:00.000Z",
+   "firstSeen": "2026-10-29T20:31:44.207Z"
   },
   {
    "id": "2345c011f5cc462b",
@@ -222,6 +266,17 @@
    "cat": "Institutions",
    "date": "2026-10-29T00:00:00.000Z",
    "firstSeen": "2026-10-29T15:37:34.005Z"
+  },
+  {
+   "id": "53b3eb9ed4c6b63a",
+   "title": "Côte d'Ivoire President: Re-globalization an opportunity to move beyond traditional trade",
+   "url": "https://www.wto.org/english/news_e/news26_e/pls_29oct26_530_e.htm",
+   "summary": "\"Re-globalization presents an opportunity for developing countries to move beyond their traditional areas of specialization in exporting primary products, and to occupy a more prominent place in the spheres of innovation, transformation, industrial production and marketing.\" That was the key message on 29 October of H.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-10-29T20:31:44.207Z"
   },
   {
    "id": "b5df6b697c46404a",
@@ -1662,17 +1717,6 @@
    "sid": "boe",
    "cat": "Banques centrales",
    "date": "2026-09-30T09:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "ac103fb429e68041",
-   "title": "Agencies publish resolution plan feedback letters for 15 banking organizations",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260929a.htm",
-   "summary": "Agencies publish resolution plan feedback letters for 15 banking organizations",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-09-29T20:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
