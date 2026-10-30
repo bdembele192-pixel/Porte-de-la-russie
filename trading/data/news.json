@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-30T11:35:45.733Z",
+ "generatedAt": "2026-10-30T17:07:48.666Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 404"
+   "error": "HTTP 429"
   },
   {
    "id": "wb",
@@ -109,10 +109,43 @@
    "name": "EIA – Énergie (États-Unis)",
    "cat": "Énergie",
    "ok": true,
-   "count": 21
+   "count": 22
   }
  ],
  "items": [
+  {
+   "id": "6f4bfc9972c3b898",
+   "title": "Philip R. Lane: AI adoption in Europe",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261030~08d9d540f0.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T16:10:00.000Z",
+   "firstSeen": "2026-10-30T17:07:48.666Z"
+  },
+  {
+   "id": "fc9449ded2d63fc2",
+   "title": "Decisions taken by the Governing Council of the ECB (in addition to decisions setting interest rates)",
+   "url": "https://www.ecb.europa.eu//press/govcdec/otherdec/2026/html/ecb.gc261030~e40f864093.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T14:00:00.000Z",
+   "firstSeen": "2026-10-30T17:07:48.666Z"
+  },
+  {
+   "id": "a5fbbc17c6e1dd2f",
+   "title": "The share of solar generation with co-located battery storage is increasing",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68384",
+   "summary": "Utility-scale solar developers are increasingly co-locating battery storage with new solar photovoltaic capacity. As of September 2026, over 16% of new utility-scale solar capacity added this year is co-located with operable battery storage, compared with 2% in 2017, according to data reported to EIA by operators.",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-10-30T14:00:00.000Z",
+   "firstSeen": "2026-10-30T17:07:48.666Z"
+  },
   {
    "id": "eaaf6578cbb6cd2e",
    "title": "Results of the ECB Survey of Professional Forecasters for the fourth quarter of 2026",
@@ -381,12 +414,34 @@
    "id": "acd234c2a8a064d4",
    "title": "WHO, WIPO and the WTO to hold 13th Joint Technical Symposium on 25 November 2026",
    "url": "https://www.wto.org/english/news_e/news26_e/heal_29oct26_531_e.htm",
-   "summary": "The World Health Organization (WHO), the World Intellectual Property Organization (WIPO) and the World Trade Organization (WTO) will hold the 13th Joint Technical Symposium on “Enabling Ecosystems for Local and Regional Health Products Manufacturing: Considering the Role of Trade, IP, AI and Digital Innovation” on 25 N",
+   "summary": "The World Health Organization (WHO), the World Intellectual Property Organization (WIPO) and the World Trade Organization (WTO) will hold the 13th Joint Technical Symposium on Enabling Ecosystems for Local and Regional Health Products Manufacturing: Considering the Role of Trade, IP, AI and Digital Innovation on 25 Nov",
    "source": "OMC",
    "sid": "wto",
    "cat": "Institutions",
    "date": "2026-10-29T00:00:00.000Z",
    "firstSeen": "2026-10-30T11:35:45.733Z"
+  },
+  {
+   "id": "a53463f53c256d38",
+   "title": "New report looks at role of South-South and triangular cooperation for trade development",
+   "url": "https://www.wto.org/english/news_e/news26_e/devel_29oct26_535_e.htm",
+   "summary": "The growing importance of trade between developing economies - South-South trade - is highlighted in a joint publication launched on Day 1 (29 October) of the 10th Global Review of Aid for Trade by the WTO and the United Nations Office for South-South Cooperation (UNOSSC). The publication examines how the partnerships ",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-10-30T17:07:48.666Z"
+  },
+  {
+   "id": "d35703e751e4ac09",
+   "title": "Members review regional trade agreements, confirm meeting frequency, adopt annual report",
+   "url": "https://www.wto.org/english/news_e/news26_e/rta_29oct26_532_e.htm",
+   "summary": "At a meeting of the Committee on Regional Trade Agreements (CRTA) on 29 October, WTO members considered five regional trade agreements (RTAs) among members as well as three involving non-members. They also took note of new RTA notifications and adopted the Committee's annual report for 2026.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-10-30T17:07:48.666Z"
   },
   {
    "id": "b5df6b697c46404a",
@@ -1761,61 +1816,6 @@
    "sid": "sec",
    "cat": "Régulateurs",
    "date": "2026-09-30T18:30:01.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "ace62c8a6e64dbcb",
-   "title": "SEC Charges Two Individuals With Orchestrating Fraud Scheme That Targeted Veterans",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-97-sec-charges-two-individuals-orchestrating-fraud-scheme-targeted-veterans",
-   "summary": "The Securities and Exchange Commission today announced charges against Christopher Kenji Dinelli and Jacob David “Kobe” Frankel for allegedly orchestrating a fraud scheme that raised more than $8.7 million from 35 investors through their fund, Beyond…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-09-30T16:42:15.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "0294c524543d27c2",
-   "title": "SEC Proposes Amendments to Expand Responsible Retailization of Private Markets",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-96-sec-proposes-amendments-expand-responsible-retailization-private-markets",
-   "summary": "The Securities and Exchange Commission today voted to propose rule amendments that would facilitate capital formation in the public and private markets by expanding retail investor choice and promoting innovation in regulated fund structures while…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-09-30T15:45:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "6d2fbe1f97289c6b",
-   "title": "U.S. electricity use for electric vehicles increasing at a slower pace in 2026",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68224",
-   "summary": "We estimate light-duty electric vehicles in the United States consumed 8% more electricity during the first six months of 2026 than in the last half of 2025 (2H25) in our Monthly Energy Review, down from the 13-24% growth seen in six-month periods in recent years. The slowing electric vehicle electricity consumption gr",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-09-30T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "865df1ebdf51d3a9",
-   "title": "Federal Reserve Board finalizes changes to enhance the transparency and public accountability of its stress test and reduce volatility in its stress test-related capital requirements",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20260930a.htm",
-   "summary": "Federal Reserve Board finalizes changes to enhance the transparency and public accountability of its stress test and reduce volatility in its stress test-related capital requirements",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-09-30T13:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "f8152b44aab639f6",
-   "title": "GDP, (Third Estimate), Industries, Corporate Profits, State GDP, and State Personal Income, 2nd Quarter 2026; State PCE, 2025",
-   "url": "https://www.bea.gov/news/2026/gdp-third-estimate-industries-corporate-profits-state-gdp-and-state-personal-income-2nd",
-   "summary": "Real gross domestic product (GDP) increased at an annual rate of 2.2 percent in the second quarter of 2026 (April, May, and June), according to the third estimate released today by the U.S. Bureau of Economic Analysis (BEA). In the first quarter, real GDP increased 2.5 percent (revised). The contributors to the increas",
-   "source": "Bureau of Economic Analysis",
-   "sid": "bea",
-   "cat": "Statistiques",
-   "date": "2026-09-30T12:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
