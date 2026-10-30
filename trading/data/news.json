@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-30T05:38:23.414Z",
+ "generatedAt": "2026-10-30T11:35:45.733Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,39 @@
   }
  ],
  "items": [
+  {
+   "id": "eaaf6578cbb6cd2e",
+   "title": "Results of the ECB Survey of Professional Forecasters for the fourth quarter of 2026",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261030~e92c3c838c.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T09:00:00.000Z",
+   "firstSeen": "2026-10-30T11:35:45.733Z"
+  },
+  {
+   "id": "81c77d8b91b7f086",
+   "title": "Quarterly Schedule of Outright Purchases of Japanese Government Bonds (Competitive Auction Method) (October-December 2026) (Schedule Updates)",
+   "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030c.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T08:00:00.000Z",
+   "firstSeen": "2026-10-30T11:35:45.733Z"
+  },
+  {
+   "id": "bd505c1c1bcad5a1",
+   "title": "Timetable and Schedule of U.S. Dollar Funds-Supplying Operations (November 2026-March 2027)",
+   "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030b.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T08:00:00.000Z",
+   "firstSeen": "2026-10-30T11:35:45.733Z"
+  },
   {
    "id": "e3cbaa08234c7323",
    "title": "Amendment to \"Basic Principles for Disposal of ETFs and J-REITs\"",
@@ -343,6 +376,17 @@
    "cat": "Institutions",
    "date": "2026-10-29T00:00:00.000Z",
    "firstSeen": "2026-10-29T20:31:44.207Z"
+  },
+  {
+   "id": "acd234c2a8a064d4",
+   "title": "WHO, WIPO and the WTO to hold 13th Joint Technical Symposium on 25 November 2026",
+   "url": "https://www.wto.org/english/news_e/news26_e/heal_29oct26_531_e.htm",
+   "summary": "The World Health Organization (WHO), the World Intellectual Property Organization (WIPO) and the World Trade Organization (WTO) will hold the 13th Joint Technical Symposium on “Enabling Ecosystems for Local and Regional Health Products Manufacturing: Considering the Role of Trade, IP, AI and Digital Innovation” on 25 N",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-10-30T11:35:45.733Z"
   },
   {
    "id": "b5df6b697c46404a",
@@ -1772,17 +1816,6 @@
    "sid": "bea",
    "cat": "Statistiques",
    "date": "2026-09-30T12:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "7084fe53589a82e1",
-   "title": "Financial Policy Committee Record – September 2026",
-   "url": "https://www.bankofengland.co.uk/financial-policy-committee-record/2026/september-2026",
-   "summary": "Our Financial Policy Committee (FPC) meets to identify risks to financial stability and agree policy actions aimed at safeguarding the resilience of the UK financial system.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-09-30T09:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
