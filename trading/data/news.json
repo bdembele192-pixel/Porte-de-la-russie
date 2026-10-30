@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-30T17:07:48.666Z",
+ "generatedAt": "2026-10-30T21:26:52.790Z",
  "sources": [
   {
    "id": "fed",
@@ -33,8 +33,9 @@
    "id": "bis",
    "name": "Banque des règlements internationaux",
    "cat": "Banques centrales",
-   "ok": true,
-   "count": 10
+   "ok": false,
+   "count": 0,
+   "error": "flux vide ou illisible"
   },
   {
    "id": "imf",
@@ -42,7 +43,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 429"
+   "error": "HTTP 404"
   },
   {
    "id": "wb",
@@ -113,6 +114,17 @@
   }
  ],
  "items": [
+  {
+   "id": "fd0bb57407dd373d",
+   "title": "SEC Issues Exemptive Relief from Treasury Clearing Requirements for Certain Inter-Affiliate and Non-U.S. Repo Transactions",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-111-sec-issues-exemptive-relief-treasury-clearing-requirements-certain-inter-affiliate-non-us-repo",
+   "summary": "The Securities and Exchange Commission took another step forward today to assist broker-dealers and other market participants on the path to central clearing of U.S. Treasury securities by issuing exemptive relief related to inter-affiliate repo…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-10-30T19:30:00.000Z",
+   "firstSeen": "2026-10-30T21:26:52.790Z"
+  },
   {
    "id": "6f4bfc9972c3b898",
    "title": "Philip R. Lane: AI adoption in Europe",
@@ -244,6 +256,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-30T02:00:00.000Z",
    "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "0f5607cc5329b765",
+   "title": "Global Review concludes with a declaration on partnerships for trade and development",
+   "url": "https://www.wto.org/english/news_e/news26_e/gr26_30oct26_534_e.htm",
+   "summary": "Marking the 20th anniversary of the Aid for Trade Initiative, WTO members adopted a declaration on 30 October repositioning the initiative as \"Aid for Trade: partnerships for trade and development\". The declaration was adopted at a meeting of the Committee on Trade and Development, which wrapped up the two-day 10th Glo",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-30T00:00:00.000Z",
+   "firstSeen": "2026-10-30T21:26:52.790Z"
   },
   {
    "id": "e16e4d1ed4e6b291",
@@ -1805,17 +1828,6 @@
    "sid": "bis",
    "cat": "Banques centrales",
    "date": "2026-10-01T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "535ee5fcabe9da85",
-   "title": "SEC Charges Meyer Global Management and Its CEO With Defrauding Retail Investors in Private Funds That Held Interests in SpaceX and Other Pre-IPO Securities",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-98-sec-charges-meyer-global-management-its-ceo-defrauding-retail-investors-private-funds-held-interests",
-   "summary": "The Securities and Exchange Commission today charged private fund adviser Meyer Global Management LLC (MGM) and its CEO, Owen E.H. Meyer, with defrauding investors and MGM-managed funds in connection with investments in SpaceX and other pre-IPO…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-09-30T18:30:01.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
