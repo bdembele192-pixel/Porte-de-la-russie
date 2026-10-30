@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-29T20:31:44.207Z",
+ "generatedAt": "2026-10-30T05:38:23.414Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,72 @@
   }
  ],
  "items": [
+  {
+   "id": "e3cbaa08234c7323",
+   "title": "Amendment to \"Basic Principles for Disposal of ETFs and J-REITs\"",
+   "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030a.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T05:00:00.000Z",
+   "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "1c125382bd3afb97",
+   "title": "Outlook for Economic Activity and Prices (October 2026, The Bank's View)",
+   "url": "http://www.boj.or.jp/en/mopo/outlook/gor2610a.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T04:00:00.000Z",
+   "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "8bba49e734acb432",
+   "title": "Statement on Monetary Policy",
+   "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030a.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T04:00:00.000Z",
+   "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "65cdfbbf8e554901",
+   "title": "(Reference) Decisions regarding a Change in the Pace of Sales of ETFs (October 2026)",
+   "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030c.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T03:02:00.000Z",
+   "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "30feffdffec9624b",
+   "title": "(Reference) Outlook Report and Indicators Related to Underlying Inflation",
+   "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030b.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T03:02:00.000Z",
+   "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "2911a03b7f3f63c0",
+   "title": "Payment and Settlement Statistics (Sept.)",
+   "url": "http://www.boj.or.jp/en/statistics/set/kess/release/2026/kess2609.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T02:00:00.000Z",
+   "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
   {
    "id": "e16e4d1ed4e6b291",
    "title": "Federal Reserve Board announces approval of application by The Bank of Nova Scotia",
