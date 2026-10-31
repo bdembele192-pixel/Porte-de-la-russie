@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-31T17:22:57.370Z",
+ "generatedAt": "2026-10-31T20:30:11.623Z",
  "sources": [
   {
    "id": "fed",
@@ -33,9 +33,8 @@
    "id": "bis",
    "name": "Banque des règlements internationaux",
    "cat": "Banques centrales",
-   "ok": false,
-   "count": 0,
-   "error": "flux vide ou illisible"
+   "ok": true,
+   "count": 10
   },
   {
    "id": "imf",
