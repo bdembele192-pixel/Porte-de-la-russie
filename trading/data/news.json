@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-30T21:26:52.790Z",
+ "generatedAt": "2026-10-31T00:54:38.669Z",
  "sources": [
   {
    "id": "fed",
@@ -33,9 +33,8 @@
    "id": "bis",
    "name": "Banque des règlements internationaux",
    "cat": "Banques centrales",
-   "ok": false,
-   "count": 0,
-   "error": "flux vide ou illisible"
+   "ok": true,
+   "count": 10
   },
   {
    "id": "imf",
@@ -1806,28 +1805,6 @@
    "sid": "boe",
    "cat": "Banques centrales",
    "date": "2026-10-01T13:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "13c32f1dcef8a014",
-   "title": "International supervisory community meets to discuss the future of global bank supervision and regulation",
-   "url": "https://www.bis.org/media-releases/20261001-international-supervisory-community-meets-discuss-future-global-bank-supervision-and-regulation",
-   "summary": "Almost 300 central bankers and banking supervisors attended the International Conference of Banking Supervisors (ICBS) to discuss the future of supervision and the digitalisation of finance...",
-   "source": "Banque des règlements internationaux",
-   "sid": "bis",
-   "cat": "Banques centrales",
-   "date": "2026-10-01T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "2b9e862b7810add1",
-   "title": "Basel Committee meets to advance supervisory and regulatory initiatives and discuss risks and vulnerabilities to the global banking system",
-   "url": "https://www.bis.org/media-releases/20261001-basel-committee-meets-advance-supervisory-and-regulatory-initiatives-and-discuss-risks-and",
-   "summary": "Exchanges experiences and views on developments in artificial intelligence for the global banking system and supervisors, modernisation efforts and implications for the Committee’s future work programme...",
-   "source": "Banque des règlements internationaux",
-   "sid": "bis",
-   "cat": "Banques centrales",
-   "date": "2026-10-01T00:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
