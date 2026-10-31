@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-31T06:22:51.945Z",
+ "generatedAt": "2026-10-31T17:22:57.370Z",
  "sources": [
   {
    "id": "fed",
@@ -1762,50 +1762,6 @@
    "sid": "boe",
    "cat": "Banques centrales",
    "date": "2026-10-02T08:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "220c0b5ecbd4cde3",
-   "title": "SEC Proposal Would Address How Investment Advisers and Funds Can Custody Crypto Assets Under the Federal Securities Laws",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-100-sec-proposal-would-address-how-investment-advisers-funds-can-custody-crypto-assets-under-federal",
-   "summary": "The Securities and Exchange Commission today proposed new rules and amendments to provide a tailored framework for the custody of crypto assets for registered investment advisers and regulated funds, i.e. registered investment companies and business…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-01T16:16:07.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "b16ffc05ab8d4551",
-   "title": "SEC’s Division of Examinations Announces New Exam Handbook",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-99-secs-division-examinations-announces-new-exam-handbook",
-   "summary": "The Securities and Exchange Commission’s Division of Examinations today published its new&nbsp;handbook, “The SEC Exam Handbook: A Practical Guide on Process and Engagement,” which replaces and expands upon the previous examination brochure by providing…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-01T15:03:35.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "2b9367b0ae007585",
-   "title": "U.S. exports of propane reached records in the first half of 2026",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68244",
-   "summary": "U.S. propane exports increased to 2 million barrels per day (b/d) in the first half of 2026, 11% more than during the same period in 2025. Increased U.S. propane production and changing trade flows, particularly increased exports to India and other countries in South Asia, drove propane exports to a record high of 2.1 ",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-01T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "1a1461fc3ba96b49",
-   "title": "Minutes of the Meeting of the Court of Directors held on 16 July 2026",
-   "url": "https://www.bankofengland.co.uk/minutes/2026/july/court-minutes-16-july-2026",
-   "summary": "The Bank's Court of Directors acts as a unitary board, setting the organisation's strategy and budget and taking key decisions on resourcing and appointments. Required to meet a minimum seven times per year, it has five executive members from the Bank and up to nine non-executive members.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-01T13:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
