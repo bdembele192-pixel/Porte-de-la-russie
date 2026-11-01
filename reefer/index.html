@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reefer Twin</title>
+<meta name="description" content="Prototype FESCO : plomb à QR code et jumeau numérique pour le transfert des conteneurs frigorifiques port → rail.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="logo" aria-hidden="true">❄</span>
+    <div>
+      <strong>Reefer Twin</strong>
+      <small>Transfert des reefers port → rail · prototype</small>
+    </div>
+  </div>
+  <label class="dept">
+    <span>Je suis :</span>
+    <select id="deptSelect"></select>
+  </label>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button data-view="dashboard" class="active">Tableau de bord</button>
+  <button data-view="twin">Jumeau numérique</button>
+  <button data-view="scan">Scanner</button>
+  <button data-view="seals">Plombs QR</button>
+  <button data-view="data">Données</button>
+</nav>
+
+<main>
+
+<!-- TABLEAU DE BORD -->
+<section id="view-dashboard" class="view active">
+  <div class="kpis" id="kpis"></div>
+  <div class="grid2">
+    <div class="card">
+      <h2>Alertes actives</h2>
+      <ul class="alerts" id="alertList"></ul>
+    </div>
+    <div class="card">
+      <h2>Conteneurs par étape</h2>
+      <div id="stageBars"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="row-between">
+      <h2>Conteneurs suivis</h2>
+      <input id="search" type="search" placeholder="Rechercher (n°, client, cargaison)…">
+    </div>
+    <div class="table-wrap">
+      <table class="tbl">
+        <thead><tr><th>Conteneur</th><th>Client</th><th>Étape</th><th>Lieu</th><th>T° / consigne</th><th>Dernier scan</th><th>État</th></tr></thead>
+        <tbody id="containerRows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- JUMEAU NUMERIQUE -->
+<section id="view-twin" class="view">
+  <div class="card">
+    <label class="inline">Conteneur :
+      <select id="twinSelect"></select>
+    </label>
+  </div>
+  <div id="twinBody"></div>
+</section>
+
+<!-- SCANNER -->
+<section id="view-scan" class="view">
+  <div class="grid2">
+    <div class="card">
+      <h2>1. Scanner le plomb</h2>
+      <div id="reader"></div>
+      <div class="btns">
+        <button id="camStart" class="primary">Activer la caméra</button>
+        <button id="camStop" hidden>Arrêter</button>
+      </div>
+      <p class="hint">Sans caméra : saisissez le numéro du conteneur (face « numéro » du plomb).</p>
+      <div class="inline-form">
+        <input id="manualId" placeholder="ex. FESU1234560" autocomplete="off">
+        <button id="manualGo">Valider</button>
+      </div>
+      <p id="scanMsg" class="msg"></p>
+    </div>
+    <div class="card">
+      <h2>2. Enregistrer l'opération</h2>
+      <form id="eventForm" class="form" autocomplete="off">
+        <label>Conteneur <input name="containerId" required readonly></label>
+        <label>Plomb lu <input name="sealId" readonly></label>
+        <label>Opération <select name="type" required></select></label>
+        <label>Lieu <select name="location" required></select></label>
+        <label>Température relevée (°C) <input name="temperature" type="number" step="0.1"></label>
+        <label>Opérateur <input name="operator" placeholder="Nom"></label>
+        <label class="full">Remarque <input name="note" placeholder="Facultatif"></label>
+        <div class="full btns"><button class="primary" type="submit">Enregistrer et diffuser</button></div>
+      </form>
+      <p id="eventMsg" class="msg"></p>
+    </div>
+  </div>
+</section>
+
+<!-- PLOMBS QR -->
+<section id="view-seals" class="view">
+  <div class="grid2">
+    <div class="card">
+      <h2>Enregistrer un conteneur et son plomb</h2>
+      <form id="containerForm" class="form" autocomplete="off">
+        <label>N° conteneur (ISO 6346) <input name="cid" required placeholder="FESU1234560" maxlength="11"></label>
+        <label>N° de plomb <input name="sealId" required placeholder="auto"></label>
+        <label>Client <input name="client" required></label>
+        <label>Cargaison <input name="cargo" required placeholder="ex. poisson congelé"></label>
+        <label>Consigne (°C) <input name="setpoint" type="number" step="0.5" required value="-18"></label>
+        <label>Tolérance (± °C) <input name="tolerance" type="number" step="0.5" min="0.5" required value="2"></label>
+        <label>Navire / voyage <input name="vessel" placeholder="ex. FESCO Diomid / 245E"></label>
+        <label>Destination <input name="destination" required placeholder="ex. Moscou (Vorsino)"></label>
+        <div class="full btns">
+          <button type="button" id="checkDigit">Calculer le chiffre de contrôle</button>
+          <button class="primary" type="submit">Créer le plomb</button>
+        </div>
+      </form>
+      <p id="containerMsg" class="msg"></p>
+    </div>
+    <div class="card">
+      <h2>Étiquette du plomb</h2>
+      <label class="inline">Conteneur : <select id="sealSelect"></select></label>
+      <div id="sealPreview" class="seal-preview"></div>
+      <div class="btns">
+        <button id="printSeal" class="primary">Imprimer</button>
+        <button id="svgQr">SVG face QR (impression 3D)</button>
+        <button id="svgNum">SVG face numéro</button>
+      </div>
+      <p class="hint">QR « lien » : n'importe quel téléphone ouvre directement la fiche du conteneur. QR « compact » : moins de modules, donc plus facile à imprimer en 3D ; il se lit avec l'onglet Scanner.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DONNEES -->
+<section id="view-data" class="view">
+  <div class="grid2">
+    <div class="card">
+      <h2>Exports (Power BI · SQL · 1C)</h2>
+      <div class="btns col">
+        <button id="expEvents">Événements (CSV)</button>
+        <button id="expContainers">Conteneurs (CSV)</button>
+        <button id="expSql">Script d'insertion SQL</button>
+        <button id="expJson">Sauvegarde complète (JSON)</button>
+      </div>
+      <p class="hint">Séparateur « ; », encodage UTF-8 avec BOM : s'ouvre tel quel dans Excel et Power BI.</p>
+    </div>
+    <div class="card">
+      <h2>Données de démonstration</h2>
+      <div class="btns col">
+        <label class="file-btn">Importer une sauvegarde JSON <input type="file" id="impJson" accept=".json"></label>
+        <button id="simulate">Simuler 1 h de capteurs (température)</button>
+        <button id="resetDemo">Recharger le jeu de démonstration</button>
+        <button id="wipe" class="danger">Tout effacer</button>
+      </div>
+      <p class="hint">Les données sont stockées dans ce navigateur (prototype). En production : API + base SQL partagée entre les services.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="vendor/qrcode.js"></script>
+<script src="vendor/html5-qrcode.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
