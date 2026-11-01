@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-01T02:29:58.138Z",
+ "generatedAt": "2026-11-01T09:31:26.161Z",
  "sources": [
   {
    "id": "fed",
@@ -1750,17 +1750,6 @@
    "sid": "eia",
    "cat": "Énergie",
    "date": "2026-10-02T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "58537050ec7ae39e",
-   "title": "Appointment of members of the Enforcement Decision Making Committee (EDMC)",
-   "url": "https://www.bankofengland.co.uk/news/2026/october/appointment-of-members-of-the-edmc",
-   "summary": "Following an external recruitment process, the Bank of England has appointed Carlos Conceicao and Alexander Justham as members of its Enforcement Decision Making Committee, with effect from September 2026.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-02T08:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
