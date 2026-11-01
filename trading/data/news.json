@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-01T20:30:24.189Z",
+ "generatedAt": "2026-11-01T23:46:33.157Z",
  "sources": [
   {
    "id": "fed",
@@ -1706,17 +1706,6 @@
    "sid": "bis",
    "cat": "Banques centrales",
    "date": "2026-10-05T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "adc8835e6b5f1463",
-   "title": "Federal Reserve Board announces approval of application by Fleur Capital Corporation",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/orders20261002a.htm",
-   "summary": "Federal Reserve Board announces approval of application by Fleur Capital Corporation",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-02T20:45:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
