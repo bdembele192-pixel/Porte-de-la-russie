@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-01T09:31:26.161Z",
+ "generatedAt": "2026-11-01T16:15:38.802Z",
  "sources": [
   {
    "id": "fed",
@@ -33,8 +33,9 @@
    "id": "bis",
    "name": "Banque des règlements internationaux",
    "cat": "Banques centrales",
-   "ok": true,
-   "count": 10
+   "ok": false,
+   "count": 0,
+   "error": "flux vide ou illisible"
   },
   {
    "id": "imf",
@@ -1728,28 +1729,6 @@
    "sid": "fed",
    "cat": "Banques centrales",
    "date": "2026-10-02T20:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "5c92092a2885d139",
-   "title": "Federal Reserve Board issues enforcement action with Ontario Bancorporation, Inc.",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261002a.htm",
-   "summary": "Federal Reserve Board issues enforcement action with Ontario Bancorporation, Inc.",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-02T15:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "62a09f80f1e5479f",
-   "title": "U.S. natural gas production reached a record high in July 2026",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68225",
-   "summary": "U.S. natural gas production hit an all-time high in July 2026, driven primarily by increased output in the Permian Basin, according to our latest Natural Gas Monthly.",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-02T14:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
