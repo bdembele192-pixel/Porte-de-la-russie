@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-01T23:46:33.157Z",
+ "generatedAt": "2026-11-02T09:59:23.173Z",
  "sources": [
   {
    "id": "fed",
@@ -33,8 +33,9 @@
    "id": "bis",
    "name": "Banque des règlements internationaux",
    "cat": "Banques centrales",
-   "ok": true,
-   "count": 10
+   "ok": false,
+   "count": 0,
+   "error": "flux vide ou illisible"
   },
   {
    "id": "imf",
@@ -113,6 +114,39 @@
   }
  ],
  "items": [
+  {
+   "id": "584e9c2bc9c27396",
+   "title": "Boris Vujčić: Integrated, open and resilient: Europe’s strengths in a fragmenting world",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp.261102~70003226e9.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-02T09:30:00.000Z",
+   "firstSeen": "2026-11-02T09:59:23.173Z"
+  },
+  {
+   "id": "0e58f0213d4a2056",
+   "title": "Outlook for Economic Activity and Prices (October 2026, full text)",
+   "url": "http://www.boj.or.jp/en/mopo/outlook/gor2610b.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-02T05:00:00.000Z",
+   "firstSeen": "2026-11-02T09:59:23.173Z"
+  },
+  {
+   "id": "8f7f91854dc3528d",
+   "title": "Sources of Changes in Current Account Balances and Market Operations (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/fm/juqf/juqf10.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-02T04:00:00.000Z",
+   "firstSeen": "2026-11-02T09:59:23.173Z"
+  },
   {
    "id": "fd0bb57407dd373d",
    "title": "SEC Issues Exemptive Relief from Treasury Clearing Requirements for Certain Inter-Affiliate and Non-U.S. Repo Transactions",
