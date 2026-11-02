@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-02T09:59:23.173Z",
+ "generatedAt": "2026-11-02T19:58:08.008Z",
  "sources": [
   {
    "id": "fed",
@@ -146,6 +146,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-02T04:00:00.000Z",
    "firstSeen": "2026-11-02T09:59:23.173Z"
+  },
+  {
+   "id": "0bc900233bc56f70",
+   "title": "EU launches safeguard investigation on certain new hybrid vehicles",
+   "url": "https://www.wto.org/english/news_e/news26_e/safe_eec_02nov26_536_e.htm",
+   "summary": "On 30 October 2026, the European Union notified the WTO’s Committee on Safeguards that it had initiated, on the same day (30 October 2026), a safeguard investigation on imports of certain new hybrid vehicles.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-02T00:00:00.000Z",
+   "firstSeen": "2026-11-02T19:58:08.008Z"
   },
   {
    "id": "fd0bb57407dd373d",
@@ -300,6 +311,17 @@
    "cat": "Institutions",
    "date": "2026-10-30T00:00:00.000Z",
    "firstSeen": "2026-10-30T21:26:52.790Z"
+  },
+  {
+   "id": "2e0a9dd7f44dfcfe",
+   "title": "Transparency remains core priority in work of subsidies committee",
+   "url": "https://www.wto.org/english/news_e/news26_e/scm_30oct26_537_e.htm",
+   "summary": "At a meeting of the Committee on Subsidies and Countervailing Measures (SCM) on 30 October 2026, the Chair of the Committee - Raimondas Alisauskas (Lithuania) - expressed serious concern over persistently low compliance with subsidy notification obligations. He stressed that timely and complete notifications are both a",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-30T00:00:00.000Z",
+   "firstSeen": "2026-11-02T19:58:08.008Z"
   },
   {
    "id": "e16e4d1ed4e6b291",
