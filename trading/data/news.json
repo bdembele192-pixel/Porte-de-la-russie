@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-03T16:39:15.956Z",
+ "generatedAt": "2026-11-03T21:57:52.327Z",
  "sources": [
   {
    "id": "fed",
@@ -26,9 +26,8 @@
    "id": "boj",
    "name": "Banque du Japon",
    "cat": "Banques centrales",
-   "ok": false,
-   "count": 0,
-   "error": "flux vide ou illisible"
+   "ok": true,
+   "count": 25
   },
   {
    "id": "bis",
@@ -127,6 +126,17 @@
    "firstSeen": "2026-11-03T16:39:15.956Z"
   },
   {
+   "id": "5fa6d8a43e93bf25",
+   "title": "La planète se connecte, mais la fracture numérique résiste",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159774",
+   "summary": "Plus des trois quarts de la population mondiale, soit 6,3 milliards de personnes, utilisent Internet en 2026. Selon le dernier rapport de l’Union internationale des télécommunications (UIT), publié mardi, le nombre d’internautes a progressé de 200 millions en un an. Mais derrière cette avancée, les inégalités d’accès r",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-03T12:00:00.000Z",
+   "firstSeen": "2026-11-03T21:57:52.327Z"
+  },
+  {
    "id": "3b0e1a5dcf79a8d3",
    "title": "Regulators explore credit union reforms to support growth, innovation and better outcomes for members",
    "url": "https://www.bankofengland.co.uk/news/2026/november/regulators-explore-credit-union-reforms-to-support-growth-innovation-and-better-outcomes-for-members",
@@ -136,6 +146,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-03T10:00:00.000Z",
    "firstSeen": "2026-11-03T16:39:15.956Z"
+  },
+  {
+   "id": "c1872a8f926e2e2d",
+   "title": "Yémen : plus de 300 000 nouveaux déplacés et la troisième ville du pays coupée du monde",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159771",
+   "summary": "Plus de 300 000 personnes ont fui les combats dans l’ouest du Yémen, presque toutes au cours des deux derniers mois, selon l’Organisation internationale pour les migrations (OIM). Dans la ville de Taëz, désormais coupée de tout approvisionnement, les prix s’envolent, les hôpitaux menacent de fermer et le choléra progre",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-02T12:00:00.000Z",
+   "firstSeen": "2026-11-03T21:57:52.327Z"
   },
   {
    "id": "584e9c2bc9c27396",
