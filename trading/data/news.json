@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-02T19:58:08.008Z",
+ "generatedAt": "2026-11-03T16:39:15.956Z",
  "sources": [
   {
    "id": "fed",
@@ -26,8 +26,9 @@
    "id": "boj",
    "name": "Banque du Japon",
    "cat": "Banques centrales",
-   "ok": true,
-   "count": 25
+   "ok": false,
+   "count": 0,
+   "error": "flux vide ou illisible"
   },
   {
    "id": "bis",
@@ -110,10 +111,32 @@
    "name": "EIA – Énergie (États-Unis)",
    "cat": "Énergie",
    "ok": true,
-   "count": 22
+   "count": 23
   }
  ],
  "items": [
+  {
+   "id": "e4cc81629369c33b",
+   "title": "Global refinery inputs fell sharply in the second quarter of 2026 before modest recovery",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68404",
+   "summary": "Global crude oil refinery inputs fell by 4.8 million barrels per day (b/d) in the second quarter of 2026 (2Q26), or 6%, following the start of conflict in late February in the Middle East, according to data from Kpler. Throughput then increased by 1.8 million b/d in the third quarter, primarily as refiners in the regio",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-11-03T14:00:00.000Z",
+   "firstSeen": "2026-11-03T16:39:15.956Z"
+  },
+  {
+   "id": "3b0e1a5dcf79a8d3",
+   "title": "Regulators explore credit union reforms to support growth, innovation and better outcomes for members",
+   "url": "https://www.bankofengland.co.uk/news/2026/november/regulators-explore-credit-union-reforms-to-support-growth-innovation-and-better-outcomes-for-members",
+   "summary": "Credit unions could benefit from several ideas put forward today by the Prudential Regulation Authority and Financial Conduct Authority aimed at helping the sector grow, innovate and meet the changing needs of their members.",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-03T10:00:00.000Z",
+   "firstSeen": "2026-11-03T16:39:15.956Z"
+  },
   {
    "id": "584e9c2bc9c27396",
    "title": "Boris Vujčić: Integrated, open and resilient: Europe’s strengths in a fragmenting world",
@@ -520,6 +543,17 @@
    "cat": "Institutions",
    "date": "2026-10-29T00:00:00.000Z",
    "firstSeen": "2026-10-30T17:07:48.666Z"
+  },
+  {
+   "id": "38493e294a908b0c",
+   "title": "Members review 34 notifications, share experiences at Fisheries Subsidies Committee",
+   "url": "https://www.wto.org/english/news_e/news26_e/fish_29oct26_539_e.htm",
+   "summary": "At a meeting of the Committee on Fisheries Subsidies on 29 October, WTO members conducted the first review of notifications under the WTO Agreement on Fisheries Subsidies and shared experiences on how they are implementing the Agreement since it entered into force just over a year ago.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-11-03T16:39:15.956Z"
   },
   {
    "id": "b5df6b697c46404a",
