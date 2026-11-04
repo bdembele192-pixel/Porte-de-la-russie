@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-04T08:06:10.897Z",
+ "generatedAt": "2026-11-04T16:11:26.517Z",
  "sources": [
   {
    "id": "fed",
@@ -115,6 +115,28 @@
  ],
  "items": [
   {
+   "id": "db8e021e3df26de7",
+   "title": "Summary of the RTGS CHAPS Industry Forum - 13 October 2026",
+   "url": "https://www.bankofengland.co.uk/minutes/2026/october/rtgs-chaps-industry-forum-13-october-2026",
+   "summary": "The second meeting of the RTGS CHAPS Industry Forum",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T14:51:45.000Z",
+   "firstSeen": "2026-11-04T16:11:26.517Z"
+  },
+  {
+   "id": "1978b826f2a181c9",
+   "title": "U.S. International Trade in Goods and Services, September 2026",
+   "url": "https://www.bea.gov/news/2026/us-international-trade-goods-and-services-september-2026",
+   "summary": "The U.S. goods and services trade deficit decreased in September 2026 according to the U.S. Bureau of Economic Analysis and the U.S. Census Bureau. The deficit decreased from $105.7 billion in August (revised) to $105.0 billion in September, as exports increased more than imports. The goods deficit decreased $0.7 billi",
+   "source": "Bureau of Economic Analysis",
+   "sid": "bea",
+   "cat": "Statistiques",
+   "date": "2026-11-04T13:30:00.000Z",
+   "firstSeen": "2026-11-04T16:11:26.517Z"
+  },
+  {
    "id": "cedcbdb7d6406a81",
    "title": "Japanese Government Bonds Held by the Bank of Japan",
    "url": "http://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261030.xlsx",
@@ -146,6 +168,28 @@
    "cat": "Banques centrales",
    "date": "2026-11-04T01:00:00.000Z",
    "firstSeen": "2026-11-04T01:48:57.543Z"
+  },
+  {
+   "id": "d84f35b9e08880e5",
+   "title": "ECB wage tracker suggests slightly higher wage growth in first three quarters of 2027 compared with the full year of 2026",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261104~caf181d7ac.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T00:00:00.000Z",
+   "firstSeen": "2026-11-04T16:11:26.517Z"
+  },
+  {
+   "id": "f625cd2dc118d4b4",
+   "title": "Trade Policy Review: Viet Nam",
+   "url": "https://www.wto.org/english/tratop_e/tpr_e/tpr_vnm_04nov26_e.htm",
+   "summary": "The third review of the trade policies and practices of Viet Nam takes place on 4 and 6 November 2026. The basis for the review is a report by the WTO Secretariat and a report by the Government of Viet Nam.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-04T00:00:00.000Z",
+   "firstSeen": "2026-11-04T16:11:26.517Z"
   },
   {
    "id": "096604a459a28758",
@@ -619,6 +663,17 @@
    "cat": "Institutions",
    "date": "2026-10-29T00:00:00.000Z",
    "firstSeen": "2026-11-03T16:39:15.956Z"
+  },
+  {
+   "id": "8ece4bfb49afee1c",
+   "title": "Cotton partners launch drive to bring textile/garment investment to West, Central Africa",
+   "url": "https://www.wto.org/english/news_e/news26_e/cotpt_29oct26_540_e.htm",
+   "summary": "On the margins of the Global Aid for Trade Review, the Partenariat pour le Coton (PPC – the Cotton Partnership) launched an Investment Promotion Drive on 29 October to help Africa’s farmers move from exporting cotton as raw fibre to increasing participation in higher-value activities, such as garment manufacturing. The",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-10-29T00:00:00.000Z",
+   "firstSeen": "2026-11-04T16:11:26.517Z"
   },
   {
    "id": "b5df6b697c46404a",
@@ -1817,39 +1872,6 @@
    "sid": "fed",
    "cat": "Banques centrales",
    "date": "2026-10-05T20:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "278711077c8185ca",
-   "title": "Crude oil prices and refinery margins generally increased throughout the third quarter",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68245",
-   "summary": "Petroleum markets in the third quarter of 2026 (3Q26) were characterized by increasing prices for crude oil and petroleum products amid persistent conflict in the Middle East.",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-05T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "fd90a2a9da0b20c6",
-   "title": "SEC Coordinates with Global Financial Regulators to Raise Fraud Awareness During World Investor Week",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-101-sec-coordinates-global-financial-regulators-raise-fraud-awareness-during-world-investor-week",
-   "summary": "The Securities and Exchange Commission, in coordination with other U.S. and global financial regulators, today issued a&nbsp;joint investor bulletin as part of World Investor Week (WIW). The bulletin&nbsp;encourages investors to be resilient in changing…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-05T12:47:36.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "92893c199b57af5f",
-   "title": "Espace : la révolution des fusées démocratise l’accès à l’orbite",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159606",
-   "summary": "Pendant des décennies, envoyer un objet au-delà de l’atmosphère terrestre était l’apanage d’un nombre limité de grandes puissances spatiales. Aujourd’hui, la donne change rapidement.",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-05T12:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
