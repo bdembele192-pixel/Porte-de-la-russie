@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-04T01:48:57.543Z",
+ "generatedAt": "2026-11-04T08:06:10.897Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,28 @@
   }
  ],
  "items": [
+  {
+   "id": "cedcbdb7d6406a81",
+   "title": "Japanese Government Bonds Held by the Bank of Japan",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261030.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T08:00:00.000Z",
+   "firstSeen": "2026-11-04T08:06:10.897Z"
+  },
+  {
+   "id": "3bd451a86644b9bd",
+   "title": "Collateral Accepted by the Bank of Japan (End of Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/col/col2610.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T08:00:00.000Z",
+   "firstSeen": "2026-11-04T08:06:10.897Z"
+  },
   {
    "id": "4ef3b79332a6c2e2",
    "title": "Bank of Japan Accounts (October 31)",
