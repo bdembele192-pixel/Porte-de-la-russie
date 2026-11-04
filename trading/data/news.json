@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-03T21:57:52.327Z",
+ "generatedAt": "2026-11-04T01:48:57.543Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,28 @@
   }
  ],
  "items": [
+  {
+   "id": "4ef3b79332a6c2e2",
+   "title": "Bank of Japan Accounts (October 31)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261031.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T01:00:00.000Z",
+   "firstSeen": "2026-11-04T01:48:57.543Z"
+  },
+  {
+   "id": "096604a459a28758",
+   "title": "Monetary Base (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/mb/mb.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-03T23:50:00.000Z",
+   "firstSeen": "2026-11-04T01:48:57.543Z"
+  },
   {
    "id": "e4cc81629369c33b",
    "title": "Global refinery inputs fell sharply in the second quarter of 2026 before modest recovery",
@@ -1806,17 +1828,6 @@
    "sid": "un",
    "cat": "Institutions",
    "date": "2026-10-05T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "1557608ce76dc66d",
-   "title": "Basel III applicable in almost all member jurisdictions by 2027",
-   "url": "https://www.bis.org/media-releases/20261005-basel-iii-applicable-almost-all-member-jurisdictions-2027",
-   "summary": "Three quarters of the Basel Committee’s 27 member jurisdictions have now published regulations implementing the full set of Basel III standards. Almost all member jurisdictions have publicly announced that banks must apply Basel III by April 2027 or earlier. The Committee will continue to closely monitor and assess the",
-   "source": "Banque des règlements internationaux",
-   "sid": "bis",
-   "cat": "Banques centrales",
-   "date": "2026-10-05T00:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
