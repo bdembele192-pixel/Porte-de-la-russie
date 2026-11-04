@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-04T16:11:26.517Z",
+ "generatedAt": "2026-11-04T21:50:53.533Z",
  "sources": [
   {
    "id": "fed",
@@ -43,7 +43,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 404"
+   "error": "HTTP 429"
   },
   {
    "id": "wb",
@@ -114,6 +114,17 @@
   }
  ],
  "items": [
+  {
+   "id": "423655cc1d290f0f",
+   "title": "SEC Adopts Amendments to Update Definitions of Small Entity for Investment Companies and Investment Advisers",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-112-sec-adopts-amendments-update-definitions-small-entity-investment-companies-investment-advisers",
+   "summary": "The Securities and Exchange Commission today adopted amendments to the rules that define which registered investment companies, investment advisers, and business development companies qualify as small entities for purposes of the Regulatory Flexibility…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-11-04T16:28:00.000Z",
+   "firstSeen": "2026-11-04T21:50:53.533Z"
+  },
   {
    "id": "db8e021e3df26de7",
    "title": "Summary of the RTGS CHAPS Industry Forum - 13 October 2026",
@@ -1861,17 +1872,6 @@
    "sid": "ecb",
    "cat": "Banques centrales",
    "date": "2026-10-06T07:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "82ac683085d6e101",
-   "title": "Federal Reserve Board announces approval of application by Isabella Bank Corporation",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/orders20261005a.htm",
-   "summary": "Federal Reserve Board announces approval of application by Isabella Bank Corporation",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-05T20:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
