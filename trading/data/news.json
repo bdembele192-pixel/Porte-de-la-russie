@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-05T16:43:35.015Z",
+ "generatedAt": "2026-11-05T22:18:51.734Z",
  "sources": [
   {
    "id": "fed",
@@ -179,6 +179,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-05T07:00:00.000Z",
    "firstSeen": "2026-11-05T08:34:45.093Z"
+  },
+  {
+   "id": "a5f005f14dbeb31f",
+   "title": "Director-General: Leverage trade and partnerships to build a resilient ocean economy",
+   "url": "https://www.wto.org/english/news_e/news26_e/envir_05nov26_541_e.htm",
+   "summary": "The multilateral trading system provides important tools for the development of a healthy and prosperous ocean economy, Director-General Ngozi Okonjo-Iweala said in her keynote speech at an event on \"Trade, Biodiversity and the Ocean Economy: Pathways to Resilience\" at the WTO on 5 November. Highlighting the importance",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-05T00:00:00.000Z",
+   "firstSeen": "2026-11-05T22:18:51.734Z"
   },
   {
    "id": "599c27053adadba2",
@@ -1894,17 +1905,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-07T01:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "b92625d853cce4c4",
-   "title": "SEC Seeks Final Judgment Against Former Western Asset Co-CIO Ken Leech in Cherry Picking Case",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-103-sec-seeks-final-judgment-against-former-western-asset-co-cio-ken-leech-cherry-picking-case",
-   "summary": "The Securities and Exchange Commission today moved for entry of a final judgment by consent against Stephen Kenneth Leech II, the former co-chief investment officer of registered investment adviser Western Asset Management Company LLC, whom the SEC…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-06T20:30:24.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
