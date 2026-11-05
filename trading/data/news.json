@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-05T01:50:54.305Z",
+ "generatedAt": "2026-11-05T08:34:45.093Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,39 @@
   }
  ],
  "items": [
+  {
+   "id": "da58f267320ab75e",
+   "title": "Isabel Schnabel: Navigating stormy waters: reflections on monetary policy",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261105_1~5e97d9d5a0.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-05T08:00:00.000Z",
+   "firstSeen": "2026-11-05T08:34:45.093Z"
+  },
+  {
+   "id": "f53ad9a9acf9ca50",
+   "title": "Piero Cipollone: Shaping the future of money",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261105~6495a0df6f.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-05T07:30:00.000Z",
+   "firstSeen": "2026-11-05T08:34:45.093Z"
+  },
+  {
+   "id": "ae57bca8d02723e9",
+   "title": "Holding the Twenty-fifth Round of the \"Bond Market Group\" Meetings",
+   "url": "http://www.boj.or.jp/en/paym/bond/mbond_list/mbond261105.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-05T07:00:00.000Z",
+   "firstSeen": "2026-11-05T08:34:45.093Z"
+  },
   {
    "id": "599c27053adadba2",
    "title": "Sources of Changes in Current Account Balances (Projections for Nov.)",
@@ -1883,17 +1916,6 @@
    "sid": "bea",
    "cat": "Statistiques",
    "date": "2026-10-06T12:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "5e50542f8c773146",
-   "title": "Philip R. Lane: Interview with Ansa",
-   "url": "https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in261006~bc94400297.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-06T07:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
