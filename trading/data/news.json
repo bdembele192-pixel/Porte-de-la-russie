@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-04T21:50:53.533Z",
+ "generatedAt": "2026-11-05T01:50:54.305Z",
  "sources": [
   {
    "id": "fed",
@@ -43,7 +43,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 429"
+   "error": "HTTP 404"
   },
   {
    "id": "wb",
@@ -114,6 +114,28 @@
   }
  ],
  "items": [
+  {
+   "id": "599c27053adadba2",
+   "title": "Sources of Changes in Current Account Balances (Projections for Nov.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/fm/juqp/juqp2611.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T23:50:00.000Z",
+   "firstSeen": "2026-11-05T01:50:54.305Z"
+  },
+  {
+   "id": "3b6158c00f025e70",
+   "title": "Minutes of the Monetary Policy Meeting on September 17 and 18, 2026",
+   "url": "http://www.boj.or.jp/en/mopo/mpmsche_minu/minu_2026/g260918.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T23:50:00.000Z",
+   "firstSeen": "2026-11-05T01:50:54.305Z"
+  },
   {
    "id": "423655cc1d290f0f",
    "title": "SEC Adopts Amendments to Update Definitions of Small Entity for Investment Companies and Investment Advisers",
