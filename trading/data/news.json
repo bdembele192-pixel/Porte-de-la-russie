@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-06T16:55:59.238Z",
+ "generatedAt": "2026-11-06T21:50:39.301Z",
  "sources": [
   {
    "id": "fed",
@@ -2125,17 +2125,6 @@
    "sid": "boe",
    "cat": "Banques centrales",
    "date": "2026-10-07T23:01:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "0e41ec59b9646f85",
-   "title": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261007a.htm",
-   "summary": "Minutes of the Federal Open Market Committee, September 15-16, 2026",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-07T18:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
