@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-06T02:31:17.096Z",
+ "generatedAt": "2026-11-06T09:42:44.988Z",
  "sources": [
   {
    "id": "fed",
@@ -43,7 +43,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 404"
+   "error": "HTTP 429"
   },
   {
    "id": "wb",
@@ -115,6 +115,28 @@
  ],
  "items": [
   {
+   "id": "e4f1eb91fb0604cd",
+   "title": "ECB publishes consolidated banking data for end-June 2026",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261106~356f2fc73a.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-06T09:00:00.000Z",
+   "firstSeen": "2026-11-06T09:42:44.988Z"
+  },
+  {
+   "id": "8df03f73108bc83d",
+   "title": "(IMES Newsletter) 2026 BoC - Philadelphia Fed - BOJ Joint Workshop",
+   "url": "http://www.boj.or.jp/en/about/release_2026/rel261106b.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-06T07:00:00.000Z",
+   "firstSeen": "2026-11-06T09:42:44.988Z"
+  },
+  {
    "id": "d078485dd08adf30",
    "title": "IMES Discussion Paper Series (2026)",
    "url": "https://www.boj.or.jp/en/research/imes/dps/dps26.htm",
@@ -124,6 +146,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-06T02:00:00.000Z",
    "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
+   "id": "9557439f554f8dbe",
+   "title": "IMES Discussion Paper Series (2026)",
+   "url": "http://www.boj.or.jp/en/research/imes/dps/dps26.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-06T02:00:00.000Z",
+   "firstSeen": "2026-10-25T04:32:53.588Z"
   },
   {
    "id": "99557d5e820ca022",
@@ -206,7 +239,7 @@
    "id": "a5f005f14dbeb31f",
    "title": "Director-General: Leverage trade and partnerships to build a resilient ocean economy",
    "url": "https://www.wto.org/english/news_e/news26_e/envir_05nov26_541_e.htm",
-   "summary": "The multilateral trading system provides important tools for the development of a healthy and prosperous ocean economy, Director-General Ngozi Okonjo-Iweala said in her keynote speech at an event on \"Trade, Biodiversity and the Ocean Economy: Pathways to Resilience\" at the WTO on 5 November. Highlighting the importance",
+   "summary": "The multilateral trading system provides important tools for the development of a healthy and prosperous ocean economy, Director-General Ngozi Okonjo-Iweala said in her keynote speech at an event on Trade, Biodiversity and the Ocean Economy: Pathways to Resilience at the WTO on 5 November. Highlighting the importance o",
    "source": "OMC",
    "sid": "wto",
    "cat": "Institutions",
@@ -1974,17 +2007,6 @@
    "firstSeen": "2026-10-25T04:32:53.588Z"
   },
   {
-   "id": "9557439f554f8dbe",
-   "title": "IMES Discussion Paper Series (2026)",
-   "url": "http://www.boj.or.jp/en/research/imes/dps/dps26.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-09T02:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
    "id": "d02469648203d39c",
    "title": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
    "url": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261008a.htm",
@@ -2114,61 +2136,6 @@
    "sid": "boe",
    "cat": "Banques centrales",
    "date": "2026-10-07T09:49:25.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "b32cf09ef226479f",
-   "title": "Minutes of the London FXJSC Main Committee Meeting – 24 June 2026",
-   "url": "https://www.bankofengland.co.uk/minutes/2026/june/fxjsc-main-committee-meeting-24-june-2026",
-   "summary": "The Bank of England chairs the London Foreign Exchange Joint Standing Committee (FXJSC), which is a forum for discussion of the wholesale foreign exchange market. The FXJSC is made up of market participants, infrastructure providers and the UK financial regulators.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-07T09:08:40.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "d43b0f6b29507bd2",
-   "title": "Regulatory thresholds set to shift to automatic increases",
-   "url": "https://www.bankofengland.co.uk/news/2026/october/regulatory-thresholds-set-to-shift-to-automatic-increases",
-   "summary": "Proportionality is set to be improved for firms as over 100 regulatory thresholds could be automatically increased periodically.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-07T09:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "7327c11760d8973a",
-   "title": "Results of the September 2026 survey on credit terms and conditions in euro-denominated securities financing and OTC derivatives markets (SESFOD)",
-   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261007~6447350434.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-07T08:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "26662ea827f6e4d5",
-   "title": "Amounts Outstanding in the Call Money Market (Sept.)",
-   "url": "http://www.boj.or.jp/en/statistics/market/short/call/call.xlsx",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-07T06:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "d0e79e4d521b3dfa",
-   "title": "Consumption Activity Index",
-   "url": "http://www.boj.or.jp/en/research/research_data/cai/index.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-07T05:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
