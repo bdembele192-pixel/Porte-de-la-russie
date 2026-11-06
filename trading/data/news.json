@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-05T22:18:51.734Z",
+ "generatedAt": "2026-11-06T02:31:17.096Z",
  "sources": [
   {
    "id": "fed",
@@ -115,6 +115,17 @@
  ],
  "items": [
   {
+   "id": "d078485dd08adf30",
+   "title": "IMES Discussion Paper Series (2026)",
+   "url": "https://www.boj.or.jp/en/research/imes/dps/dps26.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-06T02:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "99557d5e820ca022",
    "title": "Federal Reserve Board announces termination of enforcement action with Allegiant United Holdings, LLC, Nano Financial Holdings, Inc., and Nano Banc",
    "url": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261105a.htm",
@@ -181,6 +192,17 @@
    "firstSeen": "2026-11-05T08:34:45.093Z"
   },
   {
+   "id": "f435acc5b4e1f540",
+   "title": "Holding the Twenty-fifth Round of the \"Bond Market Group\" Meetings",
+   "url": "https://www.boj.or.jp/en/paym/bond/mbond_list/mbond261105.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-05T07:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "a5f005f14dbeb31f",
    "title": "Director-General: Leverage trade and partnerships to build a resilient ocean economy",
    "url": "https://www.wto.org/english/news_e/news26_e/envir_05nov26_541_e.htm",
@@ -212,6 +234,28 @@
    "cat": "Banques centrales",
    "date": "2026-11-04T23:50:00.000Z",
    "firstSeen": "2026-11-05T01:50:54.305Z"
+  },
+  {
+   "id": "63ce71e161867e07",
+   "title": "Sources of Changes in Current Account Balances (Projections for Nov.)",
+   "url": "https://www.boj.or.jp/en/statistics/boj/fm/juqp/juqp2611.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T23:50:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
+   "id": "f3baf3ef0875bc78",
+   "title": "Minutes of the Monetary Policy Meeting on September 17 and 18, 2026",
+   "url": "https://www.boj.or.jp/en/mopo/mpmsche_minu/minu_2026/g260918.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T23:50:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "423655cc1d290f0f",
@@ -280,6 +324,28 @@
    "firstSeen": "2026-11-04T08:06:10.897Z"
   },
   {
+   "id": "184780aaee4afbca",
+   "title": "Japanese Government Bonds Held by the Bank of Japan",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261030.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T08:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
+   "id": "b57139436b08c1c1",
+   "title": "Collateral Accepted by the Bank of Japan (End of Oct.)",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/col/col2610.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T08:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "4ef3b79332a6c2e2",
    "title": "Bank of Japan Accounts (October 31)",
    "url": "http://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261031.htm",
@@ -289,6 +355,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-04T01:00:00.000Z",
    "firstSeen": "2026-11-04T01:48:57.543Z"
+  },
+  {
+   "id": "759a082fa838543b",
+   "title": "Bank of Japan Accounts (October 31)",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261031.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-04T01:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "d84f35b9e08880e5",
@@ -322,6 +399,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-03T23:50:00.000Z",
    "firstSeen": "2026-11-04T01:48:57.543Z"
+  },
+  {
+   "id": "5e6310961527d372",
+   "title": "Monetary Base (Oct.)",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/mb/mb.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-03T23:50:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "e4cc81629369c33b",
@@ -390,6 +478,17 @@
    "firstSeen": "2026-11-02T09:59:23.173Z"
   },
   {
+   "id": "6b07898b5736daaa",
+   "title": "Outlook for Economic Activity and Prices (October 2026, full text)",
+   "url": "https://www.boj.or.jp/en/mopo/outlook/gor2610b.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-02T05:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "8f7f91854dc3528d",
    "title": "Sources of Changes in Current Account Balances and Market Operations (Oct.)",
    "url": "http://www.boj.or.jp/en/statistics/boj/fm/juqf/juqf10.xlsx",
@@ -399,6 +498,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-02T04:00:00.000Z",
    "firstSeen": "2026-11-02T09:59:23.173Z"
+  },
+  {
+   "id": "67fee6ccff7af2ab",
+   "title": "Sources of Changes in Current Account Balances and Market Operations (Oct.)",
+   "url": "https://www.boj.or.jp/en/statistics/boj/fm/juqf/juqf10.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-02T04:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "0bc900233bc56f70",
@@ -489,6 +599,28 @@
    "firstSeen": "2026-10-30T11:35:45.733Z"
   },
   {
+   "id": "92a8eca8f2a63836",
+   "title": "Quarterly Schedule of Outright Purchases of Japanese Government Bonds (Competitive Auction Method) (October-December 2026) (Schedule Updates)",
+   "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030c.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T08:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
+   "id": "13b793814d42ec1f",
+   "title": "Timetable and Schedule of U.S. Dollar Funds-Supplying Operations (November 2026-March 2027)",
+   "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030b.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T08:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "e3cbaa08234c7323",
    "title": "Amendment to \"Basic Principles for Disposal of ETFs and J-REITs\"",
    "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030a.pdf",
@@ -498,6 +630,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-30T05:00:00.000Z",
    "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "ce5e9c2bb368d130",
+   "title": "Amendment to \"Basic Principles for Disposal of ETFs and J-REITs\"",
+   "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261030a.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T05:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "1c125382bd3afb97",
@@ -522,6 +665,28 @@
    "firstSeen": "2026-10-30T05:38:23.414Z"
   },
   {
+   "id": "c6ecd4962c11f6e9",
+   "title": "Outlook for Economic Activity and Prices (October 2026, The Bank's View)",
+   "url": "https://www.boj.or.jp/en/mopo/outlook/gor2610a.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T04:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
+   "id": "3b004613cfad29ff",
+   "title": "Statement on Monetary Policy",
+   "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030a.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T04:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "65cdfbbf8e554901",
    "title": "(Reference) Decisions regarding a Change in the Pace of Sales of ETFs (October 2026)",
    "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030c.pdf",
@@ -544,6 +709,28 @@
    "firstSeen": "2026-10-30T05:38:23.414Z"
   },
   {
+   "id": "70de4a48e28a79e2",
+   "title": "(Reference) Decisions regarding a Change in the Pace of Sales of ETFs (October 2026)",
+   "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030c.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T03:02:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
+   "id": "55be0e1f7e9fd0ad",
+   "title": "(Reference) Outlook Report and Indicators Related to Underlying Inflation",
+   "url": "https://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/k261030b.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T03:02:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "2911a03b7f3f63c0",
    "title": "Payment and Settlement Statistics (Sept.)",
    "url": "http://www.boj.or.jp/en/statistics/set/kess/release/2026/kess2609.pdf",
@@ -553,6 +740,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-30T02:00:00.000Z",
    "firstSeen": "2026-10-30T05:38:23.414Z"
+  },
+  {
+   "id": "5776ed5810045896",
+   "title": "Payment and Settlement Statistics (Sept.)",
+   "url": "https://www.boj.or.jp/en/statistics/set/kess/release/2026/kess2609.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-30T02:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "0f5607cc5329b765",
@@ -874,6 +1072,17 @@
    "firstSeen": "2026-10-27T07:45:14.071Z"
   },
   {
+   "id": "87c588183f0c38df",
+   "title": "Indicators for Core CPI",
+   "url": "https://www.boj.or.jp/en/research/research_data/cpi/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-27T05:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "d40dd902446a28fb",
    "title": "October 2026 euro area bank lending survey",
    "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261027~506ef03145.en.html",
@@ -916,6 +1125,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-26T23:50:00.000Z",
    "firstSeen": "2026-10-27T02:10:24.464Z"
+  },
+  {
+   "id": "ab929eac28cdcaa9",
+   "title": "Services Producer Price Index (Sept.)",
+   "url": "https://www.boj.or.jp/en/statistics/pi/cspi_release/sppi2609.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-26T23:50:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "86656f9a0027efa6",
@@ -1006,6 +1226,17 @@
    "firstSeen": "2026-10-25T04:32:53.588Z"
   },
   {
+   "id": "b1ca31581506aa4c",
+   "title": "Financial System Report (October 2026)",
+   "url": "https://www.boj.or.jp/en/research/brp/fsr/fsr261023.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-23T06:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "26760411aab6c47c",
    "title": "Members intensify discussions on WTO reform based on substantive proposals",
    "url": "https://www.wto.org/english/news_e/news26_e/refrm_23oct26_524_e.htm",
@@ -1072,6 +1303,17 @@
    "firstSeen": "2026-10-25T04:32:53.588Z"
   },
   {
+   "id": "6d39d93da143f1e5",
+   "title": "Japanese Government Bonds Held by the Bank of Japan",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261020.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-22T08:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "c8a9525a01667374",
    "title": "Developments in Real Exports and Real Imports",
    "url": "http://www.boj.or.jp/en/research/research_data/reri/index.htm",
@@ -1083,6 +1325,17 @@
    "firstSeen": "2026-10-25T04:32:53.588Z"
   },
   {
+   "id": "521dab6d8f0c44cb",
+   "title": "Developments in Real Exports and Real Imports",
+   "url": "https://www.boj.or.jp/en/research/research_data/reri/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-22T07:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
+  },
+  {
    "id": "9e61331fc06b38c2",
    "title": "Bank of Japan Accounts (October 20)",
    "url": "http://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261020.htm",
@@ -1092,6 +1345,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-22T01:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
+  },
+  {
+   "id": "86b913c01a94aba1",
+   "title": "Bank of Japan Accounts (October 20)",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261020.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-22T01:00:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "f3c9eead7a76b710",
@@ -1125,6 +1389,17 @@
    "cat": "Banques centrales",
    "date": "2026-10-21T23:50:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
+  },
+  {
+   "id": "9553f3129c100666",
+   "title": "Senior Loan Officer Opinion Survey (Oct.)",
+   "url": "https://www.boj.or.jp/en/statistics/dl/loan/loos/release/loos2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-10-21T23:50:00.000Z",
+   "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
    "id": "3a3e8c14363825a8",
@@ -1894,17 +2169,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-07T05:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "a2927234a7ca8e11",
-   "title": "Bank of Japan Accounts (September 30)",
-   "url": "http://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac260930.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-07T01:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
