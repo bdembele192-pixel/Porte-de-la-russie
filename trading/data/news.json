@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-07T01:18:04.253Z",
+ "generatedAt": "2026-11-07T07:15:33.690Z",
  "sources": [
   {
    "id": "fed",
@@ -2070,28 +2070,6 @@
    "sid": "ecb",
    "cat": "Banques centrales",
    "date": "2026-10-08T11:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "f77ce8b395c099bb",
-   "title": "Piero Cipollone: Interview with Corriere della Sera",
-   "url": "https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in261008~3184e7d0d0.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-08T06:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "93b913205ae53e1a",
-   "title": "Regional Economic Report (Summary) (Oct. 2026)",
-   "url": "http://www.boj.or.jp/en/research/brp/rer/rer261008.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-08T05:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
