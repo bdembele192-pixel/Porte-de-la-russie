@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-07T14:03:06.193Z",
+ "generatedAt": "2026-11-07T22:15:22.262Z",
  "sources": [
   {
    "id": "fed",
@@ -2048,17 +2048,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-09T07:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "d02469648203d39c",
-   "title": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261008a.htm",
-   "summary": "Federal Reserve Board announces enforcement action against American Express Company to address, among other things, the firm’s failure to sufficiently detect and report certain suspicious activity related to money laundering",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-08T20:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
