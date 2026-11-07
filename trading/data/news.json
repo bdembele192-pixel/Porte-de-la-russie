@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-07T07:15:33.690Z",
+ "generatedAt": "2026-11-07T14:03:06.193Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,17 @@
   }
  ],
  "items": [
+  {
+   "id": "2b5fc021feaf8643",
+   "title": "Christine Lagarde: Interview with Yomiuri Shimbun",
+   "url": "https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in261107~e7b86fc4ce.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-07T14:00:00.000Z",
+   "firstSeen": "2026-11-07T14:03:06.193Z"
+  },
   {
    "id": "8193bddb52d3d2b9",
    "title": "Speech by Governor UEDA at the 2026 Michel Camdessus Central Banking Lecture, International Monetary Fund",
@@ -2048,28 +2059,6 @@
    "sid": "fed",
    "cat": "Banques centrales",
    "date": "2026-10-08T20:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "858b02efbcd29887",
-   "title": "Myanmar : deux habitants sur trois vivent dans la pauvreté ou risquent d’y sombrer",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159628",
-   "summary": "Conflits, déplacements et crises économiques successives fragilisent les conditions de vie au Myanmar. Selon un rapport des Nations Unies, plus de 37 millions de personnes, soit 68 % de la population, vivent dans la pauvreté ou risquent d'y basculer. Leur capacité à faire face à de nouveaux chocs s'en trouve fortement ",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-08T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "a24511267df966cf",
-   "title": "Meeting of 9-10 September 2026",
-   "url": "https://www.ecb.europa.eu//press/accounts/2026/html/ecb.mg261008~a10153d090.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-08T11:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
