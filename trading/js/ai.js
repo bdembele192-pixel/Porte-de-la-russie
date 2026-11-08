@@ -575,7 +575,7 @@ ${context}`;
     const talk = smallTalk(n);
     if (talk) return { html: talk };
     if (/\b(mes stats|mes trades|mon bilan|mes erreurs|mes performances)\b/.test(n)) return { html: stats() };
-    const brain = a.cfg.claudeKey ? "key" : relayUrl() ? "relay" : null;
+    const brain = a.cfg.claudeKey ? "key" : sampleFn ? "sample" : relayUrl() ? "relay" : null;
     // Décryptage d'un communiqué de la section Actus (mode local)
     const nm = !brain && q0.match(/«\s*(.+?)\s*»/);
     const item = nm && ((M.News && M.News.items) || []).find(i => i.title === nm[1]);
@@ -610,7 +610,7 @@ ${context}`;
       if (hl.length) ctx += "\n\nDerniers communiqués officiels collectés par l'app :\n" + hl.map(i => `- ${new Date(i.date).toLocaleString("fr-FR")} · ${i.source} : ${i.title}${i.summary ? " — " + i.summary.slice(0, 200) : ""} (${i.url})`).join("\n");
       if (a.metrics) ctx += `\n\nModèle interne : précision ${pct(a.metrics.acc)}, compétence ${a.metrics.skill.toFixed(3)} sur ${a.metrics.nVal} cas récents.`;
       try {
-        const r = brain === "key" ? { text: await claude(q0, ctx || "(aucun)"), sources: [] } : await relayAsk(q0, ctx);
+        const r = brain === "key" ? { text: await claude(q0, ctx || "(aucun)"), sources: [] } : brain === "sample" ? await sampleAsk(q0, ctx) : await relayAsk(q0, ctx);
         const links = (r.sources || []).map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.title)}</a>`).join(" · ");
         return { html: mdLite(r.text) + (links ? `<br><small class="muted">Sources : ${links}</small>` : ""), plain: r.text, src: "Claude" };
       } catch (e) {
@@ -643,6 +643,30 @@ ${context}`;
     if (best) return { html: fromHits([best]) };
     if (hits.length) return { html: `Je ne suis pas sûr d'avoir compris. Tu parles peut-être de : ${hits.map(h => `<b>${esc(h.d.t)}</b>`).join(", ")} ? Reformule avec le mot exact et je t'explique.` };
     return { html: "Je ne sais pas encore répondre à ça, et je n'ai pas pu chercher en ligne. Reformule avec un mot-clé (ex. « inflation », « OHADA », « levier »), ou active le cerveau Claude dans l'onglet Copilote pour des réponses complètes." };
+  }
+
+  // ---------- Cerveau Claude intégré (page ouverte sur claude.ai : compte Claude de la personne, sans clé) ----------
+  let sampleFn = null;
+  if (window.claude && window.claude.use) window.claude.use("sample").then(f => { sampleFn = f || null; }).catch(() => {});
+  const RULES = `Tu es Mèche IA, l'assistant de Mèche, une application éducative de trading pour les jeunes, en particulier en Afrique de l'Ouest (Mali, UEMOA, BRVM, franc CFA).
+Tu réponds aux questions de trading, finance, options, économie, politique, droit (OHADA, UEMOA, BCEAO), géopolitique, écologie, psychologie et commerce.
+- Réponds dans la langue de la question, avec des phrases simples et des exemples concrets (en FCFA quand c'est naturel). Va droit au but : 3 à 8 phrases ou une courte liste, sauf si on te demande plus.
+- Sois exact. Tu n'as pas accès au web : pour un fait qui a pu changer (taux, dirigeant, cours, actualité), utilise les « Données de l'app » si elles le donnent, sinon dis jusqu'à quand ton information est sûre et invite à vérifier.
+- Pour expliquer un mouvement de marché, distingue les faits des hypothèses.
+- Pas d'ordre d'investissement personnalisé avec de l'argent réel : explique, analyse de façon éducative, rappelle le risque, la taille de position et le stop-loss. Mets en garde contre les arnaques.
+- Formatage léger : **gras** pour les mots clés, listes avec « - ». Pas de tableaux.`;
+  async function sampleAsk(q, context) {
+    const history = st().chat.slice(-9, -1).filter(x => x.plain || x.text).map(x => ({ role: x.role === "user" ? "user" : "assistant", content: (x.plain || x.text.replace(/<[^>]+>/g, " ")).slice(0, 3000) })).filter(x => x.content.trim());
+    while (history.length && history[0].role !== "user") history.shift();
+    const turns = [{ role: "user", content: RULES }].concat(history, [{ role: "user", content: `Données de l'app (${new Date().toLocaleString("fr-FR")}) :\n${context || "(aucune)"}\n\nQuestion : ${q}` }]);
+    try {
+      const r = await sampleFn(turns, { cache: false });
+      return { text: r.text, sources: [] };
+    } catch (e) {
+      // Refus ou indisponible : on n'insiste pas pendant cette visite
+      if (/not_granted|sampling_disabled|not_declared|capability_/.test(e.code)) sampleFn = null;
+      throw new Error(e.code === "rate_limited" ? "trop de questions d'affilée" : e.code === "not_granted" ? "accès à Claude refusé" : e.message || e.code);
+    }
   }
 
   // ---------- Cerveau Claude via le relais (sans clé pour l'utilisateur) ----------
@@ -788,7 +812,7 @@ ${context}`;
       </div>
       <div class="glass pad set-sec" style="margin-top:14px">
         <h2>${M.icon("ai")} Cerveau Claude (optionnel)</h2>
-        <p class="muted">${relayUrl() ? "<b>Activé pour tous par l'app</b> : le chat répond avec Claude et la recherche web, sans clé de ta part. Une clé personnelle reste possible (elle passe alors en priorité)." : "Sans clé, le chat répond avec ses connaissances locales et apprend sur Wikipédia. Avec une clé API Anthropic, il utilise Claude avec recherche web pour des réponses complètes sur tous les sujets. La clé reste sur cet appareil. Pour l'activer pour tous les utilisateurs sans clé, installe le relais (relay/README.md)."}</p>
+        <p class="muted">${sampleFn ? "<b>Activé par ton compte Claude</b> : tu utilises Mèche sur claude.ai, le chat répond donc avec Claude sans clé API. À la première question, Claude te demande l'autorisation." : relayUrl() ? "<b>Activé pour tous par l'app</b> : le chat répond avec Claude et la recherche web, sans clé de ta part. Une clé personnelle reste possible (elle passe alors en priorité)." : "Sans clé, le chat répond avec ses connaissances locales et apprend sur Wikipédia. Avec une clé API Anthropic, il utilise Claude avec recherche web pour des réponses complètes sur tous les sujets. La clé reste sur cet appareil. Pour l'activer pour tous les utilisateurs sans clé, installe le relais (relay/README.md)."}</p>
         <div class="set-row"><div><b>Clé API Anthropic</b><small>À créer sur console.anthropic.com (payant à l'usage).</small></div><div class="set-ctl"><span class="inp"><input type="password" id="c-key" value="${esc(a.cfg.claudeKey)}" placeholder="sk-ant-…" autocomplete="off"></span></div></div>
         <div class="set-row"><div><b>Modèle</b></div><div class="set-ctl"><select id="c-model">${[["claude-opus-5-5", "Claude Opus 5.5 (le plus précis)"], ["claude-sonnet-5-5", "Claude Sonnet 5.5 (plus rapide)"], ["claude-haiku-5-5", "Claude Haiku 5.5 (le moins cher)"]].map(([k, t]) => `<option value="${k}" ${a.cfg.claudeModel === k ? "selected" : ""}>${t}</option>`).join("")}</select></div></div>
       </div>
@@ -848,5 +872,5 @@ ${context}`;
     setTimeout(() => { if (navigator.onLine !== false) train().catch(() => {}); }, 4000);
   });
 
-  M.AI = { train, review, advise, monitor, snapshot, learnFromTrade, predict, answer, search, notify, openChat, resetIndex: () => { index = null; }, state: st };
+  M.AI = { train, review, advise, monitor, snapshot, learnFromTrade, predict, answer, search, notify, openChat, resetIndex: () => { index = null; }, state: st, brain: () => st().cfg.claudeKey ? "key" : sampleFn ? "sample" : relayUrl() ? "relay" : null };
 })();

@@ -3,37 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stoa FX Desk</title>
+<title>Vega FX Desk</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
 
 :root {
-  --bg-0: #0A0A0B;
-  --bg-1: #111112;
-  --bg-2: #161615;
-  --bg-3: #1C1B19;
-  --bg-4: #252320;
-  --border: #2A2824;
-  --border-bright: #3B3832;
-  --text-0: #EDEAE3;
-  --text-1: #CBC6BA;
-  --text-2: #9C968A;
-  --text-3: #78736A;
-  --accent-blue: #C9B38A;
-  --accent-green: #79C59A;
-  --accent-red: #E2725B;
-  --accent-orange: #D9A55B;
-  --accent-yellow: #E8D7A8;
-  --accent-purple: #A99BC9;
-  --accent-teal: #8FB8A8;
-  --pos: #79C59A;
-  --neg: #E2725B;
-  --warn: #D9A55B;
-  --mono: 'IBM Plex Mono', monospace;
+  --bg-0: #05060D;
+  --bg-1: #0C0E20;
+  --bg-2: #11142C;
+  --bg-3: #161A38;
+  --bg-4: #1E2348;
+  --border: #23284D;
+  --border-bright: #363E72;
+  --text-0: #F3F5FF;
+  --text-1: #C9CEEE;
+  --text-2: #959DC8;
+  --text-3: #6E76A6;
+  --accent-blue: #4DE1FF;
+  --accent-green: #3DFFA8;
+  --accent-red: #FF4D8D;
+  --accent-orange: #FFB547;
+  --accent-yellow: #FFE45C;
+  --accent-purple: #A66BFF;
+  --accent-teal: #2EF2D0;
+  --pos: #3DFFA8;
+  --neg: #FF4D8D;
+  --warn: #FFB547;
+  --mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
   --sans: 'Inter', system-ui, sans-serif;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --display: 'Cinzel', 'Cormorant Garamond', serif;
-  --side: 216px;
+  --display: 'Space Grotesk', 'Inter', sans-serif;
+  --side: 224px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -88,11 +87,11 @@ body {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
-.regime-calm { background: rgba(143,184,168,0.15); color: var(--accent-teal); border: 1px solid rgba(143,184,168,0.3); }
-.regime-bull { background: rgba(121,197,154,0.15); color: var(--accent-green); border: 1px solid rgba(121,197,154,0.3); }
-.regime-bear { background: rgba(226,114,91,0.15); color: var(--accent-red); border: 1px solid rgba(226,114,91,0.3); }
-.regime-riskoff { background: rgba(217,165,91,0.15); color: var(--accent-orange); border: 1px solid rgba(217,165,91,0.3); }
-.regime-shock { background: rgba(169,155,201,0.2); color: var(--accent-purple); border: 1px solid rgba(169,155,201,0.4); animation: pulse 0.5s infinite; }
+.regime-calm { background: rgba(46,242,208,0.15); color: var(--accent-teal); border: 1px solid rgba(46,242,208,0.3); }
+.regime-bull { background: rgba(61,255,168,0.15); color: var(--accent-green); border: 1px solid rgba(61,255,168,0.3); }
+.regime-bear { background: rgba(255,77,141,0.15); color: var(--accent-red); border: 1px solid rgba(255,77,141,0.3); }
+.regime-riskoff { background: rgba(255,181,71,0.15); color: var(--accent-orange); border: 1px solid rgba(255,181,71,0.3); }
+.regime-shock { background: rgba(166,107,255,0.2); color: var(--accent-purple); border: 1px solid rgba(166,107,255,0.4); animation: pulse 0.5s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
 
 .topbar-stat { display: flex; flex-direction: column; gap: 1px; }
@@ -189,7 +188,7 @@ td {
   font-size: 12px;
   padding: 4px 6px;
   text-align: right;
-  border-bottom: 1px solid rgba(58,55,50,0.5);
+  border-bottom: 1px solid rgba(54,62,114,0.5);
   color: var(--text-1);
   white-space: nowrap;
 }
@@ -222,13 +221,13 @@ tr:last-child td { border-bottom: none; }
 }
 .btn:hover { background: var(--bg-4); color: var(--text-0); border-color: var(--text-2); }
 .btn-blue { border-color: var(--accent-blue); color: var(--accent-blue); }
-.btn-blue:hover { background: rgba(201,179,138,0.1); }
+.btn-blue:hover { background: rgba(77,225,255,0.1); }
 .btn-green { border-color: var(--accent-green); color: var(--accent-green); }
-.btn-green:hover { background: rgba(121,197,154,0.1); }
+.btn-green:hover { background: rgba(61,255,168,0.1); }
 .btn-red { border-color: var(--accent-red); color: var(--accent-red); }
-.btn-red:hover { background: rgba(226,114,91,0.1); }
+.btn-red:hover { background: rgba(255,77,141,0.1); }
 .btn-orange { border-color: var(--accent-orange); color: var(--accent-orange); }
-.btn-orange:hover { background: rgba(217,165,91,0.1); }
+.btn-orange:hover { background: rgba(255,181,71,0.1); }
 .btn-lg { padding: 8px 20px; font-size: 13px; }
 
 /* ─── INPUTS ─── */
@@ -316,7 +315,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 }
 .mm-box .mm-name { font-size: 10px; color: var(--text-3); letter-spacing: 1px; margin-bottom: 4px; }
 .mm-box .mm-price { font-size: 14px; font-weight: 700; }
-.mm-box.winner { border-color: var(--accent-green); background: rgba(121,197,154,0.05); }
+.mm-box.winner { border-color: var(--accent-green); background: rgba(61,255,168,0.05); }
 .mm-box.loser { opacity: 0.5; }
 
 /* ─── FEEDBACK BOX ─── */
@@ -424,17 +423,17 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   font-weight: 700;
   letter-spacing: 1px;
 }
-.badge-buy { background: rgba(121,197,154,0.15); color: var(--pos); }
-.badge-sell { background: rgba(226,114,91,0.15); color: var(--neg); }
-.badge-call { background: rgba(201,179,138,0.1); color: var(--accent-blue); }
-.badge-put { background: rgba(169,155,201,0.1); color: var(--accent-purple); }
+.badge-buy { background: rgba(61,255,168,0.15); color: var(--pos); }
+.badge-sell { background: rgba(255,77,141,0.15); color: var(--neg); }
+.badge-call { background: rgba(77,225,255,0.1); color: var(--accent-blue); }
+.badge-put { background: rgba(166,107,255,0.1); color: var(--accent-purple); }
 
 /* terminal glow effect */
 .card { box-shadow: 0 0 0 0 transparent; transition: box-shadow 0.3s; }
-.card.active-glow { box-shadow: 0 0 10px rgba(201,179,138,0.1); }
+.card.active-glow { box-shadow: 0 0 10px rgba(77,225,255,0.1); }
 
 /* ATM flash */
-@keyframes volFlash { 0%{background:rgba(201,179,138,0.3)} 100%{background:transparent} }
+@keyframes volFlash { 0%{background:rgba(77,225,255,0.3)} 100%{background:transparent} }
 .vol-flash { animation: volFlash 0.8s ease-out; }
 
 /* ─── DEALER CARDS ─── */
@@ -445,7 +444,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   overflow: hidden;
   transition: border-color 0.2s;
 }
-.dealer-card.fresh { border-color: var(--accent-blue); box-shadow: 0 0 8px rgba(201,179,138,0.15); }
+.dealer-card.fresh { border-color: var(--accent-blue); box-shadow: 0 0 8px rgba(77,225,255,0.15); }
 .dealer-header {
   background: var(--bg-3);
   padding: 6px 10px;
@@ -471,8 +470,8 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 }
 .dealer-side.bid-side { border-right: 1px solid var(--border); }
 .dealer-side:hover { filter: brightness(1.15); }
-.dealer-side.bid-side { background: rgba(226,114,91,0.08); }
-.dealer-side.ask-side { background: rgba(121,197,154,0.08); }
+.dealer-side.bid-side { background: rgba(255,77,141,0.08); }
+.dealer-side.ask-side { background: rgba(61,255,168,0.08); }
 .dealer-side .side-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; margin-bottom: 2px; }
 .dealer-side .side-price { font-size: 18px; font-weight: 700; line-height: 1.1; }
 .dealer-side .side-pips { font-size: 11px; color: var(--text-3); margin-top: 2px; }
@@ -492,8 +491,8 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   flex-direction: column;
   gap: 4px;
 }
-.best-bar-side.best-bid { background: rgba(226,114,91,0.1); border: 1px solid rgba(226,114,91,0.3); }
-.best-bar-side.best-ask { background: rgba(121,197,154,0.1); border: 1px solid rgba(121,197,154,0.3); }
+.best-bar-side.best-bid { background: rgba(255,77,141,0.1); border: 1px solid rgba(255,77,141,0.3); }
+.best-bar-side.best-ask { background: rgba(61,255,168,0.1); border: 1px solid rgba(61,255,168,0.3); }
 .best-bar-side .bb-label { font-size: 11px; letter-spacing: 2px; font-weight: 700; }
 .best-bar-side .bb-price { font-size: 22px; font-weight: 700; }
 .best-bar-side .bb-dealer { font-size: 11px; color: var(--text-3); }
@@ -532,8 +531,8 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   font-size: 13px;
   animation: quoteFlash 0.2s ease-out;
 }
-.trade-result-box.bought { background: rgba(121,197,154,0.08); border: 1px solid rgba(121,197,154,0.3); }
-.trade-result-box.sold { background: rgba(226,114,91,0.08); border: 1px solid rgba(226,114,91,0.3); }
+.trade-result-box.bought { background: rgba(61,255,168,0.08); border: 1px solid rgba(61,255,168,0.3); }
+.trade-result-box.sold { background: rgba(255,77,141,0.08); border: 1px solid rgba(255,77,141,0.3); }
 
 /* ─── MOBILE RESPONSIVE ─── */
 @media (max-width: 768px) {
@@ -582,8 +581,8 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   transition: all 0.15s;
 }
 .tf-btn:hover { color: var(--text-1); border-color: var(--text-2); }
-.tf-btn.active { background: rgba(201,179,138,0.15); color: var(--accent-blue); border-color: var(--accent-blue); }
-.tf-btn.ta-on { background: rgba(232,215,168,0.12); color: var(--accent-yellow); border-color: var(--accent-yellow); }
+.tf-btn.active { background: rgba(77,225,255,0.15); color: var(--accent-blue); border-color: var(--accent-blue); }
+.tf-btn.ta-on { background: rgba(255,228,92,0.12); color: var(--accent-yellow); border-color: var(--accent-yellow); }
 
 /* ─── GREEK LIMIT BARS ─── */
 .greek-limit-bar {
@@ -627,7 +626,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   background: var(--bg-1);
   border: 1px solid var(--accent-blue);
   border-radius: 4px;
-  box-shadow: 0 0 40px rgba(201,179,138,0.2);
+  box-shadow: 0 0 40px rgba(77,225,255,0.2);
 }
 #vol-history-modal .modal-header {
   background: var(--bg-2);
@@ -662,8 +661,8 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   text-transform: uppercase;
 }
 .sc-btn:hover { color: var(--text-1); border-color: var(--text-2); }
-.sc-btn.sc-active { background: rgba(201,179,138,0.15); color: var(--accent-blue); border-color: var(--accent-blue); }
-#sc-pause.sc-active { background: rgba(232,215,168,0.15); color: var(--accent-yellow); border-color: var(--accent-yellow); }
+.sc-btn.sc-active { background: rgba(77,225,255,0.15); color: var(--accent-blue); border-color: var(--accent-blue); }
+#sc-pause.sc-active { background: rgba(255,228,92,0.15); color: var(--accent-yellow); border-color: var(--accent-yellow); }
 body.sim-paused #main { border-top: 2px solid var(--accent-yellow); }
 
 
@@ -682,73 +681,89 @@ body.sim-paused #main { border-top: 2px solid var(--accent-yellow); }
 .sc-card-desc { font-size: 10px; color: var(--text-3); line-height: 1.4; }
 
 
-/* ═══ STOA — calme, sobre, concentré ═══ */
-body { padding-left: var(--side); font-feature-settings: "tnum" 1; -webkit-font-smoothing: antialiased; }
-#topbar { padding: 10px 18px; gap: 22px; flex-wrap: wrap; row-gap: 6px; }
+/* ═══ VEGA — néon, verre dépoli, aurore ═══ */
+body { padding-left: var(--side); font-feature-settings: "tnum" 1; -webkit-font-smoothing: antialiased; background: var(--bg-0); }
+body::before {
+  content: ""; position: fixed; inset: -20vh -10vw auto auto; width: 70vw; height: 70vh; pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, rgba(166,107,255,0.22), transparent 70%); filter: blur(10px);
+}
+body::after {
+  content: ""; position: fixed; left: 10vw; bottom: -30vh; width: 70vw; height: 70vh; pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, rgba(77,225,255,0.14), transparent 70%); filter: blur(10px);
+}
+#topbar, #sim-controls, #main { position: relative; z-index: 1; }
+#topbar { padding: 12px 20px; gap: 22px; flex-wrap: wrap; row-gap: 6px; background: rgba(8,10,22,0.55); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.06); }
 #topbar .logo { display: none; }
-.topbar-market .spot-val { font-size: 24px; font-weight: 500; letter-spacing: 0.5px; }
+.topbar-market .pair { font-family: var(--display); letter-spacing: 1px; }
+.topbar-market .spot-val { font-family: var(--display); font-size: 28px; font-weight: 700; letter-spacing: 0; color: #fff; text-shadow: 0 0 22px rgba(77,225,255,0.45); }
 .topbar-stat .lbl, .card-title, th, .nav-sec, .tf-lbl { font-family: var(--sans); }
 .topbar-stat .lbl { letter-spacing: 1.5px; }
-.pnl-total { font-size: 19px; font-weight: 600; }
-.regime-badge { border-radius: 999px; padding: 3px 11px; font-family: var(--sans); }
-.regime-shock { animation: pulse 2.4s ease-in-out infinite; }
-#sim-controls { padding: 6px 18px !important; flex-wrap: wrap; row-gap: 6px; }
+.pnl-total { font-family: var(--display); font-size: 22px; font-weight: 700; }
+.pnl-total.pos { text-shadow: 0 0 18px rgba(61,255,168,0.45); }
+.pnl-total.neg { text-shadow: 0 0 18px rgba(255,77,141,0.45); }
+.regime-badge { border-radius: 999px; padding: 4px 12px; font-family: var(--sans); font-weight: 700; }
+#sim-controls { padding: 8px 20px !important; flex-wrap: wrap; row-gap: 6px; background: rgba(8,10,22,0.4) !important; border-bottom: 1px solid rgba(255,255,255,0.05) !important; }
 #notification { top: auto; bottom: 16px; right: 16px; width: min(360px, calc(100vw - 32px)); }
-.panel > *, .row > * { min-width: 0; }
-.card-body { overflow-x: auto; }
 
 #tabs {
   position: fixed; left: 0; top: 0; bottom: 0; width: var(--side);
   display: flex; flex-direction: column; gap: 0; overflow-y: auto; overflow-x: hidden;
-  background: var(--bg-0); border-right: 1px solid var(--border); border-bottom: none; z-index: 200;
-  padding: 22px 0 16px;
+  background: linear-gradient(180deg, rgba(14,16,36,0.92), rgba(6,7,16,0.96)); border-right: 1px solid rgba(255,255,255,0.06); border-bottom: none; z-index: 200;
+  padding: 22px 12px 16px; backdrop-filter: blur(16px);
 }
-#tabs .brand { padding: 0 22px 22px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
-#tabs .mark { font-family: var(--display); font-size: 26px; letter-spacing: 9px; color: var(--accent-blue); font-weight: 500; }
+#tabs .brand { padding: 0 10px 22px; margin-bottom: 8px; }
+#tabs .mark { font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: 6px;
+  background: linear-gradient(90deg, #4DE1FF, #A66BFF 55%, #FF4D8D); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 14px rgba(166,107,255,0.45)); }
 #tabs .sub { font-family: var(--sans); font-size: 11px; color: var(--text-3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px; }
-#tabs nav { display: flex; flex-direction: column; }
-.nav-sec { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-3); padding: 14px 22px 6px; }
+#tabs nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-sec { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-3); padding: 14px 12px 6px; }
 .tab {
-  display: flex; align-items: center; gap: 12px;
-  padding: 9px 22px; font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.3px; text-transform: none;
-  color: var(--text-2); border: none; border-left: 2px solid transparent; background: none;
+  display: flex; align-items: center; gap: 12px; border-radius: 10px;
+  padding: 9px 12px; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.2px; text-transform: none;
+  color: var(--text-2); border: 1px solid transparent; background: none; transition: background .15s, color .15s;
 }
-.tab .n { width: 26px; font-family: var(--display); font-size: 11px; color: var(--text-3); letter-spacing: 1px; }
-.tab:hover { color: var(--text-0); background: var(--bg-2); }
-.tab.active { color: var(--text-0); background: var(--bg-2); border-left-color: var(--accent-blue); border-bottom-color: transparent; }
-.tab.active .n { color: var(--accent-blue); }
-.maxim { margin: auto 22px 14px; padding-top: 18px; border-top: 1px solid var(--border); font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.45; color: var(--text-2); }
-.maxim span { display: block; margin-top: 8px; font-family: var(--sans); font-style: normal; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); }
-.focus-btn { margin: 0 22px; text-transform: none; letter-spacing: 0.5px; font-family: var(--sans); }
+.tab .n { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 7px; font-family: var(--mono); font-size: 11px; color: var(--text-3); background: rgba(255,255,255,0.04); }
+.tab:hover { color: var(--text-0); background: rgba(255,255,255,0.04); }
+.tab.active { color: #fff; background: linear-gradient(90deg, rgba(166,107,255,0.28), rgba(77,225,255,0.10)); border-color: rgba(166,107,255,0.35); box-shadow: 0 0 24px rgba(166,107,255,0.18); }
+.tab.active .n { color: #0A0B16; background: linear-gradient(135deg, #4DE1FF, #A66BFF); }
+.maxim { margin: auto 10px 14px; padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); font-family: var(--display); font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text-0); }
+.maxim span { display: block; margin-top: 6px; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.3px; color: var(--text-3); }
+.focus-btn { margin: 0 10px; text-transform: none; letter-spacing: 0.5px; font-family: var(--sans); }
 
-.panel { padding: 16px 18px; gap: 14px; }
-.card { border-radius: 6px; background: var(--bg-1); }
-.card-header { background: transparent; padding: 10px 14px 8px; }
-.card-title { letter-spacing: 2px; color: var(--text-2); font-weight: 600; }
-.card-body { padding: 10px 14px 12px; }
-td { border-bottom-color: rgba(237,234,227,0.05); }
-tr:hover td { background: rgba(201,179,138,0.04); }
-.btn { border-radius: 4px; font-family: var(--sans); letter-spacing: 1px; }
-input, select, textarea { border-radius: 4px; }
-.rfq-box { border-color: rgba(201,179,138,0.5); border-radius: 6px; }
-.rfq-box::before { border-radius: 0 0 4px 4px; }
-.mm-box { border-radius: 4px; }
-.feedback-item { border-radius: 0 4px 4px 0; }
-.notif { font-family: var(--sans); border-radius: 4px; }
+.panel { padding: 18px 20px; gap: 14px; }
+.card { border-radius: 16px; background: linear-gradient(180deg, rgba(22,26,56,0.72), rgba(12,14,32,0.72)); border: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(12px); box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+.card-header { background: transparent; padding: 12px 16px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.card-title { letter-spacing: 1.8px; color: var(--text-1); font-weight: 700; }
+.card-body { padding: 12px 16px 14px; }
+td { border-bottom-color: rgba(255,255,255,0.04); }
+tr:hover td { background: rgba(77,225,255,0.05); }
+.btn { border-radius: 9px; font-family: var(--sans); letter-spacing: 0.6px; font-weight: 700; }
+.btn-blue { background: linear-gradient(135deg, rgba(77,225,255,0.18), rgba(166,107,255,0.18)); }
+.btn-green { background: rgba(61,255,168,0.08); }
+.btn-lg { box-shadow: 0 0 22px rgba(61,255,168,0.2); }
+input, select, textarea { border-radius: 8px; background: rgba(5,6,13,0.7) !important; }
+.rfq-box { border-color: rgba(77,225,255,0.45); border-radius: 14px; background: rgba(12,16,38,0.8); box-shadow: 0 0 30px rgba(77,225,255,0.10); }
+.rfq-box::before { border-radius: 0 0 6px 6px; background: linear-gradient(90deg, #4DE1FF, #A66BFF); }
+.mm-box { border-radius: 10px; }
+.mm-box.winner { box-shadow: 0 0 20px rgba(61,255,168,0.2); }
+.feedback-item { border-radius: 0 10px 10px 0; }
+.notif { font-family: var(--sans); border-radius: 10px; backdrop-filter: blur(10px); }
+.sc-btn { border-radius: 8px !important; }
 
 .tf-bar { display: flex; align-items: center; gap: 5px; margin-bottom: 8px; flex-wrap: wrap; }
 .tf-lbl { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); margin-right: 2px; }
-.tf-btn { padding: 3px 9px !important; }
+.tf-btn { padding: 3px 9px !important; border-radius: 7px !important; }
 
 #journal-card {
   position: fixed; left: calc(var(--side) + 18px); bottom: 18px; width: min(420px, calc(100vw - 36px)); z-index: 950;
-  background: var(--bg-1); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 14px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6); display: none; font-family: var(--sans);
+  background: rgba(14,16,36,0.95); border: 1px solid rgba(166,107,255,0.5); border-radius: 14px; padding: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(166,107,255,0.2); display: none; font-family: var(--sans); backdrop-filter: blur(14px);
 }
 #journal-card.open { display: block; }
-#journal-card .j-title { font-family: var(--display); letter-spacing: 3px; font-size: 13px; color: var(--accent-blue); }
+#journal-card .j-title { font-family: var(--display); font-weight: 700; letter-spacing: 1px; font-size: 15px; color: #fff; }
 #journal-card .j-prod { font-size: 12px; color: var(--text-2); margin: 4px 0 10px; }
-#journal-card textarea { width: 100%; background: var(--bg-0); color: var(--text-0); border: 1px solid var(--border-bright); padding: 8px 10px; font-family: var(--sans); font-size: 13px; resize: vertical; outline: none; }
+#journal-card textarea { width: 100%; color: var(--text-0); border: 1px solid var(--border-bright); padding: 8px 10px; font-family: var(--sans); font-size: 13px; resize: vertical; outline: none; }
 #journal-card textarea:focus { border-color: var(--accent-blue); }
 #journal-card .j-act { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
 
@@ -759,21 +774,22 @@ body.focus #topbar > .btn { display: none !important; }
 body.focus #topbar .topbar-pnl .topbar-stat { display: flex !important; }
 body.focus #notification { opacity: 0.35; }
 body.focus #notification:hover { opacity: 1; }
+.panel > *, .row > * { min-width: 0; }
+.card-body { overflow-x: auto; }
 
 @media (max-width: 900px) {
   :root { --side: 0px; }
   body { overflow: auto; height: auto; min-height: 100vh; }
   #main { overflow: visible; }
   .panel { height: auto; overflow: visible; padding: 12px 16px; }
-  #tabs { position: sticky; top: 0; width: auto; flex-direction: row; padding: 0; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; order: -1; }
-  #tabs .brand { display: flex; align-items: center; padding: 0 14px; border: none; margin: 0; }
-  #tabs .mark { font-size: 16px; letter-spacing: 5px; }
+  #tabs { position: sticky; top: 0; width: auto; flex-direction: row; padding: 6px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); overflow-x: auto; order: -1; }
+  #tabs .brand { display: flex; align-items: center; padding: 0 10px; margin: 0; }
+  #tabs .mark { font-size: 18px; letter-spacing: 3px; }
   #tabs .sub, .maxim, .nav-sec { display: none; }
   #tabs nav { flex-direction: row; }
-  .tab { padding: 12px 12px; border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; }
-  .tab.active { border-bottom-color: var(--accent-blue); }
+  .tab { padding: 9px 12px; white-space: nowrap; }
   .tab .n { display: none; }
-  .focus-btn { margin: 6px 10px; white-space: nowrap; }
+  .focus-btn { margin: 0 6px; white-space: nowrap; }
   #topbar { padding: 10px 16px; }
   #sim-controls { flex-wrap: wrap; }
   #sim-controls > div[style*="margin-left:auto"] { margin-left: 0 !important; flex-wrap: wrap; }
@@ -788,7 +804,7 @@ body.focus #notification:hover { opacity: 1; }
 
 <!-- TOP BAR -->
 <div id="topbar">
-  <div class="logo">STOA</div>
+  <div class="logo">VEGA</div>
   <div class="topbar-market">
     <span class="pair">EUR/USD</span>
     <span class="spot-val" id="tb-spot">1.0850</span>
@@ -816,7 +832,7 @@ body.focus #notification:hover { opacity: 1; }
   <button id="sc-x2"    class="sc-btn"           onclick="setSimSpeed(2)">×2</button>
   <button id="sc-x5"    class="sc-btn"           onclick="setSimSpeed(5)">×5</button>
   <button id="sc-x10"   class="sc-btn"           onclick="setSimSpeed(10)">×10</button>
-  <div id="sc-paused-badge" style="display:none;padding:2px 8px;background:rgba(232,215,168,0.15);border:1px solid var(--accent-yellow);border-radius:2px;font-size:11px;color:var(--accent-yellow);font-weight:700;letter-spacing:2px;">PAUSED — Book frozen</div>
+  <div id="sc-paused-badge" style="display:none;padding:2px 8px;background:rgba(255,228,92,0.15);border:1px solid var(--accent-yellow);border-radius:2px;font-size:11px;color:var(--accent-yellow);font-weight:700;letter-spacing:2px;">PAUSED — Book frozen</div>
   <div style="margin-left:auto;display:flex;gap:6px;align-items:center;">
     <span id="save-indicator" style="font-size:10px;color:var(--text-3);"></span>
     <button class="btn" style="padding:3px 10px;font-size:11px;" onclick="saveSession()">SAVE</button>
@@ -830,25 +846,25 @@ body.focus #notification:hover { opacity: 1; }
 </div>
 
 <aside id="tabs">
-  <div class="brand"><div class="mark">STOA</div><div class="sub">FX Options Desk · EUR/USD</div></div>
+  <div class="brand"><div class="mark">VEGA</div><div class="sub">FX Options Desk · EUR/USD</div></div>
   <nav>
     <div class="nav-sec">Taker</div>
-    <div class="tab" data-tab="myrfq" onclick="showTab('myrfq', this)"><span class="n">0</span>My RFQ</div>
+    <div class="tab" data-tab="myrfq" onclick="showTab('myrfq', this)"><span class="n">00</span>My RFQ</div>
     <div class="nav-sec">Market</div>
-    <div class="tab active" data-tab="market" onclick="showTab('market', this)"><span class="n">I</span>Market</div>
-    <div class="tab" data-tab="volsurface" onclick="showTab('volsurface', this)"><span class="n">II</span>Vol Surface</div>
+    <div class="tab active" data-tab="market" onclick="showTab('market', this)"><span class="n">01</span>Market</div>
+    <div class="tab" data-tab="volsurface" onclick="showTab('volsurface', this)"><span class="n">02</span>Vol Surface</div>
     <div class="nav-sec">Dealing</div>
-    <div class="tab" data-tab="rfq" onclick="showTab('rfq', this)"><span class="n">III</span>Client RFQ</div>
-    <div class="tab" data-tab="pricer" onclick="showTab('pricer', this)"><span class="n">IV</span>Pricer</div>
+    <div class="tab" data-tab="rfq" onclick="showTab('rfq', this)"><span class="n">03</span>Client RFQ</div>
+    <div class="tab" data-tab="pricer" onclick="showTab('pricer', this)"><span class="n">04</span>Pricer</div>
     <div class="nav-sec">Risk</div>
-    <div class="tab" data-tab="book" onclick="showTab('book', this)"><span class="n">V</span>Book</div>
-    <div class="tab" data-tab="greeks" onclick="showTab('greeks', this)"><span class="n">VI</span>Greeks</div>
-    <div class="tab" data-tab="hedging" onclick="showTab('hedging', this)"><span class="n">VII</span>Hedging</div>
-    <div class="tab" data-tab="pnl" onclick="showTab('pnl', this)"><span class="n">VIII</span>PnL Attribution</div>
+    <div class="tab" data-tab="book" onclick="showTab('book', this)"><span class="n">05</span>Book</div>
+    <div class="tab" data-tab="greeks" onclick="showTab('greeks', this)"><span class="n">06</span>Greeks</div>
+    <div class="tab" data-tab="hedging" onclick="showTab('hedging', this)"><span class="n">07</span>Hedging</div>
+    <div class="tab" data-tab="pnl" onclick="showTab('pnl', this)"><span class="n">08</span>PnL Attribution</div>
     <div class="nav-sec">Practice</div>
-    <div class="tab" data-tab="training" onclick="showTab('training', this)"><span class="n">IX</span>Training</div>
+    <div class="tab" data-tab="training" onclick="showTab('training', this)"><span class="n">09</span>Training</div>
   </nav>
-  <div class="maxim">“Some things are within our control: your price, your size, your hedge. The rest belongs to the market.”<span>after Epictetus</span></div>
+  <div class="maxim">Price it. Hedge it. Own it.<span>Quote tight, hedge fast, keep a journal.</span></div>
   <button class="btn focus-btn" id="focus-btn" onclick="toggleFocus()">Focus mode</button>
 </aside>
 
@@ -2584,10 +2600,10 @@ function renderSpotDeformation() {
   const results = spots.map(s => ({ s, ...computeBookAtSpot(s) }));
   const currentIdx = Math.round(steps / 2);
 
-  drawDeformChart('deform-delta-canvas', spots, results.map(r => r.delta), S0, '#79C59A', currentIdx);
+  drawDeformChart('deform-delta-canvas', spots, results.map(r => r.delta), S0, '#3DFFA8', currentIdx);
   // Gamma displayed as EUR delta change per pip (×0.0001)
-  drawDeformChart('deform-gamma-canvas', spots, results.map(r => r.gamma * 0.0001), S0, '#D9A55B', currentIdx);
-  drawDeformChart('deform-vega-canvas', spots, results.map(r => r.vega), S0, '#A99BC9', currentIdx);
+  drawDeformChart('deform-gamma-canvas', spots, results.map(r => r.gamma * 0.0001), S0, '#FFB547', currentIdx);
+  drawDeformChart('deform-vega-canvas', spots, results.map(r => r.vega), S0, '#A66BFF', currentIdx);
   drawPnLDeformChart('deform-pnl-canvas', spots, results.map(r => r.pnl), S0, currentIdx);
 
   const cur = results[currentIdx];
@@ -2613,7 +2629,7 @@ function renderSpotDeformation() {
   if (tbody) tbody.innerHTML = keyIdxs.map(i => {
     const r = results[i]; const dSpot = r.s - S0;
     const isCurrent = i === currentIdx;
-    const bg = isCurrent ? 'background:rgba(201,179,138,0.08);font-weight:700;' : '';
+    const bg = isCurrent ? 'background:rgba(77,225,255,0.08);font-weight:700;' : '';
     return '<tr style="'+bg+'"><td>'+r.s.toFixed(4)+(isCurrent?' <span class="badge badge-call">NOW</span>':'')+'</td><td class="'+(dSpot>=0?'pos':'neg')+'">'+(dSpot>=0?'+':'')+(dSpot*10000).toFixed(1)+' pips</td><td class="'+(r.delta>=0?'pos':'neg')+'">'+r.delta.toFixed(0)+'</td><td class="'+(r.gamma>=0?'pos':'neg')+'">'+(r.gamma*0.0001).toFixed(0)+'</td><td class="'+(r.vega>=0?'pos':'neg')+'">'+r.vega.toFixed(0)+'</td><td class="'+(r.pnl>=0?'pos':'neg')+'">'+'$'+r.pnl.toFixed(0)+'</td><td class="muted" style="font-size:11px;">'+getSpotRiskLabel(r.delta, r.gamma)+'</td></tr>';
   }).join('');
 }
@@ -2650,7 +2666,7 @@ function drawDeformChart(canvasId, spots, values, S0, color, currentIdx) {
   spots.forEach((s,i) => { i===0?ctx.moveTo(toX(i),toY(values[i])):ctx.lineTo(toX(i),toY(values[i])); });
   ctx.lineTo(toX(spots.length-1),h-pad.b); ctx.lineTo(toX(0),h-pad.b); ctx.closePath();
   const grad = ctx.createLinearGradient(0,pad.t,0,h-pad.b);
-  const rgb = color==='#79C59A'?'0,255,157':color==='#D9A55B'?'255,154,60':'182,109,255';
+  const rgb = color==='#3DFFA8'?'0,255,157':color==='#FFB547'?'255,154,60':'182,109,255';
   grad.addColorStop(0,'rgba('+rgb+',0.25)'); grad.addColorStop(1,'rgba('+rgb+',0.0)');
   ctx.fillStyle=grad; ctx.fill();
 
@@ -2661,9 +2677,9 @@ function drawDeformChart(canvasId, spots, values, S0, color, currentIdx) {
 
   // current spot line
   const cx=toX(currentIdx);
-  ctx.strokeStyle='#E2725B'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
+  ctx.strokeStyle='#FF4D8D'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
   ctx.beginPath(); ctx.moveTo(cx,pad.t); ctx.lineTo(cx,h-pad.b); ctx.stroke(); ctx.setLineDash([]);
-  ctx.fillStyle='#E2725B'; ctx.beginPath(); ctx.arc(cx,toY(values[currentIdx]),3.5,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#FF4D8D'; ctx.beginPath(); ctx.arc(cx,toY(values[currentIdx]),3.5,0,Math.PI*2); ctx.fill();
 
   ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font='9px IBM Plex Mono';
   ctx.fillText(spots[0].toFixed(3),pad.l,h-2);
@@ -2690,22 +2706,22 @@ function drawPnLDeformChart(canvasId, spots, pnlValues, S0, currentIdx) {
   for (let i=0;i<spots.length-1;i++) {
     const x1=toX(i),x2=toX(i+1),y1=toY(pnlValues[i]),y2=toY(pnlValues[i+1]);
     ctx.beginPath(); ctx.moveTo(x1,zeroY); ctx.lineTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(x2,zeroY); ctx.closePath();
-    ctx.fillStyle=(pnlValues[i]+pnlValues[i+1])>=0?'rgba(121,197,154,0.2)':'rgba(226,114,91,0.2)'; ctx.fill();
+    ctx.fillStyle=(pnlValues[i]+pnlValues[i+1])>=0?'rgba(61,255,168,0.2)':'rgba(255,77,141,0.2)'; ctx.fill();
   }
 
-  ctx.strokeStyle='#E8D7A8'; ctx.lineWidth=2;
+  ctx.strokeStyle='#FFE45C'; ctx.lineWidth=2;
   ctx.beginPath();
   spots.forEach((s,i)=>{i===0?ctx.moveTo(toX(i),toY(pnlValues[i])):ctx.lineTo(toX(i),toY(pnlValues[i]));});
   ctx.stroke();
 
   const cx=toX(currentIdx);
-  ctx.strokeStyle='#E2725B'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
+  ctx.strokeStyle='#FF4D8D'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
   ctx.beginPath(); ctx.moveTo(cx,pad.t); ctx.lineTo(cx,h-pad.b); ctx.stroke(); ctx.setLineDash([]);
 
   const maxP=Math.max(...pnlValues), minP=Math.min(...pnlValues);
-  ctx.fillStyle='rgba(121,197,154,0.7)'; ctx.font='9px IBM Plex Mono';
+  ctx.fillStyle='rgba(61,255,168,0.7)'; ctx.font='9px IBM Plex Mono';
   ctx.fillText('$'+maxP.toFixed(0),2,Math.max(12,toY(maxP)+3));
-  ctx.fillStyle='rgba(226,114,91,0.7)';
+  ctx.fillStyle='rgba(255,77,141,0.7)';
   ctx.fillText('$'+minP.toFixed(0),2,Math.min(h-4,toY(minP)+3));
   ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.font='9px IBM Plex Mono';
   ctx.fillText(spots[0].toFixed(3),pad.l,h-2);
@@ -2888,10 +2904,10 @@ function renderTermStructure() {
   const w = canvas.width, h = canvas.height;
   ctx.clearRect(0,0,w,h);
 
-  ctx.strokeStyle = 'rgba(58,55,50,0.5)'; ctx.lineWidth = 0.5;
+  ctx.strokeStyle = 'rgba(54,62,114,0.5)'; ctx.lineWidth = 0.5;
   for (let i = 0; i <= 3; i++) { ctx.beginPath(); ctx.moveTo(0,h*i/3); ctx.lineTo(w,h*i/3); ctx.stroke(); }
 
-  ctx.strokeStyle = '#C9B38A'; ctx.lineWidth = 1.5;
+  ctx.strokeStyle = '#4DE1FF'; ctx.lineWidth = 1.5;
   ctx.beginPath();
   vols.forEach((v,i) => { const x = i/(vols.length-1)*(w-40)+20, y = h-(v-min)/(max-min)*h*0.8-h*0.1; i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y); });
   ctx.stroke();
@@ -2900,7 +2916,7 @@ function renderTermStructure() {
     const x = i/(vols.length-1)*(w-40)+20;
     const y = h-(v-min)/(max-min)*h*0.8-h*0.1;
     i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-    ctx.fillStyle = '#C9B38A';
+    ctx.fillStyle = '#4DE1FF';
     ctx.beginPath(); ctx.arc(x,y,2.5,0,Math.PI*2); ctx.fill();
     ctx.beginPath();
   });
@@ -2917,10 +2933,10 @@ function renderSmileChart() {
   const w = canvas.width, h = canvas.height;
   ctx.clearRect(0,0,w,h);
 
-  ctx.strokeStyle = 'rgba(58,55,50,0.4)'; ctx.lineWidth = 0.5;
+  ctx.strokeStyle = 'rgba(54,62,114,0.4)'; ctx.lineWidth = 0.5;
   for (let i=0;i<=3;i++){ctx.beginPath();ctx.moveTo(0,h*i/3);ctx.lineTo(w,h*i/3);ctx.stroke();}
 
-  ctx.strokeStyle='#A99BC9'; ctx.lineWidth=1.5;
+  ctx.strokeStyle='#A66BFF'; ctx.lineWidth=1.5;
   ctx.beginPath();
   vols.forEach((v,i)=>{ const x=i/(vols.length-1)*(w-40)+20, y=h-(v-min)/(max-min)*h*0.85-h*0.05; i===0?ctx.moveTo(x,y):ctx.lineTo(x,y); });
   ctx.stroke();
@@ -2929,7 +2945,7 @@ function renderSmileChart() {
     const x=i/(vols.length-1)*(w-40)+20;
     const y=h-(v-min)/(max-min)*h*0.85-h*0.05;
     i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
-    ctx.fillStyle='#A99BC9'; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#A66BFF'; ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill();
     ctx.fillStyle='rgba(255,255,255,0.6)'; ctx.font='9px IBM Plex Mono';
     ctx.fillText(v.toFixed(2)+'%',x-10,y-6);
     ctx.beginPath();
@@ -2937,7 +2953,7 @@ function renderSmileChart() {
   ctx.stroke();
 
   // Labels
-  ctx.fillStyle='#78736A'; ctx.font='9px IBM Plex Mono';
+  ctx.fillStyle='#6E76A6'; ctx.font='9px IBM Plex Mono';
   DELTA_PILLARS.forEach((d,i)=>{
     const x=i/(DELTA_PILLARS.length-1)*(w-40)+20;
     ctx.fillText(DELTA_LABELS[d]||d,x-12,h-2);
@@ -2995,8 +3011,8 @@ function renderVolSurface() {
       const norm = (v/100 - minV)/(maxV-minV);
       const r = Math.round(norm * 200);
       const g = Math.round((1-norm) * 180);
-      const bg = `rgba(${Math.round(121+(226-121)*norm)},${Math.round(197+(114-197)*norm)},${Math.round(154+(91-154)*norm)},0.22)`;
-      html += `<td class="vol-cell" style="background:${bg};color:#EDEAE3;">${v.toFixed(3)}%</td>`;
+      const bg = `rgba(${Math.round(77+(255-77)*norm)},${Math.round(225+(77-225)*norm)},${Math.round(255+(141-255)*norm)},0.22)`;
+      html += `<td class="vol-cell" style="background:${bg};color:#F3F5FF;">${v.toFixed(3)}%</td>`;
     });
     html += '</tr>';
   });
@@ -3103,7 +3119,7 @@ function renderGreeksMatrix() {
     const r = v < 0 ? Math.round(Math.abs(norm)*200) : 0;
     const g = v >= 0 ? Math.round(norm*180) : 0;
     const alpha = Math.min(0.8, Math.abs(norm)*0.7+0.1);
-    html += `<td class="hm-cell" style="background:rgba(${r},${g},80,${alpha});color:#EDEAE3;font-size:12px;font-weight:600;">
+    html += `<td class="hm-cell" style="background:rgba(${r},${g},80,${alpha});color:#F3F5FF;font-size:12px;font-weight:600;">
       ${formatGreek(greek, v)}
     </td>`;
   });
@@ -3490,7 +3506,7 @@ const DEALERS = [
     spreadMult: { '1W':0.80, '2W':0.85, '1M':0.90, '3M':0.95, '6M':1.00, '1Y':1.05 },
     biasVol: +0.0002,    // slight vol bid
     responseDelay: 600,
-    color: '#C9B38A',
+    color: '#4DE1FF',
   },
   {
     id: 'dealer-b',
@@ -3501,7 +3517,7 @@ const DEALERS = [
     spreadMult: { '1W':1.00, '2W':1.00, '1M':1.00, '3M':1.00, '6M':1.00, '1Y':1.00 },
     biasVol: 0.0000,
     responseDelay: 900,
-    color: '#E8D7A8',
+    color: '#FFE45C',
   },
   {
     id: 'dealer-c',
@@ -3512,7 +3528,7 @@ const DEALERS = [
     spreadMult: { '1W':1.20, '2W':1.15, '1M':1.10, '3M':1.05, '6M':1.00, '1Y':0.95 },
     biasVol: -0.0001,   // slight vol offer
     responseDelay: 1200,
-    color: '#D9A55B',
+    color: '#FFB547',
   },
 ];
 
@@ -4434,7 +4450,7 @@ function renderSpotChart() {
     if (data.length < 2) return;
     const min = Math.min(...data), max = Math.max(...data);
     const range = max - min || 0.0001;
-    ctx.strokeStyle = '#C9B38A'; ctx.lineWidth = 1.2;
+    ctx.strokeStyle = '#4DE1FF'; ctx.lineWidth = 1.2;
     ctx.beginPath();
     data.forEach((v, i) => {
       const x = i / (data.length - 1) * w;
@@ -4442,7 +4458,7 @@ function renderSpotChart() {
       i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.stroke();
-    ctx.fillStyle = '#C9B38A'; ctx.font = '11px IBM Plex Mono';
+    ctx.fillStyle = '#4DE1FF'; ctx.font = '11px IBM Plex Mono';
     ctx.fillText(state.spot.toFixed(4), w - 65, 14);
     return;
   }
@@ -4459,12 +4475,12 @@ function renderSpotChart() {
   const candleW = Math.max(1.5, cW / N - 1.5);
 
   // Grid lines
-  ctx.strokeStyle = 'rgba(58,55,50,0.5)'; ctx.lineWidth = 0.5;
+  ctx.strokeStyle = 'rgba(54,62,114,0.5)'; ctx.lineWidth = 0.5;
   for (let i = 0; i <= 4; i++) {
     const y = pad.t + cH * i / 4;
     ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
     const price = maxH - (maxH - minL) * i / 4;
-    ctx.fillStyle = 'rgba(156,150,138,0.5)'; ctx.font = '8px IBM Plex Mono';
+    ctx.fillStyle = 'rgba(149,157,200,0.5)'; ctx.font = '8px IBM Plex Mono';
     ctx.fillText(price.toFixed(4), w - pad.r + 3, y + 3);
   }
 
@@ -4472,7 +4488,7 @@ function renderSpotChart() {
   if (chartState.taEnabled.bb) {
     const bb = calcBB(closes, 20, 2);
     ['upper', 'lower', 'mid'].forEach((band, bi) => {
-      const col = bi === 2 ? 'rgba(232,215,168,0.4)' : 'rgba(201,179,138,0.3)';
+      const col = bi === 2 ? 'rgba(255,228,92,0.4)' : 'rgba(77,225,255,0.3)';
       ctx.strokeStyle = col; ctx.lineWidth = 0.8; ctx.setLineDash(bi === 2 ? [3,3] : []);
       ctx.beginPath();
       bb.forEach((b, i) => {
@@ -4487,7 +4503,7 @@ function renderSpotChart() {
   // SMA20
   if (chartState.taEnabled.sma) {
     const sma = calcSMA(closes, 20);
-    ctx.strokeStyle = '#E8D7A8'; ctx.lineWidth = 1; ctx.setLineDash([]);
+    ctx.strokeStyle = '#FFE45C'; ctx.lineWidth = 1; ctx.setLineDash([]);
     ctx.beginPath();
     sma.forEach((v, i) => {
       if (v === null) return;
@@ -4500,7 +4516,7 @@ function renderSpotChart() {
   // EMA9
   if (chartState.taEnabled.ema) {
     const ema = calcEMA(closes, 9);
-    ctx.strokeStyle = '#A99BC9'; ctx.lineWidth = 1;
+    ctx.strokeStyle = '#A66BFF'; ctx.lineWidth = 1;
     ctx.beginPath();
     ema.forEach((v, i) => {
       const x = toX(i), y = toY(v);
@@ -4513,7 +4529,7 @@ function renderSpotChart() {
   candles.forEach((cd, i) => {
     const x = toX(i);
     const isGreen = cd.c >= cd.o;
-    const col = isGreen ? '#79C59A' : '#E2725B';
+    const col = isGreen ? '#3DFFA8' : '#FF4D8D';
     const bodyTop = toY(Math.max(cd.o, cd.c));
     const bodyBot = toY(Math.min(cd.o, cd.c));
     const bodyH = Math.max(1, bodyBot - bodyTop);
@@ -4523,7 +4539,7 @@ function renderSpotChart() {
     ctx.beginPath(); ctx.moveTo(x, toY(cd.h)); ctx.lineTo(x, toY(cd.l)); ctx.stroke();
 
     // Body
-    ctx.fillStyle = isGreen ? 'rgba(121,197,154,0.85)' : 'rgba(226,114,91,0.85)';
+    ctx.fillStyle = isGreen ? 'rgba(61,255,168,0.85)' : 'rgba(255,77,141,0.85)';
     ctx.fillRect(x - candleW / 2, bodyTop, candleW, bodyH);
     if (candleW > 3) {
       ctx.strokeStyle = col; ctx.lineWidth = 0.5;
@@ -4537,13 +4553,13 @@ function renderSpotChart() {
   ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 0.5; ctx.setLineDash([4, 4]);
   ctx.beginPath(); ctx.moveTo(pad.l, lineY); ctx.lineTo(w - pad.r, lineY); ctx.stroke();
   ctx.setLineDash([]);
-  ctx.fillStyle = lastC >= candles[0].o ? '#79C59A' : '#E2725B';
+  ctx.fillStyle = lastC >= candles[0].o ? '#3DFFA8' : '#FF4D8D';
   ctx.font = 'bold 11px IBM Plex Mono';
   ctx.fillText(lastC.toFixed(4), w - pad.r + 3, lineY + 3);
 
   // Tick timestamp labels
   if (N > 2) {
-    ctx.fillStyle = 'rgba(156,150,138,0.5)'; ctx.font = '8px IBM Plex Mono';
+    ctx.fillStyle = 'rgba(149,157,200,0.5)'; ctx.font = '8px IBM Plex Mono';
     const step = Math.max(1, Math.floor(N / 5));
     for (let i = 0; i < N; i += step) {
       ctx.fillText(candles[i].t, toX(i) - 12, h - 2);
@@ -4559,14 +4575,14 @@ function renderSpotChart() {
     const rctx = rsiCanvas.getContext('2d');
     rctx.clearRect(0, 0, rsiCanvas.width, 40);
     const rsi = calcRSI(closes, 14);
-    rctx.strokeStyle = 'rgba(58,55,50,0.5)'; rctx.lineWidth = 0.5;
+    rctx.strokeStyle = 'rgba(54,62,114,0.5)'; rctx.lineWidth = 0.5;
     [30, 50, 70].forEach(lvl => {
       const y = 40 - (lvl / 100) * 36 - 2;
       rctx.beginPath(); rctx.moveTo(pad.l, y); rctx.lineTo(rsiCanvas.width - pad.r, y); rctx.stroke();
-      rctx.fillStyle = 'rgba(156,150,138,0.5)'; rctx.font = '8px IBM Plex Mono';
+      rctx.fillStyle = 'rgba(149,157,200,0.5)'; rctx.font = '8px IBM Plex Mono';
       rctx.fillText(lvl, rsiCanvas.width - pad.r + 2, y + 3);
     });
-    rctx.strokeStyle = '#A99BC9'; rctx.lineWidth = 1.2;
+    rctx.strokeStyle = '#A66BFF'; rctx.lineWidth = 1.2;
     rctx.beginPath();
     rsi.forEach((v, i) => {
       const x = pad.l + (i + 0.5) / N * (rsiCanvas.width - pad.l - pad.r);
@@ -4640,7 +4656,7 @@ function renderGreekLimits() {
 
   // Alert banner
   if (alerts.length > 0) {
-    html = `<div style="background:rgba(226,114,91,0.1);border:1px solid var(--accent-red);border-radius:3px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--accent-red);">
+    html = `<div style="background:rgba(255,77,141,0.1);border:1px solid var(--accent-red);border-radius:3px;padding:6px 8px;margin-bottom:8px;font-size:11px;color:var(--accent-red);">
       ${alerts.map(a => `<div>${a}</div>`).join('')}
     </div>` + html;
     // Also push topbar alert
@@ -4901,16 +4917,16 @@ function _renderVolHistoryChart(type, tenor, canvas) {
   const toY = function(v) { return pad.t + cH - (v - minV) / range * cH; };
 
   // Background
-  ctx.fillStyle = 'rgba(17,17,18,0.6)';
+  ctx.fillStyle = 'rgba(12,14,32,0.6)';
   ctx.fillRect(pad.l, pad.t, cW, cH);
 
   // Grid lines + Y axis labels
-  ctx.strokeStyle = 'rgba(58,55,50,0.6)'; ctx.lineWidth = 0.5;
+  ctx.strokeStyle = 'rgba(54,62,114,0.6)'; ctx.lineWidth = 0.5;
   for (let i = 0; i <= 5; i++) {
     const y = pad.t + cH * i / 5;
     ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
     const v = maxV - (maxV - minV) * i / 5;
-    ctx.fillStyle = 'rgba(156,150,138,0.7)'; ctx.font = '9px IBM Plex Mono';
+    ctx.fillStyle = 'rgba(149,157,200,0.7)'; ctx.font = '9px IBM Plex Mono';
     ctx.textAlign = 'right';
     ctx.fillText(v.toFixed(3) + '%', pad.l - 3, y + 3);
   }
@@ -4928,14 +4944,14 @@ function _renderVolHistoryChart(type, tenor, canvas) {
 
   // X axis ticks (time labels)
   const step = Math.max(1, Math.floor(N / 6));
-  ctx.fillStyle = 'rgba(156,150,138,0.5)'; ctx.font = '8px IBM Plex Mono';
+  ctx.fillStyle = 'rgba(149,157,200,0.5)'; ctx.font = '8px IBM Plex Mono';
   for (let i = 0; i < N; i += step) {
     ctx.fillText(history[i].time || '', toX(i) - 12, h - 4);
   }
 
   // Draw filled area for 25D
-  const col25 = isRR ? '#E2725B' : '#C9B38A';
-  const col25alpha = isRR ? 'rgba(226,114,91,0.15)' : 'rgba(201,179,138,0.12)';
+  const col25 = isRR ? '#FF4D8D' : '#4DE1FF';
+  const col25alpha = isRR ? 'rgba(255,77,141,0.15)' : 'rgba(77,225,255,0.12)';
   ctx.beginPath();
   vals25.forEach(function(v, i) { i===0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)); });
   const zeroY = minV < 0 ? toY(0) : pad.t + cH;
@@ -4949,7 +4965,7 @@ function _renderVolHistoryChart(type, tenor, canvas) {
   ctx.stroke();
 
   // 10D line
-  ctx.strokeStyle = '#A99BC9'; ctx.lineWidth = 1.2; ctx.setLineDash([4, 3]);
+  ctx.strokeStyle = '#A66BFF'; ctx.lineWidth = 1.2; ctx.setLineDash([4, 3]);
   ctx.beginPath();
   vals10.forEach(function(v, i) { i===0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)); });
   ctx.stroke(); ctx.setLineDash([]);
@@ -4958,7 +4974,7 @@ function _renderVolHistoryChart(type, tenor, canvas) {
   ctx.font = '10px IBM Plex Mono';
   ctx.fillStyle = col25;
   ctx.fillText('─ 25D: ' + vals25[vals25.length-1].toFixed(3) + '%', pad.l + 4, pad.t - 4);
-  ctx.fillStyle = '#A99BC9';
+  ctx.fillStyle = '#A66BFF';
   ctx.fillText('- 10D: ' + vals10[vals10.length-1].toFixed(3) + '%', pad.l + 110, pad.t - 4);
 
   // Current dot
@@ -5274,11 +5290,11 @@ function showAutoRFQPopup() {
         '<div style="font-size:10px;color:var(--text-3);">FAIR VALUE</div>' +
         '<div style="font-size:13px;font-weight:700;color:var(--accent-blue);">' + fvPips + ' pips</div>' +
       '</div>' +
-      '<div style="background:rgba(121,197,154,0.08);padding:5px;border-radius:2px;text-align:center;cursor:pointer;" onclick="quickQuote(\'buy\')">' +
+      '<div style="background:rgba(61,255,168,0.08);padding:5px;border-radius:2px;text-align:center;cursor:pointer;" onclick="quickQuote(\'buy\')">' +
         '<div style="font-size:10px;color:var(--pos);">CLIENT BID (SELL)</div>' +
         '<div style="font-size:15px;font-weight:700;color:var(--pos);">' + bid + '</div>' +
       '</div>' +
-      '<div style="background:rgba(226,114,91,0.08);padding:5px;border-radius:2px;text-align:center;cursor:pointer;" onclick="quickQuote(\'sell\')">' +
+      '<div style="background:rgba(255,77,141,0.08);padding:5px;border-radius:2px;text-align:center;cursor:pointer;" onclick="quickQuote(\'sell\')">' +
         '<div style="font-size:10px;color:var(--neg);">CLIENT ASK (BUY)</div>' +
         '<div style="font-size:15px;font-weight:700;color:var(--neg);">' + ask + '</div>' +
       '</div>' +
@@ -5720,7 +5736,7 @@ function renderSnapshotCompare() {
       const cls = row.cls ? row.cls(s) : '';
       const val = row.fmt(s);
       const isLast = s === current;
-      html += '<td class="' + cls + '" style="text-align:center;font-size:12px;font-weight:' + (isLast?'700':'400') + ';' + (isLast?'background:rgba(201,179,138,0.05);':'') + '">' + val + '</td>';
+      html += '<td class="' + cls + '" style="text-align:center;font-size:12px;font-weight:' + (isLast?'700':'400') + ';' + (isLast?'background:rgba(77,225,255,0.05);':'') + '">' + val + '</td>';
     });
     html += '</tr>';
   });
@@ -6332,10 +6348,10 @@ function toggleFocus(force) {
   document.body.classList.toggle('focus', on);
   const b = document.getElementById('focus-btn');
   if (b) b.textContent = on ? 'Leave focus' : 'Focus mode';
-  try { localStorage.setItem('stoa:focus', on ? '1' : '0'); } catch (e) {}
+  try { localStorage.setItem('vega:focus', on ? '1' : '0'); } catch (e) {}
   setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
 }
-window.addEventListener('load', () => { try { if (localStorage.getItem('stoa:focus') === '1') toggleFocus(true); } catch (e) {} });
+window.addEventListener('load', () => { try { if (localStorage.getItem('vega:focus') === '1') toggleFocus(true); } catch (e) {} });
 document.addEventListener('keydown', e => {
   if (e.key === 'f' && !e.ctrlKey && !e.metaKey && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) toggleFocus();
 });
@@ -6379,7 +6395,7 @@ document.addEventListener('keydown', e => {
 
 
 <!-- MACRO EVENT POPUP -->
-<div id="macro-popup" style="display:none;position:fixed;bottom:60px;right:12px;width:min(440px,95vw);background:var(--bg-1);border:1px solid var(--accent-yellow);border-radius:4px;padding:12px;z-index:900;box-shadow:0 0 30px rgba(232,215,168,0.2);">
+<div id="macro-popup" style="display:none;position:fixed;bottom:60px;right:12px;width:min(440px,95vw);background:var(--bg-1);border:1px solid var(--accent-yellow);border-radius:4px;padding:12px;z-index:900;box-shadow:0 0 30px rgba(255,228,92,0.2);">
 </div>
 
 <!-- MACRO HISTORY MODAL -->
@@ -6401,7 +6417,7 @@ document.addEventListener('keydown', e => {
 
 
 <!-- AUTO CLIENT RFQ POPUP -->
-<div id="auto-rfq-popup" style="display:none;position:fixed;top:50px;left:50%;transform:translateX(-50%);width:min(580px,96vw);background:var(--bg-1);border:2px solid var(--accent-blue);border-radius:4px;padding:14px;z-index:950;box-shadow:0 0 40px rgba(201,179,138,0.25);animation:slideIn 0.3s ease;">
+<div id="auto-rfq-popup" style="display:none;position:fixed;top:50px;left:50%;transform:translateX(-50%);width:min(580px,96vw);background:var(--bg-1);border:2px solid var(--accent-blue);border-radius:4px;padding:14px;z-index:950;box-shadow:0 0 40px rgba(77,225,255,0.25);animation:slideIn 0.3s ease;">
 </div>
 
 <!-- WHAT-IF MODAL -->

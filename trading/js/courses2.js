@@ -168,7 +168,7 @@ M.COURSES.push(
       { q: "Tu achètes un call strike 50 pour une prime de 3. À l'échéance l'action vaut 58. Ton gain net par option ?", o: ["8", "5", "3"], a: 1, why: "Valeur à l'échéance 58 − 50 = 8, moins la prime de 3 = 5." },
       { q: "Le theta mesure…", o: ["La perte de valeur liée au temps", "La sensibilité au prix", "Le volume"], a: 0, why: "Le theta, c'est l'érosion quotidienne de la valeur temps." }
     ],
-    try: "quiz"
+    try: "options"
   },
 
   {
