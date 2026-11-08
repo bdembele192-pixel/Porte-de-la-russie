@@ -1,0 +1,992 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""marche — la boîte à outils en ligne de commande de Mèche OS.
+
+Tâches courantes des traders et des analystes, sans dépendance externe
+(bibliothèque standard Python uniquement) :
+
+  marche cours [SYMB...]          tableau des cours (indices, actions, forex, BRVM…)
+  marche graph SYMB               graphique des cours dans le terminal
+  marche analyse SYMB             indicateurs techniques + statistiques de risque
+  marche backtest SYMB            test historique d'une stratégie, frais inclus
+  marche correlation SYMB...      matrice de corrélation des rendements
+  marche risque                   taille de position selon le risque accepté
+  marche actus                    communiqués officiels (banques centrales, FMI…)
+  marche alerte ...               alertes de prix (ajout, liste, vérification)
+  marche rapport                  rapport quotidien (Markdown + HTML)
+  marche export SYMB              export CSV de l'historique
+
+Données : cours collectés toutes les 5 minutes par le dépôt Mèche
+(CNBC, TradingView, brvm.org — différé de quelques minutes). Hors ligne,
+la dernière copie téléchargée est utilisée.
+
+Ce programme est un outil d'aide à l'analyse, pas un conseil en investissement.
+"""
+
+import argparse
+import csv
+import datetime as dt
+import html
+import json
+import math
+import os
+import shutil
+import subprocess
+import sys
+import urllib.error
+import urllib.request
+
+VERSION = "1.0.0"
+
+BASE_URL = os.environ.get(
+    "MARCHE_DATA_URL",
+    "https://raw.githubusercontent.com/bdembele192-pixel/Porte-de-la-russie/main/trading/data",
+)
+CACHE_DIR = os.path.join(
+    os.environ.get("XDG_CACHE_HOME", os.path.expanduser("~/.cache")), "marche"
+)
+CONFIG_DIR = os.path.join(
+    os.environ.get("XDG_CONFIG_HOME", os.path.expanduser("~/.config")), "marche"
+)
+# Copie des données livrée avec le système (utilisée si jamais téléchargé et hors ligne).
+SYSTEM_DATA_DIR = os.environ.get("MARCHE_SYSTEM_DATA", "/usr/share/meche/data")
+CACHE_TTL = 120  # secondes : les robots publient toutes les 5 minutes
+
+# --------------------------------------------------------------------------
+# Affichage
+# --------------------------------------------------------------------------
+
+USE_COLOR = sys.stdout.isatty() and os.environ.get("NO_COLOR") is None
+
+
+def color(text, code):
+    if not USE_COLOR:
+        return text
+    return "\033[%sm%s\033[0m" % (code, text)
+
+
+def green(t):
+    return color(t, "32")
+
+
+def red(t):
+    return color(t, "31")
+
+
+def bold(t):
+    return color(t, "1")
+
+
+def dim(t):
+    return color(t, "2")
+
+
+def signed(value, fmt="{:+.2f}", suffix=""):
+    if value is None or (isinstance(value, float) and math.isnan(value)):
+        return "—"
+    text = fmt.format(value) + suffix
+    return green(text) if value > 0 else red(text) if value < 0 else text
+
+
+def fmt_num(value, decimals=None):
+    if value is None:
+        return "—"
+    if decimals is None:
+        a = abs(value)
+        decimals = 2 if a >= 100 else 4 if a >= 1 else 6
+    s = "{:,.{d}f}".format(value, d=decimals)
+    return s.replace(",", " ")  # espace fine insécable, à la française
+
+
+def visible_len(s):
+    out, i = 0, 0
+    while i < len(s):
+        if s[i] == "\033":
+            j = s.find("m", i)
+            i = j + 1 if j != -1 else len(s)
+            continue
+        out += 1
+        i += 1
+    return out
+
+
+def table(headers, rows, align=None):
+    align = align or ["l"] + ["r"] * (len(headers) - 1)
+    widths = [visible_len(h) for h in headers]
+    for r in rows:
+        for i, c in enumerate(r):
+            widths[i] = max(widths[i], visible_len(str(c)))
+
+    def line(cells):
+        out = []
+        for i, c in enumerate(cells):
+            c = str(c)
+            pad = " " * (widths[i] - visible_len(c))
+            out.append(c + pad if align[i] == "l" else pad + c)
+        return "  ".join(out)
+
+    print(bold(line(headers)))
+    print(dim("  ".join("─" * w for w in widths)))
+    for r in rows:
+        print(line(r))
+
+
+def die(msg, code=1):
+    print(red("Erreur : ") + msg, file=sys.stderr)
+    sys.exit(code)
+
+
+# --------------------------------------------------------------------------
+# Données
+# --------------------------------------------------------------------------
+
+
+def _read_json(path):
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def load(name, refresh=False):
+    """Charge quotes / history / news : cache récent > réseau > cache ancien > copie système."""
+    os.makedirs(CACHE_DIR, exist_ok=True)
+    cache = os.path.join(CACHE_DIR, name + ".json")
+    local_dir = os.environ.get("MARCHE_LOCAL_DATA")  # dossier local (tests, hors ligne)
+    if local_dir:
+        return _read_json(os.path.join(local_dir, name + ".json"))
+
+    fresh = os.path.exists(cache) and (
+        dt.datetime.now().timestamp() - os.path.getmtime(cache) < CACHE_TTL
+    )
+    if fresh and not refresh:
+        return _read_json(cache)
+    try:
+        req = urllib.request.Request(
+            "%s/%s.json" % (BASE_URL, name), headers={"User-Agent": "marche/" + VERSION}
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        tmp = cache + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            json.dump(data, f)
+        os.replace(tmp, cache)
+        return data
+    except (urllib.error.URLError, OSError, ValueError) as exc:
+        for path in (cache, os.path.join(SYSTEM_DATA_DIR, name + ".json")):
+            if os.path.exists(path):
+                print(
+                    dim("(hors ligne : %s — données du %s)" % (exc.__class__.__name__,
+                        dt.datetime.fromtimestamp(os.path.getmtime(path)).strftime("%d/%m %H:%M"))),
+                    file=sys.stderr,
+                )
+                return _read_json(path)
+        die("impossible de récupérer les données (%s) et aucune copie locale." % exc)
+
+
+def quotes():
+    return load("quotes")["items"]
+
+
+def find_quote(items, symbol):
+    s = symbol.upper()
+    for q in items:
+        if q["id"].upper() in (s, "BRVM:" + s):
+            return q
+    for q in items:  # recherche par nom
+        if s.lower() in q["name"].lower() or s.lower() in q.get("short", "").lower():
+            return q
+    return None
+
+
+def closes_for(symbol):
+    """Renvoie (fiche du cours, liste de (date, clôture)) — historique journalier."""
+    items = quotes()
+    q = find_quote(items, symbol)
+    if not q:
+        die("symbole inconnu : %s (voir « marche cours --tout »)" % symbol)
+    hist = load("history")["items"].get(q["id"], [])
+    series = [(dt.datetime.fromtimestamp(b[0] / 1000).date(), float(b[4])) for b in hist]
+    # Ajoute le dernier cours du jour s'il est plus récent que l'historique.
+    if q.get("price") is not None and q.get("time"):
+        today = dt.datetime.fromtimestamp(q["time"] / 1000).date()
+        if not series or today > series[-1][0]:
+            series.append((today, float(q["price"])))
+        elif today == series[-1][0]:
+            series[-1] = (today, float(q["price"]))
+    return q, series
+
+
+# --------------------------------------------------------------------------
+# Indicateurs (mêmes définitions que trading/js/indicators.js)
+# --------------------------------------------------------------------------
+
+
+def sma(values, n):
+    out, s = [], 0.0
+    for i, v in enumerate(values):
+        s += v
+        if i >= n:
+            s -= values[i - n]
+        out.append(s / n if i >= n - 1 else None)
+    return out
+
+
+def ema(values, n):
+    out, k, prev = [], 2.0 / (n + 1), None
+    for i, v in enumerate(values):
+        if i < n - 1:
+            out.append(None)
+            continue
+        if prev is None:
+            prev = sum(values[i - n + 1 : i + 1]) / n
+        else:
+            prev = v * k + prev * (1 - k)
+        out.append(prev)
+    return out
+
+
+def rsi(values, n=14):
+    out = [None] * len(values)
+    if len(values) <= n:
+        return out
+    gains = losses = 0.0
+    for i in range(1, n + 1):
+        d = values[i] - values[i - 1]
+        gains += max(d, 0)
+        losses += max(-d, 0)
+    ag, al = gains / n, losses / n
+
+    def val(g, l):
+        return 100.0 if l == 0 else 100 - 100 / (1 + g / l)
+
+    out[n] = val(ag, al)
+    for i in range(n + 1, len(values)):
+        d = values[i] - values[i - 1]
+        ag = (ag * (n - 1) + max(d, 0)) / n
+        al = (al * (n - 1) + max(-d, 0)) / n
+        out[i] = val(ag, al)
+    return out
+
+
+def macd(values, fast=12, slow=26, signal=9):
+    ef, es = ema(values, fast), ema(values, slow)
+    line = [a - b if a is not None and b is not None else None for a, b in zip(ef, es)]
+    start = next((i for i, v in enumerate(line) if v is not None), None)
+    sig = [None] * len(values)
+    if start is not None:
+        s = ema(line[start:], signal)
+        sig[start:] = s
+    return line, sig
+
+
+def bollinger(values, n=20, k=2.0):
+    mid = sma(values, n)
+    up, lo = [], []
+    for i, m in enumerate(mid):
+        if m is None:
+            up.append(None)
+            lo.append(None)
+            continue
+        w = values[i - n + 1 : i + 1]
+        sd = math.sqrt(sum((x - m) ** 2 for x in w) / n)
+        up.append(m + k * sd)
+        lo.append(m - k * sd)
+    return mid, up, lo
+
+
+def returns(values):
+    return [values[i] / values[i - 1] - 1 for i in range(1, len(values)) if values[i - 1]]
+
+
+def stdev(xs):
+    if len(xs) < 2:
+        return 0.0
+    m = sum(xs) / len(xs)
+    return math.sqrt(sum((x - m) ** 2 for x in xs) / (len(xs) - 1))
+
+
+def max_drawdown(values):
+    peak, mdd = -math.inf, 0.0
+    for v in values:
+        peak = max(peak, v)
+        if peak > 0:
+            mdd = min(mdd, v / peak - 1)
+    return mdd
+
+
+def var_hist(rets, level=0.95):
+    if not rets:
+        return None
+    s = sorted(rets)
+    return s[max(0, int((1 - level) * len(s)) - 1)]
+
+
+def pearson(a, b):
+    n = min(len(a), len(b))
+    if n < 3:
+        return None
+    a, b = a[-n:], b[-n:]
+    ma, mb = sum(a) / n, sum(b) / n
+    cov = sum((x - ma) * (y - mb) for x, y in zip(a, b))
+    va = math.sqrt(sum((x - ma) ** 2 for x in a))
+    vb = math.sqrt(sum((y - mb) ** 2 for y in b))
+    return cov / (va * vb) if va and vb else None
+
+
+def last(xs):
+    for v in reversed(xs):
+        if v is not None:
+            return v
+    return None
+
+
+# --------------------------------------------------------------------------
+# Commandes
+# --------------------------------------------------------------------------
+
+TYPE_ORDER = ["Indice", "Action", "Matière première", "Forex", "Taux", "BRVM"]
+
+
+def cmd_cours(args):
+    items = quotes()
+    if args.symboles:
+        sel = []
+        for s in args.symboles:
+            q = find_quote(items, s)
+            if not q:
+                print(red("symbole inconnu : ") + s, file=sys.stderr)
+            else:
+                sel.append(q)
+    else:
+        sel = [q for q in items if args.tout or q["type"] != "BRVM" or q["id"].startswith("BRVM:BRVM-")]
+        if args.type:
+            sel = [q for q in items if args.type.lower() in q["type"].lower()]
+    sel.sort(key=lambda q: (TYPE_ORDER.index(q["type"]) if q["type"] in TYPE_ORDER else 99))
+    if args.tri == "variation":
+        sel.sort(key=lambda q: q.get("chg") or 0, reverse=True)
+    if args.json:
+        print(json.dumps(sel, ensure_ascii=False, indent=2))
+        return
+    rows = []
+    for q in sel:
+        rows.append([
+            q["id"].replace("BRVM:", ""),
+            q["short"] if len(q["name"]) > 28 else q["name"],
+            q["type"],
+            fmt_num(q.get("price")),
+            signed(q.get("chg"), suffix=" %"),
+            q.get("cur", ""),
+            "ouvert" if q.get("open_") else dim("fermé"),
+        ])
+    table(["Symbole", "Nom", "Type", "Cours", "Var.", "Devise", "Marché"], rows,
+          ["l", "l", "l", "r", "r", "l", "l"])
+    meta = load("quotes")
+    print(dim("\nSource : %s — mis à jour %s" % (meta.get("source", "?"), meta.get("generatedAt", "?"))))
+
+
+SPARK = "▁▂▃▄▅▆▇█"
+
+
+def sparkline(values):
+    lo, hi = min(values), max(values)
+    if hi == lo:
+        return SPARK[3] * len(values)
+    return "".join(SPARK[int((v - lo) / (hi - lo) * (len(SPARK) - 1))] for v in values)
+
+
+def resample(values, width):
+    if len(values) <= width:
+        return values
+    step = len(values) / width
+    return [values[min(len(values) - 1, int((i + 1) * step) - 1)] for i in range(width)]
+
+
+def cmd_graph(args):
+    q, series = closes_for(args.symbole)
+    series = series[-args.jours :]
+    if len(series) < 2:
+        die("pas assez d'historique pour %s." % q["id"])
+    vals = [c for _, c in series]
+    width = min(args.largeur or shutil.get_terminal_size((100, 24)).columns - 14, 120)
+    height = args.hauteur
+    pts = resample(vals, width)
+    lo, hi = min(pts), max(pts)
+    span = (hi - lo) or 1
+    grid = [[" "] * len(pts) for _ in range(height)]
+    for x, v in enumerate(pts):
+        y = int(round((v - lo) / span * (height - 1)))
+        grid[height - 1 - y][x] = "●"
+        # relie au point précédent pour une courbe continue
+        if x:
+            py = int(round((pts[x - 1] - lo) / span * (height - 1)))
+            for yy in range(min(py, y) + 1, max(py, y)):
+                grid[height - 1 - yy][x] = "│"
+    up = vals[-1] >= vals[0]
+    print(bold("%s — %s" % (q["id"], q["name"])) + dim("  (%d séances)" % len(vals)))
+    for i, row in enumerate(grid):
+        label = hi - span * i / (height - 1)
+        line = "".join(row)
+        print("%11s ┤%s" % (fmt_num(label), green(line) if up else red(line)))
+    print(" " * 12 + "└" + "─" * len(pts))
+    print(" " * 13 + series[0][0].strftime("%d/%m/%y") + " " * max(1, len(pts) - 16)
+          + series[-1][0].strftime("%d/%m/%y"))
+    perf = vals[-1] / vals[0] - 1
+    print("\nPerformance sur la période : " + signed(perf * 100, suffix=" %"))
+
+
+def analyse_data(symbol):
+    q, series = closes_for(symbol)
+    vals = [c for _, c in series]
+    if len(vals) < 15:
+        die("historique trop court pour %s (%d points)." % (q["id"], len(vals)))
+    rets = returns(vals)
+    price = vals[-1]
+    m20, m50 = last(sma(vals, 20)), last(sma(vals, 50))
+    r = last(rsi(vals))
+    ml, ms = macd(vals)
+    bm, bu, bl = bollinger(vals)
+    vol = stdev(rets) * math.sqrt(252)
+    mean = sum(rets) / len(rets) if rets else 0
+    sharpe = (mean * 252) / vol if vol else None
+
+    def perf(days):
+        return vals[-1] / vals[-1 - days] - 1 if len(vals) > days else None
+
+    signals = []
+    score = 0
+    if m20 and m50:
+        if price > m20 > m50:
+            signals.append(("Tendance haussière (cours > MM20 > MM50)", 1))
+        elif price < m20 < m50:
+            signals.append(("Tendance baissière (cours < MM20 < MM50)", -1))
+        else:
+            signals.append(("Tendance indécise (moyennes mobiles croisées)", 0))
+    elif m20:
+        signals.append(("Cours %s de la MM20" % ("au-dessus" if price > m20 else "en dessous"),
+                        1 if price > m20 else -1))
+    if r is not None:
+        if r > 70:
+            signals.append(("RSI %.0f : surachat, risque de correction" % r, -1))
+        elif r < 30:
+            signals.append(("RSI %.0f : survente, rebond possible" % r, 1))
+        else:
+            signals.append(("RSI %.0f : zone neutre" % r, 0))
+    if last(ml) is not None and last(ms) is not None:
+        bull = last(ml) > last(ms)
+        signals.append(("MACD %s sa ligne de signal" % ("au-dessus de" if bull else "sous"),
+                        1 if bull else -1))
+    if last(bu) is not None:
+        if price > last(bu):
+            signals.append(("Cours au-dessus de la bande de Bollinger haute", -1))
+        elif price < last(bl):
+            signals.append(("Cours sous la bande de Bollinger basse", 1))
+    score = sum(s for _, s in signals)
+    verdict = "plutôt haussier" if score >= 2 else "plutôt baissier" if score <= -2 else "neutre"
+    return {
+        "quote": q, "series": series, "price": price, "sma20": m20, "sma50": m50, "rsi": r,
+        "macd": last(ml), "macd_signal": last(ms), "boll_up": last(bu), "boll_low": last(bl),
+        "vol": vol, "sharpe": sharpe, "mdd": max_drawdown(vals), "var95": var_hist(rets),
+        "perf": {"1 sem.": perf(5), "1 mois": perf(21), "3 mois": perf(63), "1 an": perf(len(vals) - 1)},
+        "high": max(vals), "low": min(vals), "signals": signals, "score": score, "verdict": verdict,
+    }
+
+
+def cmd_analyse(args):
+    a = analyse_data(args.symbole)
+    q = a["quote"]
+    if args.json:
+        out = {k: v for k, v in a.items() if k not in ("quote", "series")}
+        out["symbole"] = q["id"]
+        print(json.dumps(out, ensure_ascii=False, indent=2, default=str))
+        return
+    print(bold("%s — %s" % (q["id"], q["name"])) + "  " + fmt_num(a["price"]) + " " + q.get("cur", ""))
+    print(dim("%d séances d'historique, du %s au %s\n" % (
+        len(a["series"]), a["series"][0][0].strftime("%d/%m/%Y"), a["series"][-1][0].strftime("%d/%m/%Y"))))
+    print(bold("Performance"))
+    print("   " + "   ".join("%s %s" % (k, signed(v * 100 if v is not None else None, suffix=" %"))
+                            for k, v in a["perf"].items()))
+    print("   Plus haut %s   Plus bas %s" % (fmt_num(a["high"]), fmt_num(a["low"])))
+    print(bold("\nIndicateurs techniques"))
+    rows = [
+        ["Moyenne mobile 20 j", fmt_num(a["sma20"])],
+        ["Moyenne mobile 50 j", fmt_num(a["sma50"])],
+        ["RSI 14", "%.1f" % a["rsi"] if a["rsi"] is not None else "—"],
+        ["MACD / signal", "%s / %s" % (fmt_num(a["macd"]), fmt_num(a["macd_signal"]))],
+        ["Bollinger (20, 2)", "%s – %s" % (fmt_num(a["boll_low"]), fmt_num(a["boll_up"]))],
+    ]
+    for k, v in rows:
+        print("   %-22s %s" % (k, v))
+    print(bold("\nRisque"))
+    print("   %-22s %.1f %%" % ("Volatilité annualisée", a["vol"] * 100))
+    print("   %-22s %s" % ("Ratio de Sharpe (≈)", "%.2f" % a["sharpe"] if a["sharpe"] is not None else "—"))
+    print("   %-22s %s" % ("Perte max. (drawdown)", signed(a["mdd"] * 100, suffix=" %")))
+    if a["var95"] is not None:
+        print("   %-22s %s" % ("VaR 95 % sur 1 jour", signed(a["var95"] * 100, suffix=" %")))
+    print(bold("\nSignaux"))
+    for text, s in a["signals"]:
+        mark = green("▲") if s > 0 else red("▼") if s < 0 else dim("•")
+        print("   %s %s" % (mark, text))
+    print("\n   Lecture d'ensemble : " + bold(a["verdict"]) + dim(" (score %+d)" % a["score"]))
+    print(dim("\nAide à l'analyse, pas un conseil en investissement."))
+
+
+def backtest(vals, strategy, fees=0.001, fast=20, slow=50):
+    """Stratégies long/cash, décision à la clôture, exécution à la clôture suivante
+    (pas de biais d'anticipation). Renvoie la courbe de capital et les trades."""
+    n = len(vals)
+    pos = [0] * n
+    if strategy == "sma":
+        f, s = sma(vals, fast), sma(vals, slow)
+        for i in range(n):
+            pos[i] = 1 if f[i] is not None and s[i] is not None and f[i] > s[i] else 0
+    elif strategy == "rsi":
+        r, held = rsi(vals), 0
+        for i in range(n):
+            if r[i] is not None:
+                if r[i] < 30:
+                    held = 1
+                elif r[i] > 70:
+                    held = 0
+            pos[i] = held
+    elif strategy == "bollinger":
+        mid, up, lo = bollinger(vals)
+        held = 0
+        for i in range(n):
+            if lo[i] is not None:
+                if vals[i] < lo[i]:
+                    held = 1
+                elif vals[i] > mid[i]:
+                    held = 0
+            pos[i] = held
+    elif strategy == "momentum":
+        for i in range(n):
+            pos[i] = 1 if i >= slow and vals[i] > vals[i - slow] else 0
+    else:
+        raise ValueError(strategy)
+
+    equity, eq, trades, entry = [1.0], 1.0, [], None
+    for i in range(1, n):
+        held = pos[i - 1]  # position décidée la veille
+        if held:
+            eq *= vals[i] / vals[i - 1]
+        prev = pos[i - 2] if i >= 2 else 0
+        if held != prev:  # changement exécuté à la clôture i-1
+            eq *= 1 - fees
+            if held:
+                entry = vals[i - 1]
+            elif entry is not None:
+                trades.append(vals[i - 1] / entry - 1 - 2 * fees)
+                entry = None
+        equity.append(eq)
+    if entry is not None:
+        trades.append(vals[-1] / entry - 1 - 2 * fees)
+    return equity, trades, pos
+
+
+def cmd_backtest(args):
+    q, series = closes_for(args.symbole)
+    vals = [c for _, c in series]
+    if len(vals) < 60:
+        die("historique trop court pour un backtest fiable (%d séances)." % len(vals))
+    strategies = ["sma", "rsi", "bollinger", "momentum"] if args.strategie == "toutes" else [args.strategie]
+    labels = {"sma": "Croisement MM %d/%d" % (args.rapide, args.lente), "rsi": "RSI 30/70",
+              "bollinger": "Retour à la moyenne (Bollinger)", "momentum": "Momentum %d j" % args.lente}
+    bh = vals[-1] / vals[0] - 1
+    print(bold("Backtest %s — %s" % (q["id"], q["name"])) + dim(
+        "  %d séances, frais %.2f %% par ordre" % (len(vals), args.frais)))
+    rows = []
+    for st in strategies:
+        eq, trades, _ = backtest(vals, st, args.frais / 100, args.rapide, args.lente)
+        rets = returns(eq)
+        vol = stdev(rets) * math.sqrt(252)
+        wins = [t for t in trades if t > 0]
+        rows.append([
+            labels[st],
+            signed((eq[-1] - 1) * 100, suffix=" %"),
+            signed(max_drawdown(eq) * 100, suffix=" %"),
+            "%.2f" % ((sum(rets) / len(rets) * 252) / vol) if vol else "—",
+            str(len(trades)),
+            "%.0f %%" % (100 * len(wins) / len(trades)) if trades else "—",
+        ])
+    rows.append(["Achat-conservation (référence)", signed(bh * 100, suffix=" %"),
+                 signed(max_drawdown(vals) * 100, suffix=" %"), "", "1", ""])
+    table(["Stratégie", "Rendement", "Drawdown", "Sharpe", "Trades", "Gagnants"], rows)
+    print(dim("\nDécision à la clôture, exécution à la clôture suivante. "
+              "Les performances passées ne préjugent pas des performances futures."))
+
+
+def cmd_correlation(args):
+    syms = args.symboles or ["SPX", "CAC", "GOLD", "BRENT", "EURUSD", "US10Y"]
+    data = {}
+    for s in syms:
+        q, series = closes_for(s)
+        data[q["id"]] = {d: c for d, c in series}
+    # dates communes, pour aligner les rendements
+    common = sorted(set.intersection(*(set(v) for v in data.values())))
+    if len(common) < 10:
+        die("pas assez de dates communes entre ces actifs.")
+    rets = {k: returns([v[d] for d in common]) for k, v in data.items()}
+    keys = list(rets)
+    rows = []
+    for a in keys:
+        row = [a]
+        for b in keys:
+            c = pearson(rets[a], rets[b])
+            cell = "%.2f" % c if c is not None else "—"
+            if c is not None and a != b:
+                cell = green(cell) if c > 0.5 else red(cell) if c < -0.5 else cell
+            row.append(cell)
+        rows.append(row)
+    print(bold("Corrélation des rendements journaliers") + dim("  (%d séances communes)\n" % len(common)))
+    table([""] + [k.replace("BRVM:", "") for k in keys], rows)
+    print(dim("\n> 0,5 : évoluent ensemble · < −0,5 : évoluent en sens inverse"))
+
+
+def cmd_risque(args):
+    if args.stop == args.entree:
+        die("le stop doit être différent du prix d'entrée.")
+    risk_amount = args.capital * args.risque / 100
+    per_unit = abs(args.entree - args.stop)
+    qty = risk_amount / per_unit
+    if args.lot:
+        qty = math.floor(qty / args.lot) * args.lot
+    exposure = qty * args.entree
+    side = "achat (long)" if args.stop < args.entree else "vente (short)"
+    print(bold("Calcul de taille de position — %s" % side))
+    print("   Capital                %s" % fmt_num(args.capital, 2))
+    print("   Risque accepté         %s (%.2f %%)" % (fmt_num(risk_amount, 2), args.risque))
+    print("   Distance au stop       %s (%.2f %%)" % (fmt_num(per_unit), per_unit / args.entree * 100))
+    print(bold("   Quantité               %s" % fmt_num(qty, 4)))
+    print("   Exposition             %s (levier effectif ×%.2f)" % (
+        fmt_num(exposure, 2), exposure / args.capital))
+    if args.objectif:
+        gain = abs(args.objectif - args.entree) * qty
+        print("   Gain à l'objectif      %s — ratio gain/risque %.2f" % (
+            fmt_num(gain, 2), gain / risk_amount if risk_amount else 0))
+    if exposure > args.capital:
+        print(red("\n   Attention : la position dépasse le capital, il faut du levier."))
+    if args.risque > 2:
+        print(red("   Attention : plus de 2 % de risque par trade est considéré comme élevé."))
+
+
+def cmd_actus(args):
+    news = load("news")["items"]
+    if args.categorie:
+        news = [n for n in news if args.categorie.lower() in n.get("cat", "").lower()]
+    if args.recherche:
+        news = [n for n in news if args.recherche.lower() in n["title"].lower()]
+    news = news[: args.nombre]
+    if args.json:
+        print(json.dumps(news, ensure_ascii=False, indent=2))
+        return
+    for n in news:
+        d = n.get("date", "")[:16].replace("T", " ")
+        print("%s  %s" % (dim(d), bold(n["title"])))
+        print("   %s · %s" % (n.get("source", ""), dim(n.get("url", ""))))
+
+
+# --------------------------------------------------------------------------
+# Alertes
+# --------------------------------------------------------------------------
+
+ALERTS_FILE = os.path.join(CONFIG_DIR, "alertes.json")
+
+
+def load_alerts():
+    try:
+        return _read_json(ALERTS_FILE)
+    except (OSError, ValueError):
+        return []
+
+
+def save_alerts(alerts):
+    os.makedirs(CONFIG_DIR, exist_ok=True)
+    tmp = ALERTS_FILE + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(alerts, f, ensure_ascii=False, indent=2)
+    os.replace(tmp, ALERTS_FILE)
+
+
+def notify(title, body):
+    print(bold(title) + " — " + body)
+    if shutil.which("notify-send") and (os.environ.get("DISPLAY") or os.environ.get("WAYLAND_DISPLAY")):
+        try:
+            subprocess.run(["notify-send", "-a", "Mèche", "-i", "meche", title, body],
+                           check=False, timeout=5)
+        except (OSError, subprocess.SubprocessError):
+            pass
+
+
+def cmd_alerte(args):
+    alerts = load_alerts()
+    if args.action == "ajouter":
+        if len(args.regle) != 3 or args.regle[1] not in (">", "<", ">=", "<="):
+            die("format : marche alerte ajouter SYMBOLE '>' PRIX   (ou '<')")
+        sym, op, price = args.regle
+        q = find_quote(quotes(), sym)
+        if not q:
+            die("symbole inconnu : %s" % sym)
+        alerts.append({"symbole": q["id"], "op": op, "prix": float(price.replace(",", ".")),
+                       "creee": dt.datetime.now().isoformat(timespec="seconds")})
+        save_alerts(alerts)
+        print(green("Alerte ajoutée : ") + "%s %s %s" % (q["id"], op, price))
+    elif args.action == "liste":
+        if not alerts:
+            print("Aucune alerte. Exemple : marche alerte ajouter GOLD '>' 2500")
+        for i, a in enumerate(alerts, 1):
+            print("%d. %s %s %s  %s" % (i, a["symbole"], a["op"], fmt_num(a["prix"]),
+                                        dim("créée le " + a["creee"])))
+    elif args.action == "supprimer":
+        idx = int(args.regle[0]) - 1 if args.regle else -1
+        if not 0 <= idx < len(alerts):
+            die("numéro d'alerte invalide (voir « marche alerte liste »).")
+        a = alerts.pop(idx)
+        save_alerts(alerts)
+        print("Alerte supprimée : %s %s %s" % (a["symbole"], a["op"], a["prix"]))
+    elif args.action == "verifier":
+        if not alerts:
+            return
+        items = load("quotes", refresh=True)["items"]
+        remaining = []
+        for a in alerts:
+            q = find_quote(items, a["symbole"])
+            p = q and q.get("price")
+            hit = p is not None and {
+                ">": p > a["prix"], ">=": p >= a["prix"], "<": p < a["prix"], "<=": p <= a["prix"],
+            }[a["op"]]
+            if hit:
+                notify("Alerte %s" % q["id"], "%s vaut %s (seuil %s %s)" % (
+                    q["name"], fmt_num(p), a["op"], fmt_num(a["prix"])))
+            else:
+                remaining.append(a)
+        if len(remaining) != len(alerts):
+            save_alerts(remaining)
+
+
+# --------------------------------------------------------------------------
+# Rapport quotidien
+# --------------------------------------------------------------------------
+
+
+def cmd_rapport(args):
+    items = quotes()
+    meta = load("quotes")
+    news = load("news")["items"][:8]
+    out_dir = os.path.expanduser(args.dossier)
+    os.makedirs(out_dir, exist_ok=True)
+    today = dt.date.today().isoformat()
+    movers = sorted([q for q in items if q.get("chg") is not None], key=lambda q: q["chg"])
+    watch = args.symboles or ["SPX", "CAC", "DAX", "GOLD", "BRENT", "EURUSD", "BRVM-C"]
+
+    md = ["# Rapport de marché — %s" % today, "",
+          "_Source : %s, données du %s._" % (meta.get("source"), meta.get("generatedAt")), "",
+          "## Vue d'ensemble", "", "| Actif | Cours | Var. | RSI 14 | Tendance |", "|---|---:|---:|---:|---|"]
+    for s in watch:
+        q = find_quote(items, s)
+        if not q:
+            continue
+        r = trend = "—"
+        try:
+            a = analyse_data(q["id"])
+            r = "%.0f" % a["rsi"] if a["rsi"] is not None else "—"
+            trend = a["verdict"]
+        except SystemExit:
+            pass
+        md.append("| %s | %s | %+.2f %% | %s | %s |" % (
+            q["name"], fmt_num(q.get("price")), q.get("chg") or 0, r, trend))
+    md += ["", "## Plus fortes hausses", ""]
+    md += ["- **%s** %+.2f %%" % (q["name"], q["chg"]) for q in reversed(movers[-5:])]
+    md += ["", "## Plus fortes baisses", ""]
+    md += ["- **%s** %+.2f %%" % (q["name"], q["chg"]) for q in movers[:5]]
+    md += ["", "## Communiqués officiels", ""]
+    md += ["- [%s](%s) — %s" % (n["title"], n.get("url", ""), n.get("source", "")) for n in news]
+    alerts = load_alerts()
+    if alerts:
+        md += ["", "## Alertes actives", ""]
+        md += ["- %s %s %s" % (a["symbole"], a["op"], fmt_num(a["prix"])) for a in alerts]
+    md += ["", "---", "_Généré par Mèche OS (marche %s). Aide à l'analyse, pas un conseil en investissement._" % VERSION]
+
+    md_path = os.path.join(out_dir, "rapport-%s.md" % today)
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(md) + "\n")
+    html_path = os.path.join(out_dir, "rapport-%s.html" % today)
+    with open(html_path, "w", encoding="utf-8") as f:
+        f.write(md_to_html("\n".join(md), "Rapport de marché %s" % today))
+    print(green("Rapport créé : ") + md_path)
+    print("              " + html_path)
+    if args.ouvrir and shutil.which("xdg-open"):
+        subprocess.Popen(["xdg-open", html_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def _inline(text):
+    import re
+    t = html.escape(text)
+    t = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', t)
+    t = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
+    t = re.sub(r"(?<!\w)_([^_]+)_(?!\w)", r"<em>\1</em>", t)
+    return t
+
+
+def md_to_html(md, title):
+    """Convertisseur Markdown minimal (titres, listes, tableaux) pour le rapport."""
+    out, in_list, in_table = [], False, False
+    for line in md.splitlines():
+        if line.startswith("|"):
+            cells = [c.strip() for c in line.strip("|").split("|")]
+            if all(set(c) <= set("-:") for c in cells):
+                continue
+            if not in_table:
+                out.append("<table><tr>" + "".join("<th>%s</th>" % _inline(c) for c in cells) + "</tr>")
+                in_table = True
+            else:
+                out.append("<tr>" + "".join("<td>%s</td>" % _inline(c) for c in cells) + "</tr>")
+            continue
+        if in_table:
+            out.append("</table>")
+            in_table = False
+        if line.startswith("- "):
+            if not in_list:
+                out.append("<ul>")
+                in_list = True
+            out.append("<li>%s</li>" % _inline(line[2:]))
+            continue
+        if in_list:
+            out.append("</ul>")
+            in_list = False
+        if line.startswith("## "):
+            out.append("<h2>%s</h2>" % _inline(line[3:]))
+        elif line.startswith("# "):
+            out.append("<h1>%s</h1>" % _inline(line[2:]))
+        elif line == "---":
+            out.append("<hr>")
+        elif line.strip():
+            out.append("<p>%s</p>" % _inline(line))
+    if in_list:
+        out.append("</ul>")
+    if in_table:
+        out.append("</table>")
+    style = ("body{font-family:system-ui,sans-serif;max-width:860px;margin:2rem auto;padding:0 1rem;"
+             "background:#0d0b14;color:#e8e6f0}h1,h2{color:#b48cff}a{color:#c9b3ff}"
+             "table{border-collapse:collapse;width:100%}th,td{padding:.4rem .6rem;border-bottom:1px solid #2a2440;"
+             "text-align:left}td:nth-child(n+2){text-align:right}em{color:#9a95ad}")
+    return ("<!doctype html><html lang=\"fr\"><head><meta charset=\"utf-8\"><title>%s</title>"
+            "<style>%s</style></head><body>%s</body></html>\n" % (html.escape(title), style, "\n".join(out)))
+
+
+def cmd_export(args):
+    q, series = closes_for(args.symbole)
+    path = args.fichier or "%s.csv" % q["id"].replace(":", "_")
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f, delimiter=args.separateur)
+        w.writerow(["date", "cloture"])
+        for d, c in series:
+            w.writerow([d.isoformat(), c])
+    print(green("Exporté : ") + "%s (%d lignes)" % (path, len(series)))
+
+
+def cmd_maj(args):
+    for name in ("quotes", "history", "news"):
+        data = load(name, refresh=True)
+        print("%-8s %s" % (name, data.get("generatedAt", "?")))
+
+
+# --------------------------------------------------------------------------
+# Point d'entrée
+# --------------------------------------------------------------------------
+
+
+def build_parser():
+    p = argparse.ArgumentParser(
+        prog="marche",
+        description="Outils de marché pour traders et analystes (Mèche OS).",
+        epilog="Exemples : marche cours · marche analyse AAPL · marche backtest GOLD --strategie toutes",
+    )
+    p.add_argument("--version", action="version", version="marche " + VERSION)
+    sub = p.add_subparsers(dest="cmd", metavar="COMMANDE")
+
+    s = sub.add_parser("cours", help="tableau des cours")
+    s.add_argument("symboles", nargs="*")
+    s.add_argument("--tout", action="store_true", help="inclure toutes les actions BRVM")
+    s.add_argument("--type", help="filtrer : indice, action, forex, matière, taux, brvm")
+    s.add_argument("--tri", choices=["type", "variation"], default="type")
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(func=cmd_cours)
+
+    s = sub.add_parser("graph", help="graphique dans le terminal")
+    s.add_argument("symbole")
+    s.add_argument("--jours", type=int, default=120)
+    s.add_argument("--hauteur", type=int, default=14)
+    s.add_argument("--largeur", type=int)
+    s.set_defaults(func=cmd_graph)
+
+    s = sub.add_parser("analyse", help="indicateurs techniques et risque")
+    s.add_argument("symbole")
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(func=cmd_analyse)
+
+    s = sub.add_parser("backtest", help="tester une stratégie sur l'historique")
+    s.add_argument("symbole")
+    s.add_argument("--strategie", choices=["sma", "rsi", "bollinger", "momentum", "toutes"], default="toutes")
+    s.add_argument("--rapide", type=int, default=20)
+    s.add_argument("--lente", type=int, default=50)
+    s.add_argument("--frais", type=float, default=0.1, help="frais par ordre en %% (défaut 0,1)")
+    s.set_defaults(func=cmd_backtest)
+
+    s = sub.add_parser("correlation", help="matrice de corrélation")
+    s.add_argument("symboles", nargs="*")
+    s.set_defaults(func=cmd_correlation)
+
+    s = sub.add_parser("risque", help="taille de position")
+    s.add_argument("--capital", type=float, required=True)
+    s.add_argument("--risque", type=float, default=1.0, help="%% du capital risqué (défaut 1)")
+    s.add_argument("--entree", type=float, required=True)
+    s.add_argument("--stop", type=float, required=True)
+    s.add_argument("--objectif", type=float)
+    s.add_argument("--lot", type=float, help="taille de lot minimale")
+    s.set_defaults(func=cmd_risque)
+
+    s = sub.add_parser("actus", help="communiqués officiels")
+    s.add_argument("-n", "--nombre", type=int, default=15)
+    s.add_argument("--categorie")
+    s.add_argument("--recherche")
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(func=cmd_actus)
+
+    s = sub.add_parser("alerte", help="alertes de prix")
+    s.add_argument("action", choices=["ajouter", "liste", "supprimer", "verifier"])
+    s.add_argument("regle", nargs="*", help="ex. : GOLD '>' 2500")
+    s.set_defaults(func=cmd_alerte)
+
+    s = sub.add_parser("rapport", help="rapport quotidien Markdown + HTML")
+    s.add_argument("symboles", nargs="*")
+    s.add_argument("--dossier", default="~/Rapports")
+    s.add_argument("--ouvrir", action="store_true")
+    s.set_defaults(func=cmd_rapport)
+
+    s = sub.add_parser("export", help="export CSV")
+    s.add_argument("symbole")
+    s.add_argument("-o", "--fichier")
+    s.add_argument("--separateur", default=";")
+    s.set_defaults(func=cmd_export)
+
+    s = sub.add_parser("maj", help="forcer le téléchargement des données")
+    s.set_defaults(func=cmd_maj)
+    return p
+
+
+def main(argv=None):
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    if not args.cmd:
+        parser.print_help()
+        return 0
+    try:
+        args.func(args)
+    except KeyboardInterrupt:
+        return 130
+    except BrokenPipeError:
+        return 0
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

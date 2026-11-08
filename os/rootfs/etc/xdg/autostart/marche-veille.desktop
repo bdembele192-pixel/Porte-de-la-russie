@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Veille des alertes de prix
+Exec=marche-veille
+NoDisplay=true

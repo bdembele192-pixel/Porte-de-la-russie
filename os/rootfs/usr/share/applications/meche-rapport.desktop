@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Rapport du jour
+Comment=Génère et ouvre le rapport de marché quotidien
+Exec=sh -c "marche rapport --ouvrir || notify-send 'Rapport' 'Échec : données indisponibles'"
+Icon=x-office-document
+Categories=Office;Finance;
+Terminal=false
