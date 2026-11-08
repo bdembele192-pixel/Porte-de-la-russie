@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-08T07:37:28.598Z",
+ "generatedAt": "2026-11-08T14:29:29.549Z",
  "sources": [
   {
    "id": "fed",
@@ -2004,39 +2004,6 @@
    "sid": "sec",
    "cat": "Régulateurs",
    "date": "2026-10-09T14:59:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "e47941a419284507",
-   "title": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/other20261009a.htm",
-   "summary": "Federal Reserve Board releases results of the 2025 Survey of Consumer Finances, which provides the public and policymakers with detailed insights into the economic condition of American families",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-09T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "58b643d6bbe150eb",
-   "title": "CMORG holds sector-wide cloud outage simulation exercise",
-   "url": "https://www.bankofengland.co.uk/news/2026/october/cmorg-holds-sector-wide-cloud-outage-simulation-exercise",
-   "summary": "The Cross-Market Operational Resilience Group (CMORG) yesterday (8 October 2026) completed its biennial simulation exercise, known as SIMEX26, focused this year on a global cloud services disruption.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-09T09:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "74a609a720ea7bb0",
-   "title": "Twenty-fifth Meeting of the \"Council for Cooperation on Financial Stability\"",
-   "url": "http://www.boj.or.jp/en/finsys/macpru/mac261009a.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-09T09:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
