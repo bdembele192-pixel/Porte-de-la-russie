@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-07T22:15:22.262Z",
+ "generatedAt": "2026-11-08T07:37:28.598Z",
  "sources": [
   {
    "id": "fed",
@@ -2037,17 +2037,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-09T09:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "bd939ec155931e41",
-   "title": "Amendment to \"Prices of Eligible Collateral\"",
-   "url": "http://www.boj.or.jp/en/mopo/mpmdeci/mpr_2026/mpr261009a.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-09T07:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
