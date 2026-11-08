@@ -1,4 +1,4 @@
-"""Construit fx-desk/index.html (version « Stoa ») à partir du fichier original du frère.
+"""Construit fx-desk/index.html (version « Vega ») à partir du fichier original du frère.
 Usage : python3 build.py orig.txt sortie.html"""
 import re, sys
 
@@ -15,55 +15,54 @@ def sub_once(old, new, label):
 
 # ---------- 1. Palette et polices ----------
 root_new = """:root {
-  --bg-0: #0A0A0B;
-  --bg-1: #111112;
-  --bg-2: #161615;
-  --bg-3: #1C1B19;
-  --bg-4: #252320;
-  --border: #2A2824;
-  --border-bright: #3B3832;
-  --text-0: #EDEAE3;
-  --text-1: #CBC6BA;
-  --text-2: #9C968A;
-  --text-3: #78736A;
-  --accent-blue: #C9B38A;
-  --accent-green: #79C59A;
-  --accent-red: #E2725B;
-  --accent-orange: #D9A55B;
-  --accent-yellow: #E8D7A8;
-  --accent-purple: #A99BC9;
-  --accent-teal: #8FB8A8;
-  --pos: #79C59A;
-  --neg: #E2725B;
-  --warn: #D9A55B;
-  --mono: 'IBM Plex Mono', monospace;
+  --bg-0: #05060D;
+  --bg-1: #0C0E20;
+  --bg-2: #11142C;
+  --bg-3: #161A38;
+  --bg-4: #1E2348;
+  --border: #23284D;
+  --border-bright: #363E72;
+  --text-0: #F3F5FF;
+  --text-1: #C9CEEE;
+  --text-2: #959DC8;
+  --text-3: #6E76A6;
+  --accent-blue: #4DE1FF;
+  --accent-green: #3DFFA8;
+  --accent-red: #FF4D8D;
+  --accent-orange: #FFB547;
+  --accent-yellow: #FFE45C;
+  --accent-purple: #A66BFF;
+  --accent-teal: #2EF2D0;
+  --pos: #3DFFA8;
+  --neg: #FF4D8D;
+  --warn: #FFB547;
+  --mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
   --sans: 'Inter', system-ui, sans-serif;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --display: 'Cinzel', 'Cormorant Garamond', serif;
-  --side: 216px;
+  --display: 'Space Grotesk', 'Inter', sans-serif;
+  --side: 224px;
 }"""
 s = re.sub(r":root \{.*?\n\}", root_new, s, count=1, flags=re.S)
 sub_once("@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');",
-         "@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');",
+         "@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');",
          "polices")
 
 # Couleurs codées en dur (canvas, styles en ligne) -> mêmes teintes que la palette
 COLORS = {
-    "#00ff9d": "#79C59A", "#ff3b5c": "#E2725B", "#00d4ff": "#C9B38A", "#ff9a3c": "#D9A55B",
-    "#ffd700": "#E8D7A8", "#b66dff": "#A99BC9", "#00c8a0": "#8FB8A8", "#e8f4f8": "#EDEAE3",
+    "#00ff9d": "#3DFFA8", "#ff3b5c": "#FF4D8D", "#00d4ff": "#4DE1FF", "#ff9a3c": "#FFB547",
+    "#ffd700": "#FFE45C", "#b66dff": "#A66BFF", "#00c8a0": "#2EF2D0", "#e8f4f8": "#F3F5FF",
 }
 for a, b in COLORS.items():
     s = re.sub(re.escape(a), b, s, flags=re.I)
 RGB = {
-    "0,255,157": "121,197,154", "255,59,92": "226,114,91", "0,212,255": "201,179,138",
-    "255,154,60": "217,165,91", "255,215,0": "232,215,168", "182,109,255": "169,155,201",
-    "0,200,160": "143,184,168", "30,45,61": "58,55,50", "106,143,168": "156,150,138", "13,17,23": "17,17,18",
+    "0,255,157": "61,255,168", "255,59,92": "255,77,141", "0,212,255": "77,225,255",
+    "255,154,60": "255,181,71", "255,215,0": "255,228,92", "182,109,255": "166,107,255",
+    "0,200,160": "46,242,208", "30,45,61": "54,62,114", "106,143,168": "149,157,200", "13,17,23": "12,14,32",
 }
 for a, b in RGB.items():
     s = re.sub(r"rgba?\(\s*" + r",\s*".join(a.split(",")), lambda m, b=b: m.group(0).split("(")[0] + "(" + b, s)
-# La heatmap de la surface de vol : dégradé vert -> rouge néon remplacé par sauge -> terre cuite
+# La heatmap de la surface de vol : dégradé cyan -> rose néon
 sub_once("const bg = `rgba(${r},${g},80,0.3)`;",
-         "const bg = `rgba(${Math.round(121+(226-121)*norm)},${Math.round(197+(114-197)*norm)},${Math.round(154+(91-154)*norm)},0.22)`;",
+         "const bg = `rgba(${Math.round(77+(255-77)*norm)},${Math.round(225+(77-225)*norm)},${Math.round(255+(141-255)*norm)},0.22)`;",
          "heatmap vol")
 
 # ---------- 2. Tailles de texte (+2 px, lisibilité) ----------
@@ -98,7 +97,7 @@ sub_once("""  TENORS.forEach(t => {
     const v""", "getLargestTenor")
 
 # 4d. Smile : une variable CSS n'est pas une couleur valide pour un canvas
-sub_once("ctx.fillStyle='var(--text-3)';", "ctx.fillStyle='#78736A';", "smile labels")
+sub_once("ctx.fillStyle='var(--text-3)';", "ctx.fillStyle='#6E76A6';", "smile labels")
 
 # 4e. Panneau Market : barre de timeframe non fermée, boutons TF/TA et canvas RSI absents
 sub_once("""        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
@@ -228,20 +227,20 @@ items, k = [], 0
 for sec, tabs in NAV:
     items.append(f'    <div class="nav-sec">{sec}</div>')
     for tid, label in tabs:
-        roman = ["0", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"][k]; k += 1
+        roman = "%02d" % k; k += 1
         act = " active" if tid == "market" else ""
         items.append(f'    <div class="tab{act}" data-tab="{tid}" onclick="showTab(\'{tid}\', this)"><span class="n">{roman}</span>{label}</div>')
 side = """<aside id="tabs">
-  <div class="brand"><div class="mark">STOA</div><div class="sub">FX Options Desk · EUR/USD</div></div>
+  <div class="brand"><div class="mark">VEGA</div><div class="sub">FX Options Desk · EUR/USD</div></div>
   <nav>
 """ + "\n".join(items) + """
   </nav>
-  <div class="maxim">“Some things are within our control: your price, your size, your hedge. The rest belongs to the market.”<span>after Epictetus</span></div>
+  <div class="maxim">Price it. Hedge it. Own it.<span>Quote tight, hedge fast, keep a journal.</span></div>
   <button class="btn focus-btn" id="focus-btn" onclick="toggleFocus()">Focus mode</button>
 </aside>"""
 s = re.sub(r'<div id="tabs">.*?\n</div>', lambda m: side, s, count=1, flags=re.S)
 n_fixes.append("sidebar")
-sub_once('<div class="logo">▸ FX-OPTIONS</div>', '<div class="logo">STOA</div>', "logo")
+sub_once('<div class="logo">▸ FX-OPTIONS</div>', '<div class="logo">VEGA</div>', "logo")
 
 # Carte de journal + écran focus
 sub_once("<!-- LIMIT SETTINGS MODAL -->", """<!-- JOURNAL (non bloquant) -->
@@ -261,10 +260,10 @@ function toggleFocus(force) {
   document.body.classList.toggle('focus', on);
   const b = document.getElementById('focus-btn');
   if (b) b.textContent = on ? 'Leave focus' : 'Focus mode';
-  try { localStorage.setItem('stoa:focus', on ? '1' : '0'); } catch (e) {}
+  try { localStorage.setItem('vega:focus', on ? '1' : '0'); } catch (e) {}
   setTimeout(() => window.dispatchEvent(new Event('resize')), 50);
 }
-window.addEventListener('load', () => { try { if (localStorage.getItem('stoa:focus') === '1') toggleFocus(true); } catch (e) {} });
+window.addEventListener('load', () => { try { if (localStorage.getItem('vega:focus') === '1') toggleFocus(true); } catch (e) {} });
 document.addEventListener('keydown', e => {
   if (e.key === 'f' && !e.ctrlKey && !e.metaKey && !/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) toggleFocus();
 });
@@ -272,73 +271,89 @@ document.addEventListener('keydown', e => {
 sub_once("window.addEventListener('load', init);\n</script>", "window.addEventListener('load', init);\n" + EXTRA_JS + "</script>", "focus js")
 
 EXTRA_CSS = """
-/* ═══ STOA — calme, sobre, concentré ═══ */
-body { padding-left: var(--side); font-feature-settings: "tnum" 1; -webkit-font-smoothing: antialiased; }
-#topbar { padding: 10px 18px; gap: 22px; flex-wrap: wrap; row-gap: 6px; }
+/* ═══ VEGA — néon, verre dépoli, aurore ═══ */
+body { padding-left: var(--side); font-feature-settings: "tnum" 1; -webkit-font-smoothing: antialiased; background: var(--bg-0); }
+body::before {
+  content: ""; position: fixed; inset: -20vh -10vw auto auto; width: 70vw; height: 70vh; pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, rgba(166,107,255,0.22), transparent 70%); filter: blur(10px);
+}
+body::after {
+  content: ""; position: fixed; left: 10vw; bottom: -30vh; width: 70vw; height: 70vh; pointer-events: none; z-index: 0;
+  background: radial-gradient(closest-side, rgba(77,225,255,0.14), transparent 70%); filter: blur(10px);
+}
+#topbar, #sim-controls, #main { position: relative; z-index: 1; }
+#topbar { padding: 12px 20px; gap: 22px; flex-wrap: wrap; row-gap: 6px; background: rgba(8,10,22,0.55); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,0.06); }
 #topbar .logo { display: none; }
-.topbar-market .spot-val { font-size: 24px; font-weight: 500; letter-spacing: 0.5px; }
+.topbar-market .pair { font-family: var(--display); letter-spacing: 1px; }
+.topbar-market .spot-val { font-family: var(--display); font-size: 28px; font-weight: 700; letter-spacing: 0; color: #fff; text-shadow: 0 0 22px rgba(77,225,255,0.45); }
 .topbar-stat .lbl, .card-title, th, .nav-sec, .tf-lbl { font-family: var(--sans); }
 .topbar-stat .lbl { letter-spacing: 1.5px; }
-.pnl-total { font-size: 19px; font-weight: 600; }
-.regime-badge { border-radius: 999px; padding: 3px 11px; font-family: var(--sans); }
-.regime-shock { animation: pulse 2.4s ease-in-out infinite; }
-#sim-controls { padding: 6px 18px !important; flex-wrap: wrap; row-gap: 6px; }
+.pnl-total { font-family: var(--display); font-size: 22px; font-weight: 700; }
+.pnl-total.pos { text-shadow: 0 0 18px rgba(61,255,168,0.45); }
+.pnl-total.neg { text-shadow: 0 0 18px rgba(255,77,141,0.45); }
+.regime-badge { border-radius: 999px; padding: 4px 12px; font-family: var(--sans); font-weight: 700; }
+#sim-controls { padding: 8px 20px !important; flex-wrap: wrap; row-gap: 6px; background: rgba(8,10,22,0.4) !important; border-bottom: 1px solid rgba(255,255,255,0.05) !important; }
 #notification { top: auto; bottom: 16px; right: 16px; width: min(360px, calc(100vw - 32px)); }
-.panel > *, .row > * { min-width: 0; }
-.card-body { overflow-x: auto; }
 
 #tabs {
   position: fixed; left: 0; top: 0; bottom: 0; width: var(--side);
   display: flex; flex-direction: column; gap: 0; overflow-y: auto; overflow-x: hidden;
-  background: var(--bg-0); border-right: 1px solid var(--border); border-bottom: none; z-index: 200;
-  padding: 22px 0 16px;
+  background: linear-gradient(180deg, rgba(14,16,36,0.92), rgba(6,7,16,0.96)); border-right: 1px solid rgba(255,255,255,0.06); border-bottom: none; z-index: 200;
+  padding: 22px 12px 16px; backdrop-filter: blur(16px);
 }
-#tabs .brand { padding: 0 22px 22px; border-bottom: 1px solid var(--border); margin-bottom: 10px; }
-#tabs .mark { font-family: var(--display); font-size: 26px; letter-spacing: 9px; color: var(--accent-blue); font-weight: 500; }
+#tabs .brand { padding: 0 10px 22px; margin-bottom: 8px; }
+#tabs .mark { font-family: var(--display); font-size: 30px; font-weight: 700; letter-spacing: 6px;
+  background: linear-gradient(90deg, #4DE1FF, #A66BFF 55%, #FF4D8D); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 14px rgba(166,107,255,0.45)); }
 #tabs .sub { font-family: var(--sans); font-size: 11px; color: var(--text-3); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 6px; }
-#tabs nav { display: flex; flex-direction: column; }
-.nav-sec { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-3); padding: 14px 22px 6px; }
+#tabs nav { display: flex; flex-direction: column; gap: 2px; }
+.nav-sec { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-3); padding: 14px 12px 6px; }
 .tab {
-  display: flex; align-items: center; gap: 12px;
-  padding: 9px 22px; font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.3px; text-transform: none;
-  color: var(--text-2); border: none; border-left: 2px solid transparent; background: none;
+  display: flex; align-items: center; gap: 12px; border-radius: 10px;
+  padding: 9px 12px; font-family: var(--sans); font-size: 13px; font-weight: 600; letter-spacing: 0.2px; text-transform: none;
+  color: var(--text-2); border: 1px solid transparent; background: none; transition: background .15s, color .15s;
 }
-.tab .n { width: 26px; font-family: var(--display); font-size: 11px; color: var(--text-3); letter-spacing: 1px; }
-.tab:hover { color: var(--text-0); background: var(--bg-2); }
-.tab.active { color: var(--text-0); background: var(--bg-2); border-left-color: var(--accent-blue); border-bottom-color: transparent; }
-.tab.active .n { color: var(--accent-blue); }
-.maxim { margin: auto 22px 14px; padding-top: 18px; border-top: 1px solid var(--border); font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.45; color: var(--text-2); }
-.maxim span { display: block; margin-top: 8px; font-family: var(--sans); font-style: normal; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); }
-.focus-btn { margin: 0 22px; text-transform: none; letter-spacing: 0.5px; font-family: var(--sans); }
+.tab .n { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 7px; font-family: var(--mono); font-size: 11px; color: var(--text-3); background: rgba(255,255,255,0.04); }
+.tab:hover { color: var(--text-0); background: rgba(255,255,255,0.04); }
+.tab.active { color: #fff; background: linear-gradient(90deg, rgba(166,107,255,0.28), rgba(77,225,255,0.10)); border-color: rgba(166,107,255,0.35); box-shadow: 0 0 24px rgba(166,107,255,0.18); }
+.tab.active .n { color: #0A0B16; background: linear-gradient(135deg, #4DE1FF, #A66BFF); }
+.maxim { margin: auto 10px 14px; padding: 14px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); font-family: var(--display); font-size: 15px; font-weight: 700; line-height: 1.35; color: var(--text-0); }
+.maxim span { display: block; margin-top: 6px; font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.3px; color: var(--text-3); }
+.focus-btn { margin: 0 10px; text-transform: none; letter-spacing: 0.5px; font-family: var(--sans); }
 
-.panel { padding: 16px 18px; gap: 14px; }
-.card { border-radius: 6px; background: var(--bg-1); }
-.card-header { background: transparent; padding: 10px 14px 8px; }
-.card-title { letter-spacing: 2px; color: var(--text-2); font-weight: 600; }
-.card-body { padding: 10px 14px 12px; }
-td { border-bottom-color: rgba(237,234,227,0.05); }
-tr:hover td { background: rgba(201,179,138,0.04); }
-.btn { border-radius: 4px; font-family: var(--sans); letter-spacing: 1px; }
-input, select, textarea { border-radius: 4px; }
-.rfq-box { border-color: rgba(201,179,138,0.5); border-radius: 6px; }
-.rfq-box::before { border-radius: 0 0 4px 4px; }
-.mm-box { border-radius: 4px; }
-.feedback-item { border-radius: 0 4px 4px 0; }
-.notif { font-family: var(--sans); border-radius: 4px; }
+.panel { padding: 18px 20px; gap: 14px; }
+.card { border-radius: 16px; background: linear-gradient(180deg, rgba(22,26,56,0.72), rgba(12,14,32,0.72)); border: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(12px); box-shadow: 0 10px 40px rgba(0,0,0,0.35); }
+.card-header { background: transparent; padding: 12px 16px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.card-title { letter-spacing: 1.8px; color: var(--text-1); font-weight: 700; }
+.card-body { padding: 12px 16px 14px; }
+td { border-bottom-color: rgba(255,255,255,0.04); }
+tr:hover td { background: rgba(77,225,255,0.05); }
+.btn { border-radius: 9px; font-family: var(--sans); letter-spacing: 0.6px; font-weight: 700; }
+.btn-blue { background: linear-gradient(135deg, rgba(77,225,255,0.18), rgba(166,107,255,0.18)); }
+.btn-green { background: rgba(61,255,168,0.08); }
+.btn-lg { box-shadow: 0 0 22px rgba(61,255,168,0.2); }
+input, select, textarea { border-radius: 8px; background: rgba(5,6,13,0.7) !important; }
+.rfq-box { border-color: rgba(77,225,255,0.45); border-radius: 14px; background: rgba(12,16,38,0.8); box-shadow: 0 0 30px rgba(77,225,255,0.10); }
+.rfq-box::before { border-radius: 0 0 6px 6px; background: linear-gradient(90deg, #4DE1FF, #A66BFF); }
+.mm-box { border-radius: 10px; }
+.mm-box.winner { box-shadow: 0 0 20px rgba(61,255,168,0.2); }
+.feedback-item { border-radius: 0 10px 10px 0; }
+.notif { font-family: var(--sans); border-radius: 10px; backdrop-filter: blur(10px); }
+.sc-btn { border-radius: 8px !important; }
 
 .tf-bar { display: flex; align-items: center; gap: 5px; margin-bottom: 8px; flex-wrap: wrap; }
 .tf-lbl { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-3); margin-right: 2px; }
-.tf-btn { padding: 3px 9px !important; }
+.tf-btn { padding: 3px 9px !important; border-radius: 7px !important; }
 
 #journal-card {
   position: fixed; left: calc(var(--side) + 18px); bottom: 18px; width: min(420px, calc(100vw - 36px)); z-index: 950;
-  background: var(--bg-1); border: 1px solid var(--accent-blue); border-radius: 8px; padding: 14px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6); display: none; font-family: var(--sans);
+  background: rgba(14,16,36,0.95); border: 1px solid rgba(166,107,255,0.5); border-radius: 14px; padding: 16px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 30px rgba(166,107,255,0.2); display: none; font-family: var(--sans); backdrop-filter: blur(14px);
 }
 #journal-card.open { display: block; }
-#journal-card .j-title { font-family: var(--display); letter-spacing: 3px; font-size: 13px; color: var(--accent-blue); }
+#journal-card .j-title { font-family: var(--display); font-weight: 700; letter-spacing: 1px; font-size: 15px; color: #fff; }
 #journal-card .j-prod { font-size: 12px; color: var(--text-2); margin: 4px 0 10px; }
-#journal-card textarea { width: 100%; background: var(--bg-0); color: var(--text-0); border: 1px solid var(--border-bright); padding: 8px 10px; font-family: var(--sans); font-size: 13px; resize: vertical; outline: none; }
+#journal-card textarea { width: 100%; color: var(--text-0); border: 1px solid var(--border-bright); padding: 8px 10px; font-family: var(--sans); font-size: 13px; resize: vertical; outline: none; }
 #journal-card textarea:focus { border-color: var(--accent-blue); }
 #journal-card .j-act { display: flex; justify-content: flex-end; gap: 8px; margin-top: 10px; }
 
@@ -349,21 +364,22 @@ body.focus #topbar > .btn { display: none !important; }
 body.focus #topbar .topbar-pnl .topbar-stat { display: flex !important; }
 body.focus #notification { opacity: 0.35; }
 body.focus #notification:hover { opacity: 1; }
+.panel > *, .row > * { min-width: 0; }
+.card-body { overflow-x: auto; }
 
 @media (max-width: 900px) {
   :root { --side: 0px; }
   body { overflow: auto; height: auto; min-height: 100vh; }
   #main { overflow: visible; }
   .panel { height: auto; overflow: visible; padding: 12px 16px; }
-  #tabs { position: sticky; top: 0; width: auto; flex-direction: row; padding: 0; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; order: -1; }
-  #tabs .brand { display: flex; align-items: center; padding: 0 14px; border: none; margin: 0; }
-  #tabs .mark { font-size: 16px; letter-spacing: 5px; }
+  #tabs { position: sticky; top: 0; width: auto; flex-direction: row; padding: 6px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); overflow-x: auto; order: -1; }
+  #tabs .brand { display: flex; align-items: center; padding: 0 10px; margin: 0; }
+  #tabs .mark { font-size: 18px; letter-spacing: 3px; }
   #tabs .sub, .maxim, .nav-sec { display: none; }
   #tabs nav { flex-direction: row; }
-  .tab { padding: 12px 12px; border-left: none; border-bottom: 2px solid transparent; white-space: nowrap; }
-  .tab.active { border-bottom-color: var(--accent-blue); }
+  .tab { padding: 9px 12px; white-space: nowrap; }
   .tab .n { display: none; }
-  .focus-btn { margin: 6px 10px; white-space: nowrap; }
+  .focus-btn { margin: 0 6px; white-space: nowrap; }
   #topbar { padding: 10px 16px; }
   #sim-controls { flex-wrap: wrap; }
   #sim-controls > div[style*="margin-left:auto"] { margin-left: 0 !important; flex-wrap: wrap; }
@@ -375,7 +391,7 @@ body.focus #notification:hover { opacity: 1; }
 idx = s.index("</style>")
 s = s[:idx] + EXTRA_CSS + s[idx:]
 
-s = s.replace("<title>FX OPTIONS — EUR/USD MARKET MAKER SIMULATOR</title>", "<title>Stoa FX Desk</title>")
+s = s.replace("<title>FX OPTIONS — EUR/USD MARKET MAKER SIMULATOR</title>", "<title>Vega FX Desk</title>")
 s = s.replace('<html lang="en">', '<html lang="en">', 1)
 
 open(out, "w", encoding="utf-8").write(s)

@@ -1,7 +1,7 @@
-# Stoa — FX Options Desk
+# Vega — FX Options Desk
 
 Simulateur de teneur de marché sur options EUR/USD (le cadeau du grand frère), refait dans un style
-sobre et concentré : barre latérale, palette obsidienne et laiton, textes plus lisibles, mode focus
+néon : barre latérale, cartes en verre dépoli, dégradé cyan-violet, textes plus lisibles, mode focus
 (touche `F`), journal de trading non bloquant.
 
 Ouvre `index.html` dans un navigateur : tout tient dans un seul fichier.
