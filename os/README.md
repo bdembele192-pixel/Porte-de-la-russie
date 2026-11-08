@@ -55,7 +55,23 @@ sudo ./os/build.sh                        # résultat dans os/out/
 sudo KEYMAP=us TIMEZONE=Europe/Paris ./os/build.sh
 ```
 
-## Démarrer
+## Démarrer depuis un disque dur externe (recommandé : Ventoy)
+
+Un disque dur ou SSD externe fonctionne comme une clé USB, en plus rapide et plus spacieux. Avec **[Ventoy](https://www.ventoy.net/fr/)**, vous ne gravez pas l'ISO : vous la copiez comme un simple fichier, et le reste du disque reste utilisable pour vos fichiers.
+
+> ⚠️ L'installation de Ventoy **efface tout le disque une seule fois**. Sauvegardez son contenu avant, puis recopiez-le après : ensuite le disque s'utilise normalement.
+
+1. Téléchargez Ventoy (Windows : `Ventoy2Disk.exe`, Linux : `VentoyGUI`), choisissez le disque externe (**vérifiez bien la lettre ou le nom**), puis cliquez sur *Installer*.
+2. Le disque réapparaît avec une partition nommée `Ventoy`. Copiez-y `meche-os-1.0-amd64.iso`, ainsi que vos fichiers personnels si vous voulez.
+3. Pour **conserver vos fichiers et réglages** d'une session à l'autre, créez un fichier de persistance :
+   - téléchargez `ventoy_persistence` depuis la page *Plugins → Persistence* du site Ventoy, et créez un fichier `persistence.dat` de 8 à 32 Go, avec l'étiquette `casper-rw` ;
+   - créez sur la partition `Ventoy` un fichier `ventoy/ventoy.json` :
+     ```json
+     { "persistence": [ { "image": "/meche-os-1.0-amd64.iso", "backend": "/persistence.dat" } ] }
+     ```
+4. Branchez le disque, allumez le PC et ouvrez le menu de démarrage (F12, F10, F9 ou Échap selon la marque ; sur Mac, maintenez la touche Option). Choisissez le disque externe, puis Mèche OS dans le menu Ventoy.
+
+## Démarrer depuis une clé USB
 
 1. Copiez l'ISO sur une clé USB (8 Go ou plus) avec [balenaEtcher](https://etcher.balena.io), Rufus (mode DD) ou `sudo dd if=meche-os-1.0-amd64.iso of=/dev/sdX bs=4M status=progress`.
 2. Démarrez le PC sur la clé (touche F12, F10 ou Échap selon le fabricant). Désactivez *Secure Boot* si la clé n'apparaît pas.
