@@ -125,6 +125,7 @@ echo "Navigateur installé : $BROWSER"
 log "3/6 Personnalisation Mèche OS"
 # ---------------------------------------------------------------------------
 cp -a "$HERE/rootfs/." "$CHROOT/"
+find "$CHROOT/usr/local" -name __pycache__ -prune -exec rm -rf {} +
 chmod 0755 "$CHROOT"/usr/local/bin/*
 
 # Application Mèche (simulateur) et copie des données pour le mode hors ligne.
