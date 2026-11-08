@@ -95,6 +95,9 @@ tzdata tzdata/Areas select ${TIMEZONE%%/*}
 tzdata tzdata/Zones/${TIMEZONE%%/*} select ${TIMEZONE#*/}
 EOF
 mapfile -t PKGS < <(grep -Ev '^\s*(#|$)' "$HERE/config/packages.txt")
+# Reprise après une construction interrompue.
+in_chroot dpkg --configure -a || true
+in_chroot apt-get -y -f install || true
 in_chroot apt-get update
 in_chroot apt-get -y upgrade
 in_chroot apt-get -y install --no-install-recommends "${PKGS[@]}"
