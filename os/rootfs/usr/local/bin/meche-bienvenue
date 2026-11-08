@@ -16,6 +16,7 @@ for f in meche-app meche-tableau meche-rapport meche-jupyter meche-aide; do
     "$(sha256sum "$BUREAU/$f.desktop" | cut -d' ' -f1)" 2>/dev/null || true
 done
 touch "$FLAG"
+xfdesktop --reload 2>/dev/null || true
 sleep 3
 exo-open --launch WebBrowser "file:///usr/share/meche/bienvenue.html" 2>/dev/null \
   || xdg-open "file:///usr/share/meche/bienvenue.html"

@@ -146,8 +146,18 @@ def _read_json(path):
         return json.load(f)
 
 
+_LOADED = {}
+
+
 def load(name, refresh=False):
-    """Charge quotes / history / news : cache récent > réseau > cache ancien > copie système."""
+    """Charge quotes / history / news (mémorisé pour la durée de la commande)."""
+    if refresh or name not in _LOADED:
+        _LOADED[name] = _load(name, refresh)
+    return _LOADED[name]
+
+
+def _load(name, refresh=False):
+    """Cache récent > réseau > cache ancien > copie système."""
     os.makedirs(CACHE_DIR, exist_ok=True)
     cache = os.path.join(CACHE_DIR, name + ".json")
     local_dir = os.environ.get("MARCHE_LOCAL_DATA")  # dossier local (tests, hors ligne)

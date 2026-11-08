@@ -151,15 +151,37 @@ BACKSPACE="guess"
 EOF
 
 # Navigateur par défaut (XFCE).
+case "$BROWSER" in
+  firefox) HELPER=firefox; DESKTOP=firefox.desktop ;;
+  *)       HELPER=epiphany; DESKTOP=org.gnome.Epiphany.desktop ;;
+esac
 mkdir -p "$CHROOT/etc/xdg/xfce4"
-printf 'WebBrowser=%s\nTerminalEmulator=xfce4-terminal\n' "$BROWSER" > "$CHROOT/etc/xdg/xfce4/helpers.rc"
+printf 'WebBrowser=%s\nTerminalEmulator=xfce4-terminal\n' "$HELPER" > "$CHROOT/etc/xdg/xfce4/helpers.rc"
+cat > "$CHROOT/etc/xdg/mimeapps.list" <<EOF
+[Default Applications]
+text/html=$DESKTOP
+x-scheme-handler/http=$DESKTOP
+x-scheme-handler/https=$DESKTOP
+application/xhtml+xml=$DESKTOP
+EOF
 
 # Fond d'écran : remplace les fonds XFCE par défaut (quel que soit le nom retenu).
 for f in "$CHROOT"/usr/share/backgrounds/xfce/*; do
-  [ -e "$f" ] || continue
+  case "$f" in *.distrib) continue ;; esac; [ -e "$f" ] || continue
   rel="${f#"$CHROOT"}"
   in_chroot dpkg-divert --quiet --local --rename --add "$rel"
   ln -sf /usr/share/backgrounds/meche/meche.png "$f"
+done
+
+# Écran de démarrage (Plymouth) : logo Mèche à la place de celui d'Ubuntu.
+for f in /usr/share/plymouth/ubuntu-logo.png /usr/share/plymouth/themes/spinner/watermark.png \
+         /usr/share/plymouth/themes/spinner/bgrt-fallback.png; do
+  [ -e "$CHROOT$f" ] || continue
+  in_chroot dpkg-divert --quiet --local --rename --add "$f"
+  case "$f" in
+    *watermark*) cp "$HERE/config/plymouth/watermark.png" "$CHROOT$f" ;;
+    *)           cp "$HERE/config/plymouth/logo.png" "$CHROOT$f" ;;
+  esac
 done
 
 # Panneau XFCE : configuration par défaut appliquée directement (pas de question au 1er démarrage).
