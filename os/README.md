@@ -105,4 +105,5 @@ Pour ajouter un logiciel, ajoutez son nom de paquet Ubuntu dans `config/packages
 
 - Système live uniquement : il n'y a pas encore d'installateur sur disque dur (prévu : Calamares).
 - *Secure Boot* n'est pas pris en charge, car le chargeur GRUB n'est pas signé.
+- Le navigateur est Firefox (dépôt Mozilla). L'ISO construite par GitHub l'exige ; une construction locale sans accès à packages.mozilla.org se rabat sur Epiphany, qui a planté lors des essais en machine virtuelle sans accélération graphique.
 - Les cours sont différés de quelques minutes. Ce n'est pas un flux de cotation temps réel pour exécuter des ordres.

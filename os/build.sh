@@ -118,6 +118,9 @@ if curl -fsSL --max-time 30 https://packages.mozilla.org/apt/repo-signing-key.gp
     in_chroot apt-get update
   fi
 fi
+if [ -z "$BROWSER" ] && [ "${EXIGER_FIREFOX:-0}" = 1 ]; then
+  die "Firefox n'a pas pu être installé (dépôt packages.mozilla.org injoignable)."
+fi
 if [ -z "$BROWSER" ]; then
   in_chroot apt-get -y install --no-install-recommends epiphany-browser
   BROWSER="epiphany-browser"

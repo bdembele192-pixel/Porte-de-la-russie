@@ -63,6 +63,7 @@ jobs:
         env:
           KEYMAP: ${{ github.event.inputs.clavier || 'fr' }}
           TIMEZONE: ${{ github.event.inputs.fuseau || 'Africa/Abidjan' }}
+          EXIGER_FIREFOX: "1"
         run: sudo -E ./os/build.sh
       - name: Publier l'ISO (artefact)
         uses: actions/upload-artifact@v4
