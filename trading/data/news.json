@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-08T14:29:29.549Z",
+ "generatedAt": "2026-11-08T18:56:30.974Z",
  "sources": [
   {
    "id": "fed",
@@ -1993,17 +1993,6 @@
    "sid": "wto",
    "cat": "Institutions",
    "date": "2026-10-10T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "d3f96495cf3c8a6b",
-   "title": "SEC Proposes Expanding Securities Eligible for Cross Trading by Registered Funds",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-104-sec-proposes-expanding-securities-eligible-cross-trading-registered-funds",
-   "summary": "The Securities and Exchange Commission today proposed amendments to the Investment Company Act “cross-trading rule,” which permits transactions in securities between a registered fund and its affiliates under certain conditions. The proposed amendments…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-09T14:59:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
