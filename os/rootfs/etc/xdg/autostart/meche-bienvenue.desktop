@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Bienvenue Mèche OS
+Exec=meche-bienvenue
+NoDisplay=true
+OnlyShowIn=XFCE;

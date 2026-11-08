@@ -1,0 +1,8 @@
+#!/bin/sh
+# Lancé à l'ouverture de session : vérifie les alertes de prix toutes les 5 minutes
+# et affiche une notification de bureau quand un seuil est franchi.
+sleep 30
+while true; do
+  marche alerte verifier >/dev/null 2>&1
+  sleep 300
+done

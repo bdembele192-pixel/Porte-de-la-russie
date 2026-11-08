@@ -1,0 +1,12 @@
+#!/bin/sh
+# Tableau de bord marché : rafraîchi toutes les 60 s (Ctrl+C pour quitter).
+INTERVALLE="${1:-60}"
+while true; do
+  clear
+  printf '\033[1;35mMèche OS — tableau de bord\033[0m   %s   (rafraîchi toutes les %ss, Ctrl+C pour quitter)\n\n' "$(date '+%d/%m/%Y %H:%M')" "$INTERVALLE"
+  marche cours
+  printf '\n\033[1mDerniers communiqués\033[0m\n'
+  marche actus -n 5
+  marche alerte verifier >/dev/null 2>&1
+  sleep "$INTERVALLE"
+done

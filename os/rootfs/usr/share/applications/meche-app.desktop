@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Mèche — simulateur de trading
+Comment=Trading papier sur prix réels, Algo Lab, options, académie
+Exec=exo-open --launch WebBrowser file:///opt/meche/app/index.html
+Icon=meche
+Categories=Office;Finance;
+Terminal=false

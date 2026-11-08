@@ -1,0 +1,95 @@
+# Paquets de Mèche OS (Ubuntu 24.04 LTS « noble », dépôts main + universe).
+# Une ligne par paquet ; les lignes vides et les commentaires sont ignorés.
+
+# --- Système live et matériel ---
+linux-generic
+casper
+discover
+laptop-detect
+os-prober
+systemd-sysv
+systemd-resolved
+sudo
+locales
+tzdata
+ca-certificates
+keyboard-configuration
+console-setup
+language-pack-fr
+language-pack-gnome-fr
+hunspell-fr
+plymouth-theme-spinner
+zstd
+
+# --- Réseau ---
+network-manager
+network-manager-gnome
+curl
+wget
+
+# --- Bureau XFCE ---
+xorg
+xserver-xorg-video-all
+lightdm
+lightdm-gtk-greeter
+xfce4
+xfce4-terminal
+xfce4-notifyd
+xfce4-whiskermenu-plugin
+xfce4-taskmanager
+xfce4-screenshooter
+xfce4-power-manager
+xfce4-pulseaudio-plugin
+thunar
+mousepad
+ristretto
+gvfs
+libnotify-bin
+exo-utils
+xdg-user-dirs
+xdg-utils
+pipewire-pulse
+wireplumber
+pavucontrol
+fonts-noto-core
+fonts-dejavu-core
+arc-theme
+papirus-icon-theme
+gnome-themes-extra
+
+# --- Analyse de données ---
+python3
+python3-pip
+python3-venv
+python3-numpy
+python3-pandas
+python3-scipy
+python3-matplotlib
+python3-statsmodels
+python3-sklearn
+python3-openpyxl
+python3-requests
+python3-tk
+python3-ipykernel
+jupyter-notebook
+r-base-core
+r-cran-quantmod
+r-cran-xts
+r-cran-ttr
+gnuplot-nox
+
+# --- Tableurs et bases de données ---
+libreoffice-calc
+libreoffice-gtk3
+libreoffice-l10n-fr
+sqlite3
+sqlitebrowser
+csvkit
+visidata
+jq
+
+# --- Outils ---
+git
+tmux
+htop
+nano

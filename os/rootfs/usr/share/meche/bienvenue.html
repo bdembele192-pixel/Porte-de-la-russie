@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bienvenue dans Mèche OS</title>
+<style>
+  :root { --bg:#0d0b14; --card:#17132a; --line:#2a2440; --txt:#e8e6f0; --mute:#a39cba; --acc:#b48cff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--txt); font:16px/1.55 "Noto Sans", system-ui, sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:40px 20px 60px; }
+  h1 { font-size:40px; margin:0 0 4px; } h1 span { color:var(--acc); }
+  h2 { margin:36px 0 12px; font-size:20px; color:var(--acc); }
+  p.lead { color:var(--mute); margin:0 0 24px; font-size:18px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; }
+  .card h3 { margin:0 0 6px; font-size:16px; }
+  .card p { margin:0; color:var(--mute); font-size:14px; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  td { padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  td:first-child { white-space:nowrap; }
+  code { font-family:"DejaVu Sans Mono", monospace; color:#d9c8ff; background:#1f1938; padding:2px 6px; border-radius:6px; font-size:13px; }
+  .note { margin-top:32px; color:var(--mute); font-size:13px; }
+  a { color:var(--acc); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Bienvenue dans <span>Mèche OS</span></h1>
+  <p class="lead">Un système Linux (base Ubuntu 24.04 LTS) préparé pour les traders et les analystes : données de marché, analyse, backtests, rapports et carnets Python, prêts dès le démarrage.</p>
+
+  <h2>Sur le bureau</h2>
+  <div class="grid">
+    <div class="card"><h3>Tableau de bord marché</h3><p>Indices, actions, matières premières, forex, taux et BRVM, rafraîchis chaque minute, avec les derniers communiqués.</p></div>
+    <div class="card"><h3>Rapport du jour</h3><p>Synthèse en un clic : vue d'ensemble, RSI, tendance, plus fortes hausses et baisses, communiqués. Enregistré dans <code>~/Rapports</code>.</p></div>
+    <div class="card"><h3>Jupyter</h3><p>Carnets Python avec pandas, NumPy, SciPy, matplotlib, statsmodels et scikit-learn. Un carnet d'exemple vous attend dans <code>~/Analyses</code>.</p></div>
+    <div class="card"><h3>Mèche, simulateur</h3><p>Trading papier sur prix réels, Algo Lab, labo options, académie et quiz.</p></div>
+  </div>
+
+  <h2>La commande <code>marche</code> (dans un terminal)</h2>
+  <table>
+    <tr><td><code>marche cours</code></td><td>Tableau des cours. <code>marche cours AAPL GOLD SNTS</code> pour une sélection, <code>--tout</code> pour toute la BRVM, <code>--tri variation</code>.</td></tr>
+    <tr><td><code>marche graph CAC</code></td><td>Graphique dans le terminal (<code>--jours 250</code>).</td></tr>
+    <tr><td><code>marche analyse NVDA</code></td><td>Moyennes mobiles, RSI, MACD, Bollinger, volatilité, Sharpe, drawdown, VaR, signaux.</td></tr>
+    <tr><td><code>marche backtest GOLD</code></td><td>Compare 4 stratégies (croisement de moyennes, RSI, Bollinger, momentum) à l'achat-conservation, frais inclus.</td></tr>
+    <tr><td><code>marche correlation SPX CAC GOLD</code></td><td>Matrice de corrélation des rendements.</td></tr>
+    <tr><td><code>marche risque --capital 10000 --entree 100 --stop 95</code></td><td>Taille de position pour risquer 1 % du capital (<code>--risque 0.5</code>, <code>--objectif 115</code>).</td></tr>
+    <tr><td><code>marche actus</code></td><td>Communiqués officiels : Fed, BCE, FMI, SEC… (<code>--recherche inflation</code>).</td></tr>
+    <tr><td><code>marche alerte ajouter GOLD '&gt;' 4200</code></td><td>Alerte de prix : notification de bureau quand le seuil est franchi (vérifiée toutes les 5 min). <code>liste</code>, <code>supprimer N</code>.</td></tr>
+    <tr><td><code>marche rapport --ouvrir</code></td><td>Rapport quotidien Markdown + HTML.</td></tr>
+    <tr><td><code>marche export EURUSD</code></td><td>Historique en CSV pour LibreOffice Calc, R ou Python.</td></tr>
+  </table>
+
+  <h2>Logiciels installés</h2>
+  <div class="grid">
+    <div class="card"><h3>Analyse</h3><p>Python 3 (pandas, NumPy, SciPy, matplotlib, statsmodels, scikit-learn), Jupyter, R (quantmod, xts, TTR), gnuplot.</p></div>
+    <div class="card"><h3>Données</h3><p>LibreOffice Calc, SQLite + DB Browser, csvkit, VisiData, jq.</p></div>
+    <div class="card"><h3>Outils</h3><p>Navigateur web, git, tmux, htop, éditeur Mousepad, captures d'écran.</p></div>
+  </div>
+
+  <p class="note">Sources des cours : CNBC, TradingView et brvm.org, avec quelques minutes de différé, collectés toutes les 5 minutes par le projet Mèche. Hors ligne, la dernière copie téléchargée est utilisée. Ces outils aident à l'analyse ; ils ne constituent pas un conseil en investissement.<br>
+  Session live : identifiant <code>trader</code>, sans mot de passe. Vos fichiers sont effacés à l'extinction, sauf si vous installez le système ou utilisez une clé avec persistance.</p>
+</main>
+</body>
+</html>
