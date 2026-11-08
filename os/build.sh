@@ -186,7 +186,7 @@ done
 
 # Panneau XFCE : configuration par défaut appliquée directement (pas de question au 1er démarrage).
 if [ -f "$CHROOT/etc/xdg/xfce4/panel/default.xml" ]; then
-  cp "$CHROOT/etc/xdg/xfce4/panel/default.xml" \
+  python3 "$HERE/config/panel.py" "$CHROOT/etc/xdg/xfce4/panel/default.xml" \
      "$CHROOT/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 fi
 
@@ -243,7 +243,7 @@ touch "$IMAGE/meche-os"
 log "6/6 Image ISO (BIOS + UEFI)"
 # ---------------------------------------------------------------------------
 sed "s/@VERSION@/$VERSION/g; s/@KEYMAP@/$KEYMAP/g" "$HERE/config/grub.cfg" > "$IMAGE/boot/grub/grub.cfg"
-cp "$HERE/rootfs/usr/share/backgrounds/meche/meche.png" "$IMAGE/boot/grub/fond.png"
+cp "$HERE/config/grub-fond.png" "$IMAGE/boot/grub/fond.png"
 rm -f "$ISO"
 grub-mkrescue -o "$ISO" "$IMAGE" -- -volid "MECHE_OS" 2>&1 | grep -v '^xorriso : UPDATE' || true
 [ -s "$ISO" ] || die "la création de l'ISO a échoué."

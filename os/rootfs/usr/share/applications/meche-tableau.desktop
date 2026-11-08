@@ -3,6 +3,6 @@ Type=Application
 Name=Tableau de bord marché
 Comment=Cours et communiqués rafraîchis chaque minute
 Exec=xfce4-terminal --title "Tableau de bord marché" --geometry 120x45 -x marche-tableau
-Icon=utilities-system-monitor
+Icon=gnome-system-monitor
 Categories=Office;Finance;
 Terminal=false

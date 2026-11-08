@@ -1,22 +1,9 @@
 #!/bin/sh
-# Premier démarrage de session : raccourcis sur le bureau + page d'accueil.
+# Première ouverture de session : affiche la page d'accueil de Mèche OS.
+# (Les raccourcis Mèche sont dans le dock en bas de l'écran et dans le menu Applications.)
 FLAG="${XDG_CONFIG_HOME:-$HOME/.config}/meche/bienvenue-vue"
 [ -f "$FLAG" ] && [ "$1" != "--forcer" ] && exit 0
 mkdir -p "$(dirname "$FLAG")"
-xdg-user-dirs-update 2>/dev/null
-BUREAU="$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")"
-mkdir -p "$BUREAU"
-for f in meche-app meche-tableau meche-rapport meche-jupyter meche-aide; do
-  src="/usr/share/applications/$f.desktop"
-  [ -f "$src" ] || continue
-  cp "$src" "$BUREAU/"
-  chmod +x "$BUREAU/$f.desktop"
-  # XFCE : marque le lanceur comme « de confiance » pour éviter l'avertissement
-  gio set -t string "$BUREAU/$f.desktop" metadata::xfce-exe-checksum \
-    "$(sha256sum "$BUREAU/$f.desktop" | cut -d' ' -f1)" 2>/dev/null || true
-done
 touch "$FLAG"
-xfdesktop --reload 2>/dev/null || true
-sleep 3
-exo-open --launch WebBrowser "file:///usr/share/meche/bienvenue.html" 2>/dev/null \
-  || xdg-open "file:///usr/share/meche/bienvenue.html"
+sleep 5
+exec xdg-open "file:///usr/share/meche/bienvenue.html"

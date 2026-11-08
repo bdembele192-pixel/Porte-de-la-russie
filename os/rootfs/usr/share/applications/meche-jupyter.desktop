@@ -2,7 +2,7 @@
 Type=Application
 Name=Jupyter — carnets d'analyse
 Comment=Python, pandas, matplotlib, statsmodels, scikit-learn
-Exec=sh -c "cd \"$HOME/Analyses\" && jupyter notebook"
-Icon=accessories-text-editor
-Categories=Office;Finance;Science;
+Exec=meche-jupyter
+Icon=jupyter
+Categories=Office;Finance;
 Terminal=true

@@ -3,6 +3,6 @@ Type=Application
 Name=Bienvenue dans Mèche OS
 Comment=Guide de démarrage et liste des commandes
 Exec=exo-open --launch WebBrowser file:///usr/share/meche/bienvenue.html
-Icon=help-browser
+Icon=system-help
 Categories=Office;Finance;
 Terminal=false

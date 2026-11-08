@@ -9,7 +9,7 @@ Elle n'écrit pas un nouveau noyau : elle s'appuie sur Linux et Ubuntu, comme la
 | Domaine | Contenu |
 |---|---|
 | **Commande `marche`** | Cours, graphique dans le terminal, analyse technique, backtest, corrélations, taille de position, communiqués officiels, alertes de prix, rapport quotidien, export CSV (détail plus bas). |
-| **Bureau** | XFCE (léger et rapide), thème sombre Mèche, en français. Raccourcis : *Tableau de bord marché*, *Rapport du jour*, *Jupyter*, *Mèche (simulateur)*, *Bienvenue*. |
+| **Bureau** | XFCE (léger et rapide), thème sombre Mèche, en français. Raccourcis dans le dock et le menu Applications : *Tableau de bord marché*, *Rapport du jour*, *Jupyter*, *Mèche (simulateur)*, *Bienvenue*. |
 | **Alertes** | Vérifiées toutes les 5 minutes en arrière-plan, avec une notification de bureau quand un seuil est franchi. |
 | **Analyse** | Python 3 avec pandas, NumPy, SciPy, matplotlib, statsmodels et scikit-learn, Jupyter Notebook (carnet d'exemple dans `~/Analyses`), R avec quantmod, xts et TTR, gnuplot. |
 | **Données** | LibreOffice Calc, SQLite et DB Browser, csvkit, VisiData, jq. |
