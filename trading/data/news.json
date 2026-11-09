@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-08T18:56:30.974Z",
+ "generatedAt": "2026-11-09T01:55:08.282Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,39 @@
   }
  ],
  "items": [
+  {
+   "id": "02ec7ab9585f5397",
+   "title": "Market Operations by the Bank of Japan (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/fm/ope/m_release/2026/ope2610.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-08T23:50:00.000Z",
+   "firstSeen": "2026-11-09T01:55:08.282Z"
+  },
+  {
+   "id": "b2cda543d7705db8",
+   "title": "Monetary Base and the Bank of Japan's Transactions (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/mbt/mbt2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-08T23:50:00.000Z",
+   "firstSeen": "2026-11-09T01:55:08.282Z"
+  },
+  {
+   "id": "55c8e24abccacca5",
+   "title": "Bank of Japan's Transactions with the Government (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/tseifu/release/2026/seifu2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-08T23:50:00.000Z",
+   "firstSeen": "2026-11-09T01:55:08.282Z"
+  },
   {
    "id": "2b5fc021feaf8643",
    "title": "Christine Lagarde: Interview with Yomiuri Shimbun",
@@ -1982,17 +2015,6 @@
    "sid": "wto",
    "cat": "Institutions",
    "date": "2026-10-12T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "f73086481fbfc073",
-   "title": "WTO-ITC visit to Mogadishu supports Somalia's preparations for next phase of WTO accession",
-   "url": "https://www.wto.org/english/news_e/news26_e/acc_10oct26_519_e.htm",
-   "summary": "The WTO and the International Trade Centre (ITC) conducted their first joint technical assistance activity in Mogadishu, Somalia, from 10 to 15 October to support the government's preparations for the second meeting of the Working Party on the accession of Somalia. Supported by the United Kingdom, the technical assista",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-10T00:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
