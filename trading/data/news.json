@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-09T08:44:25.442Z",
+ "generatedAt": "2026-11-09T19:09:43.581Z",
  "sources": [
   {
    "id": "fed",
@@ -135,6 +135,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-09T05:00:00.000Z",
    "firstSeen": "2026-11-09T08:44:25.442Z"
+  },
+  {
+   "id": "566732cd69056a82",
+   "title": "Germany contributes EUR 500,000 to strengthen developing economies' trade capacity",
+   "url": "https://www.wto.org/english/news_e/news26_e/tech_09nov26_543_e.htm",
+   "summary": "Germany is contributing EUR 500,000 (approximately CHF 460,000) to the WTO's Global Trust Fund (GTF) to help developing economies and least developed countries (LDCs) enhance their participation in the multilateral trading system. Carmen Heidecke, Ambassador of Germany to the WTO, signed the Memorandum of Understanding",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-09T00:00:00.000Z",
+   "firstSeen": "2026-11-09T19:09:43.581Z"
   },
   {
    "id": "02ec7ab9585f5397",
