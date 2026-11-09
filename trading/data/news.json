@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-09T01:55:08.282Z",
+ "generatedAt": "2026-11-09T08:44:25.442Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,28 @@
   }
  ],
  "items": [
+  {
+   "id": "77952c8f4f6d4d13",
+   "title": "Amounts Outstanding in the Call Money Market (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/market/short/call/call.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-09T06:00:00.000Z",
+   "firstSeen": "2026-11-09T08:44:25.442Z"
+  },
+  {
+   "id": "d0e79e4d521b3dfa",
+   "title": "Consumption Activity Index",
+   "url": "http://www.boj.or.jp/en/research/research_data/cai/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-09T05:00:00.000Z",
+   "firstSeen": "2026-11-09T08:44:25.442Z"
+  },
   {
    "id": "02ec7ab9585f5397",
    "title": "Market Operations by the Bank of Japan (Oct.)",
