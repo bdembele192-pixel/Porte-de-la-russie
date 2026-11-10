@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-10T17:09:02.708Z",
+ "generatedAt": "2026-11-10T22:20:15.637Z",
  "sources": [
   {
    "id": "fed",
@@ -123,6 +123,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-10T16:45:00.000Z",
    "firstSeen": "2026-11-10T17:09:02.708Z"
+  },
+  {
+   "id": "d2d78274be323f75",
+   "title": "SEC Announces Enforcement Annual Results for Fiscal Year 2026",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-113-sec-announces-enforcement-annual-results-fiscal-year-2026",
+   "summary": "The Securities and Exchange Commission today provided its enforcement results for the past fiscal year which ended September 30. Throughout the fiscal year, the SEC’s Division of Enforcement remained focused on its fundamental responsibility: protecting…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-11-10T16:15:35.000Z",
+   "firstSeen": "2026-11-10T22:20:15.637Z"
   },
   {
    "id": "9f55d71f882e9b92",
