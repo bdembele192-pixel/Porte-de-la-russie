@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-09T19:09:43.581Z",
+ "generatedAt": "2026-11-10T02:00:28.879Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,39 @@
   }
  ],
  "items": [
+  {
+   "id": "bdb5af404db16a2c",
+   "title": "Principal Figures of Financial Institutions (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/dl/depo/kashi/kasi2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-09T23:50:00.000Z",
+   "firstSeen": "2026-11-10T02:00:28.879Z"
+  },
+  {
+   "id": "c9691307f35b3a57",
+   "title": "Summary of Opinions at the Monetary Policy Meeting on October 29 and 30, 2026",
+   "url": "http://www.boj.or.jp/en/mopo/mpmsche_minu/opinion_2026/opi261030.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-09T23:50:00.000Z",
+   "firstSeen": "2026-11-10T02:00:28.879Z"
+  },
+  {
+   "id": "5b05bbd0a3cea5f2",
+   "title": "Federal Reserve Board announces approval of two applications by Mutual Federal Bancorp, MHC, and MFB Bancorp, Inc.",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/orders20261109a.htm",
+   "summary": "Federal Reserve Board announces approval of two applications by Mutual Federal Bancorp, MHC, and MFB Bancorp, Inc.",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-09T21:00:00.000Z",
+   "firstSeen": "2026-11-10T02:00:28.879Z"
+  },
   {
    "id": "77952c8f4f6d4d13",
    "title": "Amounts Outstanding in the Call Money Market (Oct.)",
