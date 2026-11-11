@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-11T08:47:30.414Z",
+ "generatedAt": "2026-11-11T16:39:02.649Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 429"
+   "error": "HTTP 404"
   },
   {
    "id": "wb",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "7356adacaf5829df",
+   "title": "South Africa notifies launch of safeguard investigation into certain non-wired float glass products",
+   "url": "https://www.wto.org/english/news_e/news26_e/safe_zaf_11nov26_546_e.htm",
+   "summary": "On 11 November 2026, South Africa notified the WTO’s Committee on Safeguards regarding the initiation on 3 November 2026 of a safeguard investigation into imports of certain non-wired float glass products.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-11T00:00:00.000Z",
+   "firstSeen": "2026-11-11T16:39:02.649Z"
+  },
   {
    "id": "b375a607aac08627",
    "title": "Money Stock (Oct.)",
@@ -629,6 +640,17 @@
    "cat": "Institutions",
    "date": "2026-11-04T00:00:00.000Z",
    "firstSeen": "2026-11-04T16:11:26.517Z"
+  },
+  {
+   "id": "5da283b512035329",
+   "title": "Members review progress in resolving SPS trade concerns at WTO",
+   "url": "https://www.wto.org/english/news_e/news26_e/sps_04nov26_548_e.htm",
+   "summary": "The WTO's Committee on Sanitary and Phytosanitary (SPS) Measures met on 4-6 November, receiving an update on the resolution of past SPS-related trade concerns raised by members, reviewing a list of new and previously raised trade concerns, and advancing work on transparency, mentoring and technical cooperation issues.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-04T00:00:00.000Z",
+   "firstSeen": "2026-11-11T16:39:02.649Z"
   },
   {
    "id": "096604a459a28758",
@@ -2113,17 +2135,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-12T23:50:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "0f347032a6c09865",
-   "title": "La pauvreté dans le monde augmente pour la première fois depuis 2010",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159646",
-   "summary": "L’indice mondial de pauvreté a enregistré sa première hausse depuis sa création en 2010, portant à 1,2 milliard le nombre de personnes concernées, a indiqué lundi le Programme des Nations Unies pour le développement (PNUD).",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-12T12:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
