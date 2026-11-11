@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-10T22:20:15.637Z",
+ "generatedAt": "2026-11-11T01:58:48.020Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "b375a607aac08627",
+   "title": "Money Stock (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/money/ms/ms2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-10T23:50:00.000Z",
+   "firstSeen": "2026-11-11T01:58:48.020Z"
+  },
   {
    "id": "475019b5adccff90",
    "title": "Philip R. Lane: The science and practice of monetary policy communication: the ECB experience",
@@ -2113,39 +2124,6 @@
    "sid": "un",
    "cat": "Institutions",
    "date": "2026-10-12T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "83d63ba86bd3e064",
-   "title": "Report underlines value of WTO committee in helping resolve market access trade concerns",
-   "url": "https://www.wto.org/english/news_e/news26_e/mark_12oct26_516_e.htm",
-   "summary": "A first-ever report by the WTO Secretariat on the resolution of trade concerns related to market access highlights the effectiveness of the organization's committee work in helping members settle their differences without resorting to dispute settlement. The report was presented at a 12-13 October meeting of the WTO's ",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-12T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "5fabe6fb3c82fe71",
-   "title": "WTO members conclude review of US import surcharges following removal of measure",
-   "url": "https://www.wto.org/english/news_e/news26_e/bop_12oct26_521_e.htm",
-   "summary": "WTO members have concluded the consultations regarding the 10% import surcharge adopted by the United States.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-12T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "618fbc1fc6d1c973",
-   "title": "Madagascar launches safeguard investigation on certain confectionary",
-   "url": "https://www.wto.org/english/news_e/news26_e/safe_mdg_12oct26_511_e.htm",
-   "summary": "On 12 October 2026, Madagascar notified the WTO’s Committee on Safeguards that it had initiated on 9 October 2026 a safeguard investigation on imports of sugar confectionary as well as chocolate and cocoa confectionary.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-12T00:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
