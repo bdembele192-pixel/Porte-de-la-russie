@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-11T16:39:02.649Z",
+ "generatedAt": "2026-11-12T03:38:51.398Z",
  "sources": [
   {
    "id": "fed",
@@ -78,8 +78,9 @@
    "id": "sec",
    "name": "SEC (États-Unis)",
    "cat": "Régulateurs",
-   "ok": true,
-   "count": 25
+   "ok": false,
+   "count": 0,
+   "error": "fetch failed"
   },
   {
    "id": "cftc",
@@ -113,6 +114,50 @@
   }
  ],
  "items": [
+  {
+   "id": "9747aca4f2759f6f",
+   "title": "Speech by Board Member ASADA in Nagasaki (Economic Activity, Prices, and Monetary Policy in Japan)",
+   "url": "http://www.boj.or.jp/en/about/press/koen_2026/ko261112a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-12T01:30:00.000Z",
+   "firstSeen": "2026-11-12T03:38:51.398Z"
+  },
+  {
+   "id": "e4a1e1b23ee1840d",
+   "title": "Bank of Japan Accounts (November 10)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261110.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-12T01:00:00.000Z",
+   "firstSeen": "2026-11-12T03:38:51.398Z"
+  },
+  {
+   "id": "4bf83c8d175ab4a8",
+   "title": "Corporate Goods Price Index (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/pi/cgpi_release/cgpi2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-11T23:50:00.000Z",
+   "firstSeen": "2026-11-12T03:38:51.398Z"
+  },
+  {
+   "id": "9847313654d96e09",
+   "title": "Release of Latest \"Amounts Outstanding of Deposits by Depositor\" Data",
+   "url": "http://www.boj.or.jp/en/statistics/outline/notice_2026/not261112a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-11T23:50:00.000Z",
+   "firstSeen": "2026-11-12T03:38:51.398Z"
+  },
   {
    "id": "7356adacaf5829df",
    "title": "South Africa notifies launch of safeguard investigation into certain non-wired float glass products",
@@ -2102,39 +2147,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-13T04:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "3dab2713e3356075",
-   "title": "Basel Committee finds Australia, Japan, Korea, Switzerland compliant, and Canada, United Kingdom largely compliant with its leverage ratio framework",
-   "url": "https://www.bis.org/media-releases/20261013-basel-committee-finds-australia-japan-korea-switzerland-compliant-and-canada-united-kingdom",
-   "summary": "The Basel Committee has published assessment reports on the implementation of its leverage ratio framework (LEV) in Australia, Canada, Japan, Korea, Switzerland and the United Kingdom. Australia, Japan, Korea and Switzerland are assessed as compliant; Canada and the United Kingdom are assessed as largely compliant. Thi",
-   "source": "Banque des règlements internationaux",
-   "sid": "bis",
-   "cat": "Banques centrales",
-   "date": "2026-10-13T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "0ae7224a4ec13d1e",
-   "title": "Principal Figures of Financial Institutions (Sept.)",
-   "url": "http://www.boj.or.jp/en/statistics/dl/depo/kashi/kasi2609.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-12T23:50:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "9765cbf19b75ff5d",
-   "title": "Corporate Goods Price Index (Sept.)",
-   "url": "http://www.boj.or.jp/en/statistics/pi/cgpi_release/cgpi2609.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-12T23:50:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
