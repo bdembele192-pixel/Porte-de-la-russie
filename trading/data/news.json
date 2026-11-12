@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-12T03:38:51.398Z",
+ "generatedAt": "2026-11-12T11:47:53.460Z",
  "sources": [
   {
    "id": "fed",
@@ -78,9 +78,8 @@
    "id": "sec",
    "name": "SEC (États-Unis)",
    "cat": "Régulateurs",
-   "ok": false,
-   "count": 0,
-   "error": "fetch failed"
+   "ok": true,
+   "count": 25
   },
   {
    "id": "cftc",
@@ -114,6 +113,28 @@
   }
  ],
  "items": [
+  {
+   "id": "0134a79f38a6e3e8",
+   "title": "Japanese Government Bonds Held by the Bank of Japan",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261110.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-12T08:00:00.000Z",
+   "firstSeen": "2026-11-12T11:47:53.460Z"
+  },
+  {
+   "id": "d624f76fecd69e8e",
+   "title": "Basic Figures on Fails (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/set/bffail/sjgb2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-12T07:30:00.000Z",
+   "firstSeen": "2026-11-12T11:47:53.460Z"
+  },
   {
    "id": "9747aca4f2759f6f",
    "title": "Speech by Board Member ASADA in Nagasaki (Economic Activity, Prices, and Monetary Policy in Japan)",
@@ -2125,28 +2146,6 @@
    "sid": "un",
    "cat": "Institutions",
    "date": "2026-10-13T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "0a0545636505450c",
-   "title": "Basic Figures on Fails (Sept.)",
-   "url": "http://www.boj.or.jp/en/statistics/set/bffail/sjgb2609.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-13T07:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "d7c4c3cbacbeb6bd",
-   "title": "Results of the 107th Opinion Survey on the General Public's Views and Behavior",
-   "url": "http://www.boj.or.jp/en/research/o_survey/ishiki2610.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-13T04:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
