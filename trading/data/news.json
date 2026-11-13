@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-12T19:10:17.822Z",
+ "generatedAt": "2026-11-13T00:15:30.037Z",
  "sources": [
   {
    "id": "fed",
@@ -2113,50 +2113,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-14T01:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "39b2934cad79021a",
-   "title": "Frank Elderson: Ensuring resilience in the face of uncertainty",
-   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261014~e4ca33588e.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-14T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "a1021094e27ff280",
-   "title": "Global standard-setting bodies publish final report on guidance for FMIs on general business risks and general business losses",
-   "url": "https://www.bis.org/media-releases/20261014-global-standard-setting-bodies-publish-final-report-guidance-fmis-general-business-risks-and",
-   "summary": "The Bank for International Settlements’ Committee on Payments and Market Infrastructures (CPMI) and the International Organization of Securities Commissions (IOSCO) today published a final report on financial market infrastructures’ (FMIs) management of general business risks and general business losses.",
-   "source": "Banque des règlements internationaux",
-   "sid": "bis",
-   "cat": "Banques centrales",
-   "date": "2026-10-14T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "7126950527ec8c3e",
-   "title": "Talks kick off for Timor-Leste's accession to government procurement pact",
-   "url": "https://www.wto.org/english/news_e/news26_e/gpro_14oct26_515_e.htm",
-   "summary": "At a meeting of the Committee on Government Procurement on 14 October, parties to the Government Procurement Agreement (GPA) 2012 welcomed Timor-Leste's submission of key documents required to kick off its negotiations on acceding to the Agreement. The Committee also reviewed regulatory developments, heard updates on t",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-14T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "2e529384b4c1e570",
-   "title": "Money Stock (Sept.)",
-   "url": "http://www.boj.or.jp/en/statistics/money/ms/ms2609.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-13T23:50:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
