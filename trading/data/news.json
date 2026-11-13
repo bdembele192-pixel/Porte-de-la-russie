@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-13T06:46:38.265Z",
+ "generatedAt": "2026-11-13T14:55:53.122Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,50 @@
   }
  ],
  "items": [
+  {
+   "id": "b47c571cb790f98f",
+   "title": "Hydropower generation in the Southwest fell to record lows this summer",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68445",
+   "summary": "Prolonged drought conditions affecting the Colorado River Basin led to record low hydropower generation this summer in the Southwestern electricity supply region, which includes Arizona, New Mexico, and small parts of Nevada and California. Hydropower generation from April through August 2026 was 19% lower than during ",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-11-13T14:00:00.000Z",
+   "firstSeen": "2026-11-13T14:55:53.122Z"
+  },
+  {
+   "id": "1a1a54e2b40f03bc",
+   "title": "The Bank of England, the Monetary Authority of Singapore, and the Bank of Thailand: Project Meridian FX APAC",
+   "url": "https://www.bankofengland.co.uk/news/2026/november/the-boe-monetary-authority-of-singapore-and-bank-of-thailand-media-release",
+   "summary": "Joint media release",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-13T09:00:00.000Z",
+   "firstSeen": "2026-11-13T14:55:53.122Z"
+  },
+  {
+   "id": "7f5ac712f199536c",
+   "title": "Isabel Schnabel: Made in Europe",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261113~3883f1f187.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-13T07:20:00.000Z",
+   "firstSeen": "2026-11-13T14:55:53.122Z"
+  },
+  {
+   "id": "a712a1639d86c45c",
+   "title": "Ireland contributes EUR 200,000 to strengthen trade opportunities in developing countries",
+   "url": "https://www.wto.org/english/news_e/pres26_e/pr998_551_e.htm",
+   "summary": "Ireland is contributing EUR 200,000 (approximately CHF 185,000) to the Standards and Trade Development Facility (STDF) in 2026 to strengthen sanitary and phytosanitary capacity in developing and least-developed countries. The contribution will support STDF activities that help countries meet international food safety a",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-13T00:00:00.000Z",
+   "firstSeen": "2026-11-13T14:55:53.122Z"
+  },
   {
    "id": "2982dc5dd2dd3995",
    "title": "Federal Reserve Board announces pricing, effective January 1, 2027, for payment services the Federal Reserve Banks provide to banks and credit unions, and changes to streamline and adjust their check services",
@@ -2058,50 +2102,6 @@
    "sid": "wto",
    "cat": "Institutions",
    "date": "2026-10-15T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "049a91d13f39d696",
-   "title": "SEC Small Business Advisory Committee to Discuss IPO Modernization and Regulation Crowdfunding",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-105-sec-small-business-advisory-committee-discuss-ipo-modernization-regulation-crowdfunding",
-   "summary": "The&nbsp;Securities and Exchange Commission’s&nbsp;Small Business Capital Formation Advisory Committee announced that it will hold a meeting on Tuesday, October 27, 2026, at 10 a.m. to continue discussing IPO modernization and explore potential policy…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-14T14:30:47.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "5f818365ac22e5b8",
-   "title": "Monthly wind generation in ISO-NE is about 68% higher than last year",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68304",
-   "summary": "Monthly wind generation in the first nine months of 2026 was an average of 68% higher compared with the same period in 2025 in ISO New England (ISO-NE).",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-14T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "0ef869186b35e77b",
-   "title": "The Fifteenth Tripartite Governors' Meeting among PBOC, BOJ, and BOK",
-   "url": "http://www.boj.or.jp/en/intl_finance/cooperate/coop261014a.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-14T11:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "381580a3cc6b4497",
-   "title": "Japanese Government Bonds Held by the Bank of Japan",
-   "url": "http://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261009.xlsx",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-14T08:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
