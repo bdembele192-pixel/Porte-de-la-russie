@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-13T21:03:48.899Z",
+ "generatedAt": "2026-11-14T01:23:50.972Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "ac9c8fdd5330ff16",
+   "title": "Agencies extend comment period for proposed third-party risk management guidance",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261113a.htm",
+   "summary": "Agencies extend comment period for proposed third-party risk management guidance",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-13T21:15:00.000Z",
+   "firstSeen": "2026-11-14T01:23:50.972Z"
+  },
   {
    "id": "f84f9b52ca2f655c",
    "title": "SEC Proposes Executive and Director Compensation Disclosure Reforms",
@@ -2091,28 +2102,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-15T01:30:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "2bc5743b41481824",
-   "title": "Summary of the \"Meeting on Market Operations\" (October 2026)",
-   "url": "http://www.boj.or.jp/en/paym/market/mkt261015a.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-15T01:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "6aab5e658967b3c1",
-   "title": "Import Licensing Committee addresses notifications, trade concerns, transparency efforts",
-   "url": "https://www.wto.org/english/news_e/news26_e/impl_15oct26_518_e.htm",
-   "summary": "At its 15 October meeting, the WTO Committee on Import Licensing examined challenges for WTO members in preparing notifications, including findings from a recent WTO workshop for government officials. It also reviewed the latest information on members' notification practices. In addition, the Committee considered a ran",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-15T00:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
