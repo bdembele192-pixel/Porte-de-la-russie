@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-14T01:23:50.972Z",
+ "generatedAt": "2026-11-14T07:40:36.131Z",
  "sources": [
   {
    "id": "fed",
@@ -2091,17 +2091,6 @@
    "sid": "boe",
    "cat": "Banques centrales",
    "date": "2026-10-15T08:27:59.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "45a2aa0c192a1984",
-   "title": "Speech by Board Member KOEDA in Kumamoto (Economic Activity, Prices, and Monetary Policy in Japan)",
-   "url": "http://www.boj.or.jp/en/about/press/koen_2026/ko261015a.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-15T01:30:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
