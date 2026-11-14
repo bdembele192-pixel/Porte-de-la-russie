@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-14T07:40:36.131Z",
+ "generatedAt": "2026-11-14T14:29:44.195Z",
  "sources": [
   {
    "id": "fed",
@@ -2047,50 +2047,6 @@
    "sid": "wto",
    "cat": "Institutions",
    "date": "2026-10-16T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "0a379df7e7286c87",
-   "title": "PJM, ERCOT, and SWPP all set peak load records this summer",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68305",
-   "summary": "Three regional transmission organizations (RTOs) set records for peak hourly load this past summer, according to data reported on Form EIA-930 and presented in the Hourly Electric Grid Monitor.",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-15T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "5f06f1b1768a6887",
-   "title": "L’innovation progresse, les inégalités persistent : l’ONU appelle à repenser le développement",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159673",
-   "summary": "De l’intelligence artificielle à la transition énergétique, en passant par l’essor du numérique, les mutations de l’économie mondiale ne profitent pas à tous. Dans un rapport publié jeudi, l’ONU démontre que les pays les plus avancés technologiquement ne sont pas nécessairement les plus inclusifs et met en garde contre",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-15T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "a100bd60d8f39d88",
-   "title": "David Roberts CV and questionnaire for the Treasury Select Committee",
-   "url": "https://www.bankofengland.co.uk/news/2026/october/david-roberts-tsc-reappointment",
-   "summary": "Published for the Treasury Select Committee",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-15T09:52:41.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "1dcc44ea7aee9b3f",
-   "title": "Minutes of the SONIA Stakeholder Advisory Group - 25 September 2026",
-   "url": "https://www.bankofengland.co.uk/minutes/2026/september/sonia-stakeholder-advisory-group-25-september-2026",
-   "summary": "The SONIA Stakeholder Advisory Group supports the Bank’s administration of SONIA by providing advice and technical input to the Bank and the SONIA Oversight Committee",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-15T08:27:59.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
