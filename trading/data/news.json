@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-14T14:29:44.195Z",
+ "generatedAt": "2026-11-15T02:34:14.356Z",
  "sources": [
   {
    "id": "fed",
@@ -2025,28 +2025,6 @@
    "sid": "boj",
    "cat": "Banques centrales",
    "date": "2026-10-16T08:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "be17206ef56b52ca",
-   "title": "Basel Committee finalises measures to address window-dressing in the G-SIB framework and consults on G-SIB methodology review",
-   "url": "https://www.bis.org/media-releases/20261016-basel-committee-finalises-measures-address-window-dressing-g-sib-framework-and-consults-g-sib",
-   "summary": "The Basel Committee on Banking Supervision today published final amendments to address window dressing in the G-SIB framework and a consultation on the G-SIB methodology review.",
-   "source": "Banque des règlements internationaux",
-   "sid": "bis",
-   "cat": "Banques centrales",
-   "date": "2026-10-16T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "994f75dd869cc00a",
-   "title": "WTO and multilateral partners review progress on supply chain finance initiative",
-   "url": "https://www.wto.org/english/news_e/news26_e/trfin_16oct26_517_e.htm",
-   "summary": "Director-General Ngozi Okonjo-Iweala joined leaders of multilateral development banks and other international organizations at a high-level roundtable held on the sidelines of the 2026 World Bank – International Monetary Fund (IMF) Annual Meetings in Bangkok, Thailand, on 16 October to review progress in expanding supp",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-16T00:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
