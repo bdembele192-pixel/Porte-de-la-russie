@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-15T09:49:14.437Z",
+ "generatedAt": "2026-11-15T16:37:51.159Z",
  "sources": [
   {
    "id": "fed",
@@ -1981,39 +1981,6 @@
    "sid": "ecb",
    "cat": "Banques centrales",
    "date": "2026-10-17T05:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "3d4498a3ef804e76",
-   "title": "Federal Reserve Board announces termination of enforcement actions with Gardner Bancshares, Inc. and Small Business Bank",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261016a.htm",
-   "summary": "Federal Reserve Board announces termination of enforcement actions with Gardner Bancshares, Inc. and Small Business Bank",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-16T15:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "1a9887f4c10c2bf7",
-   "title": "U.S. small-scale solar generation has quadrupled in the last decade",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68324",
-   "summary": "We estimate that U.S. generation from small-scale or rooftop solar photovoltaic systems (smaller than 1 megawatt of capacity) has increased from 18,812 gigawatthours (GWh) to 92,979 GWh over the last decade. The four states with the highest generation of small-scale solar in the country-California, Arizona, Texas, and ",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-16T14:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "07ef9379b6632e98",
-   "title": "Banknote imagery advisory group minutes – 15 July 2026",
-   "url": "https://www.bankofengland.co.uk/minutes/2026/july/banknote-advisory-minutes-15-july",
-   "summary": "Meeting held 15 July 2026",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-16T11:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
