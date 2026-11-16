@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-16T07:39:23.922Z",
+ "generatedAt": "2026-11-16T17:25:17.766Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,50 @@
   }
  ],
  "items": [
+  {
+   "id": "800d6575c6843638",
+   "title": "Frank Elderson: Smart supervision for small banks",
+   "url": "https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in261116_1~11dd7f62af.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-16T13:00:00.000Z",
+   "firstSeen": "2026-11-16T17:25:17.766Z"
+  },
+  {
+   "id": "2ab7baf7102b44f9",
+   "title": "Boris Vujčić: Risks and resilience in the euro area financial system",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261116~db374b56ab.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-16T08:30:00.000Z",
+   "firstSeen": "2026-11-16T17:25:17.766Z"
+  },
+  {
+   "id": "142a6aaafd37b23d",
+   "title": "Highlights of the Outlook for Economic Activity and Prices (October 2026)",
+   "url": "http://www.boj.or.jp/en/mopo/outlook/highlight/ten202610.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-16T08:00:00.000Z",
+   "firstSeen": "2026-11-16T17:25:17.766Z"
+  },
+  {
+   "id": "4915bcc55c53b473",
+   "title": "BOJ Current Account Balances by Sector (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/cabs/cabs.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-16T08:00:00.000Z",
+   "firstSeen": "2026-11-16T17:25:17.766Z"
+  },
   {
    "id": "dff605704c4a05b5",
    "title": "Speech by Board Member TAKATA at a Meeting Held by the Tokushima Association of Corporate Executives (Economic Activity, Prices, and Monetary Policy in Japan: Japan's Money and Capital Market Transformation -- Will a Paradigm Shift Occur?)",
