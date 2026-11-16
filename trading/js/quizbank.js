@@ -146,6 +146,21 @@ M.QUIZ_UNITS = [
       { t: "mcq", q: "Avant de déposer, teste…", o: ["Un petit retrait", "Le levier ×100", "Un memecoin"], a: 0, e: "Pouvoir retirer facilement est essentiel." },
       { t: "mcq", q: "Ce qu'il faut constituer AVANT de trader ?", o: ["Une épargne de précaution", "Un compte prop firm", "Une collection de NFT"], a: 0, e: "Pour ne jamais trader sous la pression d'un imprévu." }
     ]
+  },
+  {
+    id: "u12", e: "📊", t: "Options & volatilité", sub: "Call, put, grecques, vol, couverture", gen: [],
+    q: [
+      { t: "mcq", q: "Un call te donne…", o: ["Le droit d'acheter à un prix fixé", "L'obligation d'acheter", "Le droit de vendre"], a: 0, e: "Call = droit d'acheter, put = droit de vendre." },
+      { t: "mcq", q: "Perte maximale de l'acheteur d'une option ?", o: ["La prime", "Illimitée", "Le strike"], a: 0, e: "Il ne peut perdre que ce qu'il a payé." },
+      { t: "num", q: "Call strike 100, prime 4. À l'échéance l'actif vaut 112. Gain net ?", a: 8, tol: 0.01, u: "", e: "112 − 100 = 12, moins la prime de 4 = 8." },
+      { t: "tf", q: "Le theta joue contre l'acheteur d'options.", a: true, e: "Chaque jour sans mouvement, l'option perd de sa valeur temps." },
+      { t: "mcq", q: "Plus la volatilité implicite est haute, plus une option est…", o: ["Chère", "Bon marché", "Proche de l'échéance"], a: 0, e: "Le marché anticipe de grands mouvements : le droit vaut plus." },
+      { t: "fill", q: "Après une annonce, la vol implicite s'effondre : c'est le vol ___.", o: ["crush", "smile", "spread"], a: 0, e: "Les options perdent de la valeur même si le prix bouge." },
+      { t: "mcq", q: "Un vendeur d'options est…", o: ["Short gamma", "Long gamma", "Sans risque"], a: 0, e: "Les grands mouvements lui font perdre ; il encaisse le theta." },
+      { t: "mcq", q: "Pour neutraliser la direction de son book, un desk fait…", o: ["Une couverture delta", "Un vol crush", "Un stop au point mort"], a: 0, e: "Il achète ou vend l'actif pour ramener son delta à zéro." },
+      { t: "tf", q: "Un teneur de marché qui gagne presque toutes les demandes de prix est forcément très bon.", a: false, e: "Sélection adverse : ses prix sont sans doute trop bas." },
+      { t: "mcq", q: "Un importateur malien paie en dollars. Le risque, c'est surtout…", o: ["EUR/USD, car le FCFA suit l'euro", "Le cours de l'or", "La BRVM"], a: 0, e: "Si l'euro baisse face au dollar, sa facture monte en FCFA." }
+    ]
   }
 ];
 

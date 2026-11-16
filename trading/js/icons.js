@@ -86,8 +86,8 @@ window.M = window.M || {};
     Object.entries(P).map(([k, v]) => `<symbol id="i-${k}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${v}</symbol>`).join("") + "</svg>";
   M.IC = {
     level: ["sprout", "eye", "book", "chart", "waves", "shield", "bot", "crown"],
-    course: { bases: "compass", instruments: "layers", styles: "clock", technique: "chart", indicateurs: "sliders", strategies: "flag", algos: "bot", risque: "shield", psycho: "brain", macro: "globe", reel: "lock", afrique: "map", fondamentale: "search", options: "ticket", crypto2: "key", forex: "repeat", plan: "edit", argent: "leaf" },
-    unit: { u1: "compass", u2: "sliders", u3: "layers", u4: "chart", u5: "live", u6: "shield", u7: "brain", u8: "bot", u9: "globe", u10: "map", u11: "lock" },
+    course: { bases: "compass", instruments: "layers", styles: "clock", technique: "chart", indicateurs: "sliders", strategies: "flag", algos: "bot", risque: "shield", psycho: "brain", macro: "globe", reel: "lock", afrique: "map", fondamentale: "search", options: "ticket", crypto2: "key", forex: "repeat", plan: "edit", argent: "leaf", volatilite: "waves", "market-making": "bank", "options-change": "repeat" },
+    unit: { u1: "compass", u2: "sliders", u3: "layers", u4: "chart", u5: "live", u6: "shield", u7: "brain", u8: "bot", u9: "globe", u10: "map", u11: "lock", u12: "waves" },
     mission: { covid: "virus", doge: "rocket", luna: "moon", merge: "merge", ftx: "flame", etf: "bank", yen: "yen", election: "vote", tariffs: "receipt", gold: "award" },
     algo: { trend: "rocket", breakout: "trending", meanrev: "magnet", pairs: "scale" },
     badge: { first_trade: "play", first_stop: "shield", first_win: "coins", liquidated: "skull", mission_1: "missions", survivor: "lifebuoy", mission_all: "book", swipe_game: "swipe", swipe_7: "eye", lab_run: "lab", lab_compare: "flag", course_1: "academy", course_all: "brain", quiz_perfect: "check", coach_90: "target", streak_3: "flame", quiz_first: "quiz", quiz_combo: "zap", quiz_all: "award", ai_saved: "lifebuoy" }
