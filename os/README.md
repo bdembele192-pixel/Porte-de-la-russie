@@ -9,7 +9,7 @@ Elle n'écrit pas un nouveau noyau : elle s'appuie sur Linux et Ubuntu, comme la
 | Domaine | Contenu |
 |---|---|
 | **Commande `marche`** | Cours, graphique dans le terminal, analyse technique, backtest, corrélations, taille de position, communiqués officiels, alertes de prix, rapport quotidien, export CSV (détail plus bas). |
-| **Bureau** | XFCE (léger et rapide), thème sombre Mèche, en français. Raccourcis : *Tableau de bord marché*, *Rapport du jour*, *Jupyter*, *Mèche (simulateur)*, *Bienvenue*. |
+| **Bureau** | XFCE (léger et rapide), thème sombre Mèche, en français. Raccourcis dans le dock et le menu Applications : *Tableau de bord marché*, *Rapport du jour*, *Jupyter*, *Mèche (simulateur)*, *Bienvenue*. |
 | **Alertes** | Vérifiées toutes les 5 minutes en arrière-plan, avec une notification de bureau quand un seuil est franchi. |
 | **Analyse** | Python 3 avec pandas, NumPy, SciPy, matplotlib, statsmodels et scikit-learn, Jupyter Notebook (carnet d'exemple dans `~/Analyses`), R avec quantmod, xts et TTR, gnuplot. |
 | **Données** | LibreOffice Calc, SQLite et DB Browser, csvkit, VisiData, jq. |
@@ -105,4 +105,5 @@ Pour ajouter un logiciel, ajoutez son nom de paquet Ubuntu dans `config/packages
 
 - Système live uniquement : il n'y a pas encore d'installateur sur disque dur (prévu : Calamares).
 - *Secure Boot* n'est pas pris en charge, car le chargeur GRUB n'est pas signé.
+- Le navigateur est Firefox (dépôt Mozilla). L'ISO construite par GitHub l'exige ; une construction locale sans accès à packages.mozilla.org se rabat sur Epiphany, qui a planté lors des essais en machine virtuelle sans accélération graphique.
 - Les cours sont différés de quelques minutes. Ce n'est pas un flux de cotation temps réel pour exécuter des ordres.

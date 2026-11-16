@@ -1,0 +1,4 @@
+#!/bin/sh
+# Ouvre Jupyter Notebook dans le dossier des analyses.
+mkdir -p "$HOME/Analyses"
+cd "$HOME/Analyses" && exec jupyter notebook
