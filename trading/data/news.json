@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-15T16:37:51.159Z",
+ "generatedAt": "2026-11-16T07:39:23.922Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "dff605704c4a05b5",
+   "title": "Speech by Board Member TAKATA at a Meeting Held by the Tokushima Association of Corporate Executives (Economic Activity, Prices, and Monetary Policy in Japan: Japan's Money and Capital Market Transformation -- Will a Paradigm Shift Occur?)",
+   "url": "http://www.boj.or.jp/en/about/press/koen_2026/ko261116a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-16T04:00:00.000Z",
+   "firstSeen": "2026-11-16T07:39:23.922Z"
+  },
   {
    "id": "ac9c8fdd5330ff16",
    "title": "Agencies extend comment period for proposed third-party risk management guidance",
@@ -1970,17 +1981,6 @@
    "sid": "ecb",
    "cat": "Banques centrales",
    "date": "2026-10-19T06:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "07b1a43f92a2d4d9",
-   "title": "Christine Lagarde: IMFC Statement",
-   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261017~7015ea3099.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-17T05:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
