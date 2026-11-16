@@ -385,6 +385,7 @@ body.focus #notification:hover { opacity: 1; }
   #sim-controls > div[style*="margin-left:auto"] { margin-left: 0 !important; flex-wrap: wrap; }
   .card { width: 100% !important; flex: 0 0 auto !important; }
   .panel .topbar-stat { display: flex !important; }
+  .card .row { flex-direction: row !important; flex-wrap: wrap !important; }
   .row { flex-direction: column; flex-wrap: nowrap; }
   #journal-card { left: 16px; }
 }

@@ -1,6 +1,6 @@
 """Thèmes texturés pour le simulateur (inspirés de l'image du temple dans les nuages).
 S'applique par-dessus la page construite par build.py :
-    python3 theme_textures.py index.html sortie.html laque|couchant|pierre"""
+    python3 theme_textures.py index.html sortie.html vague|laque|couchant|pierre"""
 import re, sys
 from urllib.parse import quote
 
@@ -68,6 +68,18 @@ V = {
         page_layers=lambda: (clouds("#FFE9DA", 0.22), grain(0.18)),
         side="linear-gradient(180deg, rgba(255,226,206,0.62), rgba(255,214,196,0.55))", side_fg="#2B1520", side_muted="#6E3E4C",
         top="rgba(255,232,216,0.72)", bar="rgba(255,222,204,0.55)", btn="rgba(255,244,236,0.85)",
+        active="linear-gradient(135deg, #C0151D, #E8622C)", active_fg="#FFFFFF", active_n_bg="#FFF1E6", active_n_fg="#C0151D",
+        gold="#C46A12", sky=("#F28A50", "#F7C7A2"), sun="#C0151D", cloud="#FFF1E6", cloud2="#FBE0D0", mount="#5A2E44", mount2="#6E3A55", stair="#8C5A6E", tree="#C0151D",
+        quote="Above the clouds, the price is calm.", glass=True),
+    "vague": dict(
+        label="Vagues au coucher de soleil",
+        bg0="#D9483B", card="#F6DCCB", card2="#F0D0BC", card3="#EAC4AD", card4="#E2B79E", border="#D6A386", borderB="#B9785A",
+        text0="#2B1520", text1="#3D1E2C", text2="#5E3242", text3="#714050", accent="#5B2A55", pos="#1E6B4A", neg="#B0141C",
+        warn="#7A3E00", yellow="#6E4C00", red="#C0151D", teal="#1E5A55",
+        page_css=lambda: (lambda sg, sz: f"background: {grain(0.18)}, linear-gradient(160deg, rgba(246,160,90,0.55) 0%, rgba(232,98,60,0.18) 40%, rgba(181,59,72,0.30) 70%, rgba(110,46,84,0.62) 100%), {sg};"
+                          f" background-color: #D9503C; background-size: 180px 180px, cover, {', '.join([sz] * 5)}; background-attachment: fixed;")(*seigaiha("#D9503C", "#E8694C", 72)),
+        side="linear-gradient(180deg, rgba(255,226,206,0.70), rgba(255,214,196,0.62))", side_fg="#2B1520", side_muted="#6E3E4C",
+        top="rgba(255,232,216,0.80)", bar="rgba(255,222,204,0.70)", btn="rgba(255,244,236,0.88)",
         active="linear-gradient(135deg, #C0151D, #E8622C)", active_fg="#FFFFFF", active_n_bg="#FFF1E6", active_n_fg="#C0151D",
         gold="#C46A12", sky=("#F28A50", "#F7C7A2"), sun="#C0151D", cloud="#FFF1E6", cloud2="#FBE0D0", mount="#5A2E44", mount2="#6E3A55", stair="#8C5A6E", tree="#C0151D",
         quote="Above the clouds, the price is calm.", glass=True),
@@ -143,7 +155,9 @@ ORN = svg_url(f"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 32'><g f
 # Bande de vagues sous la barre de simulation
 wave_img, wave_size = seigaiha(P["card4"], P["border"], 28)
 
-if "page_layers" in P:
+if "page_css" in P:
+    page_bg_css = P["page_css"]()
+elif "page_layers" in P:
     page_bg = ", ".join(P["page_layers"]() + P["page"]())
     page_size = ", ".join(["520px 260px"] + ["180px 180px" if "feTurbulence" in x else "200px 200px" for x in P["page_layers"]()[1:]] + ["cover"])
     page_bg_css = f"background: {page_bg}; background-size: {page_size}; background-attachment: fixed;"

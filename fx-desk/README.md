@@ -17,3 +17,13 @@ pricer (tout devenait « short »), panneau Market (boutons de timeframe et RSI 
 mal fermées), signe des nombres négatifs (`--2,937`), courbes de vol réduites à des points,
 gamma ×10⁶ dans la table de déformation, couleur de canvas invalide, identifiant en double,
 recalcul inutile du book dans `getLargestTenor`, `window.prompt` qui bloquait la simulation.
+
+## Ambiance retenue : « Vagues au coucher de soleil »
+
+`vega-vagues.html` est la version publiée : vagues japonaises (seigaiha) sur un dégradé de coucher de
+soleil, cartes rosées avec grain de papier, cadres dorés et scène du temple dans le menu.
+
+```bash
+python3 build.py original.html index.html
+python3 theme_textures.py index.html vega-vagues.html vague   # autres choix : laque, couchant, pierre
+```
