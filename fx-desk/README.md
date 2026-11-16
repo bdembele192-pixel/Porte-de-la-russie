@@ -27,3 +27,14 @@ soleil, cartes rosées avec grain de papier, cadres dorés et scène du temple d
 python3 build.py original.html index.html
 python3 theme_textures.py index.html vega-vagues.html vague   # autres choix : laque, couchant, pierre
 ```
+
+## Version actuelle : habillage Mèche
+
+`vega-meche.html` reprend la logique de design de Mèche : barre latérale à icônes, cartes arrondies avec motif
+bogolan, Montserrat et Inter, et les mêmes thèmes au choix (Or noir par défaut, Clair, Bamako, Minuit, Sunset,
+Océan), mémorisés dans le navigateur. Les graphiques changent de couleur avec le thème.
+
+```bash
+python3 build.py original.html index.html
+python3 theme_meche.py index.html vega-meche.html
+```
