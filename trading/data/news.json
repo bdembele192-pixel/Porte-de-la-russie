@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-17T08:35:47.954Z",
+ "generatedAt": "2026-11-17T17:50:31.291Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,28 @@
   }
  ],
  "items": [
+  {
+   "id": "86c2e98e1374cd9d",
+   "title": "How does EIA account for small differences between energy supply and demand data?",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68464",
+   "summary": "EIA uses over 60 surveys to collect data on the U.S. energy sector's supply and demand. In theory, supply and demand should balance. In practice, we often have small differences between our total supply and total demand figures.",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-11-17T14:00:00.000Z",
+   "firstSeen": "2026-11-17T17:50:31.291Z"
+  },
+  {
+   "id": "1d1a2c75503ddcac",
+   "title": "New trade-restrictive measures surge but WTO members step up trade facilitation efforts",
+   "url": "https://www.wto.org/english/news_e/news26_e/tmwto_17nov26_552_e.htm",
+   "summary": "The pace of newly-introduced tariffs and other non-facilitating measures rose sharply in the first half of 2026, while the stockpile of such measures reached a record level, according to the WTO Director-General's latest annual overview of developments in the international trading environment. At the same time, WTO mem",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-17T00:00:00.000Z",
+   "firstSeen": "2026-11-17T17:50:31.291Z"
+  },
   {
    "id": "49ff67bcc693ed2d",
    "title": "Release of Latest \"Loans and Bills Discounted by Sector\" and \"Loans to Households\" Data",
