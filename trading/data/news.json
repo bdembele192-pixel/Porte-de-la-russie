@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-16T17:25:17.766Z",
+ "generatedAt": "2026-11-17T00:54:08.795Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "49ff67bcc693ed2d",
+   "title": "Release of Latest \"Loans and Bills Discounted by Sector\" and \"Loans to Households\" Data",
+   "url": "http://www.boj.or.jp/en/statistics/outline/notice_2026/not261117a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-16T23:50:00.000Z",
+   "firstSeen": "2026-11-17T00:54:08.795Z"
+  },
   {
    "id": "800d6575c6843638",
    "title": "Frank Elderson: Smart supervision for small banks",
