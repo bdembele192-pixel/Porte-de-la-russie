@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-17T17:50:31.291Z",
+ "generatedAt": "2026-11-17T23:59:59.690Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "116750dfdb841611",
+   "title": "Philip R. Lane: The practice and science of monetary policy communication: the ECB experience",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261117~7f5d3b1a0e.en.pdf",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-17T18:30:00.000Z",
+   "firstSeen": "2026-11-17T23:59:59.690Z"
+  },
   {
    "id": "86c2e98e1374cd9d",
    "title": "How does EIA account for small differences between energy supply and demand data?",
