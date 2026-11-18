@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-18T15:30:18.565Z",
+ "generatedAt": "2026-11-18T22:39:47.560Z",
  "sources": [
   {
    "id": "fed",
@@ -34,7 +34,7 @@
    "name": "Banque des règlements internationaux",
    "cat": "Banques centrales",
    "ok": true,
-   "count": 1
+   "count": 2
   },
   {
    "id": "imf",
@@ -114,6 +114,17 @@
  ],
  "items": [
   {
+   "id": "b49590135b971fa2",
+   "title": "Minutes of the Federal Open Market Committee, October 27-28, 2026",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm",
+   "summary": "Minutes of the Federal Open Market Committee, October 27-28, 2026",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-18T19:00:00.000Z",
+   "firstSeen": "2026-11-18T22:39:47.560Z"
+  },
+  {
    "id": "286b41b2201e05f2",
    "title": "Outdoor Recreation Economic Statistics, U.S. and States, 2025",
    "url": "https://www.bea.gov/news/2026/outdoor-recreation-economic-statistics-us-and-states-2025",
@@ -134,6 +145,17 @@
    "cat": "Énergie",
    "date": "2026-11-18T14:00:00.000Z",
    "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
+   "id": "76a53e9d31347f10",
+   "title": "Portés par la Chine, les dépôts de brevets atteignent un record",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159865",
+   "summary": "Plus de 3,9 millions de demandes de brevet ont été déposées dans le monde en 2025, soit une hausse de 6 % en un an, selon l’Organisation mondiale de la propriété intellectuelle (OMPI). La Chine est à l’origine de plus de la moitié de cette progression. L’Inde a dépassé pour la première fois les 100 000 demandes annuell",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-18T12:00:00.000Z",
+   "firstSeen": "2026-11-18T22:39:47.560Z"
   },
   {
    "id": "f6a373c723e3b35c",
@@ -167,6 +189,17 @@
    "cat": "Institutions",
    "date": "2026-11-18T00:00:00.000Z",
    "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
+   "id": "6b59a5ae236313eb",
+   "title": "Basel Committee discusses risks and vulnerabilities faced by global banking system",
+   "url": "https://www.bis.org/media-releases/20261118-basel-committee-discusses-risks-and-vulnerabilities-faced-global-banking-system",
+   "summary": "The Basel Committee on Banking Supervision met in Basel on 18 November 2026 to discuss a range of analytical, supervisory and regulatory initiatives.",
+   "source": "Banque des règlements internationaux",
+   "sid": "bis",
+   "cat": "Banques centrales",
+   "date": "2026-11-18T00:00:00.000Z",
+   "firstSeen": "2026-11-18T22:39:47.560Z"
   },
   {
    "id": "116750dfdb841611",
@@ -321,6 +354,17 @@
    "cat": "Institutions",
    "date": "2026-11-16T00:00:00.000Z",
    "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
+   "id": "dafa8f26528b722d",
+   "title": "DDG Nordquist: Global trade is adapting, not retreating",
+   "url": "https://www.wto.org/english/news_e/news26_e/ddgjn_16nov26_555_e.htm",
+   "summary": "Global trade has demonstrated remarkable resilience despite geopolitical tensions, supply chain disruptions and trade restrictions, with businesses adapting through diversification and new trading partnerships, Deputy Director-General DJ Nordquist said at the 16th Asian Logistics, Maritime and Aviation Conference in Ho",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-16T00:00:00.000Z",
+   "firstSeen": "2026-11-18T22:39:47.560Z"
   },
   {
    "id": "ac9c8fdd5330ff16",
@@ -2333,17 +2377,6 @@
    "sid": "ecb",
    "cat": "Banques centrales",
    "date": "2026-10-20T07:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "d041ee4c0f727b8d",
-   "title": "SEC Announces Roundtable on Machine-Understandable Data in the Age of Super Intelligence",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-106-sec-announces-roundtable-machine-understandable-data-age-super-intelligence",
-   "summary": "The Securities and Exchange Commission announced today that it will host a roundtable on November 9, 2026, to discuss the use of machine-understandable data and Super Intelligence (SI) and related risks and costs.“In the age of SI, high-quality…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-19T17:19:43.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
