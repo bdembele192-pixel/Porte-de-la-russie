@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-18T06:03:18.141Z",
+ "generatedAt": "2026-11-18T15:30:18.565Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,61 @@
   }
  ],
  "items": [
+  {
+   "id": "286b41b2201e05f2",
+   "title": "Outdoor Recreation Economic Statistics, U.S. and States, 2025",
+   "url": "https://www.bea.gov/news/2026/outdoor-recreation-economic-statistics-us-and-states-2025",
+   "summary": "The value added of the outdoor recreation economy accounted for 2.3 percent ($704.2 billion) of current-dollar gross domestic product (GDP) for the nation in 2025. Across states and the District of Columbia, value added for outdoor recreation as a share of state GDP ranged from 6.1 percent in Hawaii to 1.0 percent in t",
+   "source": "Bureau of Economic Analysis",
+   "sid": "bea",
+   "cat": "Statistiques",
+   "date": "2026-11-18T15:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
+   "id": "cd318fc5f6ef0629",
+   "title": "U.S. natural gas inventories end injection season above normal levels",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68484",
+   "summary": "Working natural gas in storage in the Lower 48 states ended the natural gas injection season at 3,810 billion cubic feet (Bcf), exceeding the five-year average by almost 2%, according to estimates based on data from our Weekly Natural Gas Storage Report released on November 12. Injection season runs April 1–October 31,",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-11-18T14:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
+   "id": "f6a373c723e3b35c",
+   "title": "Boris Vujčić: Financial Stability Review - November 2026",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261118~86f1e8147e.en.pdf",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-18T09:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
+   "id": "a6c0209d2fd91f15",
+   "title": "Risks from AI valuations, fiscal imbalances and geoeconomic tensions weigh on financial stability outlook",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261118~83c5c60158.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-18T09:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
+   "id": "3be44048a87da023",
+   "title": "Trade Policy Review: Peru",
+   "url": "https://www.wto.org/english/tratop_e/tpr_e/tpr_per_18nov26_e.htm",
+   "summary": "The sixth review of the trade policies and practices of Peru takes place on 18 and 20 November 2026. The basis for the review is a report by the WTO Secretariat and a report by the Government of Peru.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-18T00:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
   {
    "id": "116750dfdb841611",
    "title": "Philip R. Lane: The practice and science of monetary policy communication: the ECB experience",
@@ -255,6 +310,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-16T04:00:00.000Z",
    "firstSeen": "2026-11-17T08:35:47.954Z"
+  },
+  {
+   "id": "41fef8cd6b479094",
+   "title": "DDG Nordquist: Global trade is adapting, not retreating, amid growing uncertainty",
+   "url": "https://www.wto.org/english/news_e/news26_e/ddgjn_16nov26_555_e.htm",
+   "summary": "Global trade has demonstrated remarkable resilience despite geopolitical tensions, supply chain disruptions and trade restrictions, with businesses adapting through diversification and new trading partnerships, Deputy Director-General DJ Nordquist said at the 16th Asian Logistics, Maritime and Aviation Conference in Ho",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-16T00:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
   },
   {
    "id": "ac9c8fdd5330ff16",
@@ -455,6 +521,17 @@
    "firstSeen": "2026-11-17T08:35:47.954Z"
   },
   {
+   "id": "d9ba851cea590280",
+   "title": "Members review LDC support, discuss public health and small business IP assistance",
+   "url": "https://www.wto.org/english/news_e/news26_e/trip_12nov26_553_e.htm",
+   "summary": "At a meeting of the Council for Trade-Related Aspects of Intellectual Property Rights (TRIPS) on 12-13 November, members reviewed special provisions for least developed countries (LDCs) and shared experiences on how governments can implement the TRIPS Agreement, achieve public health objectives, and help small business",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-12T00:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
+  },
+  {
    "id": "4bf83c8d175ab4a8",
    "title": "Corporate Goods Price Index (Oct.)",
    "url": "http://www.boj.or.jp/en/statistics/pi/cgpi_release/cgpi2610.pdf",
@@ -596,6 +673,17 @@
    "cat": "Institutions",
    "date": "2026-11-10T00:00:00.000Z",
    "firstSeen": "2026-11-12T19:10:17.822Z"
+  },
+  {
+   "id": "a4a4ec01a274eaeb",
+   "title": "Director-General praises work of Technical Barriers to Trade Committee at 100th meeting",
+   "url": "https://www.wto.org/english/news_e/news26_e/tbt_10nov26_554_e.htm",
+   "summary": "At its meeting on 10-13 November, the Technical Barriers to Trade (TBT) Committee explored emerging regulatory topics, such as additive manufacturing and interoperable data standards, discussed 79 trade concerns and adopted guidelines to facilitate voluntary information sharing among WTO members through notifications. ",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-10T00:00:00.000Z",
+   "firstSeen": "2026-11-18T15:30:18.565Z"
   },
   {
    "id": "bdb5af404db16a2c",
@@ -2256,17 +2344,6 @@
    "sid": "sec",
    "cat": "Régulateurs",
    "date": "2026-10-19T17:19:43.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "a103242dd4d93df6",
-   "title": "Hybrid sales rise while battery electric sales remain lower after tax credit expiration",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68325",
-   "summary": "In the third quarter of 2026 (3Q26), 23% of new light-duty vehicles sold in the United States were hybrid electric, battery electric, or plug-in hybrid electric vehicles, down slightly from 24% in 3Q25. Between 3Q25 and 3Q26, hybrid electric vehicles continued to gain market share, reaching 16% of light-duty vehicle sa",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-19T14:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
