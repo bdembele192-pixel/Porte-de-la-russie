@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-18T22:39:47.560Z",
+ "generatedAt": "2026-11-19T03:49:42.223Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "54dabe216c9d89d1",
+   "title": "Statement by Governor UEDA concerning the Bank's Semiannual Report on Currency and Monetary Control (Committee on Financial Affairs, Senate)",
+   "url": "http://www.boj.or.jp/en/mopo/diet/d_state/dst261119a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-19T01:13:00.000Z",
+   "firstSeen": "2026-11-19T03:49:42.223Z"
+  },
   {
    "id": "b49590135b971fa2",
    "title": "Minutes of the Federal Open Market Committee, October 27-28, 2026",
