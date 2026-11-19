@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T03:49:42.223Z",
+ "generatedAt": "2026-11-19T12:13:13.558Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,39 @@
   }
  ],
  "items": [
+  {
+   "id": "bbe3c9c60c3530b5",
+   "title": "Cyber resilience guidance consultation and AI and quantum effective practices",
+   "url": "https://www.bankofengland.co.uk/news/2026/november/cyber-resilience-guidance-consultation-and-ai-and-quantum-effective-practices",
+   "summary": "UK’s financial regulators are proposing a new guidance to help financial services firms prepare for and recover from cyber incidents as threats grow.",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-19T08:00:00.000Z",
+   "firstSeen": "2026-11-19T12:13:13.558Z"
+  },
+  {
+   "id": "ec31958c7438e653",
+   "title": "Minutes of the Market Participants Group meeting – 18 November 2026",
+   "url": "https://www.bankofengland.co.uk/minutes/2026/november/market-participants-group-meeting-18-november-2026",
+   "summary": "The Market Participants Group (MPG) is a senior-level forum for financial market participants to share their views on relevant themes and narratives in financial markets with members of the Bank of England’s Monetary Policy Committee.",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-19T07:30:00.000Z",
+   "firstSeen": "2026-11-19T12:13:13.558Z"
+  },
+  {
+   "id": "c8a9525a01667374",
+   "title": "Developments in Real Exports and Real Imports",
+   "url": "http://www.boj.or.jp/en/research/research_data/reri/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-19T07:00:00.000Z",
+   "firstSeen": "2026-10-25T04:32:53.588Z"
+  },
   {
    "id": "54dabe216c9d89d1",
    "title": "Statement by Governor UEDA concerning the Bank's Semiannual Report on Currency and Monetary Control (Committee on Financial Affairs, Senate)",
@@ -2226,17 +2259,6 @@
    "firstSeen": "2026-11-06T02:31:17.096Z"
   },
   {
-   "id": "c8a9525a01667374",
-   "title": "Developments in Real Exports and Real Imports",
-   "url": "http://www.boj.or.jp/en/research/research_data/reri/index.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-22T07:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
    "id": "521dab6d8f0c44cb",
    "title": "Developments in Real Exports and Real Imports",
    "url": "https://www.boj.or.jp/en/research/research_data/reri/index.htm",
@@ -2377,17 +2399,6 @@
    "sid": "sec",
    "cat": "Régulateurs",
    "date": "2026-10-20T12:51:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "e60af1583f1cbc3e",
-   "title": "Frank Elderson: Interview with Die Presse",
-   "url": "https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in261020~97e2e4bc38.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-20T07:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
