@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T12:13:13.558Z",
+ "generatedAt": "2026-11-19T20:32:06.676Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,39 @@
  ],
  "items": [
   {
+   "id": "15c361750ca306ea",
+   "title": "Federal Reserve Board issues enforcement action with former employee of First Security Bancorp",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/enforcement20261119a.htm",
+   "summary": "Federal Reserve Board issues enforcement action with former employee of First Security Bancorp",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-19T16:00:00.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
+  },
+  {
+   "id": "190f4830860425ae",
+   "title": "SEC: Eight Entities Used Fake Crypto Asset Trading Platforms to Steal More Than $37 Million From U.S. Investors",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-115-sec-eight-entities-used-fake-crypto-asset-trading-platforms-steal-more-37-million-us-investors",
+   "summary": "The Securities and Exchange Commission today charged eight Colorado-based entities, likely operated by individuals located overseas, for defrauding U.S. investors out of more than $37 million. The defendants allegedly lured investors to believe they were…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-11-19T14:39:02.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
+  },
+  {
+   "id": "aa3c19fe425e0eac",
+   "title": "Oil flows through Middle East chokepoints increased in the third quarter",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=",
+   "summary": "Collective oil shipments through key chokepoints around the Middle East increased by 19% in the third quarter of 2026 (3Q26), according to our recently published Global Energy Security Data.",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-11-19T14:00:00.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
+  },
+  {
    "id": "bbe3c9c60c3530b5",
    "title": "Cyber resilience guidance consultation and AI and quantum effective practices",
    "url": "https://www.bankofengland.co.uk/news/2026/november/cyber-resilience-guidance-consultation-and-ai-and-quantum-effective-practices",
@@ -158,6 +191,39 @@
    "firstSeen": "2026-11-19T03:49:42.223Z"
   },
   {
+   "id": "85eb1bac6ecea591",
+   "title": "Panama submits request to join Expansion of the Information Technology Agreement",
+   "url": "https://www.wto.org/english/news_e/news26_e/ita_19nov26_560_e.htm",
+   "summary": "Panama has submitted a request to join the 2015 Expansion of the Information Technology Agreement (ITA II), the Chair of the Committee of Participants on the Expansion of Trade in Information Technology Products, Mr Shih-Chun Weng of Chinese Taipei, informed members at a meeting on 19 November. Panama said joining ITA ",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-19T00:00:00.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
+  },
+  {
+   "id": "04ab7fd8e4837166",
+   "title": "Applications open for WIPO-WTO Executive Programme on Intellectual Property Issues",
+   "url": "https://www.wto.org/english/news_e/news26_e/trip_19nov26_557_e.htm",
+   "summary": "The Secretariat of the World Intellectual Property Organization (WIPO) and the Secretariat of the World Trade Organization (WTO) are now accepting applications for the WIPO-WTO Executive Programme on Intellectual Property Issues for Senior Government Officials. The activity will take place from 1 to 12 February 2027 at",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-19T00:00:00.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
+  },
+  {
+   "id": "1232460791326b4e",
+   "title": "Spotlight on trade fundamentals at annual WTO student event",
+   "url": "https://www.wto.org/english/news_e/news26_e/stud_19nov26_558_e.htm",
+   "summary": "Over 200 students joined policymakers, executives and thought leaders on 18 November at the WTO to discuss trade fundamentals at the WTO's annual student-only event on trade, titled WTO 101: Trade Rules!. Now in its third year, the event saw spirited discussions on the key issues facing the multilateral system and its ",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-19T00:00:00.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
+  },
+  {
    "id": "b49590135b971fa2",
    "title": "Minutes of the Federal Open Market Committee, October 27-28, 2026",
    "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261118a.htm",
@@ -200,6 +266,17 @@
    "cat": "Institutions",
    "date": "2026-11-18T12:00:00.000Z",
    "firstSeen": "2026-11-18T22:39:47.560Z"
+  },
+  {
+   "id": "d6167d6958be741b",
+   "title": "Emploi, logement, famille… Les jeunes peinent à prendre leur envol",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159868",
+   "summary": "Emploi précaire, logement inabordable, conflits, dérèglement climatique… Pour des millions de jeunes dans le monde, les étapes de la vie adulte sont de plus en plus difficiles à franchir, alerte le Fonds des Nations Unies pour la population (UNFPA) dans un rapport publié jeudi.",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-18T12:00:00.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
   },
   {
    "id": "f6a373c723e3b35c",
@@ -409,6 +486,17 @@
    "cat": "Institutions",
    "date": "2026-11-16T00:00:00.000Z",
    "firstSeen": "2026-11-18T22:39:47.560Z"
+  },
+  {
+   "id": "a248be00344bd82c",
+   "title": "Goods Council agrees to modernize notification reporting, reviews trade concerns",
+   "url": "https://www.wto.org/english/news_e/news26_e/good_16nov26_556_e.htm",
+   "summary": "The WTO's Council for Trade in Goods (CTG) adopted a decision to improve annual reporting on notifications and the WTO Notifications Portal. It also reviewed an updated Secretariat report indicating that 35% of the 241 trade concerns raised in the Council between 1995 and May 2026 had been reported as fully or partiall",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-16T00:00:00.000Z",
+   "firstSeen": "2026-11-19T20:32:06.676Z"
   },
   {
    "id": "ac9c8fdd5330ff16",
@@ -2377,28 +2465,6 @@
    "sid": "wto",
    "cat": "Institutions",
    "date": "2026-10-21T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "387185440352933b",
-   "title": "SEC and AMF Announce Supervisory MOU To Enhance Cooperation for Investment Advisers and Investment Service Providers",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-108-sec-amf-announce-supervisory-mou-enhance-cooperation-investment-advisers-investment-service",
-   "summary": "The U.S. Securities and Exchange Commission (SEC) and the French Autorité des Marchés Financiers (AMF) announced that they have entered into a Memorandum of Understanding (MOU) designed to facilitate consultation and information-sharing in the…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-20T13:25:16.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "5e723fcc5f3b927a",
-   "title": "SEC, FSA Hold Autumn Financial Regulatory Dialogue",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-107-sec-fsa-hold-autumn-financial-regulatory-dialogue",
-   "summary": "The U.S. Securities and Exchange Commission (SEC) and the Financial Services Agency of Japan (FSA) convened the Autumn SEC-FSA Financial Regulatory Dialogue in Tokyo on Oct. 19, 2026.The SEC–FSA Dialogue builds upon longstanding efforts between the two…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-20T12:51:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
