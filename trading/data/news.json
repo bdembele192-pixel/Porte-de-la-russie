@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-20T09:14:02.866Z",
+ "generatedAt": "2026-11-20T17:47:09.985Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,39 @@
  ],
  "items": [
   {
+   "id": "709b417267f1ca7a",
+   "title": "Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/other20261120a.htm",
+   "summary": "Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-20T15:00:00.000Z",
+   "firstSeen": "2026-11-20T17:47:09.985Z"
+  },
+  {
+   "id": "14509df72a7e8d03",
+   "title": "SEC Charges Indianapolis-Based Backward Hat Capital and Its Co-Founders With $560 Million Dollar Offering Fraud and Obtains Emergency Relief",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-116-sec-charges-indianapolis-based-backward-hat-capital-its-co-founders-560-million-dollar-offering",
+   "summary": "The Securities and Exchange Commission today announced that it has obtained a temporary restraining order, asset freeze, expedited discovery, and other relief against Indianapolis-based Backward Hat Capital, its co-founders Phillip Williams and Devin…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-11-20T14:28:28.000Z",
+   "firstSeen": "2026-11-20T17:47:09.985Z"
+  },
+  {
+   "id": "d3a178cb8c092aa6",
+   "title": "Activities of U.S. Multinational Enterprises, 2024",
+   "url": "https://www.bea.gov/news/2026/activities-us-multinational-enterprises-2024",
+   "summary": "Worldwide employment by U.S. multinational enterprises increased 0.9 percent to 44.2 million workers in 2024 (preliminary) from 43.8 million workers in 2023 (revised), according to statistics released today by the U.S. Bureau of Economic Analysis on the operations and finances of U.S. parent companies and their majorit",
+   "source": "Bureau of Economic Analysis",
+   "sid": "bea",
+   "cat": "Statistiques",
+   "date": "2026-11-20T13:30:00.000Z",
+   "firstSeen": "2026-11-20T17:47:09.985Z"
+  },
+  {
    "id": "1ce473cd254eebf2",
    "title": "Christine Lagarde: Acting in time",
    "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261120~e52bcc4db2.en.html",
@@ -178,6 +211,17 @@
    "cat": "Institutions",
    "date": "2026-11-19T12:00:00.000Z",
    "firstSeen": "2026-11-20T01:51:34.036Z"
+  },
+  {
+   "id": "f217fee036c3fb6c",
+   "title": "L’égalité passe aussi par des toilettes sûres",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159876",
+   "summary": "Se priver de boire pendant la journée. Craindre une agression en allant aux toilettes. Devoir faire ses besoins à l’air libre. Manquer l’école, le travail ou des activités sociales pendant ses règles. Pour des centaines de millions de femmes et de filles, l’accès à des toilettes sûres est une question de santé, de sécu",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-19T12:00:00.000Z",
+   "firstSeen": "2026-11-20T17:47:09.985Z"
   },
   {
    "id": "bbe3c9c60c3530b5",
