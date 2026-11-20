@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-20T17:47:09.985Z",
+ "generatedAt": "2026-11-20T23:23:20.035Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,28 @@
   }
  ],
  "items": [
+  {
+   "id": "533399e3bab40393",
+   "title": "Federal Reserve announces College Fed Challenge winners",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/other20261120b.htm",
+   "summary": "Federal Reserve announces College Fed Challenge winners",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-20T21:15:00.000Z",
+   "firstSeen": "2026-11-20T23:23:20.035Z"
+  },
+  {
+   "id": "3105522d56292c48",
+   "title": "SEC Issues Proposal to Restructure the Consolidated Audit Trail",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-117-sec-issues-proposal-restructure-consolidated-audit-trail",
+   "summary": "The Securities and Exchange Commission today issued a proposal to address the inefficiencies in the current governance and funding model of the Consolidated Audit Trail (CAT). The Commission is proposing to rescind Rule 613 of Regulation NMS, which…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-11-20T18:03:24.000Z",
+   "firstSeen": "2026-11-20T23:23:20.035Z"
+  },
   {
    "id": "709b417267f1ca7a",
    "title": "Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances",
