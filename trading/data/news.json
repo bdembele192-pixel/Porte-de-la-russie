@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-19T20:32:06.676Z",
+ "generatedAt": "2026-11-20T01:51:34.036Z",
  "sources": [
   {
    "id": "fed",
@@ -145,6 +145,17 @@
    "cat": "Énergie",
    "date": "2026-11-19T14:00:00.000Z",
    "firstSeen": "2026-11-19T20:32:06.676Z"
+  },
+  {
+   "id": "fb2db7a04b673db3",
+   "title": "Céréales : les stocks mondiaux progressent, mais les marchés agricoles sont sous tension",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159873",
+   "summary": "Les réserves mondiales de céréales devraient encore progresser d’ici à la fin de la campagne 2026-2027, tandis que la production de riz pourrait reculer pour la première fois en quatre campagnes. Dans son dernier rapport, publié jeudi, la FAO alerte sur la chute des exportations de céréales en mer Noire et sur les effe",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-19T12:00:00.000Z",
+   "firstSeen": "2026-11-20T01:51:34.036Z"
   },
   {
    "id": "bbe3c9c60c3530b5",
@@ -2443,28 +2454,6 @@
    "sid": "ecb",
    "cat": "Banques centrales",
    "date": "2026-10-21T04:15:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "dafd57178673a005",
-   "title": "The Philippines launches safeguard investigation on pork",
-   "url": "https://www.wto.org/english/news_e/news26_e/safe_phl_21oct26_520_e.htm",
-   "summary": "On 21 October 2026, the Philippines notified the WTO’s Committee on Safeguards that it had initiated on 9 October 2026 a safeguard investigation on imports of pork.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-21T00:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "a0a353403a814818",
-   "title": "Trade Facilitation Committee advances TFA review and discusses implementation support",
-   "url": "https://www.wto.org/english/news_e/news26_e/fac_21oct26_522_e.htm",
-   "summary": "WTO members meeting in the Committee on Trade Facilitation on 21-22 October advanced work on the second review of the Trade Facilitation Agreement (TFA) and reaffirmed their commitment to completing the review by the end of the year. They also exchanged experiences on key implementation issues, reviewed specific trade ",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-21T00:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
