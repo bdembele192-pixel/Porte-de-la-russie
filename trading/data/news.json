@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-21T19:34:43.970Z",
+ "generatedAt": "2026-11-21T23:53:56.781Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 429"
+   "error": "HTTP 404"
   },
   {
    "id": "wb",
@@ -2378,17 +2378,6 @@
    "cat": "Institutions",
    "date": "2026-10-23T00:00:00.000Z",
    "firstSeen": "2026-10-26T19:52:06.978Z"
-  },
-  {
-   "id": "2211ff76acebf471",
-   "title": "Regulators unveil plans to simplify Senior Manager and Certification Regime",
-   "url": "https://www.bankofengland.co.uk/news/2026/october/regulators-unveil-plans-to-simplify-senior-manager-and-certification-regime",
-   "summary": "The number of financial services roles required to face enhanced checks from regulators will fall significantly under proposals that will support growth.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-22T20:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
 }
