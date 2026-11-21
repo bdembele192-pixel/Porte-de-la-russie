@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-21T04:03:56.286Z",
+ "generatedAt": "2026-11-21T12:26:05.906Z",
  "sources": [
   {
    "id": "fed",
@@ -2411,50 +2411,6 @@
    "cat": "Énergie",
    "date": "2026-10-22T14:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "821623c70d8a42fd",
-   "title": "Asie-Pacifique : le PNUD veut placer le développement au cœur des stratégies de sécurité",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159708",
-   "summary": "Catastrophes climatiques, précarité économique, cybercriminalité, commerce illicite, défiance envers les institutions : en Asie-Pacifique, les menaces pour la sécurité se multiplient et se renforcent les unes les autres. Dans un rapport publié jeudi, le Programme des Nations Unies pour le développement (PNUD) appelle à",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-22T12:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "1bcf2322dae61c80",
-   "title": "Japanese Government Bonds Held by the Bank of Japan",
-   "url": "http://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261020.xlsx",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-22T08:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "6d39d93da143f1e5",
-   "title": "Japanese Government Bonds Held by the Bank of Japan",
-   "url": "https://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261020.xlsx",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-22T08:00:00.000Z",
-   "firstSeen": "2026-11-06T02:31:17.096Z"
-  },
-  {
-   "id": "521dab6d8f0c44cb",
-   "title": "Developments in Real Exports and Real Imports",
-   "url": "https://www.boj.or.jp/en/research/research_data/reri/index.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-22T07:00:00.000Z",
-   "firstSeen": "2026-11-06T02:31:17.096Z"
   }
  ]
 }
