@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-21T12:26:05.906Z",
+ "generatedAt": "2026-11-21T19:34:43.970Z",
  "sources": [
   {
    "id": "fed",
@@ -42,7 +42,7 @@
    "cat": "Institutions",
    "ok": false,
    "count": 0,
-   "error": "HTTP 404"
+   "error": "HTTP 429"
   },
   {
    "id": "wb",
@@ -2388,28 +2388,6 @@
    "sid": "boe",
    "cat": "Banques centrales",
    "date": "2026-10-22T20:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "58022a3bc5d59164",
-   "title": "Minutes of the Securities Lending Committee meeting – September 2026",
-   "url": "https://www.bankofengland.co.uk/minutes/2026/september/securities-lending-committee-meeting-september-2026",
-   "summary": "The Securities Lending Committee is a forum for market participants and authorities to discuss the UK securities lending market.",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-22T15:35:53.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "2065431ce78e128b",
-   "title": "U.S. refineries have been running at very high rates in 2026",
-   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68344",
-   "summary": "The U.S. refinery fleet has run at higher-than-normal rates this year, with refinery utilization averaging more than 95% of capacity between May and September, the highest for those months since 1998. Tight global product supplies this year have boosted margins for petroleum products, particularly for diesel, incentivi",
-   "source": "EIA – Énergie (États-Unis)",
-   "sid": "eia",
-   "cat": "Énergie",
-   "date": "2026-10-22T14:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
