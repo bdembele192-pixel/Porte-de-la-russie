@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-22T11:53:33.171Z",
+ "generatedAt": "2026-11-22T18:42:04.840Z",
  "sources": [
   {
    "id": "fed",
@@ -2322,17 +2322,6 @@
    "sid": "ecb",
    "cat": "Banques centrales",
    "date": "2026-10-24T06:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "38ecaa727bbe8a1b",
-   "title": "SEC Announces Fiscal Year 2027 Examination Priorities",
-   "url": "https://www.sec.gov/newsroom/press-releases/2026-109-sec-announces-fiscal-year-2027-examination-priorities",
-   "summary": "The Securities and Exchange Commission today announced the Division of Examinations’ Fiscal Year 2027 examination priorities. The annual report identifies key areas of focus as the Division carries out its mission to promote compliance, prevent fraud,…",
-   "source": "SEC (États-Unis)",
-   "sid": "sec",
-   "cat": "Régulateurs",
-   "date": "2026-10-23T14:10:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
