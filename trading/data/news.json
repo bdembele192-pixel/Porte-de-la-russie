@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-21T23:53:56.781Z",
+ "generatedAt": "2026-11-22T03:33:27.725Z",
  "sources": [
   {
    "id": "fed",
@@ -2367,17 +2367,6 @@
    "cat": "Banques centrales",
    "date": "2026-10-23T06:00:00.000Z",
    "firstSeen": "2026-11-06T02:31:17.096Z"
-  },
-  {
-   "id": "26760411aab6c47c",
-   "title": "Members intensify discussions on WTO reform based on substantive proposals",
-   "url": "https://www.wto.org/english/news_e/news26_e/refrm_23oct26_524_e.htm",
-   "summary": "At a transparency session on 23 October, WTO members welcomed progress in the WTO reform process and acknowledged a clear shift toward more substantive and focused discussions. Ahead of the meeting, facilitators for the discussions on WTO reform reported on their engagement with members during October on the four track",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-23T00:00:00.000Z",
-   "firstSeen": "2026-10-26T19:52:06.978Z"
   }
  ]
 }
