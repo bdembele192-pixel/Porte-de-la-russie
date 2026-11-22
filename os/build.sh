@@ -118,6 +118,9 @@ if curl -fsSL --max-time 30 https://packages.mozilla.org/apt/repo-signing-key.gp
     in_chroot apt-get update
   fi
 fi
+if [ -z "$BROWSER" ] && [ "${EXIGER_FIREFOX:-0}" = 1 ]; then
+  die "Firefox n'a pas pu être installé (dépôt packages.mozilla.org injoignable)."
+fi
 if [ -z "$BROWSER" ]; then
   in_chroot apt-get -y install --no-install-recommends epiphany-browser
   BROWSER="epiphany-browser"
@@ -151,20 +154,42 @@ BACKSPACE="guess"
 EOF
 
 # Navigateur par défaut (XFCE).
+case "$BROWSER" in
+  firefox) HELPER=firefox; DESKTOP=firefox.desktop ;;
+  *)       HELPER=epiphany; DESKTOP=org.gnome.Epiphany.desktop ;;
+esac
 mkdir -p "$CHROOT/etc/xdg/xfce4"
-printf 'WebBrowser=%s\nTerminalEmulator=xfce4-terminal\n' "$BROWSER" > "$CHROOT/etc/xdg/xfce4/helpers.rc"
+printf 'WebBrowser=%s\nTerminalEmulator=xfce4-terminal\n' "$HELPER" > "$CHROOT/etc/xdg/xfce4/helpers.rc"
+cat > "$CHROOT/etc/xdg/mimeapps.list" <<EOF
+[Default Applications]
+text/html=$DESKTOP
+x-scheme-handler/http=$DESKTOP
+x-scheme-handler/https=$DESKTOP
+application/xhtml+xml=$DESKTOP
+EOF
 
 # Fond d'écran : remplace les fonds XFCE par défaut (quel que soit le nom retenu).
 for f in "$CHROOT"/usr/share/backgrounds/xfce/*; do
-  [ -e "$f" ] || continue
+  case "$f" in *.distrib) continue ;; esac; [ -e "$f" ] || continue
   rel="${f#"$CHROOT"}"
   in_chroot dpkg-divert --quiet --local --rename --add "$rel"
   ln -sf /usr/share/backgrounds/meche/meche.png "$f"
 done
 
+# Écran de démarrage (Plymouth) : logo Mèche à la place de celui d'Ubuntu.
+for f in /usr/share/plymouth/ubuntu-logo.png /usr/share/plymouth/themes/spinner/watermark.png \
+         /usr/share/plymouth/themes/spinner/bgrt-fallback.png; do
+  [ -e "$CHROOT$f" ] || continue
+  in_chroot dpkg-divert --quiet --local --rename --add "$f"
+  case "$f" in
+    *watermark*) cp "$HERE/config/plymouth/watermark.png" "$CHROOT$f" ;;
+    *)           cp "$HERE/config/plymouth/logo.png" "$CHROOT$f" ;;
+  esac
+done
+
 # Panneau XFCE : configuration par défaut appliquée directement (pas de question au 1er démarrage).
 if [ -f "$CHROOT/etc/xdg/xfce4/panel/default.xml" ]; then
-  cp "$CHROOT/etc/xdg/xfce4/panel/default.xml" \
+  python3 "$HERE/config/panel.py" "$CHROOT/etc/xdg/xfce4/panel/default.xml" \
      "$CHROOT/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-panel.xml"
 fi
 
@@ -221,7 +246,7 @@ touch "$IMAGE/meche-os"
 log "6/6 Image ISO (BIOS + UEFI)"
 # ---------------------------------------------------------------------------
 sed "s/@VERSION@/$VERSION/g; s/@KEYMAP@/$KEYMAP/g" "$HERE/config/grub.cfg" > "$IMAGE/boot/grub/grub.cfg"
-cp "$HERE/rootfs/usr/share/backgrounds/meche/meche.png" "$IMAGE/boot/grub/fond.png"
+cp "$HERE/config/grub-fond.png" "$IMAGE/boot/grub/fond.png"
 rm -f "$ISO"
 grub-mkrescue -o "$ISO" "$IMAGE" -- -volid "MECHE_OS" 2>&1 | grep -v '^xorriso : UPDATE' || true
 [ -s "$ISO" ] || die "la création de l'ISO a échoué."
