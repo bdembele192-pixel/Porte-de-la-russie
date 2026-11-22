@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-22T03:33:27.725Z",
+ "generatedAt": "2026-11-22T11:53:33.171Z",
  "sources": [
   {
    "id": "fed",
@@ -2334,39 +2334,6 @@
    "cat": "Régulateurs",
    "date": "2026-10-23T14:10:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "9016de8ff4355f25",
-   "title": "ECB Consumer Expectations Survey results – September 2026",
-   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261023~a3d201c97c.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-23T08:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "b5e8b58c4c65d8ec",
-   "title": "Financial System Report (October 2026)",
-   "url": "http://www.boj.or.jp/en/research/brp/fsr/fsr261023.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-23T06:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
-  },
-  {
-   "id": "b1ca31581506aa4c",
-   "title": "Financial System Report (October 2026)",
-   "url": "https://www.boj.or.jp/en/research/brp/fsr/fsr261023.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-23T06:00:00.000Z",
-   "firstSeen": "2026-11-06T02:31:17.096Z"
   }
  ]
 }
