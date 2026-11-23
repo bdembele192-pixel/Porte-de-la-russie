@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-22T18:42:04.840Z",
+ "generatedAt": "2026-11-23T14:22:08.822Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,50 @@
   }
  ],
  "items": [
+  {
+   "id": "01592c2beb60eb27",
+   "title": "ECB expands acceptance of DLT-based assets as eligible Eurosystem collateral",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261123~76b6f57b74.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-23T10:00:00.000Z",
+   "firstSeen": "2026-11-23T14:22:08.822Z"
+  },
+  {
+   "id": "5f71ac7f4b62e0f7",
+   "title": "General insurance stress test highlights value of rehearsing crisis response and recovery",
+   "url": "https://www.bankofengland.co.uk/news/2026/november/general-insurance-stress-test-highlights-value-of-rehearsing-crisis-response-and-recovery",
+   "summary": "The Prudential Regulation Authority (PRA) has today published the results of its 2026 Dynamic General Insurance Stress Test (DyGIST)",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-23T10:00:00.000Z",
+   "firstSeen": "2026-11-23T14:22:08.822Z"
+  },
+  {
+   "id": "9c0ae0bc66eab434",
+   "title": "Trade-facilitating measures help offset rise in new G20 trade restrictions",
+   "url": "https://www.wto.org/english/news_e/news26_e/tmg20_23nov26_559_e.htm",
+   "summary": "The number of tariff increases and other non-facilitating trade measures introduced by G20 economies rose sharply in the first half of 2026, and the stockpile of such measures reached a record level, according to the WTO's latest report on G20 trade measures. At the same time, G20 economies, representing around 80-85 p",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-23T00:00:00.000Z",
+   "firstSeen": "2026-11-23T14:22:08.822Z"
+  },
+  {
+   "id": "098ad72430e69732",
+   "title": "EU launches safeguard investigation into certain composite input materials",
+   "url": "https://www.wto.org/english/news_e/news26_e/safe_eec_23nov26_561_e.htm",
+   "summary": "On 23 November 2026, the European Union notified the WTO’s Committee on Safeguards that it had initiated, on the same day (23 November 2026), a safeguard investigation into imports of certain composite input materials.",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-23T00:00:00.000Z",
+   "firstSeen": "2026-11-23T14:22:08.822Z"
+  },
   {
    "id": "533399e3bab40393",
    "title": "Federal Reserve announces College Fed Challenge winners",
@@ -2312,17 +2356,6 @@
    "cat": "Institutions",
    "date": "2026-10-26T00:00:00.000Z",
    "firstSeen": "2026-10-29T15:37:34.005Z"
-  },
-  {
-   "id": "bfff58d568dfee6a",
-   "title": "Piero Cipollone: Interview with Milano Finanza",
-   "url": "https://www.ecb.europa.eu//press/inter/date/2026/html/ecb.in261024~ee2ba73cf3.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-24T06:00:00.000Z",
-   "firstSeen": "2026-10-25T04:32:53.588Z"
   }
  ]
 }
