@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-23T14:22:08.822Z",
+ "generatedAt": "2026-11-24T01:43:39.267Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,39 @@
   }
  ],
  "items": [
+  {
+   "id": "6966d20657beedee",
+   "title": "Statistics on Securities Financing Transactions in Japan",
+   "url": "http://www.boj.or.jp/en/statistics/bis/repo/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-23T23:50:00.000Z",
+   "firstSeen": "2026-11-24T01:43:39.267Z"
+  },
+  {
+   "id": "401d0be012b3523a",
+   "title": "Philip R. Lane: Climate change and monetary policy",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261123~b5816801a0.en.pdf",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-23T14:30:00.000Z",
+   "firstSeen": "2026-11-24T01:43:39.267Z"
+  },
+  {
+   "id": "68cf99f4d654f402",
+   "title": "IA : à la Barbade, le chef de l’ONU veut empêcher les géants de la tech de faire la loi",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159892",
+   "summary": "L’intelligence artificielle progresse plus vite que les règles destinées à l’encadrer. À l’issue d’un sommet organisé lundi à la Barbade sur les risques liés à l’IA, le chef de l’ONU a appelé les États à s’entendre sur des mesures communes pour contrebalancer l’influence des géants de l’industrie.",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-23T12:00:00.000Z",
+   "firstSeen": "2026-11-24T01:43:39.267Z"
+  },
   {
    "id": "01592c2beb60eb27",
    "title": "ECB expands acceptance of DLT-based assets as eligible Eurosystem collateral",
