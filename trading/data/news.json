@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-24T01:43:39.267Z",
+ "generatedAt": "2026-11-24T11:37:25.616Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "70e3a201cb4744d1",
+   "title": "Boris Vujčić: Resilience in an age of shocks: lessons from central and eastern Europe",
+   "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261124~17928e5456.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-24T11:00:00.000Z",
+   "firstSeen": "2026-11-24T11:37:25.616Z"
+  },
   {
    "id": "6966d20657beedee",
    "title": "Statistics on Securities Financing Transactions in Japan",
