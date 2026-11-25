@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-24T21:28:45.911Z",
+ "generatedAt": "2026-11-25T04:26:30.329Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,39 @@
   }
  ],
  "items": [
+  {
+   "id": "e94c74c149acd9cb",
+   "title": "Bank of Japan Accounts (November 20)",
+   "url": "http://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261120.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T01:00:00.000Z",
+   "firstSeen": "2026-11-25T04:26:30.329Z"
+  },
+  {
+   "id": "17e88b1a00c42a90",
+   "title": "Average Contract Interest Rates on Loans and Discounts (Sept.)",
+   "url": "http://www.boj.or.jp/en/statistics/dl/loan/yaku/yaku2609.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-24T23:50:00.000Z",
+   "firstSeen": "2026-11-25T04:26:30.329Z"
+  },
+  {
+   "id": "87ff6f63df2653d2",
+   "title": "Services Producer Price Index (Oct.)",
+   "url": "http://www.boj.or.jp/en/statistics/pi/cspi_release/sppi2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-24T23:50:00.000Z",
+   "firstSeen": "2026-11-25T04:26:30.329Z"
+  },
   {
    "id": "266c4375c149211a",
    "title": "Minutes of the Board's discount rate meetings on October 19 and October 28, 2026",
@@ -2444,28 +2477,6 @@
    "cat": "Banques centrales",
    "date": "2026-10-26T05:00:00.000Z",
    "firstSeen": "2026-10-26T07:03:23.300Z"
-  },
-  {
-   "id": "94003f4124b17753",
-   "title": "High-level talks in Doha spotlight trade and investment opportunities for LDCs",
-   "url": "https://www.wto.org/english/news_e/news26_e/ldevc_26oct26_525_e.htm",
-   "summary": "A high-level roundtable held in Doha, Qatar, on 26 October brought together representatives of least-developed countries (LDCs), international organizations and development partners to discuss how trade, investment and development cooperation can support sustainable development in LDCs. WTO Deputy Director-General Joha",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-26T00:00:00.000Z",
-   "firstSeen": "2026-10-28T19:29:13.925Z"
-  },
-  {
-   "id": "7d21b00caa6988e3",
-   "title": "WTO members review, and note increasing resort to, safeguard actions",
-   "url": "https://www.wto.org/english/news_e/news26_e/safe_26oct26_528_e.htm",
-   "summary": "At its regular meeting on 26 October, the WTO Committee on Safeguards reviewed safeguard actions covering 39 products, 11 of which were steel/metal products. Several members expressed their views on the actions of the European Union and the United Kingdom concerning certain steel products. The UK, Japan, the Republic o",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-26T00:00:00.000Z",
-   "firstSeen": "2026-10-29T15:37:34.005Z"
   }
  ]
 }
