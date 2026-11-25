@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T14:43:14.701Z",
+ "generatedAt": "2026-11-25T23:19:07.157Z",
  "sources": [
   {
    "id": "fed",
@@ -34,7 +34,7 @@
    "name": "Banque des règlements internationaux",
    "cat": "Banques centrales",
    "ok": true,
-   "count": 2
+   "count": 3
   },
   {
    "id": "imf",
@@ -113,6 +113,50 @@
   }
  ],
  "items": [
+  {
+   "id": "ffb88ea254486e25",
+   "title": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125b.htm",
+   "summary": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T20:00:00.000Z",
+   "firstSeen": "2026-11-25T23:19:07.157Z"
+  },
+  {
+   "id": "3a734d92316c0329",
+   "title": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+   "url": "https://www.federalreserve.gov/newsevents/pressreleases/bcreg20261125a.htm",
+   "summary": "Agencies announce dollar thresholds for smaller loan exemption from appraisal requirements for higher-priced mortgage loans",
+   "source": "Réserve fédérale (Fed)",
+   "sid": "fed",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T20:00:00.000Z",
+   "firstSeen": "2026-11-25T23:19:07.157Z"
+  },
+  {
+   "id": "4bf35bb96e1d804b",
+   "title": "ECB and Sveriges Riksbank conclude agreement for Sweden to join T2",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261125_1~6333a90f3a.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T17:30:00.000Z",
+   "firstSeen": "2026-11-25T23:19:07.157Z"
+  },
+  {
+   "id": "95181d134d25dca6",
+   "title": "SEC Investor Advisory Committee to Host Dec. 3 Virtual Meeting",
+   "url": "https://www.sec.gov/newsroom/press-releases/2026-118-sec-investor-advisory-committee-host-dec-3-virtual-meeting",
+   "summary": "The Securities and Exchange Commission’s&nbsp;Investor Advisory Committee will hold a virtual public meeting on Dec. 3, at 9:30 a.m. ET to discuss the trading of tokenized securities, bankruptcy, and accounting oversight.&nbsp;The meeting will be webcast…",
+   "source": "SEC (États-Unis)",
+   "sid": "sec",
+   "cat": "Régulateurs",
+   "date": "2026-11-25T14:10:24.000Z",
+   "firstSeen": "2026-11-25T23:19:07.157Z"
+  },
   {
    "id": "5ece56f4a6ebbcde",
    "title": "Almost 60% of primary energy used for electricity is lost to conversion and transmission",
@@ -200,6 +244,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-25T01:00:00.000Z",
    "firstSeen": "2026-11-25T04:26:30.329Z"
+  },
+  {
+   "id": "58bb306111bcd861",
+   "title": "Basel Committee publishes more details on the 2026 assessment of global systemically important banks",
+   "url": "https://www.bis.org/media-releases/20261125-basel-committee-publishes-more-details-2026-assessment-global-systemically-important-banks",
+   "summary": "Basel Committee provides additional information regarding the 2026 G-SIB assessment. Further details include global denominators and individual bank indicators. The release accompanies the Financial Stability Board's updated G-SIB list.",
+   "source": "Banque des règlements internationaux",
+   "sid": "bis",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T00:00:00.000Z",
+   "firstSeen": "2026-11-25T23:19:07.157Z"
   },
   {
    "id": "17e88b1a00c42a90",
