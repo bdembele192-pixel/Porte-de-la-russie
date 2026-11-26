@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T23:19:07.157Z",
+ "generatedAt": "2026-11-26T05:08:53.089Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,17 @@
   }
  ],
  "items": [
+  {
+   "id": "c106037607cc3eb0",
+   "title": "Speech by Board Member TAMURA in Yamanashi (Economic Activity, Prices, and Monetary Policy in Japan)",
+   "url": "http://www.boj.or.jp/en/about/press/koen_2026/ko261126a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-26T01:00:00.000Z",
+   "firstSeen": "2026-11-26T05:08:53.089Z"
+  },
   {
    "id": "ffb88ea254486e25",
    "title": "Agencies announce dollar thresholds for applicability of truth in lending and consumer leasing rules for consumer credit and lease transactions",
@@ -2510,72 +2521,6 @@
    "cat": "Institutions",
    "date": "2026-10-27T12:00:00.000Z",
    "firstSeen": "2026-10-28T19:29:13.925Z"
-  },
-  {
-   "id": "87c588183f0c38df",
-   "title": "Indicators for Core CPI",
-   "url": "https://www.boj.or.jp/en/research/research_data/cpi/index.htm",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-27T05:00:00.000Z",
-   "firstSeen": "2026-11-06T02:31:17.096Z"
-  },
-  {
-   "id": "d40dd902446a28fb",
-   "title": "October 2026 euro area bank lending survey",
-   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261027~506ef03145.en.html",
-   "summary": "",
-   "source": "Banque centrale européenne",
-   "sid": "ecb",
-   "cat": "Banques centrales",
-   "date": "2026-10-27T00:00:00.000Z",
-   "firstSeen": "2026-10-27T13:35:57.556Z"
-  },
-  {
-   "id": "6aa6fe3fc92f4b36",
-   "title": "WTO members discuss proposals on key trade and development issues",
-   "url": "https://www.wto.org/english/news_e/news26_e/devel_27oct26_527_e.htm",
-   "summary": "At meetings of the WTO's Committee on Trade and Development on 26-27 October 2026, members continued discussions on proposals covering trade as an engine for economic growth and the integration of trade and investment for industrialization. A group of members introduced a new proposal on capacity building for mutual re",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-27T00:00:00.000Z",
-   "firstSeen": "2026-10-29T15:37:34.005Z"
-  },
-  {
-   "id": "fc42f5a7ff97d441",
-   "title": "Members review notifications, anti-dumping actions at committee meeting",
-   "url": "https://www.wto.org/english/news_e/news26_e/anti_27oct26_529_e.htm",
-   "summary": "The WTO’s Committee on Anti-Dumping Practices met on 27 October 2026 to review members’ latest notifications of new, amended or previously reviewed anti-dumping laws and regulations as well as reports on anti-dumping actions.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-27T00:00:00.000Z",
-   "firstSeen": "2026-10-29T15:37:34.005Z"
-  },
-  {
-   "id": "48983319ee95a1ba",
-   "title": "Services Producer Price Index (Sept.)",
-   "url": "http://www.boj.or.jp/en/statistics/pi/cspi_release/sppi2609.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-26T23:50:00.000Z",
-   "firstSeen": "2026-10-27T02:10:24.464Z"
-  },
-  {
-   "id": "ab929eac28cdcaa9",
-   "title": "Services Producer Price Index (Sept.)",
-   "url": "https://www.boj.or.jp/en/statistics/pi/cspi_release/sppi2609.pdf",
-   "summary": "",
-   "source": "Banque du Japon",
-   "sid": "boj",
-   "cat": "Banques centrales",
-   "date": "2026-10-26T23:50:00.000Z",
-   "firstSeen": "2026-11-06T02:31:17.096Z"
   }
  ]
 }
