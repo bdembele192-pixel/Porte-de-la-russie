@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T05:08:53.089Z",
+ "generatedAt": "2026-11-26T15:03:48.234Z",
  "sources": [
   {
    "id": "fed",
@@ -113,6 +113,50 @@
   }
  ],
  "items": [
+  {
+   "id": "0b2b067d04754241",
+   "title": "Payments systems Memorandum of Understanding",
+   "url": "https://www.bankofengland.co.uk/news/2024/march/payment-systems-memorandum-of-understanding",
+   "summary": "Bank of England, PRA, FCA and PSR review Memorandum of Understanding in relation to payment systems in the UK",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-26T15:00:00.000Z",
+   "firstSeen": "2026-11-26T15:03:48.234Z"
+  },
+  {
+   "id": "280160606f372eec",
+   "title": "Statistical Notice 2026/09 - Update to the classification of accounts guide",
+   "url": "https://www.bankofengland.co.uk/statistics/notice/2026/statistical-notice-2026-09",
+   "summary": "Statistical Notices update the definitions and guidance contained in the Banking Statistics Yellow Folder",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-26T12:33:57.000Z",
+   "firstSeen": "2026-11-26T15:03:48.234Z"
+  },
+  {
+   "id": "b00ec9910e89ccd7",
+   "title": "Meeting of 28-29 October 2026",
+   "url": "https://www.ecb.europa.eu//press/accounts/2026/html/ecb.mg261126~ccf28c8071.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-26T12:30:00.000Z",
+   "firstSeen": "2026-11-26T15:03:48.234Z"
+  },
+  {
+   "id": "b318024295daea09",
+   "title": "Financial Policy Committee Record – November 2026",
+   "url": "https://www.bankofengland.co.uk/financial-policy-committee-record/2026/november-2026",
+   "summary": "Our Financial Policy Committee (FPC) meets to identify risks to financial stability and agree policy actions aimed at safeguarding the resilience of the UK financial system.",
+   "source": "Banque d'Angleterre",
+   "sid": "boe",
+   "cat": "Banques centrales",
+   "date": "2026-11-26T10:30:00.000Z",
+   "firstSeen": "2026-11-26T15:03:48.234Z"
+  },
   {
    "id": "c106037607cc3eb0",
    "title": "Speech by Board Member TAMURA in Yamanashi (Economic Activity, Prices, and Monetary Policy in Japan)",
@@ -431,6 +475,17 @@
    "cat": "Institutions",
    "date": "2026-11-23T00:00:00.000Z",
    "firstSeen": "2026-11-24T21:28:45.911Z"
+  },
+  {
+   "id": "cbfb52f2c29edc23",
+   "title": "Members briefed on food export restrictions history, safeguard mechanism",
+   "url": "https://www.wto.org/english/news_e/news26_e/agng_23nov26_565_e.htm",
+   "summary": "The history of negotiations on export restrictions on food and a proposed special safeguard mechanism (SSM) for developing economies were the focus of meetings of the Committee on Agriculture's negotiations body on 23 November. This was the latest in a series of thematic briefings by the WTO Secretariat, as members exp",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-23T00:00:00.000Z",
+   "firstSeen": "2026-11-26T15:03:48.234Z"
   },
   {
    "id": "533399e3bab40393",
@@ -2499,28 +2554,6 @@
    "cat": "Institutions",
    "date": "2026-10-28T00:00:00.000Z",
    "firstSeen": "2026-10-28T14:07:59.714Z"
-  },
-  {
-   "id": "dc1decd38ce6faea",
-   "title": "Pourquoi les avions tournent-ils en rond avant d’atterrir ? L’ONU a un plan pour y remédier",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159735",
-   "summary": "Les retards du trafic aérien coûtent des milliards de dollars et transforment les voyages en épreuves. Pourtant, certains pays montrent qu’une meilleure coordination permet d’économiser des milliers d’heures de vol et de réduire les émissions de gaz à effet de serre. L’agence de l’ONU pour l’aviation civile souhaite qu",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-27T12:00:00.000Z",
-   "firstSeen": "2026-10-28T19:29:13.925Z"
-  },
-  {
-   "id": "25e9ea42710ef95a",
-   "title": "Travail domestique : 83 % des travailleurs restent privés de protection effective",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159729",
-   "summary": "Malgré des progrès dans de nombreux pays, 83 % des travailleurs domestiques dans le monde, soit 66,5 millions de personnes, occupent toujours un emploi informel et restent largement privés d’une protection effective en matière de droit du travail et de sécurité sociale. Selon de nouvelles estimations de l’Organisation ",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-27T12:00:00.000Z",
-   "firstSeen": "2026-10-28T19:29:13.925Z"
   }
  ]
 }
