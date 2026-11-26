@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T15:03:48.234Z",
+ "generatedAt": "2026-11-26T23:41:29.701Z",
  "sources": [
   {
    "id": "fed",
@@ -145,6 +145,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-26T12:30:00.000Z",
    "firstSeen": "2026-11-26T15:03:48.234Z"
+  },
+  {
+   "id": "8791cd3528be2229",
+   "title": "Le commerce maritime stagne dans un contexte d’incertitudes géopolitiques",
+   "url": "https://news.un.org/feed/view/fr/story/2026/11/1159912",
+   "summary": "Le commerce maritime, qui est le pilier de l’économie mondiale, continue de ralentir, tandis que les perturbations liées aux conflits et aux facteurs climatiques touchent plus durement les économies les moins développées et les petits États insulaires, ont déclaré jeudi des économistes de l’ONU.",
+   "source": "ONU Info – Économie",
+   "sid": "un",
+   "cat": "Institutions",
+   "date": "2026-11-26T12:00:00.000Z",
+   "firstSeen": "2026-11-26T23:41:29.701Z"
   },
   {
    "id": "b318024295daea09",
