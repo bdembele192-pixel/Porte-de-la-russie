@@ -54,7 +54,7 @@ la sécurité repose sur les règles de la base. Ne mets **jamais** la clé `ser
 - **Envoi des e-mails** : l'envoi intégré de Supabase est très limité (quelques e-mails par heure). Avant le lancement, branche
   un serveur SMTP (**Project Settings → Authentication → SMTP Settings**) : Resend, Brevo, Postmark, Amazon SES…
 - **Téléphone (SMS)** : **Authentication → Sign In / Providers → Phone**, choisis un fournisseur SMS (Twilio, Vonage, MessageBird…)
-  et vérifie qu'il couvre le Mali, le Sénégal, la Côte d'Ivoire, la Russie… Les SMS sont payants. Sinon mets `phoneLogin: false` dans `config.js`.
+  et vérifie qu'il couvre le Mali, le Sénégal, la Côte d'Ivoire… Les SMS sont payants. Sinon mets `phoneLogin: false` dans `config.js`.
 - **Google** : crée un « ID client OAuth » (type application Web) dans Google Cloud Console, avec comme URI de redirection
   `https://<REF>.supabase.co/auth/v1/callback`. Ajoute les secrets `GOOGLE_CLIENT_ID` et `GOOGLE_CLIENT_SECRET`, relance le robot.
 - **Apple** : nécessite un compte Apple Developer (payant). Crée un *Services ID* et une clé « Sign in with Apple », génère le secret
@@ -72,8 +72,7 @@ la sécurité repose sur les règles de la base. Ne mets **jamais** la clé `ser
 - Active **« Leaked password protection »** si ton offre Supabase la propose (double protection avec la vérification de l'app).
 - Sauvegardes : l'offre gratuite de Supabase n'a pas de sauvegarde à un instant précis ; passe à l'offre Pro avant d'encaisser de vrais paiements.
 - La **politique de confidentialité** est dans `legal.html` : relis-la et déclare le traitement auprès de l'autorité de protection
-  des données de chaque pays visé (Mali : APDP ; Union européenne : RGPD ; Russie : Roskomnadzor, loi 152-FZ — attention, la loi
-  russe impose de stocker en Russie les données des citoyens russes : demande l'avis d'un juriste avant de viser ce marché).
+  des données de chaque pays visé (Mali : APDP ; Union européenne : RGPD).
 - Ce qui est synchronisé : progression (XP, badges, portefeuille virtuel, réglages), pseudo, abonnement, journal des ordres réels.
   Jamais la clé API Claude, jamais les clés de plateforme de trading.
 

@@ -73,7 +73,7 @@ create table if not exists public.plans (
   features    jsonb not null default '[]'::jsonb,   -- liste de textes affichés
   perks       jsonb not null default '[]'::jsonb,   -- droits techniques (ex. ["ia", "missions", "reel"])
   period_days int not null default 30 check (period_days between 1 and 3660),
-  prices      jsonb not null default '{}'::jsonb,   -- {"XOF": 2500, "EUR": 3.99, "RUB": 349} ; null = prix pas encore fixé
+  prices      jsonb not null default '{}'::jsonb,   -- {"XOF": 2500, "EUR": 3.99} ; null = prix pas encore fixé
   active      boolean not null default true,
   sort        int not null default 0
 );
@@ -85,13 +85,13 @@ grant select on public.plans to anon, authenticated;
 
 insert into public.plans (id, name, description, features, perks, period_days, prices, sort) values
   ('gratuit', 'Gratuit', 'Tout pour apprendre, sans payer.',
-   '["Trading live en argent virtuel", "Académie, quiz et glossaire", "Missions Time Machine", "Coach et copilote (règles de risque)"]', '[]', 3650, '{"XOF": 0, "EUR": 0, "RUB": 0}', 0),
+   '["Trading live en argent virtuel", "Académie, quiz et glossaire", "Missions Time Machine", "Coach et copilote (règles de risque)"]', '[]', 3650, '{"XOF": 0, "EUR": 0}', 0),
   ('premium', 'Premium', 'Pour progresser plus vite.',
-   '["Tout le gratuit", "Mèche IA (Claude) sans limite", "Analyses du coach détaillées", "Synchronisation sur tous tes appareils", "Sans publicité, pour toujours"]', '["ia", "coach"]', 30, '{"XOF": null, "EUR": null, "RUB": null}', 1),
+   '["Tout le gratuit", "Mèche IA (Claude) sans limite", "Analyses du coach détaillées", "Synchronisation sur tous tes appareils", "Sans publicité, pour toujours"]', '["ia", "coach"]', 30, '{"XOF": null, "EUR": null}', 1),
   ('premium-an', 'Premium · 1 an', 'Premium payé une fois pour l''année.',
-   '["Tout le Premium", "12 mois pour le prix fixé à l''année"]', '["ia", "coach"]', 365, '{"XOF": null, "EUR": null, "RUB": null}', 2),
+   '["Tout le Premium", "12 mois pour le prix fixé à l''année"]', '["ia", "coach"]', 365, '{"XOF": null, "EUR": null}', 2),
   ('pro', 'Pro', 'Pour passer au réel avec méthode.',
-   '["Tout le Premium", "Trading réel connecté à ton compte Binance", "Journal des ordres réels synchronisé", "Vega Desk : sessions sauvegardées"]', '["ia", "coach", "reel"]', 30, '{"XOF": null, "EUR": null, "RUB": null}', 3)
+   '["Tout le Premium", "Trading réel connecté à ton compte Binance", "Journal des ordres réels synchronisé", "Vega Desk : sessions sauvegardées"]', '["ia", "coach", "reel"]', 30, '{"XOF": null, "EUR": null}', 3)
 on conflict (id) do nothing;
 
 -- ---------- Abonnements (écrits uniquement par les fonctions serveur) ----------
@@ -115,9 +115,9 @@ create table if not exists public.payments (
   id           uuid primary key default gen_random_uuid(),
   user_id      uuid not null references auth.users (id) on delete cascade,
   plan_id      text not null references public.plans (id),
-  provider     text not null check (provider in ('cinetpay', 'stripe', 'yookassa')),
+  provider     text not null check (provider in ('cinetpay', 'stripe')),
   amount       numeric(14, 2) not null check (amount > 0),
-  currency     text not null check (currency in ('XOF', 'EUR', 'USD', 'RUB')),
+  currency     text not null check (currency in ('XOF', 'EUR', 'USD')),
   status       text not null default 'pending' check (status in ('pending', 'paid', 'failed', 'canceled')),
   provider_ref text,
   created_at   timestamptz not null default now(),

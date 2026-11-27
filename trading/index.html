@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://raw.githubusercontent.com https://data-api.binance.vision https://api.binance.com wss://stream.binance.com:9443 wss://data-stream.binance.vision wss://ws-api.binance.com:443 wss://ws-api.testnet.binance.vision https://quote.cnbc.com https://ts-api.cnbc.com https://open.er-api.com https://*.wikipedia.org https://api.anthropic.com https://esm.sh https://*.supabase.co wss://*.supabase.co https://*.workers.dev https://api.pwnedpasswords.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://raw.githubusercontent.com https://data-api.binance.vision https://api.binance.com wss://stream.binance.com:9443 wss://data-stream.binance.vision wss://ws-api.binance.com:443 wss://ws-api.testnet.binance.vision https://quote.cnbc.com https://ts-api.cnbc.com https://open.er-api.com https://*.wikipedia.org https://api.anthropic.com https://*.supabase.co wss://*.supabase.co https://*.workers.dev https://api.pwnedpasswords.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mèche · Apprends à trader sans te brûler</title>
@@ -19,11 +19,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&family=Rajdhani:wght@600;700&family=Unbounded:wght@600;800;900&family=Sora:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/app.css">
 <link rel="stylesheet" href="css/v3.css">
+<link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
-<aside class="sidebar">
-  <a class="logo" href="#/home" data-tip-text="Retour à l'accueil"><span class="logo-i" data-logo="40"></span><span class="logo-t">Mèche</span></a>
+<aside class="sidebar" id="sidebar" aria-label="Menu principal">
+  <div class="side-head">
+    <a class="logo" href="#/home" data-tip-text="Retour à l'accueil"><span class="logo-i" data-logo="40"></span><span class="logo-t">Mèche</span></a>
+    <button class="tb-btn side-x" id="side-x" type="button" aria-label="Replier le menu" data-tip-text="Replier le menu (Ctrl + .)" data-icon="panelclose"></button>
+  </div>
   <nav class="nav">
+    <div class="nav-g">Trader</div>
     <a href="#/home" data-nav="home" data-short="Accueil" data-tip-text="Ton tableau de bord : marchés, portefeuille, défi du jour."><i data-icon="home"></i><span>Accueil</span></a>
     <a href="#/live" data-nav="live" data-short="Live" data-tip-text="Trade sur les vrais prix en temps réel avec de l'argent virtuel."><i data-icon="live"></i><span>Trading live</span></a>
     <a href="#/reel" data-nav="reel" data-short="Réel" data-tip-text="Trading réel : relie ton propre compte Binance (clé sans retrait) ou trouve un courtier agréé, avec des garde-fous."><i data-icon="zap"></i><span>Trading réel</span></a>
@@ -32,17 +37,21 @@
     <a href="#/lab" data-nav="lab" data-tip-text="Backteste 4 algorithmes de trading sur de vraies données."><i data-icon="lab"></i><span>Backtest</span></a>
     <a href="#/options" data-nav="options" data-short="Options" data-tip-text="Labo options : prix d'une option, gains possibles, grecques et stratégies, à manipuler soi-même."><i data-icon="layers"></i><span>Labo options</span></a>
     <a href="#/vega" data-nav="vega" data-short="Vega" data-tip-text="Vega FX Options Desk : tiens un desk d'options EUR/USD comme dans une banque."><i data-icon="scale"></i><span>Vega Desk</span></a>
+    <div class="nav-g">Apprendre</div>
     <a href="#/ai" data-nav="ai" data-short="IA" data-tip-text="Mèche IA : ton copilote de trading et ton assistant pour toutes tes questions."><i data-icon="ai"></i><span>Mèche IA</span></a>
     <a href="#/academy" data-nav="academy" data-short="Cours" data-tip-text="Les cours : instruments, styles, stratégies, algos, macro, psychologie."><i data-icon="academy"></i><span>Académie</span></a>
     <a href="#/quiz" data-nav="quiz" data-short="Quiz" data-tip-text="Parcours de quiz façon Duolingo : 5 minutes par jour."><i data-icon="quiz"></i><span>Quiz</span></a>
     <a href="#/swipe" data-nav="swipe" data-tip-text="Mini-jeu : la prochaine bougie sera-t-elle verte ou rouge ?"><i data-icon="swipe"></i><span>Swipe</span></a>
+    <div class="nav-g">Mon espace</div>
     <a href="#/profile" data-nav="profile" data-short="Profil" data-tip-text="Ton niveau, tes badges, tes stats."><i data-icon="profile"></i><span>Profil</span></a>
-    <a href="#/abonnement" data-nav="abonnement" data-short="Offres" data-tip-text="Les offres Mèche : gratuit, Premium, Pro. Paiement mobile money, carte ou roubles."><i data-icon="crown"></i><span>Abonnement</span></a>
+    <a href="#/abonnement" data-nav="abonnement" data-short="Offres" data-tip-text="Les offres Mèche : gratuit, Premium, Pro. Paiement mobile money ou carte."><i data-icon="crown"></i><span>Abonnement</span></a>
     <a href="#/settings" data-nav="settings" class="nav-set" data-tip-text="Thème, police, taille, photo, icône, langue, devise, montants…"><i data-icon="settings"></i><span>Paramètres</span></a>
   </nav>
   <div class="side-quote"><p>La vraie force n'est pas de gagner toujours, mais de ne jamais arrêter d'apprendre.</p><span>→ Mèche</span></div>
 </aside>
+<div class="side-scrim" id="side-scrim" hidden></div>
 <header class="topbar">
+  <button class="tb-btn tb-side" id="tb-side" type="button" aria-label="Ouvrir le menu" aria-controls="sidebar" aria-expanded="false" data-tip-text="Menu (Ctrl + .)" data-icon="panel"></button>
   <a class="logo logo-m" href="#/home" aria-label="Accueil"><span class="logo-t">Mèche</span></a>
   <button class="tb-search" id="tb-search" type="button" data-tip-text="Recherche rapide : actifs, cours, termes du glossaire, pages. Raccourci Ctrl+K."><i data-icon="search"></i><span>Rechercher un actif, une crypto, un cours…</span><kbd>Ctrl K</kbd></button>
   <div class="tb-right">
@@ -102,6 +111,7 @@
 <script src="js/real.js"></script>
 <script src="js/tour.js"></script>
 <script src="js/shell.js"></script>
+<script src="js/sidebar.js"></script>
 <script src="js/offline.js"></script>
 </body>
 </html>

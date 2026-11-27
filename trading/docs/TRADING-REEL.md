@@ -15,7 +15,7 @@
   (`config.js → real.maxOrder / maxDaily`, l'utilisateur peut seulement les baisser), prix limite refusé à plus de 20 % du cours,
   stop de protection facultatif (STOP_LOSS_LIMIT) après un achat, journal exportable en CSV (copié dans le compte sans aucune clé).
 - **Testnet** : clés gratuites sur testnet.binance.vision, argent fictif. C'est le mode par défaut.
-- **Limites** : Binance n'est pas disponible partout (États-Unis : Binance.US ; Russie : pas de nouveaux comptes ; vérifie
+- **Limites** : Binance n'est pas disponible partout (États-Unis : Binance.US ; vérifie
   aussi le pays de chaque utilisateur). Si l'utilisateur restreint sa clé à une adresse IP fixe, la connexion doit venir de cette adresse.
 
 ## 2. Courtiers et SGI agréés (actions, BRVM, ETF)
@@ -29,7 +29,7 @@ partners: [
 
 N'y mets que des intermédiaires **réellement agréés** avec qui tu as un accord (ou un lien d'affiliation officiel).
 Les liens portent `rel="sponsored"`. Sans partenaire, l'écran explique comment vérifier un agrément
-(AMF-UMOA, Banque de Russie, AMF/ESMA, OCRI/CIRO).
+(AMF-UMOA, AMF/ESMA, OCRI/CIRO).
 
 ## Pour aller plus loin (plus tard)
 - Autres plateformes avec API WebSocket signée côté navigateur (OKX, Bybit…) : même principe, un module par plateforme.

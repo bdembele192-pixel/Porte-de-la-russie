@@ -11,7 +11,6 @@ name: Comptes et paiements Mèche (Supabase)
 # Secrets facultatifs (chaque moyen de paiement s'active quand ses secrets sont présents) :
 #   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_CURRENCY (EUR par défaut)
 #   CINETPAY_APIKEY, CINETPAY_SITE_ID
-#   YOOKASSA_SHOP_ID, YOOKASSA_SECRET_KEY
 #   TURNSTILE_SECRET_KEY    captcha Cloudflare (la clé de site publique va dans config.js : turnstileSiteKey)
 #   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, APPLE_CLIENT_ID, APPLE_SECRET   connexion Google / Apple
 # Puis : onglet Actions → « Comptes et paiements Mèche (Supabase) » → Run workflow.
@@ -41,7 +40,7 @@ jobs:
       SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
       REF: ${{ secrets.SUPABASE_PROJECT_REF }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Vérifier les secrets
         id: check
         run: |
@@ -49,7 +48,7 @@ jobs:
             echo "::warning::Ajoute SUPABASE_ACCESS_TOKEN, SUPABASE_PROJECT_REF et SUPABASE_DB_PASSWORD (voir trading/docs/COMPTES.md). Rien n'est déployé."
             echo "skip=1" >> "$GITHUB_OUTPUT"
           fi
-      - uses: supabase/setup-cli@v1
+      - uses: supabase/setup-cli@689adcfb80d947100a1eab127289b97d1fb07b13 # v3.2.0
         if: steps.check.outputs.skip != '1'
         with:
           version: latest
@@ -68,13 +67,11 @@ jobs:
           STRIPE_CURRENCY: ${{ secrets.STRIPE_CURRENCY }}
           CINETPAY_APIKEY: ${{ secrets.CINETPAY_APIKEY }}
           CINETPAY_SITE_ID: ${{ secrets.CINETPAY_SITE_ID }}
-          YOOKASSA_SHOP_ID: ${{ secrets.YOOKASSA_SHOP_ID }}
-          YOOKASSA_SECRET_KEY: ${{ secrets.YOOKASSA_SECRET_KEY }}
         run: |
           f=$(mktemp)
           echo "APP_URL=$APP_URL" >> "$f"
           echo "ALLOWED_ORIGINS=https://bdembele192-pixel.github.io" >> "$f"
-          for k in STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET STRIPE_CURRENCY CINETPAY_APIKEY CINETPAY_SITE_ID YOOKASSA_SHOP_ID YOOKASSA_SECRET_KEY; do
+          for k in STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET STRIPE_CURRENCY CINETPAY_APIKEY CINETPAY_SITE_ID; do
             v="${!k}"
             if [ -n "$v" ]; then echo "$k=$v" >> "$f"; echo "✓ $k"; else echo "– $k absent"; fi
           done
@@ -88,7 +85,6 @@ jobs:
           supabase functions deploy payment-webhook --project-ref "$REF" --no-verify-jwt
           echo "Adresses à donner aux prestataires (notifications) :"
           echo "  Stripe   : https://$REF.supabase.co/functions/v1/payment-webhook?provider=stripe"
-          echo "  YooKassa : https://$REF.supabase.co/functions/v1/payment-webhook?provider=yookassa"
           echo "  CinetPay : réglée automatiquement à chaque paiement"
       - name: Sécurité des connexions
         if: steps.check.outputs.skip != '1'

@@ -348,7 +348,7 @@ window.M = window.M || {};
         <div id="acc-f"></div>
         <p class="small muted" style="margin-top:14px">En créant un compte, tu acceptes les <a href="legal.html" target="_blank" rel="noopener">conditions et la politique de confidentialité</a>.</p>`;
       const otpForm = (kind) => `
-        <p class="muted">${kind === "mail" ? "On t'envoie un code à 6 chiffres. Si tu n'as pas encore de compte, il est créé automatiquement." : "Numéro au format international, par exemple +223 70 00 00 00 ou +7 900 000 00 00. Un SMS avec un code te sera envoyé."}</p>
+        <p class="muted">${kind === "mail" ? "On t'envoie un code à 6 chiffres. Si tu n'as pas encore de compte, il est créé automatiquement." : "Numéro au format international, par exemple +223 70 00 00 00. Un SMS avec un code te sera envoyé."}</p>
         <div class="acc-row"><span class="inp">${kind === "mail" ? `<input id="a-id" type="email" placeholder="toi@exemple.com" autocomplete="email">` : `<input id="a-id" type="tel" placeholder="+223…" autocomplete="tel">`}</span><button class="btn primary" id="a-send">${kind === "mail" ? "Recevoir un code" : "Recevoir un SMS"}</button></div>
         <div class="acc-row" id="a-step2" hidden><span class="inp"><input id="a-code" inputmode="numeric" maxlength="8" placeholder="Code reçu" autocomplete="one-time-code"></span><button class="btn primary" id="a-ok">Se connecter</button></div>`;
       const forms = {

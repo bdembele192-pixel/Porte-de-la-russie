@@ -1,7 +1,7 @@
-// POST /functions/v1/payment-webhook?provider=stripe|cinetpay|yookassa
+// POST /functions/v1/payment-webhook?provider=stripe|cinetpay
 // Notifications des prestataires de paiement. Rien n'est cru sur parole :
 //   · Stripe : signature HMAC de l'en-tête Stripe-Signature vérifiée avec STRIPE_WEBHOOK_SECRET ;
-//   · CinetPay et YooKassa : le paiement est revérifié en interrogeant directement leur API.
+//   · CinetPay : le paiement est revérifié en interrogeant directement leur API.
 // L'abonnement n'est prolongé que si le montant et la devise correspondent au paiement enregistré.
 import { APP_URL, env, hmacHex, json, markFailed, markPaid, safeEq } from "../_shared/pay.ts";
 
@@ -71,23 +71,6 @@ Deno.serve(async (req) => {
       return json({ received: true });
     }
 
-    if (provider === "yookassa") {
-      const ev = JSON.parse(raw);
-      const pid = ev.object?.id;
-      if (!pid || !/^[\w-]{10,64}$/.test(pid)) return json({ error: "paiement" }, 400);
-      const r = await fetch("https://api.yookassa.ru/v3/payments/" + pid, {
-        headers: { authorization: "Basic " + btoa(env("YOOKASSA_SHOP_ID") + ":" + env("YOOKASSA_SECRET_KEY")) }
-      });
-      const p = await r.json();
-      const id = p.metadata?.payment_id;
-      if (p.status === "succeeded" && p.paid && id) {
-        const res = await markPaid(id, { amount: Number(p.amount?.value), currency: p.amount?.currency, ref: p.id });
-        if (!res.ok) console.error("yookassa", res.why);
-      } else if (p.status === "canceled" && id) {
-        await markFailed(id, "canceled", { reason: p.cancellation_details?.reason });
-      }
-      return json({ received: true });
-    }
     return json({ error: "prestataire inconnu" }, 400);
   } catch (e) {
     console.error(e);

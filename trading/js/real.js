@@ -155,7 +155,7 @@ window.M = window.M || {};
           <li><b>Crée une clé API sans droit de retrait.</b> Coche uniquement « Activer le trading Spot ». Même si quelqu'un volait ta clé, il ne pourrait pas sortir l'argent de ton compte.</li>
           <li><b>Tes clés restent sur cet appareil</b>, chiffrées par une phrase secrète que toi seul connais. Mèche, son serveur et sa base de données ne les voient jamais.</li>
           <li><b>Plafonds</b> : ${lim().maxOrder} USDT par ordre et ${lim().maxDaily} USDT par 24 h au maximum (tu peux les baisser).</li>
-          <li><b>Disponibilité</b> : Binance n'est pas accessible dans tous les pays (par exemple aux États-Unis, où c'est Binance.US, ni depuis la Russie pour les nouveaux comptes). Vérifie que la plateforme est autorisée là où tu vis et que tu respectes les règles fiscales et de change de ton pays.</li>
+          <li><b>Disponibilité</b> : Binance n'est pas accessible dans tous les pays (par exemple aux États-Unis, où c'est Binance.US). Vérifie que la plateforme est autorisée là où tu vis et que tu respectes les règles fiscales et de change de ton pays.</li>
           <li><b>Actions et BRVM</b> : passe par une SGI ou un courtier agréé (onglet « Courtiers agréés »).</li>
         </ul>
         <label class="chk"><input type="checkbox" id="k1"> J'ai 18 ans ou plus.</label>
@@ -180,9 +180,9 @@ window.M = window.M || {};
             <li>Si ta connexion a une adresse IP fixe, restreins la clé à cette adresse.</li>
             <li>Colle la clé et le secret ci-dessous, puis choisis une phrase secrète : elle chiffre tes clés sur cet appareil.</li>
           </ol>
-          <div class="acc-row"><span class="inp"><input id="v-key" placeholder="Clé API (API Key)" autocomplete="off" spellcheck="false"></span></div>
-          <div class="acc-row"><span class="inp"><input id="v-sec" type="password" placeholder="Clé secrète (Secret Key)" autocomplete="off" spellcheck="false"></span></div>
-          <div class="acc-row"><span class="inp"><input id="v-p1" type="password" placeholder="Phrase secrète (10 caractères minimum)" autocomplete="new-password"></span><span class="inp"><input id="v-p2" type="password" placeholder="Confirme la phrase" autocomplete="new-password"></span></div>
+          <div class="acc-row"><span class="inp"><input id="v-key" placeholder="Clé API" autocomplete="off" spellcheck="false"></span></div>
+          <div class="acc-row"><span class="inp"><input id="v-sec" type="password" placeholder="Clé secrète" autocomplete="off" spellcheck="false"></span></div>
+          <div class="acc-row"><span class="inp"><input id="v-p1" type="password" placeholder="Phrase secrète (10+ caractères)" autocomplete="new-password"></span><span class="inp"><input id="v-p2" type="password" placeholder="Confirme la phrase" autocomplete="new-password"></span></div>
           <p class="small muted">Si tu oublies ta phrase secrète, il suffira de supprimer les clés ici et d'en créer de nouvelles chez Binance : personne ne peut la récupérer, pas même Mèche.</p>
           <div class="cta"><button class="btn primary" id="v-save">${M.icon("lock")} Chiffrer et vérifier</button></div></div>`;
         bindEnv();
@@ -396,7 +396,6 @@ window.M = window.M || {};
           <table class="tbl">
             <tr><th>Zone</th><th>Autorité de contrôle</th><th>Pour quoi</th></tr>
             <tr><td>UEMOA (Mali, Sénégal, Côte d'Ivoire…)</td><td><a href="https://www.amf-umoa.org" target="_blank" rel="noopener">AMF-UMOA</a></td><td>Actions et obligations de la BRVM, via une SGI agréée</td></tr>
-            <tr><td>Russie</td><td><a href="https://www.cbr.ru" target="_blank" rel="noopener">Banque de Russie</a></td><td>Courtiers et comptes IIS sur la Bourse de Moscou</td></tr>
             <tr><td>France / Union européenne</td><td><a href="https://www.amf-france.org" target="_blank" rel="noopener">AMF</a> · <a href="https://www.esma.europa.eu" target="_blank" rel="noopener">ESMA</a></td><td>Courtiers en ligne, PEA, CFD (très risqués)</td></tr>
             <tr><td>Canada</td><td><a href="https://www.ciro.ca" target="_blank" rel="noopener">OCRI / CIRO</a></td><td>Courtiers, comptes CELI et REER</td></tr>
           </table>

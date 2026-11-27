@@ -1,9 +1,9 @@
-// POST /functions/v1/checkout  { plan_id, provider: "cinetpay" | "stripe" | "yookassa" }
+// POST /functions/v1/checkout  { plan_id, provider: "cinetpay" | "stripe" }
 // Crée un paiement « en attente » puis renvoie l'adresse de la page de paiement du prestataire.
 // Le prix vient TOUJOURS de la table plans (jamais du navigateur).
 import { admin, APP_URL, cors, env, FN_URL, json } from "../_shared/pay.ts";
 
-const CURRENCY: Record<string, string> = { cinetpay: "XOF", stripe: env("STRIPE_CURRENCY") || "EUR", yookassa: "RUB" };
+const CURRENCY: Record<string, string> = { cinetpay: "XOF", stripe: env("STRIPE_CURRENCY") || "EUR" };
 
 Deno.serve(async (req) => {
   const h = cors(req);
@@ -17,7 +17,7 @@ Deno.serve(async (req) => {
     if (!user) return json({ error: "Connecte-toi pour t'abonner." }, 401, h);
 
     const { plan_id, provider } = await req.json().catch(() => ({}));
-    if (!["cinetpay", "stripe", "yookassa"].includes(provider)) return json({ error: "Moyen de paiement inconnu." }, 400, h);
+    if (!["cinetpay", "stripe"].includes(provider)) return json({ error: "Moyen de paiement inconnu." }, 400, h);
     const { data: plan } = await db.from("plans").select("*").eq("id", plan_id).eq("active", true).maybeSingle();
     if (!plan) return json({ error: "Offre introuvable." }, 404, h);
     const currency = CURRENCY[provider];
@@ -67,22 +67,6 @@ Deno.serve(async (req) => {
       const d = await r.json();
       if (d.code !== "201" || !d.data?.payment_url) throw new Error(d.description || d.message || "CinetPay indisponible");
       url = d.data.payment_url; ref = pay.id.replace(/-/g, "");
-    }
-
-    if (provider === "yookassa") {
-      if (!env("YOOKASSA_SHOP_ID") || !env("YOOKASSA_SECRET_KEY")) return json({ error: "Paiement en roubles pas encore configuré." }, 503, h);
-      const r = await fetch("https://api.yookassa.ru/v3/payments", {
-        method: "POST",
-        headers: { "content-type": "application/json", "idempotence-key": pay.id, authorization: "Basic " + btoa(env("YOOKASSA_SHOP_ID") + ":" + env("YOOKASSA_SECRET_KEY")) },
-        body: JSON.stringify({
-          amount: { value: amount.toFixed(2), currency: "RUB" }, capture: true,
-          confirmation: { type: "redirect", return_url: back + "/ok" },
-          description: `Mèche ${plan.name}`.slice(0, 128), metadata: { payment_id: pay.id }
-        })
-      });
-      const d = await r.json();
-      if (!r.ok) throw new Error(d.description || "YooKassa indisponible");
-      url = d.confirmation?.confirmation_url; ref = d.id;
     }
 
     await db.from("payments").update({ provider_ref: ref }).eq("id", pay.id);

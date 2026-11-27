@@ -37,8 +37,8 @@ M.CONFIG = {
   turnstileSiteKey: "",
 
   // Abonnements : moyens de paiement proposés (chacun doit être configuré côté serveur, voir docs/PAIEMENTS.md).
-  // cinetpay = Orange Money, Moov, Wave, MTN… en FCFA (UEMOA) · stripe = cartes Visa/Mastercard · yookassa = cartes russes (Mir), SBP, en roubles
-  payments: ["cinetpay", "stripe", "yookassa"],
+  // cinetpay = Orange Money, Moov, Wave, MTN… en FCFA (UEMOA) · stripe = cartes Visa/Mastercard
+  payments: ["cinetpay", "stripe"],
   // Fonctions réservées aux abonnés (laisser vide tant que les prix ne sont pas fixés) : ex. ["ia", "reel"]
   premiumGates: [],
 

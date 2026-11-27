@@ -1,5 +1,5 @@
 /* Abonnements (#/abonnement) : offres lues dans la base (table plans), paiement par CinetPay (mobile money UEMOA,
-   FCFA), Stripe (cartes, EUR) ou YooKassa (Russie, RUB). Le navigateur ne fixe jamais le prix : il demande à la
+   FCFA) ou Stripe (cartes, EUR). Le navigateur ne fixe jamais le prix : il demande à la
    fonction serveur « checkout » une page de paiement, et l'abonnement n'est prolongé qu'après vérification du
    paiement par la fonction « payment-webhook ». Guide : docs/PAIEMENTS.md */
 window.M = window.M || {};
@@ -12,15 +12,14 @@ window.M = window.M || {};
 
   const PROVIDERS = {
     cinetpay: { cur: "XOF", name: "Mobile money", sub: "Orange Money, Moov, Wave, MTN… · FCFA", ic: "phone", hosts: ["cinetpay.com"] },
-    stripe: { cur: "EUR", name: "Carte bancaire", sub: "Visa, Mastercard, Apple Pay, Google Pay", ic: "wallet", hosts: ["checkout.stripe.com"] },
-    yookassa: { cur: "RUB", name: "Russie", sub: "Cartes Mir, SBP, YooMoney · roubles", ic: "bank", hosts: ["yoomoney.ru", "yookassa.ru"] }
+    stripe: { cur: "EUR", name: "Carte bancaire", sub: "Visa, Mastercard, Apple Pay, Google Pay", ic: "wallet", hosts: ["checkout.stripe.com"] }
   };
   // Offres par défaut, affichées quand la base n'est pas encore reliée (identiques au contenu initial de la table plans)
   const DEFAULT = [
-    { id: "gratuit", name: "Gratuit", description: "Tout pour apprendre, sans payer.", features: ["Trading live en argent virtuel", "Académie, quiz et glossaire", "Missions Time Machine", "Coach et copilote (règles de risque)"], perks: [], period_days: 3650, prices: { XOF: 0, EUR: 0, RUB: 0 } },
-    { id: "premium", name: "Premium", description: "Pour progresser plus vite.", features: ["Tout le gratuit", "Mèche IA (Claude) sans limite", "Analyses du coach détaillées", "Synchronisation sur tous tes appareils", "Sans publicité, pour toujours"], perks: ["ia", "coach"], period_days: 30, prices: { XOF: null, EUR: null, RUB: null } },
-    { id: "premium-an", name: "Premium · 1 an", description: "Premium payé une fois pour l'année.", features: ["Tout le Premium", "12 mois pour le prix fixé à l'année"], perks: ["ia", "coach"], period_days: 365, prices: { XOF: null, EUR: null, RUB: null } },
-    { id: "pro", name: "Pro", description: "Pour passer au réel avec méthode.", features: ["Tout le Premium", "Trading réel connecté à ton compte Binance", "Journal des ordres réels synchronisé", "Vega Desk : sessions sauvegardées"], perks: ["ia", "coach", "reel"], period_days: 30, prices: { XOF: null, EUR: null, RUB: null } }
+    { id: "gratuit", name: "Gratuit", description: "Tout pour apprendre, sans payer.", features: ["Trading live en argent virtuel", "Académie, quiz et glossaire", "Missions Time Machine", "Coach et copilote (règles de risque)"], perks: [], period_days: 3650, prices: { XOF: 0, EUR: 0 } },
+    { id: "premium", name: "Premium", description: "Pour progresser plus vite.", features: ["Tout le gratuit", "Mèche IA (Claude) sans limite", "Analyses du coach détaillées", "Synchronisation sur tous tes appareils", "Sans publicité, pour toujours"], perks: ["ia", "coach"], period_days: 30, prices: { XOF: null, EUR: null } },
+    { id: "premium-an", name: "Premium · 1 an", description: "Premium payé une fois pour l'année.", features: ["Tout le Premium", "12 mois pour le prix fixé à l'année"], perks: ["ia", "coach"], period_days: 365, prices: { XOF: null, EUR: null } },
+    { id: "pro", name: "Pro", description: "Pour passer au réel avec méthode.", features: ["Tout le Premium", "Trading réel connecté à ton compte Binance", "Journal des ordres réels synchronisé", "Vega Desk : sessions sauvegardées"], perks: ["ia", "coach", "reel"], period_days: 30, prices: { XOF: null, EUR: null } }
   ];
   const fmt = (v, cur) => v == null ? null : v === 0 ? "0" : new Intl.NumberFormat("fr-FR", { style: "currency", currency: cur, maximumFractionDigits: cur === "XOF" ? 0 : 2 }).format(v);
   const period = d => d >= 3000 ? "" : d >= 360 ? " / an" : d >= 28 && d <= 31 ? " / mois" : ` / ${d} jours`;
@@ -39,7 +38,7 @@ window.M = window.M || {};
       <div class="glass pad sub-pay">
         <h4>${M.icon("shield")} Paiement sécurisé</h4>
         <div class="pay-list">${Object.entries(PROVIDERS).map(([k, p]) => `<div class="pay-i ${pays.includes(k) ? "" : "off"}">${M.icon(p.ic)}<div><b>${p.name}</b><small>${p.sub}</small></div></div>`).join("")}</div>
-        <p class="small muted">Tu paies sur la page sécurisée du prestataire (CinetPay, Stripe ou YooKassa) : Mèche ne voit ni ne stocke jamais ton numéro de carte ni ton code mobile money. Le montant est fixé par le serveur et l'abonnement n'est activé qu'après confirmation du paiement par le prestataire. Les prix s'entendent toutes taxes comprises. Voir les <a href="legal.html#paiements" target="_blank" rel="noopener">conditions de vente</a>.</p>
+        <p class="small muted">Tu paies sur la page sécurisée du prestataire (CinetPay ou Stripe) : Mèche ne voit ni ne stocke jamais ton numéro de carte ni ton code mobile money. Le montant est fixé par le serveur et l'abonnement n'est activé qu'après confirmation du paiement par le prestataire. Les prix s'entendent toutes taxes comprises. Voir les <a href="legal.html#paiements" target="_blank" rel="noopener">conditions de vente</a>.</p>
       </div>`;
 
     if (ret === "ok" || ret === "retour") $("#sub-ret", el).innerHTML = `<div class="glass pad sub-note win">${M.icon("check")} <b>Merci !</b> Ton paiement est en cours de vérification. L'abonnement s'active dès que le prestataire le confirme (en général moins d'une minute). <button class="btn ghost sm" id="sub-refresh">${M.icon("refresh")} Actualiser</button></div>`;

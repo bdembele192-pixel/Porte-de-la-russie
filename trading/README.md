@@ -84,7 +84,7 @@ La progression est sauvegardée dans le `localStorage` du navigateur (clé `mech
 
 - **Nom** : « Mèche » est un nom de travail — vérifier sa disponibilité (INPI / EUIPO) avant dépôt.
 - **Argent réel** : Mèche ne détient jamais de fonds. La section « Trading réel » pilote le **propre compte Binance** de l'utilisateur (clé sans retrait, chiffrée sur son appareil, ordres envoyés par son navigateur) et oriente vers des courtiers agréés (`docs/TRADING-REEL.md`). Exécuter des ordres *pour le compte de clients* demanderait un agrément (PSAN/CASP MiCA pour la crypto, PSI pour les titres).
-- **Abonnements** : CinetPay, Stripe, YooKassa, prix à fixer dans la table `plans` (`docs/PAIEMENTS.md`).
+- **Abonnements** : CinetPay (mobile money) et Stripe (cartes), prix à fixer dans la table `plans` (`docs/PAIEMENTS.md`).
 - **Données** : l'API publique Binance est gratuite mais ses conditions d'utilisation doivent être vérifiées pour un usage commercial ; pour actions/indices, prévoir un fournisseur de données sous licence.
 - **Contenu** : les cours restent éducatifs ; aucun conseil en investissement personnalisé (activité réglementée).
 - **Comptes utilisateurs** : prêts (Supabase, robot `.github/workflows/supabase.yml`, voir `docs/COMPTES.md`) ; la politique de confidentialité et les conditions de vente sont dans `legal.html`.

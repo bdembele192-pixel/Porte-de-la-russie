@@ -3,6 +3,8 @@ window.M = window.M || {};
 
 (function () {
   const P = {
+    panel: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/><path d="m14 10 2 2-2 2"/>',
+    panelclose: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/><path d="m16 10-2 2 2 2"/>',
     home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M10 21v-6h4v6"/>',
     live: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
     missions: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/>',

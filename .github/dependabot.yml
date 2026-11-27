@@ -1,0 +1,15 @@
+# Mises à jour de sécurité proposées automatiquement (pull requests à relire avant de fusionner).
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /relay
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
