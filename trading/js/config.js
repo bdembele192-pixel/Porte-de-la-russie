@@ -25,10 +25,31 @@ M.CONFIG = {
   relayUrl: "",
 
   // Comptes utilisateurs (Supabase). Laisse vide pour rester en mode local (sans compte).
+  // Rempli automatiquement par le robot .github/workflows/supabase.yml (la clé « anon » est publique par nature :
+  // la sécurité repose sur les règles de la base, pas sur ce secret).
   supabaseUrl: "",
   supabaseAnonKey: "",
   // Réseaux activés dans Supabase → Authentication → Providers
-  oauthProviders: ["google", "apple", "github", "facebook"],
-  // Connexion par SMS : nécessite un fournisseur SMS configuré dans Supabase
-  phoneLogin: true
+  oauthProviders: ["google", "apple"],
+  // Connexion par SMS : nécessite un fournisseur SMS configuré dans Supabase (Twilio, Vonage, MessageBird…)
+  phoneLogin: true,
+  // Captcha Cloudflare Turnstile (clé de site publique). À activer aussi dans Supabase → Authentication → Attack Protection.
+  turnstileSiteKey: "",
+
+  // Abonnements : moyens de paiement proposés (chacun doit être configuré côté serveur, voir docs/PAIEMENTS.md).
+  // cinetpay = Orange Money, Moov, Wave, MTN… en FCFA (UEMOA) · stripe = cartes Visa/Mastercard · yookassa = cartes russes (Mir), SBP, en roubles
+  payments: ["cinetpay", "stripe", "yookassa"],
+  // Fonctions réservées aux abonnés (laisser vide tant que les prix ne sont pas fixés) : ex. ["ia", "reel"]
+  premiumGates: [],
+
+  // Trading réel (docs/TRADING-REEL.md). Les clés restent chiffrées sur l'appareil de l'utilisateur.
+  real: {
+    exchanges: ["binance"],
+    // Plafonds de sécurité appliqués par l'app, en USDT (l'utilisateur peut les baisser, pas les dépasser)
+    maxOrder: 1000,
+    maxDaily: 3000
+  },
+  // Courtiers et SGI partenaires (agréés). Ne mettre que des partenaires réels, avec leur autorité de contrôle.
+  // Exemple : { name: "…", region: "UEMOA", regulator: "AMF-UMOA", url: "https://…", note: "Actions BRVM" }
+  partners: []
 };

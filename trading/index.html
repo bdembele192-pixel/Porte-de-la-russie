@@ -2,6 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://raw.githubusercontent.com https://data-api.binance.vision https://api.binance.com wss://stream.binance.com:9443 wss://data-stream.binance.vision wss://ws-api.binance.com:443 wss://ws-api.testnet.binance.vision https://quote.cnbc.com https://ts-api.cnbc.com https://open.er-api.com https://*.wikipedia.org https://api.anthropic.com https://esm.sh https://*.supabase.co wss://*.supabase.co https://*.workers.dev https://api.pwnedpasswords.com https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; media-src 'self' data: blob:; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mèche · Apprends à trader sans te brûler</title>
 <meta name="description" content="Simulateur de trading sur les vrais prix du marché : trading live, krachs historiques à rejouer, algos à backtester, académie et coach intégré.">
@@ -24,6 +26,7 @@
   <nav class="nav">
     <a href="#/home" data-nav="home" data-short="Accueil" data-tip-text="Ton tableau de bord : marchés, portefeuille, défi du jour."><i data-icon="home"></i><span>Accueil</span></a>
     <a href="#/live" data-nav="live" data-short="Live" data-tip-text="Trade sur les vrais prix en temps réel avec de l'argent virtuel."><i data-icon="live"></i><span>Trading live</span></a>
+    <a href="#/reel" data-nav="reel" data-short="Réel" data-tip-text="Trading réel : relie ton propre compte Binance (clé sans retrait) ou trouve un courtier agréé, avec des garde-fous."><i data-icon="zap"></i><span>Trading réel</span></a>
     <a href="#/news" data-nav="news" data-tip-text="Actus : communiqués officiels des banques centrales, du FMI, des régulateurs… mis à jour automatiquement."><i data-icon="globe"></i><span>Marchés &amp; actus</span></a>
     <a href="#/missions" data-nav="missions" data-short="Krachs" data-tip-text="Rejoue des krachs et des rallyes historiques, bougie par bougie."><i data-icon="missions"></i><span>Krachs historiques</span></a>
     <a href="#/lab" data-nav="lab" data-tip-text="Backteste 4 algorithmes de trading sur de vraies données."><i data-icon="lab"></i><span>Backtest</span></a>
@@ -34,6 +37,7 @@
     <a href="#/quiz" data-nav="quiz" data-short="Quiz" data-tip-text="Parcours de quiz façon Duolingo : 5 minutes par jour."><i data-icon="quiz"></i><span>Quiz</span></a>
     <a href="#/swipe" data-nav="swipe" data-tip-text="Mini-jeu : la prochaine bougie sera-t-elle verte ou rouge ?"><i data-icon="swipe"></i><span>Swipe</span></a>
     <a href="#/profile" data-nav="profile" data-short="Profil" data-tip-text="Ton niveau, tes badges, tes stats."><i data-icon="profile"></i><span>Profil</span></a>
+    <a href="#/abonnement" data-nav="abonnement" data-short="Offres" data-tip-text="Les offres Mèche : gratuit, Premium, Pro. Paiement mobile money, carte ou roubles."><i data-icon="crown"></i><span>Abonnement</span></a>
     <a href="#/settings" data-nav="settings" class="nav-set" data-tip-text="Thème, police, taille, photo, icône, langue, devise, montants…"><i data-icon="settings"></i><span>Paramètres</span></a>
   </nav>
   <div class="side-quote"><p>La vraie force n'est pas de gagner toujours, mais de ne jamais arrêter d'apprendre.</p><span>→ Mèche</span></div>
@@ -94,6 +98,8 @@
 <script src="js/ai.js"></script>
 <script src="js/news.js"></script>
 <script src="js/account.js"></script>
+<script src="js/subscribe.js"></script>
+<script src="js/real.js"></script>
 <script src="js/tour.js"></script>
 <script src="js/shell.js"></script>
 <script src="js/offline.js"></script>

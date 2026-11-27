@@ -6,7 +6,7 @@
    - Polices Google : cache d'abord.
    - Prix en direct (Binance, CNBC), relais, comptes, IA : jamais mis en cache.
    Changer VERSION force le renouvellement complet du cache. */
-const VERSION = "meche-v5-2026-11-27";
+const VERSION = "meche-v6-2026-11-27";
 const SHELL = VERSION + "-app", DATA = VERSION + "-data", FONTS = "meche-fonts";
 const EXTRA = ["./", "index.html", "manifest.webmanifest", "legal.html", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png",
   "icons/maskable-192.png", "icons/maskable-512.png", "icons/apple-touch-icon.png", "data/quotes.json", "data/news.json", "data/history.json",

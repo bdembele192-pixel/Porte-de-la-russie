@@ -107,3 +107,38 @@ M.I18N = {
   };
   Object.keys(T).forEach(l => { M.I18N[l] = M.I18N[l] || {}; K.forEach((k, i) => { if (T[l][i]) M.I18N[l][k] = T[l][i]; }); });
 })();
+
+// Libellés des comptes, abonnements et du trading réel
+(function () {
+  const K = ["Trading réel", "Abonnement", "Avant de commencer", "Mon compte Binance", "Courtiers agréés", "Journal", "Code e-mail", "Mot de passe", "Téléphone",
+    "J'ai un compte", "Créer un compte", "Se connecter", "Créer mon compte", "Mot de passe oublié ?", "Crée ton compte ou connecte-toi", "Recevoir un code", "Recevoir un SMS",
+    "Acheter", "Vendre", "Au marché", "À cours limité", "Vérifier l'ordre", "Solde", "Ordre", "Ordres ouverts", "Mes plafonds", "Verrouiller", "Déverrouiller",
+    "Coffre verrouillé", "Paiement sécurisé", "Mobile money", "Carte bancaire", "Russie", "Prix à fixer", "bientôt disponible", "pour toujours", "Le plus choisi",
+    "Confirmer l'ordre", "Envoyer l'ordre", "Annuler", "Enregistrer", "Se déconnecter", "Synchroniser maintenant", "Voir les offres", "Gérer", "Changer", "Ajouter",
+    "Double authentification (2FA)", "Se déconnecter partout", "Continuer vers le paiement", "Offre actuelle de base", "J'accepte et je continue", "Exporter (CSV)",
+    "Journal des ordres réels", "Vérifie toujours l'agrément", "Chiffrer et vérifier", "Testnet (argent fictif)", "Compte réel", "Aucun ordre ouvert."];
+  const T = {
+    en: ["Real trading", "Subscription", "Before you start", "My Binance account", "Licensed brokers", "Journal", "E-mail code", "Password", "Phone",
+      "I have an account", "Create an account", "Sign in", "Create my account", "Forgot password?", "Create your account or sign in", "Get a code", "Get an SMS",
+      "Buy", "Sell", "Market", "Limit", "Check the order", "Balance", "Order", "Open orders", "My limits", "Lock", "Unlock",
+      "Vault locked", "Secure payment", "Mobile money", "Bank card", "Russia", "Price to be set", "coming soon", "forever", "Most popular",
+      "Confirm the order", "Send the order", "Cancel", "Save", "Sign out", "Sync now", "See the plans", "Manage", "Change", "Add",
+      "Two-factor authentication (2FA)", "Sign out everywhere", "Continue to payment", "Current basic plan", "I accept and continue", "Export (CSV)",
+      "Real orders journal", "Always check the licence", "Encrypt and verify", "Testnet (play money)", "Real account", "No open orders."],
+    zh: ["真实交易", "订阅", "开始之前", "我的币安账户", "持牌经纪商", "日志", "邮箱验证码", "密码", "电话",
+      "我有账户", "创建账户", "登录", "创建我的账户", "忘记密码？", "创建账户或登录", "获取验证码", "获取短信",
+      "买入", "卖出", "市价", "限价", "检查订单", "余额", "订单", "未成交订单", "我的限额", "锁定", "解锁",
+      "保险库已锁定", "安全支付", "移动支付", "银行卡", "俄罗斯", "价格待定", "即将推出", "永久", "最受欢迎",
+      "确认订单", "发送订单", "取消", "保存", "退出登录", "立即同步", "查看方案", "管理", "更改", "添加",
+      "双重验证（2FA）", "在所有设备上退出", "继续付款", "当前基础方案", "我接受并继续", "导出（CSV）",
+      "真实订单日志", "务必核实牌照", "加密并验证", "测试网（模拟资金）", "真实账户", "没有未成交订单。"],
+    ru: ["Реальная торговля", "Подписка", "Перед началом", "Мой аккаунт Binance", "Лицензированные брокеры", "Журнал", "Код по e-mail", "Пароль", "Телефон",
+      "У меня есть аккаунт", "Создать аккаунт", "Войти", "Создать мой аккаунт", "Забыли пароль?", "Создай аккаунт или войди", "Получить код", "Получить SMS",
+      "Купить", "Продать", "По рынку", "Лимитный", "Проверить ордер", "Баланс", "Ордер", "Открытые ордера", "Мои лимиты", "Заблокировать", "Разблокировать",
+      "Сейф заблокирован", "Безопасная оплата", "Мобильные деньги", "Банковская карта", "Россия", "Цена уточняется", "скоро", "навсегда", "Самый популярный",
+      "Подтвердить ордер", "Отправить ордер", "Отмена", "Сохранить", "Выйти", "Синхронизировать", "Смотреть тарифы", "Управлять", "Изменить", "Добавить",
+      "Двухфакторная аутентификация (2FA)", "Выйти на всех устройствах", "Перейти к оплате", "Текущий базовый тариф", "Принимаю и продолжаю", "Экспорт (CSV)",
+      "Журнал реальных ордеров", "Всегда проверяй лицензию", "Зашифровать и проверить", "Testnet (виртуальные деньги)", "Реальный счёт", "Открытых ордеров нет."]
+  };
+  Object.keys(T).forEach(l => { M.I18N[l] = M.I18N[l] || {}; K.forEach((k, i) => { if (T[l][i]) M.I18N[l][k] = T[l][i]; }); });
+})();

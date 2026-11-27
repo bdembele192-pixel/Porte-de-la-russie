@@ -66,7 +66,11 @@ js/contentlang.js     contenu pédagogique dans la langue choisie
 js/content/           traductions EN, 中文, RU (chargées à la demande)
 icons/                icônes de l'app (PNG, SVG, iPhone)
 scripts/fetch-news.mjs  robot de collecte des actus
-supabase/schema.sql   table et règles de sécurité des comptes
+supabase/             base de données (migrations), fonctions de paiement, tests
+js/account.js         comptes : e-mail (code ou mot de passe), SMS, Google, Apple, 2FA
+js/subscribe.js       abonnements (#/abonnement)
+js/real.js            trading réel : compte Binance chiffré + courtiers agréés (#/reel)
+js/vendor/            bibliothèque Supabase (copie figée)
 js/app.js             état, XP, badges, routeur, accueil, académie, profil
 js/live.js            terminal live
 js/play.js            missions + swipe
@@ -79,10 +83,11 @@ La progression est sauvegardée dans le `localStorage` du navigateur (clé `mech
 ## Avant de commercialiser
 
 - **Nom** : « Mèche » est un nom de travail — vérifier sa disponibilité (INPI / EUIPO) avant dépôt.
-- **Argent réel** : l'app ne passe aucun ordre réel. Exécuter des ordres pour des clients demande un agrément (PSAN/CASP MiCA pour la crypto, PSI pour les titres) ou un partenariat avec un courtier régulé via son API.
+- **Argent réel** : Mèche ne détient jamais de fonds. La section « Trading réel » pilote le **propre compte Binance** de l'utilisateur (clé sans retrait, chiffrée sur son appareil, ordres envoyés par son navigateur) et oriente vers des courtiers agréés (`docs/TRADING-REEL.md`). Exécuter des ordres *pour le compte de clients* demanderait un agrément (PSAN/CASP MiCA pour la crypto, PSI pour les titres).
+- **Abonnements** : CinetPay, Stripe, YooKassa, prix à fixer dans la table `plans` (`docs/PAIEMENTS.md`).
 - **Données** : l'API publique Binance est gratuite mais ses conditions d'utilisation doivent être vérifiées pour un usage commercial ; pour actions/indices, prévoir un fournisseur de données sous licence.
 - **Contenu** : les cours restent éducatifs ; aucun conseil en investissement personnalisé (activité réglementée).
-- **Comptes utilisateurs** : prêts (Supabase, voir `docs/COMPTES.md`) ; la politique de confidentialité est dans `legal.html`.
+- **Comptes utilisateurs** : prêts (Supabase, robot `.github/workflows/supabase.yml`, voir `docs/COMPTES.md`) ; la politique de confidentialité et les conditions de vente sont dans `legal.html`.
 
 ## Mèche IA : ce qu'elle fait vraiment
 

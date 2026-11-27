@@ -83,7 +83,7 @@ window.M = window.M || {};
   function searchIndex() {
     const out = [];
     $$(".sidebar .nav a").forEach(a => out.push({ k: "Page", t: a.textContent.trim(), h: a.getAttribute("href"), ic: a.querySelector("[data-icon]") ? a.querySelector("[data-icon]").dataset.icon : "home" }));
-    out.push({ k: "Page", t: "Paramètres", h: "#/settings", ic: "settings" }, { k: "Page", t: "Glossaire", h: "#/glossary", ic: "book" }, { k: "Page", t: "Mon compte", h: "#/account", ic: "lock" });
+    out.push({ k: "Page", t: "Paramètres", h: "#/settings", ic: "settings" }, { k: "Page", t: "Glossaire", h: "#/glossary", ic: "book" }, { k: "Page", t: "Mon compte", h: "#/account", ic: "lock" }, { k: "Page", t: "Abonnement", h: "#/abonnement", ic: "crown" }, { k: "Page", t: "Trading réel", h: "#/reel", ic: "zap" });
     M.Market.ASSETS.forEach(a => out.push({ k: "Actif", t: `${a.name} (${a.short})`, s: a.type, h: "#/live/" + a.sym, ic: "chart" }));
     (M.Quotes.items || []).forEach(q => out.push({ k: q.type === "BRVM" ? "BRVM" : "Cours", t: `${q.name} (${q.short})`, s: q.type + " · " + q.delay, h: "#/home", ic: "chart", qs: "Q:" + q.id }));
     (M.COURSES || []).forEach(c => out.push({ k: "Cours", t: c.title, s: c.sub, h: "#/course/" + c.id, ic: "academy" }));
