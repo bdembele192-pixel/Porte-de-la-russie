@@ -653,5 +653,288 @@ T.c["options-change"] = {
   ]
 };
 
+// ---- g01.js
+Object.assign(T.g, {
+  bid: ["Bid (buy price)", "The best price a buyer is willing to pay right now. If you sell at market, you sell at the bid."],
+  ask: ["Ask (sell price)", "The best price at which someone is willing to sell. If you buy at market, you pay the ask."],
+  spread: ["Spread", "The gap between the bid and the ask. It's a hidden cost you pay on every round trip. The more liquid the asset, the tighter it is."],
+  carnet: ["Order book", "The list of all pending buy and sell orders, ranked by price. It's where the price is formed."],
+  "ordre-marche": ["Market order", "\"Fill it right now, at the best available price.\" Fast, but you don't control the exact price (risk of slippage)."],
+  "ordre-limite": ["Limit order", "\"Buy only if the price drops to X\" (or sell at X). You control the price, but the order may never be filled."],
+  "stop-loss": ["Stop-loss", "An order that automatically cuts your position if the price moves against you to a set level. Your airbag: it limits the loss."],
+  "take-profit": ["Take-profit", "An order that automatically cashes in the gain when the price reaches your target."],
+  "trailing-stop": ["Trailing stop", "A stop-loss that moves up with the price when it goes your way, but never moves back down. It locks in gains."],
+  slippage: ["Slippage", "The difference between the expected price and the price actually obtained. Common when the market moves fast or lacks liquidity."],
+  liquidite: ["Liquidity", "How easily you can buy/sell without moving the price. BTC, EUR/USD, Apple: very liquid. An obscure memecoin: not at all."],
+  volatilite: ["Volatility", "The size of price swings. High volatility = more opportunities, but also more risk per unit of position."],
+  volume: ["Volume", "The quantity traded over a period. A move with volume is more \"credible\" than one without."],
+  gap: ["Gap", "A hole between one period's close and the next one's open. Your stop can be filled much further away than planned."],
+  timeframe: ["Timeframe", "The length of time one candle represents: 1 minute, 1 hour, 1 day… The same asset tells a different story depending on the timeframe."],
+  long: ["Long (buyer)", "You bet on a rise: you buy now to sell higher later."],
+  short: ["Short (seller)", "You bet on a fall: you sell first (a borrowed asset) and buy back lower. Theoretically unlimited loss if it rises."],
+  pnl: ["PnL (Profit and Loss)", "Your gain or loss. \"Unrealised\" while the position is open, \"realised\" once it's closed."],
+  levier: ["Leverage", "An exposure multiplier. With ×10, a 1% move = 10% of your stake. It works in BOTH directions."],
+  marge: ["Margin", "The money you tie up to open a leveraged position. It's what you can lose before being liquidated."],
+  liquidation: ["Liquidation", "Forced closure of your position by the broker when your loss has eaten your margin. With ×10, a drop of about 10% is enough."],
+  drawdown: ["Drawdown (max loss)", "The maximum fall of your capital from a peak. −50% takes +100% to get back to where you were."],
+  rr: ["Risk/reward ratio (R:R)", "What you can gain compared with what you risk. 1:2 = you risk 100 to aim for 200. With 1:2, a 40% win rate is enough."],
+  sizing: ["Position sizing", "Calculating your position size from your stop: size = (capital × risk %) ÷ distance to stop."],
+  "regle-1pc": ["1% rule", "Never risk more than 1-2% of your capital on a single trade. Even 10 losses in a row won't knock you out of the game."],
+  equity: ["Equity (account value)", "Cash + unrealised value of your positions. It's your real balance at any given moment."],
+  frais: ["Fees", "A commission charged on every order. Here 0.1% per execution, as on many crypto platforms. Overtrading makes them explode."],
+  "paper-trading": ["Paper trading", "Trading with virtual money on real prices. The best way to learn without paying for your mistakes."],
+  chandelier: ["Candle (Japanese candlestick)", "Sums up a period: open, high, low, close. Green = close above the open, red = below."],
+  meche: ["Wick", "The thin line above/below the candle's body. A long wick = the price went far, then was rejected."],
+  tendance: ["Trend", "Uptrend = higher and higher highs and lows. Downtrend = the opposite. \"The trend is your friend\"."],
+  support: ["Support", "A price zone where buyers have already shown up in force. The price tends to bounce there… until the day it breaks."],
+  resistance: ["Resistance", "A zone where sellers have already blocked the rise. A broken resistance often becomes support."],
+  breakout: ["Breakout", "The price leaves a zone (range, resistance) with strength. Often the start of a new move."],
+  "faux-breakout": ["Fake breakout", "A break that fails and returns into the zone. The markets' favourite trap — hence the use of a stop."],
+  range: ["Range (sideways market)", "The price oscillates between a ceiling and a floor with no clear direction. Trend strategies lose there; mean reversion wins."],
+  sma: ["SMA (simple moving average)", "The average of the last N closes. Smooths out noise. Price above the SMA = bullish bias."],
+  ema: ["EMA (exponential moving average)", "A moving average that gives more weight to recent prices. Reacts faster than the SMA."],
+  rsi: ["RSI (Relative Strength Index)", "An oscillator from 0 to 100 measuring the strength of recent moves. >70 = overbought, <30 = oversold. In a strong trend, it can stay there a long time."],
+  macd: ["MACD", "The difference between a 12 EMA and a 26 EMA, compared with its own average (signal). Bullish cross = momentum picking up."],
+  bollinger: ["Bollinger Bands", "A 20 SMA surrounded by 2 standard deviations. The bands widen when volatility rises and tighten before big moves."],
+  atr: ["ATR (Average True Range)", "The average size of a candle over 14 periods. Perfect for placing a stop \"at the right distance\" from the noise."],
+  vwap: ["VWAP", "The volume-weighted average price since the start of the session. Institutions' benchmark for judging whether they \"bought well\"."],
+  donchian: ["Donchian channel", "The highest high and lowest low of the last N candles. The basis of the famous Turtles strategy."],
+  momentum: ["Momentum", "What goes up tends to keep going up (in the medium term). One of the best-documented market anomalies."],
+  "mean-reversion": ["Mean reversion", "The idea that a price too far from its average eventually comes back to it. Works well in ranges, very badly in strong trends."],
+  divergence: ["Divergence", "The price makes a new high but the indicator (RSI, MACD) doesn't. A sign the move is running out of steam."],
+  backtest: ["Backtest", "Testing a strategy on past data to see how it would have performed. Essential, but the past guarantees nothing."],
+  overfitting: ["Overfitting", "Tuning a strategy so precisely to the past that it no longer works in the future. The no. 1 trap in algo trading."],
+  sharpe: ["Sharpe ratio", "Return divided by volatility. Measures whether the gain was worth the stress. > 1 = good, > 2 = excellent (and often suspicious in a backtest)."],
+  "win-rate": ["Win rate", "The percentage of winning trades. A 35% win rate can be very profitable if wins are big and losses small."],
+  "profit-factor": ["Profit factor", "Sum of gains ÷ sum of losses. > 1 = winning strategy, > 1.5 = solid."],
+  "z-score": ["Z-score", "How many standard deviations a value is from its average. Z = 2: that's rare, it might come back."],
+  pairs: ["Pairs trading", "Buying one asset and selling a related one (e.g. ETH against BTC) when their spread becomes abnormal, betting it will close."],
+  "look-ahead": ["Look-ahead bias", "A backtesting error where the strategy unintentionally uses information from the future. Result: unrealistic performance."],
+  hft: ["HFT (high-frequency trading)", "Algorithms that place thousands of orders per second, with servers right next to the exchanges. Out of reach for retail traders."],
+  "market-maker": ["Market maker", "A player who constantly quotes a buy AND a sell price and earns the spread. They provide the market's liquidity."],
+  twap: ["TWAP / VWAP (execution)", "Algos that slice a big order into small pieces over time so as not to move the price."],
+  dca: ["DCA (Dollar Cost Averaging)", "Investing the same amount at regular intervals, whatever the price. Simple, anti-FOMO, formidably effective over the long term."],
+  action: ["Share", "A slice of ownership in a company. You profit from a rising share price and from dividends."],
+  etf: ["ETF (tracker)", "A listed fund that tracks an index (S&P 500, MSCI World…). Instant diversification, very low fees."],
+  indice: ["Index", "A basket of shares that measures a market: CAC 40, S&P 500, Nasdaq 100. You don't buy it directly; you go through an ETF or a derivative."],
+  obligation: ["Bond", "A loan to a government or a company, paid with a coupon. When rates rise, the price of existing bonds falls."],
+  forex: ["Forex", "The currency market (EUR/USD, USD/JPY…). The biggest market in the world: more than $7 trillion traded every day."],
+  pip: ["Pip", "The smallest standard move in a currency pair: 0.0001 for EUR/USD."],
+  crypto: ["Cryptocurrency", "A digital asset on a blockchain. The market is open 24/7, very volatile, and much less regulated than the traditional stock market."],
+  stablecoin: ["Stablecoin", "A crypto pegged to a currency (USDT, USDC ≈ $1). It serves as \"cash\" in the crypto ecosystem."],
+  futures: ["Future (futures contract)", "A commitment to buy/sell an asset at a future date at a price set today. Traded with leverage, via margin."]
+});
+
+// ---- g02.js
+Object.assign(T.g, {
+  perpetuel: ["Perpetual (perp)", "A crypto future with no expiry date. Its price is tied to spot through the funding rate. The exchanges' star (and dangerous) product."],
+  funding: ["Funding rate", "A periodic payment between longs and shorts on perpetuals. Very positive funding = everyone is long = an overheated market."],
+  option: ["Option", "The RIGHT (not the obligation) to buy (call) or sell (put) an asset at a fixed price. You pay a premium for that right."],
+  call: ["Call", "A buy option. Gains value when the underlying rises."],
+  put: ["Put", "A sell option. Gains value when the underlying falls. Often used as insurance."],
+  "0dte": ["0DTE options", "Options that expire the same day. Hugely popular on the S&P 500 since 2023 — and hugely risky: they can be worth 0 within hours."],
+  cfd: ["CFD", "Contract for difference: you bet on a price change without owning the asset, with leverage. 70 to 80% of retail accounts lose money (figures displayed by the brokers themselves)."],
+  "matieres-premieres": ["Commodities", "Gold, oil, wheat, copper… Driven by supply, demand, geopolitics and the dollar."],
+  dividende: ["Dividend", "A share of profits paid out to shareholders. The share price falls by roughly the same amount on the ex-dividend date."],
+  per: ["P/E (Price Earnings Ratio)", "Market cap ÷ annual profit. How many years of profits you're paying for. High P/E = the market expects a lot of growth."],
+  capitalisation: ["Market capitalisation", "Share price × number of shares = the value of the whole company on the stock market."],
+  rwa: ["Tokenisation (RWA)", "Representing a real-world asset (bond, share, gold) as a token on a blockchain. One of the big trends of 2024-2026."],
+  inflation: ["Inflation", "The general rise in prices. When it climbs, central banks raise rates, which weighs on risky assets."],
+  "taux-directeur": ["Policy rate", "The rate at which the central bank lends to banks. It's the \"price of money\": it influences every market."],
+  fed: ["Fed", "The US central bank. Its interest rate decisions move the whole world, crypto included."],
+  bce: ["ECB", "European Central Bank. It sets interest rates for the euro area."],
+  cpi: ["CPI", "The US consumer price index, published every month. One of the numbers that moves markets the most."],
+  nfp: ["NFP", "Non-Farm Payrolls: US job creation, published on the 1st Friday of the month. Guaranteed volatility."],
+  earnings: ["Quarterly earnings", "The accounts companies publish every quarter. A share can move ±10% overnight."],
+  halving: ["Halving", "The halving of the Bitcoin miners' reward, every ~4 years (the latest: April 2024). Reduces the new supply of BTC."],
+  "carry-trade": ["Carry trade", "Borrowing in a low-rate currency (e.g. the yen) to invest in a high-rate one. Profitable… until the brutal unwinding."],
+  scalping: ["Scalping", "Dozens of trades a day, lasting seconds to minutes. Fees and spread are your worst enemies."],
+  "day-trading": ["Day trading", "Opening and closing your positions within the day. No overnight risk, but lots of screen time and stress."],
+  swing: ["Swing trading", "Holding a position for a few days to a few weeks to catch a \"wave\". Compatible with a job or studies."],
+  "position-trading": ["Position trading", "Positions held for several months, based on major trends and macro."],
+  fomo: ["FOMO", "Fear Of Missing Out: buying because \"everyone's winning\" and you're afraid of missing the boat. Often at the top."],
+  fud: ["FUD", "Fear, Uncertainty, Doubt: negative rumours that push people to panic-sell."],
+  revenge: ["Revenge trading", "Taking a bigger trade right after a loss to \"win it back\". The fastest way to empty an account."],
+  bull: ["Bull market", "A prolonged rising market. Everyone thinks they're a genius."],
+  bear: ["Bear market", "A falling market (often −20% or more from the peak). Where you really learn."],
+  ath: ["ATH", "All-Time High: an asset's highest price ever."],
+  whale: ["Whale", "A player who holds so much of an asset that their orders move the price."],
+  "pump-dump": ["Pump & dump", "A scam: a group drives up an illiquid asset (hype, social media), then sells everything to the latecomers."],
+  rug: ["Rug pull", "A token's creators pull all the liquidity and vanish with the money."],
+  "prop-firm": ["Prop firm", "A company that \"funds\" an account for you if you pass a paid challenge. Many make most of their money from the challenge fees of those who fail."],
+  mica: ["MiCA", "The European regulation on crypto-assets, fully applicable since late 2024. Platforms must be licensed to serve Europeans."],
+  amf: ["AMF", "The Autorité des marchés financiers, France's stock market watchdog. It publishes blacklists of unauthorised sites: always check before depositing."],
+  kyc: ["KYC", "Know Your Customer: mandatory identity checks at regulated brokers. A platform that doesn't ask for it = red flag."],
+  pea: ["PEA / CTO", "In France, the PEA (European shares, favourable tax treatment after 5 years) and the ordinary securities account (everything else)."],
+  brvm: ["BRVM", "Bourse Régionale des Valeurs Mobilières, based in Abidjan. The stock exchange shared by the 8 WAEMU countries, including Mali."],
+  uemoa: ["WAEMU (UEMOA)", "West African Economic and Monetary Union: Benin, Burkina Faso, Côte d'Ivoire, Guinea-Bissau, Mali, Niger, Senegal, Togo. Common currency: the CFA franc."],
+  bceao: ["BCEAO", "Central Bank of West African States. It sets the WAEMU's policy rates and supervises banks, e-money and payments."],
+  fcfa: ["CFA franc (XOF)", "The WAEMU's currency, pegged to the euro at a fixed rate: €1 = 655.957 CFA francs."],
+  sgi: ["SGI", "Société de gestion et d'intermédiation: the licensed broker that sends your orders to the BRVM and keeps your securities account."],
+  "amf-umoa": ["AMF-UMOA", "Financial Markets Authority of the West African Monetary Union: the regional exchange's watchdog (formerly CREPMF)."],
+  strike: ["Strike (exercise price)", "The price at which an option lets you buy (call) or sell (put) the asset."],
+  prime: ["Premium", "The price paid to buy an option. It's the buyer's maximum loss."],
+  delta: ["Delta", "How much the option's price moves when the asset moves by 1. A delta of 0.5 = the option gains ~€0.50 when the share gains €1."],
+  theta: ["Theta", "The value an option loses with each day that passes. Time works against the option buyer."],
+  "valeur-temps": ["Time value", "The part of the premium that pays for the hope of a move before expiry. It melts to zero at expiration."],
+  seed: ["Recovery phrase (seed)", "12 or 24 words that give total access to a crypto wallet. Anyone who knows them can empty it. NEVER give it out."],
+  defi: ["DeFi", "Decentralised finance: loans, swaps and yields run by smart contracts, without a bank. Innovative, but bugs and hacks are frequent."],
+  "self-custody": ["Self-custody", "Keeping your crypto in your own wallet (you hold the keys) rather than on a platform."],
+  lot: ["Lot", "The unit of size in forex. 1 standard lot = 100,000 units of the base currency; 0.01 lot (micro-lot) = 1,000."],
+  "interets-composes": ["Compound interest", "Gains generate gains of their own. Over the long term, it's the most powerful force in investing."],
+  "epargne-precaution": ["Emergency fund", "A reserve of money available immediately (3 to 6 months of expenses) for the unexpected. To build BEFORE investing."],
+  "flux-tresorerie": ["Cash flow", "The money a company actually collects. Harder to dress up than accounting profit."],
+  vega: ["Vega", "How much an option's price moves when expected volatility rises by one point (e.g. from 20% to 21%)."],
+  gamma: ["Gamma", "How fast delta changes when the price moves. Positive gamma: big moves help you; negative: they hurt you."],
+  "vol-implicite": ["Implied volatility", "The size of move the market expects, derived from option prices. The higher it is, the more expensive options are."],
+  "vol-realisee": ["Realised volatility", "The size of move actually observed over a past period. Compared with implied volatility to tell whether options are expensive."],
+  smile: ["Volatility smile", "Options far from the current price often have higher implied volatility than those at the current price: the curve forms a smile or a slope (skew)."],
+  "risk-reversal": ["Risk reversal", "The volatility difference between a call and a put at the same distance from the price. Negative: the market pays more for downside protection."],
+  "delta-hedge": ["Delta hedging", "Buying or selling the asset to cancel out your options' delta, so you no longer depend on the market's direction."],
+  rfq: ["RFQ (request for quote)", "A client asks several banks or market makers for a price and trades with the best one."],
+  "selection-adverse": ["Adverse selection", "The risk of trading mostly with people who know more than you: your best-informed clients pick your prices when they're wrong."],
+  forward: ["FX forward", "An agreement to exchange two currencies at a future date, at a rate set today. It depends on the interest rate gap between the two currencies."]
+});
+
+// ---- m01.js
+Object.assign(T.m, {
+  covid: { title: "Covid's Black Thursday", year: "March 2020", diff: "Extreme", teaser: "The world discovers a pandemic. Stock markets wobble. Will Bitcoin, \"digital gold\", act as a safe haven?", story: "On 12 March 2020, global panic peaks: stock markets collapse and Bitcoin loses about 40% in 24 hours, briefly falling below $4,000. Hundreds of millions of dollars of leveraged positions are liquidated. Those who had a stop limited the damage; those who bought the panic with a small size saw BTC… pass $60,000 a year later.", lesson: "In a liquidity crisis, everything gets sold — even \"safe havens\". Small size and a mandatory stop." },
+  doge: { title: "Elon, SNL and Dogecoin", year: "May 2021", diff: "Hard", teaser: "A billionaire who's very active on Twitter is about to host a cult US TV show. The internet is on fire. The web's favourite memecoin is at its peak.", story: "On 8 May 2021, Elon Musk hosts Saturday Night Live and calls Dogecoin… \"a hustle\" (as a joke). DOGE, which had risen more than tenfold since the start of the year, drops about 30% during and after the show. A textbook case of \"buy the rumor, sell the news\" and collective FOMO.", lesson: "When your whole feed is talking about an asset, you're often someone's exit liquidity." },
+  luna: { title: "The collapse of Terra/Luna", year: "May 2022", diff: "Hard", teaser: "A giant algorithmic stablecoin promises a 20% yield. Its reserves are in Bitcoin. Something is starting to crack…", story: "In May 2022, the UST stablecoin loses its dollar peg. To defend it, the Luna Foundation Guard sells its bitcoins, then the Terra ecosystem (over $40 billion) evaporates in a week. BTC goes from about $36,000 to nearly $26,000. It's the start of a chain of bankruptcies (Celsius, 3AC… then FTX).", lesson: "A high \"guaranteed\" yield always hides a risk. And contagion spreads faster than you think." },
+  merge: { title: "Ethereum: The Merge", year: "September 2022", diff: "Medium", teaser: "The biggest upgrade in Ethereum's history is coming: the end of mining, energy use cut by ~99.9%. Everyone has been waiting for it for years.", story: "On 15 September 2022, Ethereum switches to proof of stake (\"The Merge\") without a technical hitch. And yet ETH falls about 15 to 20% in the following days: the event was expected, buyers were already positioned, and a higher-than-expected US inflation figure weighs on the whole market.", lesson: "Good news that's already known is often already in the price. Sell the news." },
+  ftx: { title: "The fall of FTX", year: "November 2022", diff: "Extreme", teaser: "The world's 2nd-biggest crypto platform, sponsor of stadiums and celebrities. An article about its balance sheet has just come out. Withdrawals are speeding up…", story: "In early November 2022, revelations about the balance sheet of Alameda, the fund linked to FTX, trigger a rush of withdrawals. Within days, FTX freezes withdrawals and then goes bankrupt; its founder will be convicted of fraud. BTC drops from about $21,000 to under $16,000. Millions of users lose access to their funds.", lesson: "\"Not your keys, not your coins.\" Counterparty risk (the platform itself) is a real risk." },
+  etf: { title: "Bitcoin ETFs arrive", year: "January 2024", diff: "Medium", teaser: "After 10 years of refusals, the US securities regulator is about to approve spot Bitcoin ETFs. BlackRock is in the race. Everyone is waiting for the decision.", story: "On 10 January 2024, the SEC approves 11 spot Bitcoin ETFs. Billions of dollars pour in over the following weeks… but BTC, which had risen sharply in anticipation, loses about 20% in two weeks (part of the selling coming from outflows from older funds). It then takes off again to break its records in March.", lesson: "The market anticipates. The day of the event is often when the first buyers cash in." },
+  yen: { title: "The yen's Black Monday", year: "August 2024", diff: "Hard", teaser: "The Bank of Japan has just raised rates. A US jobs figure disappoints. Billions borrowed in yen are funding positions all over the world…", story: "On 5 August 2024, the massive unwinding of the yen \"carry trade\" sends the Nikkei down more than 12%, its worst session since 1987. Panic spreads to all risky assets: BTC goes from about $62,000 to under $50,000 in a few hours, before partly rebounding.", lesson: "Markets are interconnected: a central bank decision in Tokyo can liquidate your BTC long in Paris." },
+  election: { title: "US election night", year: "November 2024", diff: "Medium", teaser: "The US presidential election is tomorrow. One of the candidates promises to make the US \"the crypto capital of the planet\".", story: "On 6 November 2024, Donald Trump's victory propels BTC above its $73,000 record. Within two weeks, it approaches $95,000, and it breaks $100,000 in early December. Those who followed the trend with a trailing stop captured a huge part of the move.", lesson: "When a real trend starts, the best strategy is often the simplest: follow it and let it run." },
+  tariffs: { title: "Liberation Day: the tariff shock", year: "April 2025", diff: "Extreme", teaser: "The White House is about to announce new \"reciprocal\" tariffs on the whole world. Nobody knows how big they'll be.", story: "On 2 April 2025, the United States announces tariffs far higher than expected. Global stock markets collapse for several days, and BTC falls below $75,000. On 9 April, the announcement of a 90-day pause triggers one of the biggest rebounds in Nasdaq history — and BTC climbs back towards $85,000.", lesson: "Political shocks create violent moves in both directions. Shorting the bottom or buying the panic without a stop = Russian roulette." },
+  gold: { title: "The gold rush", year: "2025", diff: "Easy", teaser: "Central banks buying, a weakening dollar, geopolitical tensions. Is the world's oldest safe haven too expensive?", story: "In 2025, gold sets record after record and passes $4,000 an ounce in the autumn, supported by central bank buying, expected US rate cuts and the search for safe havens. A perfect long-term trend… punctuated by brutal corrections that kicked out over-leveraged traders.", lesson: "A long-term trend is traded with patience: enter on pullbacks, stop below the lows, and don't get out at the first shiver." }
+});
+
+// ---- q01.js
+T.q.u1 = { t: "Market basics", sub: "Bid, ask, spread, long, short", q: [
+  ["The best price at which someone is willing to sell is called…", ["The bid", "The ask", "The spread"], "The ask is the selling price; the bid is the buying price."],
+  ["Bid 99.90 / Ask 100.10. What is the spread?", ["0.10", "0.20", "100"], "100.10 − 99.90 = 0.20."],
+  ["Going \"short\" means betting on a fall.", null, "You sell first to buy back lower."],
+  ["The price rises when ___ are in more of a hurry than sellers.", ["buyers", "regulators", "central banks"], "Buyers \"taking\" the ask push the price up."],
+  ["An unrealised gain is locked in for good.", null, "It only counts once the position is closed."],
+  ["A green candle means that…", ["The close is above the open", "Volume has increased", "The price hit a record"], "Green = close > open over the period."],
+  ["What do a candle's wicks show?", ["The open and the close", "The high and the low", "The volume"], "Wicks show the extremes reached."],
+  ["The spread is a cost you pay on every round trip.", null, "You buy at the ask and sell back at the bid."]
+] };
+T.q.u2 = { t: "Orders & execution", sub: "Market, limit, stop, slippage", q: [
+  ["Which order guarantees immediate execution but not the price?", ["Limit order", "Market order", "Take-profit"], "A market order is filled straight away at the best available price."],
+  ["You only want to buy if the price comes back down to 95. You use…", ["A limit order at 95", "A market order", "A stop at 95"], "A limit order sets your maximum buying price."],
+  ["A stop-loss is always filled exactly at its price.", null, "With a gap or a fast market, there's slippage."],
+  ["The difference between the expected price and the price you get is called ___.", ["slippage", "funding", "pip"], "Slippage increases when liquidity is low."],
+  ["A trailing stop…", ["Moves back when the price falls", "Rises with the price and never comes down", "Closes after one hour"], "It locks in gains as the price rises."],
+  ["Moving your stop to \"breakeven\" means placing it…", ["At the entry price", "At the day's low", "Nowhere"], "The trade can no longer lose (excluding fees and gaps)."],
+  ["On an illiquid asset, a limit order is often the safer choice.", null, "It avoids buying much higher than planned."],
+  ["A take-profit is used to…", ["Limit the loss", "Automatically cash in the target gain", "Increase leverage"], "It closes the position when the target is reached."]
+] };
+T.q.u3 = { t: "The instruments", sub: "Stocks, ETFs, bonds, derivatives", q: [
+  ["An S&P 500 ETF is…", ["A single US share", "A fund that tracks 500 companies", "A crypto"], "Instant diversification at low cost."],
+  ["When rates rise, the price of existing bonds falls.", null, "Their fixed coupon becomes less attractive than that of new ones."],
+  ["Which product gives the right, but not the obligation, to buy?", ["A put", "A call", "A future"], "A call is a buy option."],
+  ["A crypto perpetual is kept close to the spot price thanks to the…", ["Funding rate", "Dividend", "Coupon"], "Longs and shorts pay each other depending on the gap."],
+  ["A ___ is a loan to a government or company, paid with a coupon.", ["bond", "ETF", "CFD"], "A bond = lending rather than owning."],
+  ["With a CFD, you actually own the share.", null, "A CFD is a contract on the price change, with no ownership."],
+  ["A dividend is…", ["A share of profits paid to shareholders", "A broker's commission", "A tax"], "The share price drops by roughly the same amount on the ex-dividend date."],
+  ["A stablecoin like USDC aims to be worth…", ["1 Bitcoin", "1 dollar", "1 gram of gold"], "It's the \"cash\" of the crypto ecosystem."]
+] };
+T.q.u4 = { t: "Reading a chart", sub: "Trends, supports, breakouts", q: [
+  ["An uptrend is…", ["Higher and higher highs and lows", "One big green candle", "An RSI above 50"], "The structure of peaks and troughs defines the trend."],
+  ["A support is a precise line, to the cent.", null, "It's a zone, not an exact line."],
+  ["A resistance broken with strength often becomes…", ["A support", "Useless", "A stronger resistance"], "That's the level \"flip\"."],
+  ["A break that fails and returns into the zone is a ___.", ["fake breakout", "halving", "dividend"], "The market's favourite trap, hence the use of a stop."],
+  ["Which filter makes a breakout more credible?", ["A close beyond the level with volume", "A wick touching the level", "A tweet"], "Close + volume = confirmation."],
+  ["A hammer (long lower wick) after a drop suggests…", ["Sellers being rejected", "The drop accelerating", "Nothing at all"], "To be confirmed by the next candle."],
+  ["Round numbers ($100,000 for BTC) often act as psychological levels.", null, "Lots of orders pile up there."],
+  ["Before buying on the 1h chart, it's wise to check…", ["The 4h and daily trend", "The weather", "The coin's follower count"], "You trade in the direction of the higher timeframe."]
+] };
+T.q.u5 = { t: "Indicators", sub: "EMA, RSI, MACD, Bollinger, ATR", q: [
+  ["An RSI above 70 indicates a zone that is…", ["Oversold", "Overbought", "Neutral"], "But in a strong trend, it can stay there a long time."],
+  ["RSI > 70 = sell immediately.", null, "It shows strong momentum, not a sell signal on its own."],
+  ["The ATR measures…", ["Direction", "The average size of candles", "Volume"], "Ideal for placing a stop outside the noise."],
+  ["When the ___ bands tighten, a big move is often brewing.", ["Bollinger", "Donchian", "Fibonacci"], "That's the volatility \"squeeze\"."],
+  ["Compared with the SMA, the EMA…", ["Reacts faster to recent prices", "Reacts more slowly", "Is identical"], "It gives more weight to the latest candles."],
+  ["The price makes a new high but the RSI doesn't. That's…", ["A divergence", "A gap", "A breakout"], "Momentum is running out of steam."],
+  ["Institutions use the VWAP to…", ["Judge the quality of their buying price", "Calculate taxes", "Pick a crypto"], "Buying below the VWAP = \"bought well\" for the session."],
+  ["Stacking 8 indicators always improves decisions.", null, "2-3 complementary indicators are enough."]
+] };
+T.q.u6 = { t: "Risk management", sub: "Position size, leverage, drawdown", q: [
+  ["Maximum recommended risk per trade?", ["1 to 2% of capital", "10%", "50%"], "Even 10 losses in a row won't knock you out of the game."],
+  ["Capital $10,000, risk 1%. How many $ do you risk per trade?", null, "10,000 × 1% = $100."],
+  ["Leverage increases your probability of being right.", null, "It only increases how fast you win… or lose."],
+  ["Position size is calculated from…", ["Your mood", "The distance to the stop", "The share price"], "Size = risk in $ ÷ distance to stop."],
+  ["Your account loses 50%. What % gain do you need to break even?", null, "From 50 to 100, you have to double: +100%."],
+  ["The maximum fall in capital from a peak is called the ___.", ["drawdown", "spread", "theta"], "Drawdown measures the maximum pain."],
+  ["With an R:R of 1:3, what minimum win rate breaks even (before fees)?", ["25%", "50%", "75%"], "1 ÷ (1 + 3) = 25%."],
+  ["A daily loss limit helps avoid revenge trading.", null, "It forces a break when emotions take over."]
+] };
+
+// ---- q02.js
+T.q.u7 = { t: "Psychology", sub: "FOMO, revenge, biases", q: [
+  ["Buying after +40% because \"everyone's winning\" is…", ["FOMO", "DCA", "Hedging"], "Fear Of Missing Out."],
+  ["Doubling your size right after a loss to win it back is…", ["Revenge trading", "Discipline", "Scalping"], "The fastest way to empty an account."],
+  ["A loss hurts about twice as much as an equivalent gain feels good.", null, "That's loss aversion."],
+  ["Only seeing those who succeeded is ___ bias.", ["survivorship", "spread", "volume"], "You don't see the thousands who lost everything."],
+  ["The biggest red flag in a \"trading coach\"?", ["He talks about stop-losses", "He promises guaranteed gains", "He shows his losses"], "No return is guaranteed in the markets."],
+  ["Doing nothing can be the best trading decision.", null, "No clear setup = no trade."],
+  ["Classic beginner's mistake…", ["Cutting winners early and letting losers run", "Using a stop", "Keeping a journal"], "You should do exactly the opposite."],
+  ["After 2 losses in a row, the wisest move is often…", ["To take a break", "To increase leverage", "To switch strategy at random"], "A break breaks the emotional spiral."]
+] };
+T.q.u8 = { t: "Strategies & algos", sub: "Trend, breakout, mean reversion, pairs", q: [
+  ["Which algo buys when a fast EMA crosses above a slow EMA?", ["Trend following", "Mean reversion", "Pairs trading"], "It follows momentum."],
+  ["The Turtles' method is based on…", ["The Donchian channel", "RSI 2", "Dividends"], "Buy on a break of the highest high of the last N candles."],
+  ["Mean reversion works very well in strong trends.", null, "It suffers in trends and shines in ranges."],
+  ["Which strategy can win whether the market goes up or down?", ["Pairs trading", "Long-only trend", "Buy & hold"], "It bets on the spread between two assets."],
+  ["Tuning a strategy so finely to the past that it fails in the future is ___.", ["overfitting", "halving", "arbitrage"], "Test on one period, validate on another."],
+  ["A backtest without fees or slippage is realistic.", null, "Costs can turn a winning strategy into a losing one."],
+  ["A Telegram bot promises a guaranteed +2% a day. It's…", ["A scam", "A good investment", "An ETF"], "+2%/day ≈ +137,000% a year: impossible."],
+  ["To compare two strategies, the best return/risk indicator is…", ["The Sharpe ratio", "The number of trades", "The asset's price"], "It relates return to volatility."]
+] };
+T.q.u9 = { t: "Macro & news", sub: "Rates, inflation, events", q: [
+  ["The Fed raises rates by surprise. Typical reaction of tech?", ["Up", "Down", "None"], "More expensive money weighs on growth valuations."],
+  ["CPI measures…", ["Inflation", "Employment", "GDP"], "Consumer Price Index."],
+  ["Spot Bitcoin ETFs were approved in the United States in January 2024.", null, "And BTC fell at first: sell the news."],
+  ["The Bitcoin halving…", ["Halves the miners' reward", "Halves the price", "Doubles the number of BTC"], "It cuts new supply roughly every 4 years."],
+  ["Borrowing in yen at low rates to invest elsewhere is called the ___.", ["carry trade", "scalping", "staking"], "Its unwinding shook markets on 5 August 2024."],
+  ["In April 2025, which event caused a brutal market drop?", ["The announcement of massive US tariffs", "The halving", "A bank merger"], "Then a 90-day pause triggered a historic rebound."],
+  ["NFP (US jobs) is usually published on the first Friday of the month.", null, "Guaranteed volatility that day."],
+  ["The European regulation governing crypto-assets is called…", ["MiCA", "MiFID Crypto", "Basel IV"], "Fully applicable since late 2024."]
+] };
+T.q.u10 = { t: "West Africa & BRVM", sub: "WAEMU, CFA franc, SGI, mobile money", q: [
+  ["How many countries share the BRVM?", ["5", "8", "15"], "The 8 WAEMU countries, including Mali."],
+  ["To buy a share on the BRVM, you have to go through…", ["A licensed SGI", "A mobile money agent", "The BCEAO"], "The SGI is the broker licensed by the AMF-UMOA."],
+  ["€1 = how many CFA francs? (fixed parity, rounded to the unit)", null, "€1 = 655.957 CFA francs."],
+  ["The CFA franc floats freely against the euro.", null, "It's pegged to the euro at a fixed parity."],
+  ["Which institution sets the WAEMU's policy rates?", ["The BCEAO", "The BRVM", "The IMF"], "Central Bank of West African States."],
+  ["Someone on WhatsApp offers to double your 50,000 CFA francs sent by Orange Money in 7 days. It's…", ["A scam", "A BRVM investment", "A government bond"], "Unrealistic return + payment to an individual = scam."],
+  ["The financial markets watchdog of the WAMU is the ___.", ["AMF-UMOA", "AMF France", "SEC"], "Formerly the CREPMF."],
+  ["If you buy Bitcoin from Mali, you're also exposed to the dollar exchange rate.", null, "BTC is priced in dollars: the CFA/USD rate adds to the risk."]
+] };
+T.q.u11 = { t: "Security & going live", sub: "Brokers, scams, crypto", q: [
+  ["First criterion for choosing a broker?", ["Its regulation", "Its max leverage", "Its ads"], "Without regulation, your money isn't protected."],
+  ["Official support can ask you for your seed phrase.", null, "Never. Anyone who asks for it wants to rob you."],
+  ["The safest two-factor authentication uses…", ["An authenticator app", "An SMS", "An email"], "SMS can be hijacked (SIM swap)."],
+  ["A platform that asks for no ___ is a red flag.", ["KYC", "tweet", "dividend"], "Regulated firms verify identity."],
+  ["How much should you stake on your first real trade?", ["An amount you can lose without consequences", "All your savings", "Your rent money"], "The goal is to test your discipline, not to get rich."],
+  ["In a Ponzi scheme, the first gains come from newcomers' deposits.", null, "Until it collapses."],
+  ["Before depositing, test…", ["A small withdrawal", "×100 leverage", "A memecoin"], "Being able to withdraw easily is essential."],
+  ["What should you build up BEFORE trading?", ["An emergency fund", "A prop firm account", "An NFT collection"], "So you never trade under the pressure of an unexpected event."]
+] };
+T.q.u12 = { t: "Options & volatility", sub: "Call, put, Greeks, vol, hedging", q: [
+  ["A call gives you…", ["The right to buy at a fixed price", "The obligation to buy", "The right to sell"], "Call = right to buy, put = right to sell."],
+  ["Maximum loss for an option buyer?", ["The premium", "Unlimited", "The strike"], "They can only lose what they paid."],
+  ["Call strike 100, premium 4. At expiry the asset is worth 112. Net gain?", null, "112 − 100 = 12, minus the premium of 4 = 8."],
+  ["Theta works against the option buyer.", null, "Every day without a move, the option loses time value."],
+  ["The higher implied volatility is, the more an option is…", ["Expensive", "Cheap", "Close to expiry"], "The market expects big moves: the right is worth more."],
+  ["After an announcement, implied vol collapses: that's the vol ___.", ["crush", "smile", "spread"], "Options lose value even if the price moves."],
+  ["An option seller is…", ["Short gamma", "Long gamma", "Risk-free"], "Big moves make them lose; they collect theta."],
+  ["To neutralise its book's direction, a desk does…", ["A delta hedge", "A vol crush", "A breakeven stop"], "It buys or sells the asset to bring its delta back to zero."],
+  ["A market maker who wins almost every price request must be very good.", null, "Adverse selection: their prices are probably too low."],
+  ["A Malian importer pays in dollars. The main risk is…", ["EUR/USD, because the CFA franc follows the euro", "The gold price", "The BRVM"], "If the euro falls against the dollar, the invoice rises in CFA francs."]
+] };
+
   M.CONTENT_I18N.en = T;
 })();
