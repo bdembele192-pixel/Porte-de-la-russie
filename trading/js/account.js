@@ -186,13 +186,22 @@ window.M = window.M || {};
           <div class="set-ctl">${totp.length ? `<button class="btn ghost sm" id="a-2fa-off">Désactiver</button>` : `<button class="btn primary sm" id="a-2fa">Activer</button>`}</div></div>
         <div id="a-2fa-box"></div>
         <div class="set-row"><div><b>Supprimer mes données du cloud</b><small>Efface la progression enregistrée dans ton compte (cet appareil garde sa copie locale).</small></div>
-          <div class="set-ctl"><button class="btn danger sm" id="a-del">Supprimer</button></div></div>`;
+          <div class="set-ctl"><button class="btn danger sm" id="a-del">Supprimer</button></div></div>
+        <div class="set-row"><div><b>Supprimer mon compte</b><small>Efface définitivement ton compte et tout ce qui est enregistré dans le cloud. Ta copie locale reste sur cet appareil.</small></div>
+          <div class="set-ctl"><button class="btn danger sm" id="a-kill">Supprimer le compte</button></div></div>`;
       $("#a-sync", box).onclick = async () => M.toast(await push() ? "Synchronisé ☁️" : "Échec de la synchronisation", "win");
       $("#a-out", box).onclick = async () => { await push(); await sb.auth.signOut(); M.toast("Déconnecté"); };
       $("#a-del", box).onclick = async () => {
         if (!confirm("Supprimer la progression enregistrée dans ton compte ?")) return;
         const { error } = await sb.from("progress").delete().eq("user_id", u.id);
         M.toast(error ? error.message : "Données du cloud supprimées", error ? "err" : "win");
+      };
+      $("#a-kill", box).onclick = async () => {
+        if (!confirm("Supprimer définitivement ton compte Mèche ? Cette action est irréversible.")) return;
+        const { error } = await sb.rpc("delete_my_account");
+        if (error) { M.toast("Suppression impossible : " + error.message, "err"); return; }
+        await sb.auth.signOut().catch(() => {});
+        M.toast("Compte supprimé", "win");
       };
       const off = $("#a-2fa-off", box);
       if (off) off.onclick = async () => {

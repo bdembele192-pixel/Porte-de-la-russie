@@ -360,7 +360,9 @@ window.M = window.M || {};
             <div class="set-ctl">
               <button class="btn primary" id="tour-go">${M.icon("target")} Relancer le tutoriel</button>
               <button class="btn ghost" id="onb-go">Revoir l'écran de bienvenue</button>
+              <button class="btn ghost" id="install-go" data-tip-text="Ajoute Mèche à ton écran d'accueil ou à ton ordinateur : elle s'ouvre comme une app et marche sans connexion.">${M.icon("download")} Installer l'app</button>
             </div>
+            <p class="muted small">Mentions légales, confidentialité et avertissement sur les risques : <a href="legal.html" target="_blank" rel="noopener">lire</a>.</p>
           </section>
 
           <section class="set-sec glass" id="donnees">
@@ -455,6 +457,7 @@ window.M = window.M || {};
     bindSw("discreet");
     bindSw("newsAlerts");
     $("#tour-go", el).onclick = () => M.startTour && M.startTour();
+    $("#install-go", el).onclick = () => M.installApp && M.installApp();
     $("#onb-go", el).onclick = () => { M.state.onboarded = false; M.save(true); location.hash = "#/home"; location.reload(); };
 
     $("#export", el).onclick = () => {

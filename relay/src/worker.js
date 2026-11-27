@@ -78,6 +78,8 @@ function allow(ip, perMin) {
   const now = Date.now(), list = (recent.get(ip) || []).filter(t => now - t < 60e3);
   if (list.length >= perMin) return false;
   list.push(now); recent.set(ip, list);
+  // Les adresses IP ne sont gardées qu'une minute : on purge celles qui n'ont plus de question récente
+  if (recent.size > 200 || Math.random() < 0.05) for (const [k, v] of recent) if (!v.some(t => now - t < 60e3)) recent.delete(k);
   if (recent.size > 5000) recent.clear();
   return true;
 }

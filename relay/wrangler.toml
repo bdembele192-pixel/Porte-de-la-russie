@@ -11,7 +11,8 @@ MODEL = "claude-opus-5-5"
 EFFORT = "medium"
 # Nombre maximal de questions par minute et par adresse IP
 AI_PER_MINUTE = "6"
-# Sites autorisés à utiliser le relais (séparés par des virgules), « * » = tous
-ALLOWED_ORIGINS = "*"
+# Sites autorisés à utiliser le relais (séparés par des virgules), « * » = tous.
+# « null » = l’app ouverte depuis un fichier (Mèche OS) ; localhost = tests sur ton PC.
+ALLOWED_ORIGINS = "https://bdembele192-pixel.github.io,null,http://localhost:8765"
 
 # La clé API Claude ne se met JAMAIS ici : npx wrangler secret put ANTHROPIC_API_KEY

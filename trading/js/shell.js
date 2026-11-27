@@ -323,13 +323,14 @@ window.M = window.M || {};
       $("#ch-ic", el).innerHTML = a.icon; $("#ch-ic", el).style.setProperty("--c", a.color);
       $("#ch-n", el).innerHTML = `${esc(a.name)} <span class="muted">(${esc(a.short)})</span>`;
       const go = $("#ch-go", el), dl = $("#ch-dl", el);
-      go.hidden = a.q; go.setAttribute("href", "#/live/" + sym);
+      const canTrade = !a.q || (M.QTrade && M.QTrade.tradable(M.Quotes.byId[sym.slice(2)]));
+      go.hidden = !canTrade; go.setAttribute("href", "#/live/" + sym);
       dl.hidden = !a.q;
       if (a.q) {
         const q = M.Quotes.byId[sym.slice(2)], direct = q && !q.fromFile && q.open_;
         dl.textContent = "● " + M.Quotes.fresh(q).replace(/^./, c => c.toUpperCase()) + " · " + a.src;
         dl.className = "pill " + (direct ? "live" : "demo");
-        dl.setAttribute("data-tip-text", `Source : ${a.src} (${a.delay}). Cours gratuit, actualisé toutes les 30 s quand la source le permet. Pas encore échangeable dans le terminal Live.`);
+        dl.setAttribute("data-tip-text", `Source : ${a.src} (${a.delay}). Cours gratuit, actualisé toutes les 30 s quand la source le permet.${canTrade ? " Échangeable en argent virtuel dans le terminal Live pendant les heures de séance." : " Indice de référence ou taux : il ne s'achète pas directement."}`);
       }
       const last = !a.q && livePrice != null ? livePrice : a.price != null ? a.price : bars.length ? bars[bars.length - 1].c : null;
       $("#ch-p", el).textContent = last != null ? a.fmt(last) + a.cur : "—";

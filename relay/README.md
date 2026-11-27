@@ -13,7 +13,25 @@ Sans relais, l'app fonctionne quand même : les cryptos et les bourses mondiales
 le téléphone, la BRVM et les actus viennent du robot GitHub (mis à jour plusieurs fois par jour
 seulement), et l'IA répond avec ses connaissances locales.
 
-## Installation (10 minutes)
+## Installation sans rien installer (recommandé, 5 minutes)
+
+Le workflow GitHub **« Relais Mèche (Cloudflare) »** (`.github/workflows/relay.yml`) déploie le relais et
+inscrit tout seul son adresse dans `trading/js/config.js`.
+
+1. Crée un compte gratuit sur [dash.cloudflare.com](https://dash.cloudflare.com/sign-up).
+2. Cloudflare → **My Profile → API Tokens → Create Token** → modèle **« Edit Cloudflare Workers »** → copie le jeton.
+3. Cloudflare → **Workers & Pages** : copie l'**Account ID** (colonne de droite).
+4. GitHub, dans ce dépôt → **Settings → Secrets and variables → Actions → New repository secret** :
+   - `CLOUDFLARE_API_TOKEN` : le jeton de l'étape 2 ;
+   - `CLOUDFLARE_ACCOUNT_ID` : l'identifiant de l'étape 3 ;
+   - `ANTHROPIC_API_KEY` (facultatif) : ta clé Claude, pour Mèche IA (voir plus bas, et fixe d'abord une limite de dépense).
+5. Onglet **Actions → « Relais Mèche (Cloudflare) » → Run workflow**. Au bout d'une minute, le relais est en ligne
+   et l'app l'utilise (le robot a modifié `relayUrl`).
+
+Le relais n'accepte que les requêtes venant du site GitHub Pages, de Mèche OS et de `localhost`
+(`ALLOWED_ORIGINS` dans `wrangler.toml`). Si tu publies l'app sur un autre domaine, ajoute-le.
+
+## Installation depuis ton ordinateur (10 minutes)
 
 Il faut un ordinateur avec [Node.js](https://nodejs.org) (version 20 ou plus).
 
@@ -49,7 +67,7 @@ C'est tout pour la BRVM et les actus en direct.
 | `MODEL` | `claude-opus-5-5` | Modèle utilisé. `claude-sonnet-5-5` est plus rapide, `claude-haiku-5-5` beaucoup moins cher. |
 | `EFFORT` | `medium` | Profondeur de réflexion : `low` (plus rapide et moins cher), `medium`, `high`. |
 | `AI_PER_MINUTE` | `6` | Nombre maximal de questions par minute et par adresse IP. |
-| `ALLOWED_ORIGINS` | `*` | Sites autorisés à utiliser le relais. Mets l'adresse de ton site (ex. `https://ton-site.com`) une fois l'app en ligne. |
+| `ALLOWED_ORIGINS` | site GitHub Pages, `null`, `localhost` | Sites autorisés à utiliser le relais. `*` = tous. Ajoute ton domaine si tu publies l'app ailleurs. |
 
 ### Combien ça coûte ?
 

@@ -33,6 +33,7 @@ Tant que `js/config.js` n'est pas rempli, l'app reste en mode local (aucun compt
 ## 5. Recommandations de sécurité
 - Active une **protection anti-robots** (CAPTCHA hCaptcha ou Cloudflare Turnstile) dans **Authentication → Attack Protection**.
 - Garde des **limites d'envoi** raisonnables (codes e-mail / SMS) pour éviter les abus et les coûts.
-- Publie une **politique de confidentialité** (données collectées : identifiant de connexion + progression) et déclare
-  le traitement auprès de l'autorité de protection des données de chaque pays visé (au Mali : l'APDP ; en Europe : RGPD).
+- La **politique de confidentialité** est dans `legal.html` (lien en bas de l'app et dans Paramètres → Aide). Relis-la,
+  puis déclare le traitement auprès de l'autorité de protection des données de chaque pays visé (au Mali : l'APDP ; en Europe : RGPD).
+- Le bouton **« Supprimer mon compte »** utilise la fonction `delete_my_account()` créée par `schema.sql` : exécute bien tout le fichier.
 - Ce qui est synchronisé : la progression (XP, badges, portefeuille virtuel, réglages). Jamais la clé API Claude.

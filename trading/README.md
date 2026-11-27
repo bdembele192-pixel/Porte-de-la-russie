@@ -7,7 +7,7 @@ Application web statique (HTML/CSS/JS, aucune dépendance, aucun build) : ouvre 
 
 | Section | Ce que ça fait |
 |---|---|
-| ⚡ **Live** | Trading papier sur les prix réels (WebSocket public Binance) : BTC, ETH, SOL, BNB, XRP, DOGE, or (PAXG), EUR/USD. Long/short, levier ×1–20, stop-loss, objectif, liquidation, frais 0,1 %. Flux des **transactions réelles** en direct (🐋 = grosses transactions). Les stops restent surveillés même si tu changes d'actif, et sont rattrapés à la réouverture de l'app. |
+| ⚡ **Live** | Trading papier sur les prix réels (WebSocket public Binance) : BTC, ETH, SOL, BNB, XRP, DOGE, or (PAXG), EUR/USD. Long/short, levier ×1–20, stop-loss, objectif, liquidation, frais 0,1 %. Flux des **transactions réelles** en direct (🐋 = grosses transactions). Les stops restent surveillés même si tu changes d'actif, et sont rattrapés à la réouverture de l'app. **Aussi échangeables** (cours différés, relus toutes les 30 s) : 14 indices et actions (S&P 500, CAC 40, Apple, Nvidia…), 7 matières premières, 6 paires de devises et 48 actions de la **BRVM**, avec des règles réalistes : horaires de séance de chaque place, levier max par marché (actions ×5, indices et matières ×10, devises ×20), pas de levier ni de vente à découvert à la BRVM, limite de ±7,5 % par séance. |
 | ⏳ **Time Machine** | 10 vrais moments de marché rejoués bougie par bougie avec l'historique réel : Covid 2020, Elon/Dogecoin, Terra/Luna, The Merge, FTX, ETF Bitcoin, lundi noir du yen, élection US 2024, choc des tarifs 2025, ruée vers l'or 2025. Débrief avec l'histoire vraie + note du coach. Défi du jour. |
 | 👆 **Swipe** | Mini-jeu « haut ou bas ? » sur de vraies bougies tirées au hasard. |
 | 🧪 **Algo Lab** | Backtest de 4 algos (Trend Following EMA+ATR, Breakout Donchian/Turtles, Mean Reversion Bollinger+RSI, Pairs Trading ETH/BTC) sur données réelles, frais inclus, sans biais d'anticipation. Comparateur des 4 algos. |
@@ -18,6 +18,8 @@ Application web statique (HTML/CSS/JS, aucune dépendance, aucun build) : ouvre 
 | 🤖 **Mèche IA** | Modèle d'apprentissage (régression logistique) entraîné automatiquement sur les vraies bougies Binance (8 actifs, 1h et 4h) à chaque ouverture en ligne, validé honnêtement sur la période la plus récente, et affiné par les trades live des utilisateurs (pondérés par leur discipline). **Copilote** : analyse chaque ordre Live avant envoi (stop, risque, levier, liquidation, tendance, RSI, volatilité, revenge trading, historique perso, probabilité du modèle), bloque les ordres risqués et propose une version plus sûre ; alertes sur les positions ouvertes (notifications). N'intervient jamais dans les missions, le Swipe ni le quiz. **Chat** : glossaire + cours + base multi-domaines (économie, finance, politique, droit, écologie, géopolitique, psychologie, commerce, théorie) + apprentissage sur Wikipédia ; cerveau Claude optionnel (clé API Anthropic, recherche web). |
 | 📰 **Actus** | Communiqués officiels (Fed, BCE, Banque d'Angleterre, Banque du Japon, BRI, FMI, Banque mondiale, OMC, ONU, BAD, SEC, CFTC, BLS, BEA, EIA) collectés toutes les 5 min par un robot GitHub Actions (`.github/workflows/news.yml` → `data/news.json`), relus par l'app toutes les 2 min, avec alertes ; mouvements des marchés en direct ; Mèche IA les connaît et les explique. |
 | 🔐 **Comptes** | Connexion sans mot de passe (code e-mail ou SMS), réseaux (Google, Apple, GitHub, Facebook), double authentification TOTP, synchronisation de la progression, données cloisonnées par utilisateur. Nécessite un projet Supabase : voir `docs/COMPTES.md`. |
+| 📴 **Hors ligne** | Installable (PWA : Android, iPhone, Windows, macOS). Un service worker garde l'app, les cours, le quiz et les dernières données : elle s'ouvre sans connexion. Bandeau « hors ligne » et « nouvelle version ». |
+| ⚖️ **Légal** | `legal.html` : avertissement sur les risques, mentions légales, politique de confidentialité, sources des données, conditions d'utilisation. Lien en bas de chaque page. Suppression complète du compte depuis l'app. |
 | 🧭 **Tutoriel** | Visite guidée à la première ouverture, relançable dans Paramètres → Aide & tutoriel. |
 | 💬 **Infobulles** | Survole n'importe quel bouton ou terme souligné (appui long sur mobile) : ~125 définitions du glossaire. |
 | 🏆 **Progression** | XP, 8 niveaux, 20 badges, série de jours, coach qui note la discipline (stop, taille, levier, revenge trading, surtrading). |
@@ -50,6 +52,11 @@ js/config.js          URLs des actus, configuration des comptes
 js/news.js            section Actus
 js/account.js         comptes et synchronisation
 js/tour.js            tutoriel guidé
+js/quotetrade.js      trading sur les cours différés (bourses, matières, devises, BRVM) : horaires, levier, règles
+js/offline.js         mode hors ligne, installation, bandeau réseau
+sw.js                 service worker (cache de l'app et des données)
+legal.html            mentions légales, confidentialité, risques
+icons/                icônes de l'app (PNG, SVG, iPhone)
 scripts/fetch-news.mjs  robot de collecte des actus
 supabase/schema.sql   table et règles de sécurité des comptes
 js/app.js             état, XP, badges, routeur, accueil, académie, profil
@@ -67,7 +74,7 @@ La progression est sauvegardée dans le `localStorage` du navigateur (clé `mech
 - **Argent réel** : l'app ne passe aucun ordre réel. Exécuter des ordres pour des clients demande un agrément (PSAN/CASP MiCA pour la crypto, PSI pour les titres) ou un partenariat avec un courtier régulé via son API.
 - **Données** : l'API publique Binance est gratuite mais ses conditions d'utilisation doivent être vérifiées pour un usage commercial ; pour actions/indices, prévoir un fournisseur de données sous licence.
 - **Contenu** : les cours restent éducatifs ; aucun conseil en investissement personnalisé (activité réglementée).
-- **Comptes utilisateurs** : pour synchroniser la progression entre appareils, il faudra un backend (authentification + base de données) et une politique RGPD.
+- **Comptes utilisateurs** : prêts (Supabase, voir `docs/COMPTES.md`) ; la politique de confidentialité est dans `legal.html`.
 
 ## Mèche IA : ce qu'elle fait vraiment
 

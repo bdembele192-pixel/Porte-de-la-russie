@@ -332,7 +332,7 @@ window.M = window.M || {};
   M.dailyMission = dailyMission;
 
   function disclaimer() {
-    return `<p class="disclaimer">⚠️ Mèche est un simulateur éducatif : l'argent est virtuel, les prix sont réels (API publique Binance) ou simulés si la connexion échoue. Rien ici n'est un conseil en investissement. Le trading comporte un risque de perte en capital ; la majorité des particuliers qui tradent des produits à levier perdent de l'argent.</p>`;
+    return `<p class="disclaimer">⚠️ Mèche est un simulateur éducatif : l'argent est virtuel, les prix sont réels (Binance en direct ; bourses, matières premières, devises et BRVM avec quelques minutes de différé) ou simulés si la connexion échoue. Rien ici n'est un conseil en investissement. Le trading comporte un risque de perte en capital ; la majorité des particuliers qui tradent des produits à levier perdent de l'argent. <a href="legal.html" target="_blank" rel="noopener">En savoir plus</a></p>`;
   }
   M.disclaimer = disclaimer;
 
