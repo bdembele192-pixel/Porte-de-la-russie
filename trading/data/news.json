@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T15:15:57.847Z",
+ "generatedAt": "2026-11-27T23:28:01.957Z",
  "sources": [
   {
    "id": "fed",
@@ -123,6 +123,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-27T14:00:00.000Z",
    "firstSeen": "2026-11-27T15:15:57.847Z"
+  },
+  {
+   "id": "1b029ca61a0cb16a",
+   "title": "Global electricity generation more than doubled from 2000 to 2025",
+   "url": "https://www.eia.gov/todayinenergy/detail.php?id=68525",
+   "summary": "The world generated 31.8 trillion kilowatthours (kWh) of electricity in 2025, more than double the 15.1 trillion kWh generated in 2000, according to our recently updated International Energy Statistics data. This growth in global electricity generation is driven by increasing electricity demand from global population a",
+   "source": "EIA – Énergie (États-Unis)",
+   "sid": "eia",
+   "cat": "Énergie",
+   "date": "2026-11-27T14:00:00.000Z",
+   "firstSeen": "2026-11-27T23:28:01.957Z"
   },
   {
    "id": "d6fdcc8a57afb763",
@@ -2697,17 +2708,6 @@
    "cat": "Institutions",
    "date": "2026-10-29T00:00:00.000Z",
    "firstSeen": "2026-11-04T16:11:26.517Z"
-  },
-  {
-   "id": "b5df6b697c46404a",
-   "title": "Federal Reserve issues FOMC statement",
-   "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm",
-   "summary": "Federal Reserve issues FOMC statement",
-   "source": "Réserve fédérale (Fed)",
-   "sid": "fed",
-   "cat": "Banques centrales",
-   "date": "2026-10-28T18:00:00.000Z",
-   "firstSeen": "2026-10-28T19:29:13.925Z"
   }
  ]
 }
