@@ -345,3 +345,13 @@ kbd { font: 600 calc(11px * var(--fs)) var(--mono); padding: 3px 7px; border-rad
 @media (max-width: 760px) { #net-bar { bottom: 78px; } }
 .foot-legal { font-size: .8rem; opacity: .7; }
 .foot-legal:hover { opacity: 1; }
+
+/* ---------- Vega Desk intégré ---------- */
+.vega-frame { padding: 0; overflow: hidden; border-radius: 18px; height: calc(100vh - 150px); min-height: 620px; margin-top: 14px; }
+.vega-frame iframe { width: 100%; height: 100%; border: 0; display: block; background: #060606; }
+.vega-guide summary { cursor: pointer; }
+.vega-tabs { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 12px 0; }
+.vega-tabs div { padding: 10px 12px; border-radius: 12px; background: rgba(var(--fg), 0.04); }
+.vega-tabs p { margin: 4px 0 0; font-size: .86rem; color: var(--ink2); }
+.page-head .cta { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; }
+@media (max-width: 760px) { .vega-frame { height: 80vh; min-height: 480px; } }
