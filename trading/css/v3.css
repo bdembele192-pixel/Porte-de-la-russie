@@ -355,3 +355,9 @@ kbd { font: 600 calc(11px * var(--fs)) var(--mono); padding: 3px 7px; border-rad
 .vega-tabs p { margin: 4px 0 0; font-size: .86rem; color: var(--ink2); }
 .page-head .cta { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; }
 @media (max-width: 760px) { .vega-frame { height: 80vh; min-height: 480px; } }
+
+/* ---------- Time Machine : filtres des missions ---------- */
+.mfilters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px; margin-bottom: 8px; }
+.mfilters input[type=search] { flex: 1 1 240px; min-width: 0; padding: 9px 12px; border-radius: 12px; border: 1px solid var(--line2); background: rgba(var(--fg), 0.03); color: inherit; }
+.mfilters .mf { margin: 0; flex: 0 1 auto; }
+.mfilters select { padding: 8px 10px; border-radius: 12px; }

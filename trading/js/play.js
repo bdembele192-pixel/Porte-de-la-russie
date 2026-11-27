@@ -6,23 +6,59 @@ window.M = window.M || {};
   const DIFF = { "Facile": "ok", "Moyen": "mid", "Difficile": "hard", "Extrême": "ext" };
 
   // ---------- Liste des missions ----------
+  // Plus de 100 missions : filtres par actif, période, difficulté, statut et recherche (mémorisés).
+  const PERIODS = [["all", "Toutes"], ["2017", "2017-2018"], ["2019", "2019-2020"], ["2021", "2021"], ["2022", "2022"], ["2023", "2023"], ["2024", "2024"], ["2025", "2025"]];
+  const periodOf = m => { const y = new Date(Date.parse(m.start) + m.ctx * ({ "1h": 36e5, "4h": 144e5, "1d": 864e5 }[m.tf] || 0)).getUTCFullYear(); return y <= 2018 ? "2017" : y <= 2020 ? "2019" : String(y); };
   M.views.missions = function (el) {
     const dm = M.dailyMission();
+    const f = Object.assign({ asset: "all", period: "all", diff: "all", status: "all", q: "" }, M.state.missionFilter || {});
+    const assets = [...new Set(M.MISSIONS.map(m => m.sym))];
+    const list = M.MISSIONS.slice().sort((a, b) => Date.parse(a.start) - Date.parse(b.start));
+    const done = M.MISSIONS.filter(m => M.state.missions[m.id]).length;
+    const sel = (id, opts, v, tip) => `<label class="fld mf" data-tip-text="${tip}"><select id="${id}">${opts.map(([k, n]) => `<option value="${k}" ${k === v ? "selected" : ""}>${n}</option>`).join("")}</select></label>`;
     el.innerHTML = `
       <div class="page-head"><div><p class="eyebrow">Time Machine</p><h1>Rejoue les moments qui ont secoué les marchés</h1>
-      <p class="lede">De vraies bougies historiques, révélées une par une. Tu ne vois pas le futur : à toi de décider quand entrer, où mettre ton stop, et quand sortir. À la fin, l'histoire réelle et l'avis du coach.</p></div></div>
-      <div class="missions">${M.MISSIONS.map(m => {
+      <p class="lede">${M.MISSIONS.length} moments réels de 2017 à 2025, en vraies bougies historiques révélées une par une. Tu ne vois pas le futur : à toi de décider quand entrer, où mettre ton stop, et quand sortir. À la fin, l'histoire réelle et l'avis du coach.</p></div>
+      <div class="glass ring-card" data-tip-text="Missions jouées sur le total."><div class="ring" style="--p:${Math.round(done / M.MISSIONS.length * 100)}"><b>${done}/${M.MISSIONS.length}</b></div></div></div>
+      <div class="mfilters glass">
+        <input type="search" id="mf-q" placeholder="Rechercher : krach, Fed, ETF, Solana…" value="${M.u.esc(f.q)}" aria-label="Rechercher une mission">
+        ${sel("mf-asset", [["all", "Tous les actifs"]].concat(assets.map(a => [a, M.Market.asset(a).name])), f.asset, "Filtrer par actif")}
+        ${sel("mf-period", PERIODS, f.period, "Filtrer par période")}
+        ${sel("mf-diff", [["all", "Toutes difficultés"], ["Facile", "Facile"], ["Moyen", "Moyen"], ["Difficile", "Difficile"], ["Extrême", "Extrême"]], f.diff, "Filtrer par difficulté")}
+        ${sel("mf-status", [["all", "Toutes"], ["todo", "Pas encore jouées"], ["done", "Déjà jouées"]], f.status, "Filtrer par statut")}
+        <button class="btn ghost sm" id="mf-rand" type="button" data-tip-text="Lance une mission au hasard parmi celles affichées.">${M.icon("shuffle")} Au hasard</button>
+      </div>
+      <p class="muted small" id="mf-count"></p>
+      <div class="missions" id="mlist"></div>
+      ${M.disclaimer()}`;
+    const norm = t => String(t).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    function shown() {
+      const q = norm(f.q.trim());
+      return list.filter(m => (f.asset === "all" || m.sym === f.asset) && (f.period === "all" || periodOf(m) === f.period) && (f.diff === "all" || m.diff === f.diff)
+        && (f.status === "all" || (f.status === "done") === !!M.state.missions[m.id])
+        && (!q || norm([m.title, m.year, m.teaser, M.Market.asset(m.sym).name].join(" ")).includes(q)));
+    }
+    function draw() {
+      const ms = shown();
+      $("#mf-count", el).textContent = ms.length === list.length ? `${ms.length} missions` : `${ms.length} mission${ms.length > 1 ? "s" : ""} sur ${list.length}`;
+      $("#mlist", el).innerHTML = ms.length ? ms.map(m => {
         const r = M.state.missions[m.id];
         return `<a class="mission glass ${m.id === dm.id ? "daily" : ""}" href="#/mission/${m.id}">
           <div class="m-top"><span class="m-emoji">${M.ico("mission", m.id)}</span>
-            <span class="chip d-${DIFF[m.diff]}" data-tip-text="Difficulté : volatilité et pièges du scénario.">${m.diff}</span>
+            <span class="chip d-${DIFF[m.diff]}" data-tip-text="Difficulté : amplitude réelle des mouvements pendant la mission.">${m.diff}</span>
             ${m.id === dm.id ? `<span class="chip daily" data-tip-text="Score coach ≥ 70 sur cette mission aujourd'hui = +60 XP bonus.">🎯 Défi du jour</span>` : ""}</div>
           <h3>${m.title}</h3><p class="m-year">${m.year} · ${M.Market.asset(m.sym).short} · bougies ${m.tf}</p>
           <p>${m.teaser}</p>
           ${r ? `<div class="m-res"><span data-tip-text="Ton meilleur score sur cette mission.">🏆 ${r.score}/100</span><span class="${r.ret >= 0 ? "up" : "dn"}">${pct(r.ret, 1)}</span></div>` : `<div class="m-res muted">Pas encore jouée</div>`}
         </a>`;
-      }).join("")}</div>
-      ${M.disclaimer()}`;
+      }).join("") : `<p class="muted pad">Aucune mission ne correspond. Élargis les filtres.</p>`;
+      if (M.i18n) M.i18n.apply();
+    }
+    const save = () => { M.state.missionFilter = f; M.save(); draw(); };
+    $("#mf-q", el).oninput = e => { f.q = e.target.value; save(); };
+    [["#mf-asset", "asset"], ["#mf-period", "period"], ["#mf-diff", "diff"], ["#mf-status", "status"]].forEach(([id, k]) => $(id, el).onchange = e => { f[k] = e.target.value; save(); });
+    $("#mf-rand", el).onclick = () => { const ms = shown(); if (ms.length) M.go("#/mission/" + ms[Math.floor(Math.random() * ms.length)].id); };
+    draw();
   };
 
   // ---------- Partie ----------
