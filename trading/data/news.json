@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T23:41:29.701Z",
+ "generatedAt": "2026-11-27T05:20:26.235Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,28 @@
  ],
  "items": [
   {
+   "id": "a9c0092e48b1fa01",
+   "title": "(BOJ Review) Developments in JGB Market-Making Business by Securities Companies",
+   "url": "https://www.boj.or.jp/en/research/wps_rev/rev_2026/rev26e14.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-27T05:00:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
+  },
+  {
+   "id": "3d6377c36c505648",
+   "title": "Keynote speech by Executive Director KAMIYAMA at the IMF MCM-OAP Seminar in Tokyo (Digital Money and Payments: Transitioning Toward a New Paradigm)",
+   "url": "https://www.boj.or.jp/en/about/press/koen_2026/ko261127a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-27T01:15:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
+  },
+  {
    "id": "0b2b067d04754241",
    "title": "Payments systems Memorandum of Understanding",
    "url": "https://www.bankofengland.co.uk/news/2024/march/payment-systems-memorandum-of-understanding",
@@ -178,6 +200,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-26T01:00:00.000Z",
    "firstSeen": "2026-11-26T05:08:53.089Z"
+  },
+  {
+   "id": "9f5e8de11e33db03",
+   "title": "Speech by Board Member TAMURA in Yamanashi (Economic Activity, Prices, and Monetary Policy in Japan)",
+   "url": "https://www.boj.or.jp/en/about/press/koen_2026/ko261126a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-26T01:00:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
   },
   {
    "id": "ffb88ea254486e25",
@@ -290,6 +323,17 @@
    "firstSeen": "2026-11-25T14:43:14.701Z"
   },
   {
+   "id": "9277a4600d2322d4",
+   "title": "Japanese Government Bonds Held by the Bank of Japan",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/mei/release/2026/mei261120.xlsx",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T08:00:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
+  },
+  {
    "id": "b567760cd1903493",
    "title": "Indicators for Core CPI",
    "url": "http://www.boj.or.jp/en/research/research_data/cpi/index.htm",
@@ -301,6 +345,17 @@
    "firstSeen": "2026-10-27T07:45:14.071Z"
   },
   {
+   "id": "87c588183f0c38df",
+   "title": "Indicators for Core CPI",
+   "url": "https://www.boj.or.jp/en/research/research_data/cpi/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T05:00:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
+  },
+  {
    "id": "e94c74c149acd9cb",
    "title": "Bank of Japan Accounts (November 20)",
    "url": "http://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261120.htm",
@@ -310,6 +365,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-25T01:00:00.000Z",
    "firstSeen": "2026-11-25T04:26:30.329Z"
+  },
+  {
+   "id": "aa6ef48715e3e539",
+   "title": "Bank of Japan Accounts (November 20)",
+   "url": "https://www.boj.or.jp/en/statistics/boj/other/acmai/release/2026/ac261120.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-25T01:00:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
   },
   {
    "id": "58bb306111bcd861",
@@ -343,6 +409,28 @@
    "cat": "Banques centrales",
    "date": "2026-11-24T23:50:00.000Z",
    "firstSeen": "2026-11-25T04:26:30.329Z"
+  },
+  {
+   "id": "5163c3eafd2c4adf",
+   "title": "Average Contract Interest Rates on Loans and Discounts (Sept.)",
+   "url": "https://www.boj.or.jp/en/statistics/dl/loan/yaku/yaku2609.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-24T23:50:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
+  },
+  {
+   "id": "a70e6b76c73990d8",
+   "title": "Services Producer Price Index (Oct.)",
+   "url": "https://www.boj.or.jp/en/statistics/pi/cspi_release/sppi2610.pdf",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-24T23:50:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
   },
   {
    "id": "266c4375c149211a",
@@ -409,6 +497,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-23T23:50:00.000Z",
    "firstSeen": "2026-11-24T01:43:39.267Z"
+  },
+  {
+   "id": "7d952c8eda5d6e2d",
+   "title": "Statistics on Securities Financing Transactions in Japan",
+   "url": "https://www.boj.or.jp/en/statistics/bis/repo/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-23T23:50:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
   },
   {
    "id": "401d0be012b3523a",
@@ -576,6 +675,17 @@
    "firstSeen": "2026-11-20T09:14:02.866Z"
   },
   {
+   "id": "afd13158f60a49a1",
+   "title": "Monetary and Economic Studies (2026)",
+   "url": "https://www.boj.or.jp/en/research/imes/mes/mes26.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-20T02:00:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
+  },
+  {
    "id": "47249368b15a7be6",
    "title": "Members review customs valuation notifications, launch new work on preshipment inspection",
    "url": "https://www.wto.org/english/news_e/news26_e/val_20nov26_564_e.htm",
@@ -673,6 +783,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-19T07:00:00.000Z",
    "firstSeen": "2026-10-25T04:32:53.588Z"
+  },
+  {
+   "id": "521dab6d8f0c44cb",
+   "title": "Developments in Real Exports and Real Imports",
+   "url": "https://www.boj.or.jp/en/research/research_data/reri/index.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-19T07:00:00.000Z",
+   "firstSeen": "2026-11-27T05:20:26.235Z"
   },
   {
    "id": "54dabe216c9d89d1",
@@ -2554,17 +2675,6 @@
    "cat": "Institutions",
    "date": "2026-10-28T12:00:00.000Z",
    "firstSeen": "2026-10-28T19:29:13.925Z"
-  },
-  {
-   "id": "efeb56b0ea62aed5",
-   "title": "Trade Policy Review: Democratic Republic of the Congo",
-   "url": "https://www.wto.org/english/tratop_e/tpr_e/tpr_cod_28oct26_e.htm",
-   "summary": "The third review of the trade policies and practices of the Democratic Republic of the Congo takes place on 28 and 30 October 2026. The basis for the review is a report by the WTO Secretariat and a report by the Government of the Democratic Republic of the Congo.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-28T00:00:00.000Z",
-   "firstSeen": "2026-10-28T14:07:59.714Z"
   }
  ]
 }
