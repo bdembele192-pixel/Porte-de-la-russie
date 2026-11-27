@@ -653,6 +653,226 @@ T.c["options-change"] = {
   ]
 };
 
+// ---- c08.js
+Object.assign(T.g, {
+  taker: ["Taker (price taker)", "The one who accepts a price shown by someone else: they pay the spread in exchange for immediate execution. The opposite of the market maker."],
+  "cost-mid": ["Cost vs mid", "The gap between the price you got and the midpoint between buy and sell (the \"mid\"). It's what execution really cost you."],
+  "pnl-attribution": ["P&L attribution", "Breaking a result down by source: direction (delta), moves (gamma), volatility (vega), time (theta), hedging. Shows whether a gain comes from skill or luck."],
+  correlation: ["Correlation", "How much two assets move together, from −1 (opposite directions) to +1 (same direction). In a crisis, many correlations rise towards 1: everything falls together."],
+  diversification: ["Diversification", "Spreading your money across assets that don't all react the same way, so that one loss doesn't ruin the whole portfolio."],
+  allocation: ["Asset allocation", "How your capital is split between big families: shares, bonds, cash, gold, crypto… It explains most of a portfolio's risk and return."],
+  reequilibrage: ["Rebalancing", "Regularly returning to your target allocation by selling what has risen and buying back what has fallen. A discipline that forces you to \"buy low, sell high\"."],
+  "bank-run": ["Bank run", "When customers withdraw their money en masse for fear of a collapse, the bank has to sell assets at a loss… which can cause the very collapse they feared."],
+  contagion: ["Contagion", "A crisis spreading from one player or market to others, through debts, forced selling or loss of confidence."],
+  fibonacci: ["Fibonacci retracements", "Levels (38.2%, 50%, 61.8%) drawn on a move to spot where a pullback might stop. Widely watched, so sometimes self-fulfilling."],
+  pivot: ["Pivot points", "Levels calculated from the previous day's high, low and close. Used as the day's supports and resistances by intraday traders."],
+  "profil-volume": ["Volume profile", "The volume traded at each price level (rather than over time). High-volume zones often act as supports or resistances."],
+  ichimoku: ["Ichimoku", "An all-in-one Japanese indicator: a \"cloud\" showing the trend, signal lines and support/resistance zones projected into the future."],
+  "priced-in": ["Priced in", "Information that everyone knows or expects is already built into the price. Only a surprise relative to expectations moves the price."]
+});
+
+T.c["vega-desk"] = {
+  title: "Vega Desk: your first session as an options trader",
+  sub: "Getting started with the simulator: quoting, hedging, reading your book and your score.",
+  level: "Advanced",
+  lessons: [
+    ["The setting: an EUR/USD options desk", `<p>In <b>Vega Desk</b>, you're an FX options trader at a bank. The EUR/USD market moves constantly, clients send you [[rfq|requests for quotes]], and you build up a book of positions. Your goal isn't to guess direction: it's to earn the [[spread]] while keeping your risks under control.</p>
+<p>At the top of the screen you see the spot rate, the market regime (CALM, SHOCK…), 1-month volatility, the [[risk-reversal|risk reversal]], your total P&L and your net delta. Start with the simulation at ×1 speed: you'll have time to understand every number.</p>`],
+    ["Answering a price request (Client RFQ)", `<ol>
+<li>Read the product: call, put or strategy, expiry, strike, amount, direction requested by the client.</li>
+<li>Look at the theoretical value suggested by the pricer. It's your starting point, not your final price.</li>
+<li>Add a spread: wider if the amount is large, the expiry short, the market choppy or the client very well informed ([[selection-adverse|adverse selection]]).</li>
+<li>Skew your price according to your book: if you're already heavily exposed in the client's direction, make your price less attractive.</li>
+</ol>
+<p>If you win almost every RFQ, don't congratulate yourself: your prices are probably too low.</p>`],
+    ["Reading your book and your Greeks", `<p>The <b>Book</b> tab lists your positions; <b>Greeks</b> aggregates them by expiry and strike. Four numbers to watch at all times:</p>
+<ul>
+<li><b>[[delta|Delta]]</b>: what you gain or lose if EUR/USD moves a little. A desk keeps it close to zero.</li>
+<li><b>[[gamma|Gamma]]</b>: how fast your delta changes. Short gamma = big moves cost you.</li>
+<li><b>[[vega|Vega]]</b>: your exposure to volatility. Long vega = you gain if fear rises.</li>
+<li><b>[[theta|Theta]]</b>: what time earns you (seller) or costs you (buyer) each day.</li>
+</ul>
+<p>A healthy book has Greeks you can explain in one sentence. If you don't know why your vega is huge, it's time to hedge.</p>`],
+    ["Hedging and testing scenarios", `<p>In <b>Hedging</b>, you do a [[delta-hedge|delta hedge]] by buying or selling spot EUR/USD. You can also run a "What-if": a spot shock, a volatility shock, or a ready-made scenario (central bank surprise, flash crash, banking crisis…).</p>
+<p>Desk rule: before taking a big trade, look at what your P&L would become with "spot −1% and vol +1 point". If the number scares you, reduce the size or hedge straight away.</p>`],
+    ["Understanding your session score", `<p>The <b>Training</b> tab grades you like a head of desk: prices quoted, risk management, quality of your hedges, and, on the client side (<b>My RFQ</b>), the cost of your executions compared with the fair price ([[cost-mid|cost vs mid]]).</p>
+<p><b>PnL Attribution</b> breaks down your result ([[pnl-attribution|P&L attribution]]): a gain that comes mainly from delta — a bet on direction — isn't a market-making skill. A good result comes from the spread and well-managed theta/gamma.</p>`]
+  ],
+  key: ["A desk earns the spread, not the direction", "Price = theoretical value + spread + inventory skew", "Watch delta, gamma, vega and theta continuously", "Test \"spot −1% and vol +1\" before any big trade"],
+  quiz: [
+    ["You've just sold a lot of calls to clients. Your book is rather…", ["Short gamma and short vega", "Long gamma and long vega", "Risk-free"], "An option seller loses on big moves (gamma) and when volatility rises (vega)."],
+    ["Your day's P&L comes almost entirely from delta. That means…", ["You mostly bet on direction", "You managed your spread well", "Your hedge was perfect"], "Attribution shows the source: delta P&L is a directional bet, not a market-making skill."],
+    ["A client offers you a trade that reduces your exposure (they take on the risk you have too much of). Your price can be…", ["More attractive", "Less attractive", "The same either way"], "That's inventory skew: a trade that lightens your book suits you, so you can be more generous to win it."]
+  ]
+};
+
+T.c["chocs-macro"] = {
+  title: "Macro shocks: how prices, volatility and skew react",
+  sub: "Central banks, surprise data, crises: the desk's 12 scenarios explained.",
+  level: "Advanced",
+  lessons: [
+    ["Central bank surprises", `<p>An expected decision is [[priced-in|already priced in]]. Only a <b>surprise</b> moves the market:</p>
+<ul>
+<li><b>The [[bce|ECB]] cuts rates by surprise</b>: the euro drops, short-dated volatility jumps.</li>
+<li><b>The ECB hikes by surprise</b>: the euro rises, short-dated volatility rises too.</li>
+<li><b>The [[fed|Fed]] makes an emergency cut</b>: the dollar falls, EUR/USD gaps higher.</li>
+<li><b>The Fed hikes by surprise</b>: the dollar is bought, EUR/USD drops.</li>
+</ul>
+<p>In every case, volatility rises first on short expiries: that's where uncertainty is greatest.</p>`],
+    ["The numbers that shake markets: NFP and CPI", `<p>[[nfp|NFP]] (US jobs) and [[cpi|CPI]] (inflation) are published at fixed times. The market compares the figure with economists' <b>consensus</b>:</p>
+<ul>
+<li>An NFP far below expectations weakens the dollar (the Fed will have to support the economy).</li>
+<li>A higher-than-expected CPI pushes rate expectations up: short-dated volatility explodes.</li>
+</ul>
+<p>On a desk, people often reduce their short gamma position <i>before</i> these releases, and widen their prices in the minutes after.</p>`],
+    ["Crises: banking, flash crash, energy", `<ul>
+<li><b>Banking crisis</b>: fear of chain bankruptcies ([[contagion]]). The dollar acts as a safe haven, volatility rises across all expiries, the curve gets distorted.</li>
+<li><b>Flash crash</b>: [[liquidite|liquidity]] vanishes at once, the price drops within seconds and volatility can triple. Stop orders are filled far from their level.</li>
+<li><b>Energy shock</b>: an oil or gas supply problem hits Europe harder. The euro is sold and the skew of EUR puts soars.</li>
+</ul>
+<p>Common thread: in a crisis, the skew ([[smile|volatility smile]]) becomes more negative, because everyone wants downside protection at the same time.</p>`],
+    ["Regimes: risk-on, risk-off, calm", `<p>Between shocks, the market goes through <b>regimes</b>:</p>
+<ul>
+<li><b>Risk-on</b>: appetite for risk, stocks up, euro supported, volatility offered (option sellers win).</li>
+<li><b>Risk-off</b>: stocks sold, dollars bought, volatility in demand, skew deepening.</li>
+<li><b>Calm</b>: slow drift, low volatility. Theta pays… until the next shock.</li>
+</ul>
+<p>The classic trap: selling more and more options in a calm period because "it works". That's exactly the position that suffers most at the first shock.</p>`]
+  ],
+  key: ["Only a surprise relative to consensus moves the market", "Shocks hit short-dated volatility first", "In a crisis, skew deepens: everyone buys puts", "A long calm pushes people to take too much risk"],
+  quiz: [
+    ["The ECB cuts rates exactly as every economist expected. The euro…", ["Moves little: it was already priced in", "Necessarily collapses", "Necessarily rises"], "An expected decision is already built into the price: only a surprise creates a move."],
+    ["During a flash crash, 1-week implied volatility…", ["Explodes", "Falls", "Doesn't move"], "Immediate uncertainty is paid for on short expiries."],
+    ["The market has been calm for months. The most dangerous position at the next shock?", ["A large accumulated short gamma", "A small long gamma", "No position"], "An option seller earns a little each calm day and loses a lot on the first big move."]
+  ]
+};
+
+T.c.execution = {
+  title: "Execute like a pro: hidden costs and choosing your price",
+  sub: "Taker or maker, cost vs mid, slippage, slicing orders.",
+  level: "Intermediate",
+  lessons: [
+    ["Taker or maker", `<p>The <b>[[market-maker|maker]]</b> shows a price and waits for someone to take it. The <b>[[taker]]</b> accepts an existing price to be filled immediately. The taker pays the [[spread]]; the maker earns it, but takes the risk of not being filled… or of being filled at the wrong moment.</p>
+<p>A [[ordre-limite|limit order]] puts you on the maker side, a [[ordre-marche|market order]] on the taker side. On many platforms, maker fees are lower.</p>`],
+    ["Measuring what execution cost you", `<p>The pros' habit: compare the price obtained with the <b>mid</b> (halfway between buy and sell) at the time of the order. That's the [[cost-mid|cost vs mid]].</p>
+<pre>Bid 1.0848 · Ask 1.0852 → mid 1.0850
+You buy at 1.0853
+Cost = 1.0853 − 1.0850 = 3 pips
+On 1 million euros: about $300</pre>
+<p>Add [[frais|fees]] and [[slippage]]: over hundreds of trades a year, execution can weigh more than your strategy.</p>`],
+    ["Asking several counterparties for prices", `<p>In Vega Desk's <b>My RFQ</b>, you're the client: you ask several banks for a price and pick the best. Asking more counterparties often improves the price… but also reveals your intention: if everyone knows you're buying big, the market can rise before your order.</p>
+<p>The pros' compromise: 3 to 5 counterparties, and amounts that don't reveal your whole position at once.</p>`],
+    ["Slicing big orders", `<p>A big market order "eats" the order book and moves the price against you. Institutions slice it with [[twap|TWAP or VWAP]] algorithms: small pieces, spread over time, matched to market volume.</p>
+<p>For you, the lesson is simple: on an [[liquidite|illiquid]] asset (small crypto, BRVM share), enter in several steps with limit orders.</p>`]
+  ],
+  key: ["The taker pays the spread, the maker earns it", "Measure your execution cost against the mid", "Too many counterparties = too much information revealed", "Slice big orders in illiquid markets"],
+  quiz: [
+    ["Bid 99.90, ask 100.10, you buy at 100.15. Your cost vs mid?", ["0.15", "0.25", "0.05"], "Mid = 100.00; 100.15 − 100.00 = 0.15."],
+    ["Why slice a big order?", ["To avoid moving the price against yourself", "To pay more fees", "It's mandatory"], "One big order consumes the order book and worsens the average price obtained."]
+  ]
+};
+
+T.c.portefeuille = {
+  title: "Building a portfolio that holds up",
+  sub: "Allocation, diversification, correlation, rebalancing.",
+  level: "Beginner",
+  lessons: [
+    ["Allocation does most of the work", `<p>How you split your money between big families ([[allocation]]) matters far more than picking a particular share. A 100% crypto portfolio can lose 70% in a year; a portfolio mixing equity [[etf|ETFs]], [[obligation|bonds]] and cash gets through crises with far less damage.</p>
+<p>The question to ask yourself: <b>what drop in my portfolio can I bear without selling everything?</b> Your answer sets your share of risky assets.</p>`],
+    ["Diversifying, for real", `<p>Owning 10 cryptos isn't being diversified: they almost all rise and fall together. Real [[diversification]] mixes assets with low [[correlation]]: shares from different regions, bonds, gold, cash.</p>
+<p>Careful: in a crisis, many correlations jump suddenly. In March 2020, shares, crypto and even gold fell together for a few days. Cash remains the only real immediate protection.</p>`],
+    ["Rebalancing: buy low, sell high, automatically", `<p>You set a target, for example 60% shares, 30% bonds, 10% gold. After a big rise in shares, they weigh 70%: you sell some to get back to 60%. After a drop, you buy some back. That's [[reequilibrage|rebalancing]].</p>
+<p>Once or twice a year is enough. The advantage: the rule decides for you, and it forces you to do the opposite of the crowd.</p>`],
+    ["Portfolio traps", `<ul>
+<li><b>Concentration</b>: 50% in a single asset "because it's going up". If it goes wrong, nothing makes up for it.</li>
+<li><b>Home bias</b>: investing only in your own country. Your wealth already depends heavily on its economy.</li>
+<li><b>Currency risk</b>: an asset in dollars adds EUR/USD (and therefore CFA/USD) risk to your portfolio.</li>
+<li><b>Fees</b>: 2% in fees a year, over 30 years, cost a huge share of the final result.</li>
+</ul>`]
+  ],
+  key: ["Allocation explains most of the risk", "Diversifying = weakly correlated assets, not 10 cryptos", "Rebalance once or twice a year", "Beware of concentration and fees"],
+  quiz: [
+    ["You own BTC, ETH, SOL and DOGE. Your portfolio is…", ["Poorly diversified: these assets are highly correlated", "Perfectly diversified", "Risk-free"], "Cryptos generally rise and fall together."],
+    ["Target 60/40. After a rise, shares weigh 70%. Rebalancing means…", ["Selling shares to get back to 60%", "Buying even more shares", "Doing nothing"], "You return to the target by selling what has risen."]
+  ]
+};
+
+T.c.crises = {
+  title: "Anatomy of financial crises",
+  sub: "Bubbles, bank runs, contagion, liquidation cascades.",
+  level: "Intermediate",
+  lessons: [
+    ["The life cycle of a bubble", `<p>Almost every bubble follows the same script: a real innovation, then easy money, then euphoria ("this time it's different"), then panic once the last buyer is in. The 2017 ICOs, memecoins, the internet stocks of 2000: same story, different scenery.</p>
+<p>Signs of euphoria: people who have never invested give you advice, the asset is all over the media, people buy with borrowed money.</p>`],
+    ["The bank run", `<p>A bank lends out long-term the money its customers can withdraw tomorrow. If too many customers want their money back at once, it has to sell its assets at a loss: that's a [[bank-run|bank run]].</p>
+<p>In March 2023, Silicon Valley Bank collapsed this way in two days, accelerated by social media. In crypto, Celsius and FTX went through the same mechanism: promising instant withdrawals with money invested elsewhere.</p>`],
+    ["Contagion", `<p>A crisis spreads through three channels ([[contagion]]): <b>debts</b> (those who lent to the failed player lose in turn), <b>forced selling</b> (those who must sell push prices down for everyone) and <b>confidence</b> (people pull their money out everywhere "just in case").</p>
+<p>In 2022, the collapse of Terra/Luna put lenders and funds in trouble, which dragged down other platforms… all the way to FTX. Replay this sequence in the Time Machine missions.</p>`],
+    ["Liquidation cascades", `<p>When many traders use [[levier|leverage]], a drop triggers [[liquidation|liquidations]], which are market sales, which push the price down further, which trigger more liquidations… The cascade stops when there's no leverage left to flush out.</p>
+<p>These cascades explain drops of 10 to 20% in a few minutes, often followed by a quick rebound. 10 October 2025 was the largest example in crypto history.</p>`]
+  ],
+  key: ["Bubbles always follow the same script", "A bank or a platform can fall in two days", "Contagion travels through debts, forced selling and confidence", "Leverage turns a drop into a cascade"],
+  quiz: [
+    ["Why can a bank run bring down a healthy bank?", ["It must sell assets at a loss to repay everyone at the same time", "Customers steal the money", "The central bank forbids it"], "Deposits can be withdrawn immediately; loans can't."],
+    ["What stops a liquidation cascade?", ["Running out of leverage to flush out", "A tweet", "The market closing at the weekend"], "Once leveraged positions have been liquidated, forced selling stops."]
+  ]
+};
+
+T.c["outils-avances"] = {
+  title: "Advanced technical tools",
+  sub: "Fibonacci, pivot points, volume profile, Ichimoku: useful, but no magic.",
+  level: "Intermediate",
+  lessons: [
+    ["Fibonacci retracements", `<p>After a strong move, you draw levels at 38.2%, 50% and 61.8% of its range: these are [[fibonacci|Fibonacci retracements]]. They suggest where a pullback might stop.</p>
+<p>There's nothing mystical about it: these levels sometimes work because thousands of traders watch them and place orders there. Use them as <b>zones</b>, combined with a [[support]] or a moving average, never on their own.</p>`],
+    ["Pivot points", `<p>[[pivot|Pivot points]] are calculated from the previous day's high, low and close:</p>
+<pre>Pivot = (high + low + close) ÷ 3
+R1 = 2 × pivot − low
+S1 = 2 × pivot − high</pre>
+<p>Intraday traders use them as the day's landmarks: above the pivot, a buying bias; below, a selling bias; R1 and S1 as first targets.</p>`],
+    ["Volume profile", `<p>The [[profil-volume|volume profile]] shows how much traded at each price level. Very high-volume zones are where many buyers and sellers agreed: the price often comes back to them and they act as supports or resistances.</p>
+<p>Conversely, a low-volume zone is an "air pocket": the price often crosses it quickly.</p>`],
+    ["Ichimoku in brief", `<p>[[ichimoku|Ichimoku]] displays a coloured cloud: price above the cloud = uptrend, below = downtrend, inside = indecision. The cloud projected into the future draws upcoming support and resistance zones.</p>
+<p>It's a complete but busy tool. As with all indicators: test it on historical data before trusting it, and don't add it to five other indicators that say the same thing.</p>`]
+  ],
+  key: ["Fibonacci = zones the crowd watches, not a law", "Pivots = the day's landmarks for intraday", "High-volume zones attract the price", "An extra indicator is only useful if it adds new information"],
+  quiz: [
+    ["Previous day: high 110, low 90, close 100. The pivot point is…", ["100", "110", "95"], "(110 + 90 + 100) ÷ 3 = 100."],
+    ["A price zone where very little volume has traded…", ["Is often crossed quickly", "Is a very solid support", "Doesn't exist"], "Few orders were left there: nothing holds the price."]
+  ]
+};
+
+T.q.u13 = { t: "The Vega desk", sub: "RFQ, book, Greeks, hedging", q: [
+  ["On an options desk, the market maker mainly tries to earn…", ["The spread", "The direction of EUR/USD", "Dividends"], "They quote buy and sell and earn the gap, while hedging their risk."],
+  ["Winning almost every price request is a sign of excellent prices.", null, "It's rather a sign that your prices are too low (adverse selection)."],
+  ["Your net delta is very positive. To neutralise it, you…", ["Sell spot EUR/USD", "Buy EUR/USD", "Do nothing"], "A delta hedge brings directional exposure back towards zero."],
+  ["Breaking down your result into delta, gamma, vega and theta is called P&L ___.", ["attribution", "allocation", "arbitrage"], "It shows whether the gain comes from skill or luck."],
+  ["You've sold a lot of options. Your book is…", ["Short gamma", "Long gamma", "Gamma-free"], "Big moves cost you; theta pays you."],
+  ["Before a big trade, the classic stress test is…", ["Spot −1% and vol +1 point", "Spot +50%", "No test"], "It shows the loss if the market moves and fear rises at the same time."],
+  ["A trade that reduces your exposure can justify a more attractive price.", null, "That's inventory skew."],
+  ["In the My RFQ tab, you are…", ["The client asking for prices", "The regulator", "The central bank"], "You compare the banks' prices with the fair price (cost vs mid)."]
+] };
+T.q.u14 = { t: "Macro shocks & execution", sub: "Surprises, regimes, cost vs mid", q: [
+  ["A central bank decision exactly in line with expectations…", ["Moves the market little", "Always causes a crash", "Doubles volatility"], "It's already priced in: only a surprise counts."],
+  ["A US CPI far higher than expected first sends up…", ["Short-dated volatility", "The gold price, for sure", "Dividends"], "Rate expectations reprice abruptly."],
+  ["In a crisis, option skew often becomes more negative.", null, "Everyone buys puts for protection."],
+  ["Information everyone already knows is ___ in the price.", ["already", "never", "rarely"], "It's also called \"priced in\"."],
+  ["Bid 1.0848, ask 1.0852, you buy at 1.0853. Cost vs mid?", ["3 pips", "1 pip", "5 pips"], "Mid 1.0850; 1.0853 − 1.0850 = 3 pips."],
+  ["The taker…", ["Pays the spread to be filled immediately", "Earns the spread", "Never pays fees"], "The maker shows a price, the taker takes it."],
+  ["To buy a large amount of an illiquid asset, the best approach is to…", ["Slice the order into several limit orders", "Buy everything at market", "Use ×20 leverage"], "You avoid \"eating\" the order book."],
+  ["A long calm period is the ideal time to keep selling more options.", null, "That's the position that suffers most at the first shock."]
+] };
+T.q.u15 = { t: "Portfolio & crises", sub: "Allocation, correlation, contagion", q: [
+  ["What explains most of a portfolio's risk is…", ["Allocation between big asset families", "Picking a particular share", "The time of purchase"], "The split between shares/bonds/cash weighs the most."],
+  ["Owning 10 different cryptos means being well diversified.", null, "They're highly correlated with each other."],
+  ["A correlation of −1 between two assets means they…", ["Always move in opposite directions", "Always move together", "Have no link"], "+1 = same direction, 0 = no link, −1 = opposite directions."],
+  ["Regularly returning to your target allocation is called ___.", ["rebalancing", "scalping", "halving"], "You sell what has risen and buy back what has fallen."],
+  ["A bank run is…", ["Mass withdrawals forcing the bank to sell at a loss", "A rate hike", "A hack"], "SVB fell in two days in 2023."],
+  ["A liquidation cascade stops when…", ["There's no leverage left to flush out", "The price hits a round number", "The regulator posts a tweet"], "Forced selling runs out on its own."],
+  ["Previous day: high 110, low 90, close 100. Pivot point?", null, "(110 + 90 + 100) ÷ 3 = 100."],
+  ["The most watched Fibonacci retracement is…", ["61.8%", "12%", "99%"], "Along with 38.2% and 50%, these are the classic levels."]
+] };
+
 // ---- g01.js
 Object.assign(T.g, {
   bid: ["Bid (buy price)", "The best price a buyer is willing to pay right now. If you sell at market, you sell at the bid."],

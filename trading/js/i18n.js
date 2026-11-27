@@ -80,3 +80,30 @@ M.I18N = {
     "Ce qu'il surveille": "Что он отслеживает", "Cerveau Claude (optionnel)": "Мозг Claude (необязательно)", "Effacer la conversation": "Очистить чат"
   }
 };
+
+// Libellés ajoutés avec la finalisation (Académie, Time Machine, Vega Desk, terminal multi-marchés, hors ligne)
+(function () {
+  const K = ["Apprends les vraies règles du jeu", "Chaque terme souligné en pointillés s'explique au survol (ou d'un tap sur mobile). Chaque module se termine par un quiz.",
+    "Le dico du trader", "Rejoue les moments qui ont secoué les marchés", "Tous les actifs", "Toutes", "Toutes difficultés", "Pas encore jouées", "Déjà jouées", "Au hasard",
+    "Facile", "Moyen", "Difficile", "Extrême", "Vega Desk", "Dans la peau d'un trader d'options", "Plein écran", "Les cours du desk", "Guide des onglets",
+    "Crypto", "Bourses", "Matières", "Devises", "● DIFFÉRÉ", "● COPIE", "● FERMÉ", "indisponible", "Installer l'app", "Recharger", "Krachs historiques",
+    "Mentions légales · Confidentialité · Risques", "Supprimer mon compte", "Supprimer le compte", "Aucune mission ne correspond. Élargis les filtres."];
+  const T = {
+    en: ["Learn the real rules of the game", "Every term underlined with dots is explained on hover (or with a tap on mobile). Each module ends with a quiz.",
+      "The trader's dictionary", "Replay the moments that shook the markets", "All assets", "All", "All difficulties", "Not played yet", "Already played", "Random",
+      "Easy", "Medium", "Hard", "Extreme", "Vega Desk", "In an options trader's shoes", "Full screen", "The desk courses", "Tab guide",
+      "Crypto", "Stocks", "Commodities", "Currencies", "● DELAYED", "● COPY", "● CLOSED", "unavailable", "Install the app", "Reload", "Historic crashes",
+      "Legal notice · Privacy · Risks", "Delete my account", "Delete account", "No mission matches. Widen the filters."],
+    zh: ["学习真正的游戏规则", "每个带点状下划线的术语，悬停（手机上轻点）即可看到解释。每个模块都以一个测验结束。",
+      "交易者词典", "重温震撼市场的时刻", "全部资产", "全部", "全部难度", "尚未完成", "已完成", "随机",
+      "简单", "中等", "难", "极难", "Vega 交易台", "体验期权交易员的工作", "全屏", "交易台课程", "标签指南",
+      "加密货币", "股市", "大宗商品", "外汇", "● 延迟", "● 副本", "● 休市", "不可用", "安装应用", "重新加载", "历史暴跌",
+      "法律声明 · 隐私 · 风险", "删除我的账户", "删除账户", "没有符合条件的任务。请放宽筛选条件。"],
+    ru: ["Узнай настоящие правила игры", "Каждый термин, подчёркнутый пунктиром, объясняется при наведении (или касанием на телефоне). Каждый модуль заканчивается квизом.",
+      "Словарь трейдера", "Переживи заново моменты, которые потрясли рынки", "Все активы", "Все", "Любая сложность", "Ещё не пройдены", "Уже пройдены", "Наугад",
+      "Легко", "Средне", "Сложно", "Экстрим", "Vega Desk", "На месте опционного трейдера", "На весь экран", "Курсы деска", "Гид по вкладкам",
+      "Крипта", "Биржи", "Сырьё", "Валюты", "● С ЗАДЕРЖКОЙ", "● КОПИЯ", "● ЗАКРЫТ", "недоступно", "Установить приложение", "Перезагрузить", "Исторические крахи",
+      "Правовая информация · Конфиденциальность · Риски", "Удалить мой аккаунт", "Удалить аккаунт", "Ни одна миссия не подходит. Ослабь фильтры."]
+  };
+  Object.keys(T).forEach(l => { M.I18N[l] = M.I18N[l] || {}; K.forEach((k, i) => { if (T[l][i]) M.I18N[l][k] = T[l][i]; }); });
+})();
