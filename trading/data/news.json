@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T05:20:26.235Z",
+ "generatedAt": "2026-11-27T15:15:57.847Z",
  "sources": [
   {
    "id": "fed",
@@ -114,6 +114,28 @@
  ],
  "items": [
   {
+   "id": "665255edfb0f20e3",
+   "title": "Decisions taken by the Governing Council of the ECB (in addition to decisions setting interest rates)",
+   "url": "https://www.ecb.europa.eu//press/govcdec/otherdec/2026/html/ecb.gc261127~13ecadc0f2.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-27T14:00:00.000Z",
+   "firstSeen": "2026-11-27T15:15:57.847Z"
+  },
+  {
+   "id": "d6fdcc8a57afb763",
+   "title": "ECB Consumer Expectations Survey results – October 2026",
+   "url": "https://www.ecb.europa.eu//press/pr/date/2026/html/ecb.pr261127~2e53af695e.en.html",
+   "summary": "",
+   "source": "Banque centrale européenne",
+   "sid": "ecb",
+   "cat": "Banques centrales",
+   "date": "2026-11-27T09:00:00.000Z",
+   "firstSeen": "2026-11-27T15:15:57.847Z"
+  },
+  {
    "id": "a9c0092e48b1fa01",
    "title": "(BOJ Review) Developments in JGB Market-Making Business by Securities Companies",
    "url": "https://www.boj.or.jp/en/research/wps_rev/rev_2026/rev26e14.htm",
@@ -125,6 +147,17 @@
    "firstSeen": "2026-11-27T05:20:26.235Z"
   },
   {
+   "id": "d2a7c180c3faa579",
+   "title": "(BOJ Review) Developments in JGB Market-Making Business by Securities Companies",
+   "url": "http://www.boj.or.jp/en/research/wps_rev/rev_2026/rev26e14.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-27T05:00:00.000Z",
+   "firstSeen": "2026-11-27T15:15:57.847Z"
+  },
+  {
    "id": "3d6377c36c505648",
    "title": "Keynote speech by Executive Director KAMIYAMA at the IMF MCM-OAP Seminar in Tokyo (Digital Money and Payments: Transitioning Toward a New Paradigm)",
    "url": "https://www.boj.or.jp/en/about/press/koen_2026/ko261127a.htm",
@@ -134,6 +167,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-27T01:15:00.000Z",
    "firstSeen": "2026-11-27T05:20:26.235Z"
+  },
+  {
+   "id": "247a33e0a0d141f7",
+   "title": "Keynote speech by Executive Director KAMIYAMA at the IMF MCM-OAP Seminar in Tokyo (Digital Money and Payments: Transitioning Toward a New Paradigm)",
+   "url": "http://www.boj.or.jp/en/about/press/koen_2026/ko261127a.htm",
+   "summary": "",
+   "source": "Banque du Japon",
+   "sid": "boj",
+   "cat": "Banques centrales",
+   "date": "2026-11-27T01:15:00.000Z",
+   "firstSeen": "2026-11-27T15:15:57.847Z"
   },
   {
    "id": "0b2b067d04754241",
@@ -387,6 +431,17 @@
    "cat": "Banques centrales",
    "date": "2026-11-25T00:00:00.000Z",
    "firstSeen": "2026-11-25T23:19:07.157Z"
+  },
+  {
+   "id": "049c1f68456ef2dc",
+   "title": "Services domestic regulation disciplines enter into force for Kazakhstan",
+   "url": "https://www.wto.org/english/news_e/news26_e/jssdr_25nov26_566_e.htm",
+   "summary": "On 25 November, Kazakhstan notified WTO members that, following conclusion of its domestic approval procedures, the disciplines on services domestic regulation had taken legal effect and had been incorporated into Kazakhstan's schedule under the General Agreement on Trade in Services (GATS) as of 27 October 2026. These",
+   "source": "OMC",
+   "sid": "wto",
+   "cat": "Institutions",
+   "date": "2026-11-25T00:00:00.000Z",
+   "firstSeen": "2026-11-27T15:15:57.847Z"
   },
   {
    "id": "17e88b1a00c42a90",
@@ -2652,28 +2707,6 @@
    "sid": "fed",
    "cat": "Banques centrales",
    "date": "2026-10-28T18:00:00.000Z",
-   "firstSeen": "2026-10-28T19:29:13.925Z"
-  },
-  {
-   "id": "7b837f96dd6a5c29",
-   "title": "Remit for the Monetary Policy Committee - October 2026",
-   "url": "https://www.bankofengland.co.uk/letter/2026/mpc-remit-2026",
-   "summary": "Letter from the Chancellor to the Governor",
-   "source": "Banque d'Angleterre",
-   "sid": "boe",
-   "cat": "Banques centrales",
-   "date": "2026-10-28T14:16:49.000Z",
-   "firstSeen": "2026-10-28T19:29:13.925Z"
-  },
-  {
-   "id": "95c52b0b0ae032e9",
-   "title": "Cuba : à l’ONU, la condamnation du blocus américain perd du terrain",
-   "url": "https://news.un.org/feed/view/fr/story/2026/10/1159740",
-   "summary": "Comme chaque année depuis 1992, l’Assemblée générale de l’ONU a réclamé mercredi la levée de l’embargo américain contre Cuba. Mais le soutien international envers La Havane, autrefois massif, s’effrite. Alors que l’administration Trump accentue sa pression sur l’île, confrontée à de graves pénuries, le débat a donné li",
-   "source": "ONU Info – Économie",
-   "sid": "un",
-   "cat": "Institutions",
-   "date": "2026-10-28T12:00:00.000Z",
    "firstSeen": "2026-10-28T19:29:13.925Z"
   }
  ]
