@@ -18,7 +18,8 @@ create extension if not exists pgcrypto;
 create table if not exists public.profiles (
   id           uuid primary key references auth.users (id) on delete cascade,
   display_name text check (char_length(display_name) <= 40),
-  country      text check (country ~ '^[A-Z]{2}$'),
+  country      text check (country ~ '^[A-Z]{2}$'),   -- région choisie par le client (prix, devise, paiements)
+  country_changed_at timestamptz,
   created_at   timestamptz not null default now(),
   updated_at   timestamptz not null default now()
 );
@@ -33,15 +34,37 @@ revoke insert, update, delete on public.profiles from authenticated;
 grant select on public.profiles to authenticated;
 grant update (display_name, country, updated_at) on public.profiles to authenticated;
 
--- Profil créé automatiquement à l'inscription
+alter table public.profiles add column if not exists country_changed_at timestamptz;
+
+-- La région ne peut changer qu'une fois tous les 30 jours (évite de jongler entre les prix des zones)
+create or replace function public.guard_region()
+returns trigger language plpgsql set search_path = public as $$
+begin
+  if new.country is distinct from old.country then
+    if old.country is not null and old.country_changed_at is not null
+       and old.country_changed_at > now() - interval '30 days' then
+      raise exception 'Région modifiable une fois tous les 30 jours (prochain changement possible le %)',
+        to_char(old.country_changed_at + interval '30 days', 'DD/MM/YYYY') using errcode = 'check_violation';
+    end if;
+    new.country_changed_at := now();
+  else
+    new.country_changed_at := old.country_changed_at;
+  end if;
+  return new;
+end $$;
+drop trigger if exists profiles_region on public.profiles;
+create trigger profiles_region before update on public.profiles for each row execute function public.guard_region();
+
+-- Profil créé automatiquement à l'inscription, avec 3 jours de Pro offerts (une seule fois par compte)
 create or replace function public.handle_new_user()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
   insert into public.profiles (id) values (new.id) on conflict (id) do nothing;
+  insert into public.subscriptions (user_id, plan_id, status, current_period_end, provider)
+  values (new.id, 'pro-essai', 'active', now() + interval '3 days', 'essai')
+  on conflict (user_id) do nothing;
   return new;
 end $$;
-drop trigger if exists on_auth_user_created on auth.users;
-create trigger on_auth_user_created after insert on auth.users for each row execute function public.handle_new_user();
 
 -- ---------- Progression (XP, badges, portefeuille virtuel, réglages) ----------
 create table if not exists public.progress (
@@ -74,24 +97,29 @@ create table if not exists public.plans (
   perks       jsonb not null default '[]'::jsonb,   -- droits techniques (ex. ["ia", "missions", "reel"])
   period_days int not null default 30 check (period_days between 1 and 3660),
   prices      jsonb not null default '{}'::jsonb,   -- {"XOF": 2500, "EUR": 3.99} ; null = prix pas encore fixé
-  active      boolean not null default true,
+  active      boolean not null default true,   -- visible
+  buyable     boolean not null default true,   -- proposé à l'achat (faux pour l'essai offert)
   sort        int not null default 0
 );
+alter table public.plans add column if not exists buyable boolean not null default true;
 alter table public.plans enable row level security;
 drop policy if exists "offres : lecture publique" on public.plans;
 create policy "offres : lecture publique" on public.plans for select using (active);
 revoke insert, update, delete on public.plans from anon, authenticated;
 grant select on public.plans to anon, authenticated;
 
-insert into public.plans (id, name, description, features, perks, period_days, prices, sort) values
-  ('gratuit', 'Gratuit', 'Tout pour apprendre, sans payer.',
-   '["Trading live en argent virtuel", "Académie, quiz et glossaire", "Missions Time Machine", "Coach et copilote (règles de risque)"]', '[]', 3650, '{"XOF": 0, "EUR": 0}', 0),
-  ('premium', 'Premium', 'Pour progresser plus vite.',
-   '["Tout le gratuit", "Mèche IA (Claude) sans limite", "Analyses du coach détaillées", "Synchronisation sur tous tes appareils", "Sans publicité, pour toujours"]', '["ia", "coach"]', 30, '{"XOF": null, "EUR": null}', 1),
-  ('premium-an', 'Premium · 1 an', 'Premium payé une fois pour l''année.',
-   '["Tout le Premium", "12 mois pour le prix fixé à l''année"]', '["ia", "coach"]', 365, '{"XOF": null, "EUR": null}', 2),
-  ('pro', 'Pro', 'Pour passer au réel avec méthode.',
-   '["Tout le Premium", "Trading réel connecté à ton compte Binance", "Journal des ordres réels synchronisé", "Vega Desk : sessions sauvegardées"]', '["ia", "coach", "reel"]', 30, '{"XOF": null, "EUR": null}', 3)
+-- Modèle du pilote (Afrique de l'Ouest, novembre 2026) : Gratuit limité + Pro complet vendu en pass prépayés.
+-- Prix en FCFA (multiples de 5, exigés par CinetPay). EUR : null = pas encore vendu en euros.
+insert into public.plans (id, name, description, features, perks, period_days, prices, buyable, sort) values
+  ('gratuit', 'Gratuit', 'Pour découvrir Mèche.',
+   '["Trading live en argent virtuel", "6 modules de cours, 6 missions, 6 unités de quiz", "Mèche IA : 5 questions par jour", "Aperçu du Backtest, du Labo options et du Vega Desk", "Trading réel en mode test (argent fictif)"]',
+   '[]', 3650, '{"XOF": 0}', false, 0),
+  ('pro-1j', 'Pro · 1 jour', 'Accès complet pendant 24 heures.', '[]', '["pro"]', 1, '{"XOF": 300, "EUR": null}', true, 1),
+  ('pro-7j', 'Pro · 7 jours', 'Accès complet pendant une semaine.', '[]', '["pro"]', 7, '{"XOF": 1000, "EUR": null}', true, 2),
+  ('pro-1m', 'Pro · 1 mois', 'Accès complet pendant 30 jours.', '[]', '["pro"]', 30, '{"XOF": 3000, "EUR": null}', true, 3),
+  ('pro-3m', 'Pro · 3 mois', 'Accès complet pendant 90 jours (-11 %).', '[]', '["pro"]', 90, '{"XOF": 8000, "EUR": null}', true, 4),
+  ('pro-6m', 'Pro · 6 mois', 'Accès complet pendant 180 jours (-17 %).', '[]', '["pro"]', 180, '{"XOF": 15000, "EUR": null}', true, 5),
+  ('pro-essai', 'Pro · essai offert', '3 jours de Pro offerts à l''inscription.', '[]', '["pro"]', 3, '{}', false, 9)
 on conflict (id) do nothing;
 
 -- ---------- Abonnements (écrits uniquement par les fonctions serveur) ----------
@@ -196,3 +224,7 @@ returns void language sql security definer set search_path = public, auth as $$
 $$;
 revoke all on function public.delete_my_account() from public, anon;
 grant execute on function public.delete_my_account() to authenticated;
+
+-- Déclencheur d'inscription (créé en dernier : il écrit dans profiles et subscriptions)
+drop trigger if exists on_auth_user_created on auth.users;
+create trigger on_auth_user_created after insert on auth.users for each row execute function public.handle_new_user();

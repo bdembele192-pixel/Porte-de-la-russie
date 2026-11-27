@@ -16,24 +16,40 @@
 
 Pas de prélèvement automatique : chaque paiement couvre une période (30 jours, 1 an…). Un nouveau paiement prolonge la période en cours.
 
-## Fixer les prix
-Tant qu'un prix vaut `null`, l'offre affiche « Prix à fixer » et ses boutons de paiement sont désactivés.
-Supabase → **Table Editor → plans** → colonne `prices`, par exemple :
+## Modèle du pilote (Afrique de l'Ouest, décidé le 27 novembre 2026)
 
-```json
-{"XOF": 2500, "EUR": 3.99}
-```
+| Offre | Contenu | Prix |
+| --- | --- | --- |
+| Gratuit | 5 premiers modules + Gestion du risque, 6 missions, 6 unités de quiz, Mèche IA 5 questions/jour, Backtest 5 lancements/jour, Labo options 4 stratégies, Vega Desk 1 session/jour, trading réel en mode test, pas de synchronisation | 0 |
+| Pro | tout, sans limite | pass prépayés ci-dessous |
 
-- `XOF` (CinetPay) : nombre entier, **multiple de 5**.
-- `EUR` (Stripe) : ou une autre devise si tu mets le secret `STRIPE_CURRENCY` (ex. `USD`) et la même clé dans `prices`.
-- Tu peux aussi modifier `name`, `description`, `features` (textes affichés), `period_days`, `active`, `sort`.
-- `perks` = droits techniques : `ia`, `coach`, `reel`. Pour réserver une fonction aux abonnés, ajoute-la dans
-  `premiumGates` de `config.js` (vide par défaut : tout reste ouvert tant que les prix ne sont pas fixés).
+| Pass (table `plans`) | Durée | Prix |
+| --- | --- | --- |
+| `pro-1j` | 1 jour | 300 FCFA |
+| `pro-7j` | 7 jours | 1 000 FCFA |
+| `pro-1m` | 30 jours | 3 000 FCFA |
+| `pro-3m` | 90 jours | 8 000 FCFA (-11 %) |
+| `pro-6m` | 180 jours | 15 000 FCFA (-17 %) |
+| `pro-essai` | 3 jours offerts à la création du compte (non achetable) | 0 |
+
+- **Région** : le client la choisit (l'app la propose d'après son fuseau horaire) ; elle est enregistrée dans son profil et
+  ne change qu'une fois tous les 30 jours (règle appliquée par la base). Les abonnements ne sont vendus qu'aux régions du
+  pilote : `pilotCountries` dans `config.js` (affichage) et secret `PILOT_COUNTRIES` côté serveur (contrôle), par défaut
+  `ML,SN,CI,BF,BJ,TG`.
+- **Activation des limites** : `freemium: "auto"` dans `config.js` = les limites du Gratuit s'appliquent dès que les comptes
+  sont en service. Mets `freemium: false` tant que CinetPay n'est pas prêt, sinon personne ne pourra débloquer le Pro.
+- **Limite connue** : le contenu des cours est livré au navigateur ; les verrous du Gratuit sont commerciaux et un
+  utilisateur technique peut les contourner. Les paiements et l'abonnement, eux, sont protégés côté serveur. Pour une
+  protection forte, il faudra servir les contenus Pro depuis la base (étape suivante, après le pilote).
+
+## Modifier les prix
+Supabase → **Table Editor → plans** → colonne `prices`, par exemple `{"XOF": 3000}` (nombre entier, **multiple de 5**,
+exigé par CinetPay). `name`, `description`, `period_days`, `buyable` (proposé à l'achat) et `sort` se changent au même endroit.
 
 ## Brancher chaque prestataire
 Ajoute les secrets dans GitHub (**Settings → Secrets and variables → Actions**) puis relance le robot
 « Comptes et paiements Mèche (Supabase) ». Un moyen de paiement sans secrets répond simplement « pas encore configuré ».
-Retire de `payments` (config.js) ceux que tu n'utilises pas.
+Pendant le pilote, seul CinetPay est proposé (`payments: ["cinetpay"]` dans `config.js`) ; Stripe reste prêt pour plus tard.
 
 ### CinetPay — Orange Money, Moov, Wave, MTN, cartes (UEMOA, FCFA)
 1. Compte marchand sur cinetpay.com (pièces de l'entreprise demandées).

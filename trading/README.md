@@ -69,6 +69,7 @@ scripts/fetch-news.mjs  robot de collecte des actus
 supabase/             base de données (migrations), fonctions de paiement, tests
 js/account.js         comptes : e-mail (code ou mot de passe), SMS, Google, Apple, 2FA
 js/subscribe.js       abonnements (#/abonnement)
+js/access.js          région du client, limites du Gratuit et accès Pro
 js/real.js            trading réel : compte Binance chiffré + courtiers agréés (#/reel)
 js/vendor/            bibliothèque Supabase (copie figée)
 js/app.js             état, XP, badges, routeur, accueil, académie, profil
@@ -84,7 +85,7 @@ La progression est sauvegardée dans le `localStorage` du navigateur (clé `mech
 
 - **Nom** : « Mèche » est un nom de travail — vérifier sa disponibilité (INPI / EUIPO) avant dépôt.
 - **Argent réel** : Mèche ne détient jamais de fonds. La section « Trading réel » pilote le **propre compte Binance** de l'utilisateur (clé sans retrait, chiffrée sur son appareil, ordres envoyés par son navigateur) et oriente vers des courtiers agréés (`docs/TRADING-REEL.md`). Exécuter des ordres *pour le compte de clients* demanderait un agrément (PSAN/CASP MiCA pour la crypto, PSI pour les titres).
-- **Abonnements** : CinetPay (mobile money) et Stripe (cartes), prix à fixer dans la table `plans` (`docs/PAIEMENTS.md`).
+- **Abonnements** : pilote en Afrique de l'Ouest, Gratuit limité + Pro en pass prépayés (300 FCFA le jour à 15 000 FCFA les 6 mois, 3 jours offerts), via CinetPay (`docs/PAIEMENTS.md`).
 - **Données** : l'API publique Binance est gratuite mais ses conditions d'utilisation doivent être vérifiées pour un usage commercial ; pour actions/indices, prévoir un fournisseur de données sous licence.
 - **Contenu** : les cours restent éducatifs ; aucun conseil en investissement personnalisé (activité réglementée).
 - **Comptes utilisateurs** : prêts (Supabase, robot `.github/workflows/supabase.yml`, voir `docs/COMPTES.md`) ; la politique de confidentialité et les conditions de vente sont dans `legal.html`.

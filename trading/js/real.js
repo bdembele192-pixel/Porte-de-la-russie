@@ -133,6 +133,8 @@ window.M = window.M || {};
 
   // ---------- Vue ----------
   M.views.reel = function (el, [tab]) {
+    // Compte réel réservé au Pro : sans abonnement, retour au mode test
+    if (R.env === "live" && M.Access && !M.Access.pro()) { R.env = "testnet"; save(); keys = null; }
     let price = null, priceT = null, cur = { sym: "BTCUSDT", side: "BUY", type: "MARKET" };
     tab = tab || (R.accepted === TERMS_V ? "binance" : "risques");
 
@@ -263,6 +265,7 @@ window.M = window.M || {};
     function bindEnv() {
       $$("[data-env]", body).forEach(b => b.onclick = () => {
         if (b.dataset.env === R.env) return;
+        if (b.dataset.env === "live" && M.Access && !M.Access.pro()) return M.Access.gate("reel");
         if (b.dataset.env === "live" && !confirm("Passer en mode RÉEL ? Les ordres engageront ton argent.")) return;
         R.env = b.dataset.env; save(); keys = null; if (ws) ws.close(); drawBinance();
       });

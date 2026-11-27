@@ -133,3 +133,30 @@ html, body { max-width: 100%; overflow-x: clip; }
   font-family: var(--body); font-weight: 500; letter-spacing: 0; }
 .inp input::placeholder { font-family: var(--body); font-weight: 400; color: var(--mut); opacity: 1; text-overflow: ellipsis; }
 body.side-open #net-bar, body.side-open .ai-fab, body.side-open .ai-panel { visibility: hidden; }
+
+/* ---------- Gratuit / Pro ---------- */
+.plans.two { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.plan-f li.no { color: var(--mut); }
+.plan-f li.no svg { color: var(--mut); }
+.plan-f li span { min-width: 0; }
+.passes { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; margin: 4px 0 10px; }
+.pass { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; padding: 10px; border-radius: 12px; border: 1px solid var(--line2); background: rgba(var(--fg), 0.03); color: var(--ink2); text-align: left; }
+.pass b { color: var(--ink); font-size: calc(14px * var(--fs)); }
+.pass span { font-size: calc(13px * var(--fs)); }
+.pass small { color: var(--mut); font-size: calc(11px * var(--fs)); }
+.pass.on { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+.pass:disabled { opacity: .45; }
+.pro-tag { position: absolute; top: 10px; right: 10px; display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 99px; font-size: 11px; font-weight: 700; background: color-mix(in srgb, var(--gold) 18%, transparent); color: var(--gold); pointer-events: none; }
+.pro-tag .ic { width: 12px; height: 12px; }
+.pro-tag.free { background: rgba(43, 234, 139, 0.14); color: var(--up); }
+.course, .mission, .opt-s, .qnode { position: relative; }
+.pro-locked { opacity: .62; }
+.pro-locked:hover { opacity: .85; }
+.qnode .pro-tag { top: -8px; right: -18px; }
+.lock-page { text-align: center; max-width: 560px; margin: 40px auto; }
+.lock-page > .ic { width: 40px; height: 40px; color: var(--gold); }
+.region-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; margin: 12px 0; max-height: 50vh; overflow-y: auto; }
+.region-b { display: flex; flex-direction: column; align-items: flex-start; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line2); background: rgba(var(--fg), 0.03); color: var(--ink2); text-align: left; }
+.region-b b { color: var(--ink); }
+.region-b small { color: var(--mut); }
+.region-b.on { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }

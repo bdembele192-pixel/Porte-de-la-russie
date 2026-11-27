@@ -51,6 +51,31 @@ jobs:
           deno check trading/supabase/functions/checkout/index.ts trading/supabase/functions/payment-webhook/index.ts
           deno test -A --no-check trading/supabase/tests/functions_test.ts
 
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Règles de sécurité de la base (RLS, essai, région)
+        env:
+          PGPASSWORD: test
+        run: |
+          P="psql -h localhost -U postgres -v ON_ERROR_STOP=1"
+          $P -c "create database t"
+          $P -d t -f trading/supabase/tests/auth_mock.sql
+          $P -d t -f trading/supabase/migrations/20261127000000_meche.sql
+          $P -d t -f trading/supabase/tests/rls.sql
+
   secrets:
     runs-on: ubuntu-latest
     timeout-minutes: 10

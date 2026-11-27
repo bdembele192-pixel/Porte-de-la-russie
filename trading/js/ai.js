@@ -768,7 +768,11 @@ Tu réponds aux questions de trading, finance, options, économie, politique, dr
       wait.className = "msg bot"; wait.innerHTML = `${M.icon("ai")}<div class="typing"><i></i><i></i><i></i></div>`;
       log.appendChild(wait); log.scrollTop = log.scrollHeight;
       let r;
-      try { r = await answer(q); } catch (e) { r = { html: "Oups, une erreur est survenue. Réessaie." }; }
+      if (M.Access && !M.Access.use("ia")) {
+        r = { html: `Tu as utilisé tes ${M.Access.LIMITS.ia} questions gratuites du jour. Reviens demain, ou passe au <a href="#/abonnement">Pro</a> pour des questions sans limite.` };
+      } else {
+        try { r = await answer(q); } catch (e) { r = { html: "Oups, une erreur est survenue. Réessaie." }; }
+      }
       a.chat.push({ role: "assistant", text: r.html, plain: r.plain, src: r.src });
       a.chat = a.chat.slice(-40);
       M.save();

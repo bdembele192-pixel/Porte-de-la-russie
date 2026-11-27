@@ -18,8 +18,13 @@ Deno.serve(async (req) => {
 
     const { plan_id, provider } = await req.json().catch(() => ({}));
     if (!["cinetpay", "stripe"].includes(provider)) return json({ error: "Moyen de paiement inconnu." }, 400, h);
-    const { data: plan } = await db.from("plans").select("*").eq("id", plan_id).eq("active", true).maybeSingle();
+    const { data: plan } = await db.from("plans").select("*").eq("id", plan_id).eq("active", true).eq("buyable", true).maybeSingle();
     if (!plan) return json({ error: "Offre introuvable." }, 404, h);
+    // Pilote : abonnements ouverts seulement aux régions listées (pays du compte, choisi par le client)
+    const { data: prof } = await db.from("profiles").select("country").eq("id", user.id).maybeSingle();
+    const open = (env("PILOT_COUNTRIES") || "ML,SN,CI,BF,BJ,TG").split(",").map(s => s.trim());
+    if (!prof?.country) return json({ error: "Choisis d'abord ta région dans ton compte." }, 409, h);
+    if (provider === "cinetpay" && !open.includes(prof.country)) return json({ error: "Les abonnements ne sont pas encore ouverts dans ta région." }, 409, h);
     const currency = CURRENCY[provider];
     const amount = Number(plan.prices?.[currency]);
     if (!(amount > 0)) return json({ error: "Le prix de cette offre n'est pas encore fixé dans cette devise." }, 409, h);
@@ -61,7 +66,8 @@ Deno.serve(async (req) => {
           apikey: env("CINETPAY_APIKEY"), site_id: env("CINETPAY_SITE_ID"), transaction_id: pay.id.replace(/-/g, ""),
           amount, currency: "XOF", description: `Abonnement Meche ${plan.name}`.replace(/[^\w\s.-]/g, ""),
           notify_url: FN_URL() + "/payment-webhook?provider=cinetpay", return_url: FN_URL() + "/payment-webhook?provider=cinetpay&return=1",
-          channels: "ALL", lang: "fr", metadata: pay.id
+          channels: "ALL", lang: "fr", metadata: pay.id,
+          customer_id: user.id, customer_email: user.email || undefined, customer_country: prof.country
         })
       });
       const d = await r.json();

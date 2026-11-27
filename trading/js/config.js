@@ -36,11 +36,14 @@ M.CONFIG = {
   // Captcha Cloudflare Turnstile (clé de site publique). À activer aussi dans Supabase → Authentication → Attack Protection.
   turnstileSiteKey: "",
 
-  // Abonnements : moyens de paiement proposés (chacun doit être configuré côté serveur, voir docs/PAIEMENTS.md).
-  // cinetpay = Orange Money, Moov, Wave, MTN… en FCFA (UEMOA) · stripe = cartes Visa/Mastercard
-  payments: ["cinetpay", "stripe"],
-  // Fonctions réservées aux abonnés (laisser vide tant que les prix ne sont pas fixés) : ex. ["ia", "reel"]
-  premiumGates: [],
+  // Abonnements (pilote Afrique de l'Ouest) : Gratuit limité + Pro en pass prépayés. Voir docs/PAIEMENTS.md.
+  // "auto" = les limites du Gratuit s'activent dès que les comptes sont en service (supabaseUrl rempli) ;
+  // false = tout reste ouvert (utile tant que CinetPay n'est pas configuré).
+  freemium: "auto",
+  // Moyens de paiement : cinetpay = Orange Money, Wave, Moov, MTN, Free et cartes, en FCFA. (stripe : après le pilote)
+  payments: ["cinetpay"],
+  // Pays où l'abonnement est ouvert pendant le pilote (le serveur applique la même liste : secret PILOT_COUNTRIES)
+  pilotCountries: ["ML", "SN", "CI", "BF", "BJ", "TG"],
 
   // Trading réel (docs/TRADING-REEL.md). Les clés restent chiffrées sur l'appareil de l'utilisateur.
   real: {

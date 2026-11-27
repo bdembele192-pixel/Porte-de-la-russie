@@ -78,7 +78,10 @@ window.M = window.M || {};
       M.state.labCfg = st; M.state.labParams = params; M.save();
     }
 
+    let firstRun = true;   // le backtest affiché à l'ouverture ne compte pas dans le quota du Gratuit
     async function run() {
+      if (!firstRun && M.Access && !M.Access.use("lab")) return M.Access.gate("lab");
+      firstRun = false;
       readCfg();
       const a = algo();
       $("#stats", el).innerHTML = `<p class="muted">Chargement des données…</p>`;
@@ -142,6 +145,7 @@ window.M = window.M || {};
     }
 
     async function compare() {
+      if (M.Access && !M.Access.use("lab")) return M.Access.gate("lab");
       readCfg();
       const btn = $("#cmp", el); btn.disabled = true; btn.textContent = "Calcul…";
       const opt = { fee: st.fee / 100 };

@@ -12,11 +12,12 @@ Deno.env.set("CINETPAY_APIKEY", "ck");
 Deno.env.set("CINETPAY_SITE_ID", "42");
 
 type Row = Record<string, unknown>;
-const db: { payments: Row[]; grants: string[]; plans: Row[]; stripe: URLSearchParams[]; cinet: Row } = {
-  payments: [], grants: [], stripe: [], cinet: {},
+const db: { payments: Row[]; grants: string[]; plans: Row[]; stripe: URLSearchParams[]; cinet: Row; profiles: Row[] } = {
+  payments: [], grants: [], stripe: [], cinet: {}, profiles: [{ id: "u1", country: "ML" }],
   plans: [
-    { id: "premium", name: "Premium", period_days: 30, active: true, prices: { XOF: 2500, EUR: 3.99, RUB: null } },
-    { id: "pro", name: "Pro", period_days: 30, active: true, prices: { XOF: null, EUR: null, RUB: null } }
+    { id: "premium", name: "Premium", period_days: 30, active: true, buyable: true, prices: { XOF: 3000, EUR: 3.99 } },
+    { id: "pro", name: "Pro", period_days: 30, active: true, buyable: true, prices: { XOF: null, EUR: null } },
+    { id: "pro-essai", name: "Essai", period_days: 3, active: true, buyable: false, prices: { XOF: 0 } }
   ]
 };
 const realFetch = globalThis.fetch;
@@ -76,6 +77,16 @@ Deno.test("checkout refuse une offre sans prix", async () => {
   const r = await post(checkout, "https://f/checkout", { plan_id: "pro", provider: "stripe" }, { authorization: "Bearer good" });
   assertEquals(r.status, 409);
 });
+Deno.test("checkout refuse l'essai offert (non achetable)", async () => {
+  const r = await post(checkout, "https://f/checkout", { plan_id: "pro-essai", provider: "cinetpay" }, { authorization: "Bearer good" });
+  assertEquals(r.status, 404);
+});
+Deno.test("checkout refuse une région hors pilote", async () => {
+  db.profiles[0].country = "FR";
+  const r = await post(checkout, "https://f/checkout", { plan_id: "premium", provider: "cinetpay" }, { authorization: "Bearer good" });
+  db.profiles[0].country = "ML";
+  assertEquals(r.status, 409);
+});
 Deno.test("checkout Stripe : prix pris dans la base, pas dans la requête", async () => {
   const r = await post(checkout, "https://f/checkout", { plan_id: "premium", provider: "stripe", amount: 0.01 }, { authorization: "Bearer good" });
   assertEquals(r.status, 200);
@@ -121,7 +132,7 @@ Deno.test("CinetPay : vérification par l'API puis retour client redirigé", asy
   await post(webhook, "https://f/payment-webhook?provider=cinetpay", `cpm_trans_id=${tid}&cpm_site_id=42`, { "content-type": "application/x-www-form-urlencoded" });
   assertEquals(db.payments.find(x => x.id === payment_id)!.status, "pending");
   // Paiement accepté : retour du client en POST → vérification + redirection vers l'app
-  db.cinet = { code: "00", data: { status: "ACCEPTED", amount: "2500", currency: "XOF", payment_method: "OM" } };
+  db.cinet = { code: "00", data: { status: "ACCEPTED", amount: "3000", currency: "XOF", payment_method: "OM" } };
   const back = await webhook(new Request("https://f/payment-webhook?provider=cinetpay&return=1", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body: `transaction_id=${tid}&token=x` }));
   assertEquals(back.status, 303);
   assert(back.headers.get("location")!.endsWith("#/abonnement/ok"));

@@ -123,8 +123,9 @@ window.M = window.M || {};
     delete s.real; // rien du trading réel (coffre chiffré, journal local) n'est envoyé avec la progression
     return s;
   }
+  const canSync = () => !M.Access || M.Access.pro();   // synchronisation réservée au Pro
   async function push() {
-    if (!session || needMfa) return false;
+    if (!session || needMfa || !canSync()) return false;
     const { error } = await sb.from("progress").upsert({ user_id: session.user.id, data: exportState(), updated_at: new Date().toISOString() });
     if (error) { console.warn(error); return false; }
     M.state.cloudSyncedAt = Date.now();
@@ -158,6 +159,8 @@ window.M = window.M || {};
     if (aal && aal.nextLevel === "aal2" && aal.currentLevel !== "aal2") { needMfa = true; doneFor = null; return mfaPrompt(); }
     needMfa = false;
     syncProfile().catch(() => {});
+    if (M.Access) await M.Access.refresh();
+    if (!canSync()) return;
     let remote = null;
     try { remote = await pull(); } catch (e) { M.toast("Synchronisation impossible : " + e.message, "err"); return; }
     if (!remote) { await push(); M.toast("Compte prêt, progression sauvegardée dans le cloud ☁️", "win"); return; }
@@ -225,7 +228,7 @@ window.M = window.M || {};
     await client();
     if (!session) return null;
     if (subCache && !force && Date.now() - subCache.t < 60000) return subCache.v;
-    const { data } = await sb.from("subscriptions").select("plan_id, status, current_period_end, plans(name, perks)").eq("user_id", session.user.id).maybeSingle();
+    const { data } = await sb.from("subscriptions").select("plan_id, status, current_period_end, plans(name, perks, period_days)").eq("user_id", session.user.id).maybeSingle();
     const v = data ? { ...data, active: data.status === "active" && Date.parse(data.current_period_end) > Date.now() } : null;
     subCache = { t: Date.now(), v };
     return v;
@@ -271,13 +274,15 @@ window.M = window.M || {};
       const totp = (f && f.totp || []).filter(x => x.status === "verified");
       const hasPw = (u.identities || []).some(i => i.provider === "email") || (u.app_metadata && (u.app_metadata.providers || []).includes("email"));
       const subTxt = sub && sub.active
-        ? `✅ <b>${esc(sub.plans ? sub.plans.name : sub.plan_id)}</b> jusqu'au ${new Date(sub.current_period_end).toLocaleDateString("fr-FR")}`
-        : "Offre gratuite";
+        ? `✅ <b>${esc(sub.plans ? sub.plans.name : sub.plan_id)}</b> jusqu'au ${new Date(sub.current_period_end).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" })}`
+        : "Gratuit";
       box.innerHTML = `
         <div class="acc-user"><span class="av" style="width:56px;height:56px;font-size:26px">${M.state.photo ? `<img src="${M.state.photo}" alt="">` : M.icon("profile")}</span>
           <div><b>${esc(M.state.name || "Trader")}</b><small class="muted">${esc(u.email || u.phone || "")} · connecté via ${esc((u.app_metadata && u.app_metadata.provider) || "code")}</small>
           <small class="muted">${M.state.cloudSyncedAt ? "Synchronisé " + new Date(M.state.cloudSyncedAt).toLocaleString("fr-FR") : "Pas encore synchronisé"}</small></div></div>
         <div class="set-ctl" style="margin:14px 0"><button class="btn primary sm" id="a-sync">${M.icon("refresh")} Synchroniser maintenant</button><button class="btn ghost sm" id="a-out">Se déconnecter</button></div>
+        <div class="set-row"><div><b>Région</b><small>${M.Region && M.Region.get() ? esc(M.Region.get().name) + (M.Region.open() ? " · abonnements ouverts" : " · abonnements bientôt disponibles") : "Pas encore choisie"} · modifiable une fois par mois</small></div>
+          <div class="set-ctl"><button class="btn ghost sm" id="a-region">${M.icon("globe")} ${M.Region && M.Region.get() ? "Changer" : "Choisir"}</button></div></div>
         <div class="set-row"><div><b>Abonnement</b><small>${subTxt}</small></div>
           <div class="set-ctl"><a class="btn ${sub && sub.active ? "ghost" : "primary"} sm" href="#/abonnement">${M.icon("crown")} ${sub && sub.active ? "Gérer" : "Voir les offres"}</a></div></div>
         ${u.email ? `<div class="set-row"><div><b>Mot de passe</b><small>${hasPw ? "Tu peux aussi te connecter avec ton e-mail et ton mot de passe." : "Facultatif : ajoute un mot de passe pour te connecter sans attendre de code."}</small></div>
@@ -291,7 +296,9 @@ window.M = window.M || {};
           <div class="set-ctl"><button class="btn danger sm" id="a-del">Supprimer</button></div></div>
         <div class="set-row"><div><b>Supprimer mon compte</b><small>Efface définitivement ton compte, ton profil, ta progression, ton journal d'ordres et ton historique d'abonnement.</small></div>
           <div class="set-ctl"><button class="btn danger sm" id="a-kill">Supprimer le compte</button></div></div>`;
-      $("#a-sync", box).onclick = async () => M.toast(await push() ? "Synchronisé ☁️" : "Échec de la synchronisation", "win");
+      $("#a-sync", box).onclick = async () => { if (!canSync()) return M.Access.gate("sync"); M.toast(await push() ? "Synchronisé ☁️" : "Échec de la synchronisation", "win"); };
+      const rg = $("#a-region", box);
+      if (rg) rg.onclick = async () => { await M.Region.pick(); draw(); };
       $("#a-out", box).onclick = async () => { await push(); await sb.auth.signOut(); M.toast("Déconnecté"); };
       $("#a-all", box).onclick = async () => { await push(); await sb.auth.signOut({ scope: "global" }); M.toast("Déconnecté de tous les appareils"); };
       const pw = $("#a-pw", box);
@@ -343,7 +350,7 @@ window.M = window.M || {};
       if (prov.length) tabs.push(["social", prov.slice(0, 2).map(p => PROVIDERS[p]).join(" / ")]);
       box.innerHTML = `
         <h3 style="margin-top:0">Crée ton compte ou connecte-toi</h3>
-        <p class="muted small">Un compte garde ta progression sur tous tes appareils et permet de t'abonner. C'est gratuit.</p>
+        <p class="muted small">${M.Access && M.Access.on() ? "<b>3 jours de Pro offerts</b> à la création du compte, sans moyen de paiement. Ensuite, le Gratuit reste gratuit." : "Un compte garde ta progression sur tous tes appareils et permet de t'abonner. C'est gratuit."}</p>
         <div class="tabs acc-tabs">${tabs.map(([k, t], i) => `<a class="${i ? "" : "on"}" data-t="${k}">${t}</a>`).join("")}</div>
         <div id="acc-f"></div>
         <p class="small muted" style="margin-top:14px">En créant un compte, tu acceptes les <a href="legal.html" target="_blank" rel="noopener">conditions et la politique de confidentialité</a>.</p>`;
