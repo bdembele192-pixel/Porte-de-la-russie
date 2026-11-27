@@ -183,6 +183,7 @@ window.M = window.M || {};
     if (meta) meta.content = getComputedStyle(root).getPropertyValue("--bg").trim();
     applyIcon();
     if (M.Chart && M.Chart.setTheme) M.Chart.setTheme();
+    if (M.contentLang) M.contentLang.sync();
     M.i18n.apply();
   };
 
@@ -318,7 +319,7 @@ window.M = window.M || {};
           <section class="set-sec glass" id="langue">
             <h2>${M.icon("globe")} Langue & devise</h2><p class="muted">Les prix des marchés restent en dollars (USDT) ; ton portefeuille et tes gains s'affichent dans ta devise.</p>
             ${row("Langue", "L'anglais, le chinois et le russe traduisent l'interface (menus, boutons) ; les cours et le quiz restent en français pour l'instant.",
-              `<select id="lang">${[["fr", "🇫🇷 Français"], ["en", "🇬🇧 English (interface)"], ["zh", "🇨🇳 中文（界面）"], ["ru", "🇷🇺 Русский (интерфейс)"]].map(([k, n]) => `<option value="${k}" ${(s.lang || "fr") === k ? "selected" : ""}>${n}</option>`).join("")}</select>`)}
+              `<select id="lang">${[["fr", "🇫🇷 Français"], ["en", "🇬🇧 English"], ["zh", "🇨🇳 中文"], ["ru", "🇷🇺 Русский"]].map(([k, n]) => `<option value="${k}" ${(s.lang || "fr") === k ? "selected" : ""}>${n}</option>`).join("")}</select>`)}
             ${row("Devise d'affichage", `Taux utilisé : 1 $ = ${cur.code === "USD" ? "1 $" : M.fmt$(1)}. Le FCFA suit la parité fixe avec l'euro (1 € = 655,957 FCFA) ; rouble, yen et yuan sont mis à jour en ligne toutes les 12 h${cur.approx ? " (taux approximatif : hors ligne)" : ""}.`,
               `<select id="currency">${Object.keys(CURRENCIES).map(k => `<option value="${k}" ${s.currency === k ? "selected" : ""}>${CURRENCIES[k].n}</option>`).join("")}</select>`)}
           </section>
