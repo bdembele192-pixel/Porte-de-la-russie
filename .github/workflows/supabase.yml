@@ -1,0 +1,134 @@
+name: Comptes et paiements Mèche (Supabase)
+
+# Crée/met à jour la base de données (tables, règles de sécurité), déploie les fonctions de paiement,
+# règle la sécurité des connexions, puis inscrit l'adresse du projet dans trading/js/config.js.
+# Guide complet : trading/docs/COMPTES.md et trading/docs/PAIEMENTS.md
+#
+# Secrets obligatoires (Settings → Secrets and variables → Actions → New repository secret) :
+#   SUPABASE_ACCESS_TOKEN   jeton personnel (supabase.com → Account → Access Tokens)
+#   SUPABASE_PROJECT_REF    identifiant du projet (Project Settings → General → Reference ID)
+#   SUPABASE_DB_PASSWORD    mot de passe de la base choisi à la création du projet
+# Secrets facultatifs (chaque moyen de paiement s'active quand ses secrets sont présents) :
+#   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_CURRENCY (EUR par défaut)
+#   CINETPAY_APIKEY, CINETPAY_SITE_ID
+#   TEST_PAYMENTS          1 = paiement simulé autorisé (essais sans compte marchand) ; à retirer au lancement
+#   PILOT_COUNTRIES        pays où l'abonnement est vendu (défaut : ML,SN,CI,BF,BJ,TG)
+#   TURNSTILE_SECRET_KEY    captcha Cloudflare (la clé de site publique va dans config.js : turnstileSiteKey)
+#   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, APPLE_CLIENT_ID, APPLE_SECRET   connexion Google / Apple
+# Puis : onglet Actions → « Comptes et paiements Mèche (Supabase) » → Run workflow.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["trading/supabase/**"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: supabase
+  cancel-in-progress: false
+
+env:
+  APP_URL: https://bdembele192-pixel.github.io/Porte-de-la-russie/trading/
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+      REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Vérifier les secrets
+        id: check
+        run: |
+          if [ -z "$SUPABASE_ACCESS_TOKEN" ] || [ -z "$REF" ] || [ -z "$SUPABASE_DB_PASSWORD" ]; then
+            echo "::warning::Ajoute SUPABASE_ACCESS_TOKEN, SUPABASE_PROJECT_REF et SUPABASE_DB_PASSWORD (voir trading/docs/COMPTES.md). Rien n'est déployé."
+            echo "skip=1" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: supabase/setup-cli@689adcfb80d947100a1eab127289b97d1fb07b13 # v3.2.0
+        if: steps.check.outputs.skip != '1'
+        with:
+          version: latest
+      - name: Base de données (tables + règles de sécurité)
+        if: steps.check.outputs.skip != '1'
+        working-directory: trading
+        run: |
+          supabase link --project-ref "$REF"
+          supabase db push
+      - name: Secrets des fonctions de paiement
+        if: steps.check.outputs.skip != '1'
+        working-directory: trading
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_WEBHOOK_SECRET: ${{ secrets.STRIPE_WEBHOOK_SECRET }}
+          STRIPE_CURRENCY: ${{ secrets.STRIPE_CURRENCY }}
+          CINETPAY_APIKEY: ${{ secrets.CINETPAY_APIKEY }}
+          CINETPAY_SITE_ID: ${{ secrets.CINETPAY_SITE_ID }}
+          PILOT_COUNTRIES: ${{ secrets.PILOT_COUNTRIES }}
+          TEST_PAYMENTS: ${{ secrets.TEST_PAYMENTS }}
+        run: |
+          f=$(mktemp)
+          echo "APP_URL=$APP_URL" >> "$f"
+          echo "ALLOWED_ORIGINS=https://bdembele192-pixel.github.io" >> "$f"
+          for k in STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET STRIPE_CURRENCY CINETPAY_APIKEY CINETPAY_SITE_ID PILOT_COUNTRIES TEST_PAYMENTS; do
+            v="${!k}"
+            if [ -n "$v" ]; then echo "$k=$v" >> "$f"; echo "✓ $k"; else echo "– $k absent"; fi
+          done
+          supabase secrets set --env-file "$f" --project-ref "$REF"
+          rm -f "$f"
+      - name: Fonctions de paiement
+        if: steps.check.outputs.skip != '1'
+        working-directory: trading
+        run: |
+          supabase functions deploy checkout --project-ref "$REF"
+          supabase functions deploy payment-webhook --project-ref "$REF" --no-verify-jwt
+          echo "Adresses à donner aux prestataires (notifications) :"
+          echo "  Stripe   : https://$REF.supabase.co/functions/v1/payment-webhook?provider=stripe"
+          echo "  CinetPay : réglée automatiquement à chaque paiement"
+      - name: Sécurité des connexions
+        if: steps.check.outputs.skip != '1'
+        continue-on-error: true
+        env:
+          TURNSTILE: ${{ secrets.TURNSTILE_SECRET_KEY }}
+          G_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          G_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          A_ID: ${{ secrets.APPLE_CLIENT_ID }}
+          A_SECRET: ${{ secrets.APPLE_SECRET }}
+        run: |
+          body=$(jq -n --arg site "$APP_URL" --arg ts "$TURNSTILE" --arg gid "$G_ID" --arg gs "$G_SECRET" --arg aid "$A_ID" --arg as "$A_SECRET" '
+            {
+              site_url: $site,
+              uri_allow_list: ($site + "**,http://localhost:8765/**"),
+              password_min_length: 10,
+              password_required_characters: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ:0123456789",
+              mfa_totp_enroll_enabled: true,
+              mfa_totp_verify_enabled: true,
+              mailer_otp_length: 6,
+              sms_otp_length: 6
+            }
+            + (if $ts != "" then { security_captcha_enabled: true, security_captcha_provider: "turnstile", security_captcha_secret: $ts } else {} end)
+            + (if $gid != "" then { external_google_enabled: true, external_google_client_id: $gid, external_google_secret: $gs } else {} end)
+            + (if $aid != "" then { external_apple_enabled: true, external_apple_client_id: $aid, external_apple_secret: $as } else {} end)')
+          code=$(curl -sS -o /tmp/auth.json -w "%{http_code}" -X PATCH "https://api.supabase.com/v1/projects/$REF/config/auth" \
+            -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN" -H "Content-Type: application/json" -d "$body")
+          if [ "$code" -ge 300 ]; then echo "::warning::Réglages de connexion non appliqués ($code) : règle-les à la main (docs/COMPTES.md)."; head -c 400 /tmp/auth.json; else echo "Réglages de connexion appliqués."; fi
+          rm -f /tmp/auth.json
+      - name: Brancher l'app sur Supabase
+        if: steps.check.outputs.skip != '1'
+        run: |
+          KEY=$(supabase projects api-keys --project-ref "$REF" -o json | jq -r '([.[] | select(.type == "publishable")] + [.[] | select(.name == "anon")])[0].api_key // empty')
+          if [ -z "$KEY" ]; then echo "::warning::Clé publique introuvable : colle-la à la main dans trading/js/config.js (supabaseAnonKey)."; exit 0; fi
+          case "$KEY" in sb_secret_*|*service_role*) echo "::error::Clé secrète détectée : arrêt."; exit 1;; esac
+          sed -i -E "s|^(\s*supabaseUrl: )\"[^\"]*\"|\1\"https://$REF.supabase.co\"|; s|^(\s*supabaseAnonKey: )\"[^\"]*\"|\1\"$KEY\"|" trading/js/config.js
+          git config user.name "meche-supabase-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trading/js/config.js
+          if git diff --cached --quiet; then echo "config.js déjà à jour"; exit 0; fi
+          git commit -m "App : comptes Supabase activés [skip ci]"
+          for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0; sleep 5; done
+          exit 1

@@ -1,0 +1,84 @@
+# Abonnements et paiements
+
+Écran : `#/abonnement` (`js/subscribe.js`). Serveur : `supabase/functions/checkout` et `supabase/functions/payment-webhook`.
+
+## Comment ça marche
+1. L'utilisateur connecté choisit une offre et un moyen de paiement.
+2. L'app appelle la fonction **`checkout`** avec seulement `plan_id` et `provider`. Le serveur lit **le prix dans la table `plans`**
+   (jamais dans le navigateur), enregistre un paiement « en attente » et renvoie l'adresse de la page de paiement du prestataire.
+   L'app n'accepte que des adresses `checkout.stripe.com` et `*.cinetpay.com`.
+3. L'utilisateur paie chez le prestataire (Mèche ne voit jamais la carte ni le code mobile money).
+4. Le prestataire prévient la fonction **`payment-webhook`**, qui **ne croit rien sur parole** :
+   - Stripe : signature `Stripe-Signature` vérifiée (HMAC-SHA256, horodatage de moins de 5 minutes) ;
+   - CinetPay : le paiement est revérifié en interrogeant directement son API.
+5. Si le montant et la devise correspondent au paiement enregistré, le paiement passe à « payé » (une seule fois, même si la
+   notification arrive plusieurs fois) et `grant_subscription()` prolonge l'abonnement de la durée de l'offre.
+
+Pas de prélèvement automatique : chaque paiement couvre une période (30 jours, 1 an…). Un nouveau paiement prolonge la période en cours.
+
+## Modèle du pilote (Afrique de l'Ouest, décidé le 27 novembre 2026)
+
+| Offre | Contenu | Prix |
+| --- | --- | --- |
+| Gratuit | 5 premiers modules + Gestion du risque, 6 missions, 6 unités de quiz, Mèche IA 5 questions/jour, Backtest 5 lancements/jour, Labo options 4 stratégies, Vega Desk 1 session/jour, trading réel en mode test, pas de synchronisation | 0 |
+| Pro | tout, sans limite | pass prépayés ci-dessous |
+
+| Pass (table `plans`) | Durée | Prix |
+| --- | --- | --- |
+| `pro-1j` | 1 jour | 300 FCFA |
+| `pro-7j` | 7 jours | 1 000 FCFA |
+| `pro-1m` | 30 jours | 3 000 FCFA |
+| `pro-3m` | 90 jours | 8 000 FCFA (-11 %) |
+| `pro-6m` | 180 jours | 15 000 FCFA (-17 %) |
+| `pro-essai` | 3 jours offerts à la création du compte (non achetable) | 0 |
+
+- **Région** : le client la choisit (l'app la propose d'après son fuseau horaire) ; elle est enregistrée dans son profil et
+  ne change qu'une fois tous les 30 jours (règle appliquée par la base). Les abonnements ne sont vendus qu'aux régions du
+  pilote : `pilotCountries` dans `config.js` (affichage) et secret `PILOT_COUNTRIES` côté serveur (contrôle), par défaut
+  `ML,SN,CI,BF,BJ,TG`.
+- **Activation des limites** : `freemium: "auto"` dans `config.js` = les limites du Gratuit s'appliquent dès que les comptes
+  sont en service. Mets `freemium: false` tant que CinetPay n'est pas prêt, sinon personne ne pourra débloquer le Pro.
+- **Limite connue** : le contenu des cours est livré au navigateur ; les verrous du Gratuit sont commerciaux et un
+  utilisateur technique peut les contourner. Les paiements et l'abonnement, eux, sont protégés côté serveur. Pour une
+  protection forte, il faudra servir les contenus Pro depuis la base (étape suivante, après le pilote).
+
+## Tester sans compte marchand (mode test)
+Tant que la société et le compte CinetPay n'existent pas, tout le parcours se teste avec un **paiement simulé** :
+1. Crée le projet Supabase et lance le robot (voir `COMPTES.md`) en ajoutant le secret GitHub `TEST_PAYMENTS` = `1`.
+2. Dans l'app : Abonnement → choisir un pass → **Paiement de test** → « Simuler un paiement réussi ». Le serveur active le
+   Pro exactement comme après un vrai paiement (même vérification, même prolongation).
+3. Les paiements simulés sont enregistrés avec `provider = 'test'` : faciles à repérer et à supprimer dans la table `payments`.
+4. **Au lancement** : supprime le secret `TEST_PAYMENTS`, relance le robot, et mets `testPayments: false` dans `config.js`.
+   Sans ce secret, le serveur refuse tout paiement simulé, même si le bouton restait affiché.
+
+## Modifier les prix
+Supabase → **Table Editor → plans** → colonne `prices`, par exemple `{"XOF": 3000}` (nombre entier, **multiple de 5**,
+exigé par CinetPay). `name`, `description`, `period_days`, `buyable` (proposé à l'achat) et `sort` se changent au même endroit.
+
+## Brancher chaque prestataire
+Ajoute les secrets dans GitHub (**Settings → Secrets and variables → Actions**) puis relance le robot
+« Comptes et paiements Mèche (Supabase) ». Un moyen de paiement sans secrets répond simplement « pas encore configuré ».
+Pendant le pilote, seul CinetPay est proposé (`payments: ["cinetpay"]` dans `config.js`) ; Stripe reste prêt pour plus tard.
+
+### CinetPay — Orange Money, Moov, Wave, MTN, cartes (UEMOA, FCFA)
+1. Compte marchand sur cinetpay.com (pièces de l'entreprise demandées).
+2. Tableau de bord → Intégration : **API Key** et **Site ID** → secrets `CINETPAY_APIKEY`, `CINETPAY_SITE_ID`.
+3. Rien d'autre : l'adresse de notification est envoyée automatiquement à chaque paiement.
+
+### Stripe — cartes internationales, Apple Pay, Google Pay
+1. Compte sur stripe.com. ⚠️ Stripe n'ouvre pas de compte marchand à une entreprise établie au Mali :
+   il faut une société dans un pays pris en charge (France, Canada, Émirats…). À défaut, retire `stripe` de `payments`.
+2. **Developers → API keys** : clé secrète `sk_live_…` (ou `sk_test_…` pour tester) → secret `STRIPE_SECRET_KEY`.
+3. **Developers → Webhooks → Add endpoint** :
+   `https://<REF>.supabase.co/functions/v1/payment-webhook?provider=stripe`,
+   événements `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`,
+   `checkout.session.expired`. Copie le *Signing secret* `whsec_…` → secret `STRIPE_WEBHOOK_SECRET`.
+
+## Tester
+- Stripe : clés `sk_test_…` + carte `4242 4242 4242 4242`.
+- CinetPay propose un mode test dans son tableau de bord.
+- Tests automatiques du serveur (prix imposé par la base, signatures, double notification, montant falsifié) :
+  `deno test -A trading/supabase/tests/functions_test.ts`.
+
+## Obligations à vérifier avant d'encaisser
+Conditions de vente (partie 7 de `legal.html`), facturation et TVA selon le pays de l'entreprise, déclaration des revenus.

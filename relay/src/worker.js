@@ -21,8 +21,17 @@ function cors(env, req) {
     "access-control-allow-methods": "GET, POST, OPTIONS",
     "access-control-allow-headers": "content-type",
     "access-control-max-age": "86400",
+    "x-content-type-options": "nosniff",
+    "referrer-policy": "no-referrer",
     vary: "origin"
   };
+}
+// Les questions à Claude coûtent de l'argent au propriétaire : seules les pages autorisées peuvent les poser
+function originOk(env, req) {
+  const allowed = (env.ALLOWED_ORIGINS || "*").split(",").map(s => s.trim()).filter(Boolean);
+  if (allowed.includes("*")) return true;
+  const origin = req.headers.get("origin");
+  return !!origin && allowed.includes(origin);
 }
 const json = (data, init, h) => new Response(JSON.stringify(data), { ...init, headers: { "content-type": "application/json; charset=utf-8", ...h, ...(init && init.headers) } });
 
@@ -78,6 +87,8 @@ function allow(ip, perMin) {
   const now = Date.now(), list = (recent.get(ip) || []).filter(t => now - t < 60e3);
   if (list.length >= perMin) return false;
   list.push(now); recent.set(ip, list);
+  // Les adresses IP ne sont gardées qu'une minute : on purge celles qui n'ont plus de question récente
+  if (recent.size > 200 || Math.random() < 0.05) for (const [k, v] of recent) if (!v.some(t => now - t < 60e3)) recent.delete(k);
   if (recent.size > 5000) recent.clear();
   return true;
 }
@@ -144,6 +155,7 @@ export default {
     try {
       if (path === "/brvm" && req.method === "GET") return json(await brvm(ctx), null, h);
       if (path === "/news" && req.method === "GET") return json(await news(ctx), null, h);
+      if (path === "/ai" && req.method === "POST" && !originOk(env, req)) return json({ error: "Origine non autorisée." }, { status: 403 }, h);
       if (path === "/ai" && req.method === "POST") { const r = await ai(req, env); Object.entries(h).forEach(([k, v]) => r.headers.set(k, v)); return r; }
       if (path === "/") return json({ ok: true, service: "Relais Mèche", ai: !!env.ANTHROPIC_API_KEY, model: env.MODEL || "claude-opus-5-5" }, null, h);
       return json({ error: "Introuvable" }, { status: 404 }, h);

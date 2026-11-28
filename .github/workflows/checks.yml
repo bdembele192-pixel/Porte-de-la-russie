@@ -1,0 +1,108 @@
+name: Contrôles (tests et sécurité)
+
+# Tourne sur chaque pull request et chaque envoi sur main :
+#   · syntaxe de tous les scripts de l'app, vérification de types et tests des fonctions de paiement ;
+#   · recherche de secrets oubliés dans le code (gitleaks) ;
+#   · analyse de sécurité du code JavaScript / TypeScript (CodeQL).
+# Les actions sont épinglées par empreinte (SHA) : une version piratée d'une action ne peut pas s'exécuter ici.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "17 4 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+      - name: Syntaxe des scripts de l'app
+        run: |
+          fail=0
+          for f in trading/js/*.js trading/js/content/*.js trading/sw.js; do
+            node --check "$f" 2>/dev/null || { node --input-type=commonjs -e "new Function(require('fs').readFileSync('$f','utf8'))" || { echo "::error file=$f::erreur de syntaxe"; fail=1; }; }
+          done
+          exit $fail
+      - name: Aucune clé secrète dans la configuration publique
+        run: |
+          if grep -nE "service_role|sb_secret_|sk_live_|sk-ant-|whsec_[A-Za-z0-9]{8}" trading/js/config.js; then
+            echo "::error file=trading/js/config.js::clé secrète détectée"; exit 1
+          fi
+      - uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: v2.x
+      - name: Fonctions de paiement (types + tests)
+        run: |
+          deno check trading/supabase/functions/checkout/index.ts trading/supabase/functions/payment-webhook/index.ts
+          deno test -A --no-check trading/supabase/tests/functions_test.ts
+
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Règles de sécurité de la base (RLS, essai, région)
+        env:
+          PGPASSWORD: test
+        run: |
+          P="psql -h localhost -U postgres -v ON_ERROR_STOP=1"
+          $P -c "create database t"
+          $P -d t -f trading/supabase/tests/auth_mock.sql
+          $P -d t -f trading/supabase/migrations/20261127000000_meche.sql
+          $P -d t -f trading/supabase/tests/rls.sql
+
+  secrets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  codeql:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@74c1aea9df7c0f02e9b7bfe4a8935abf2e5e3aa6 # v3
+        with:
+          languages: javascript-typescript
+          config: |
+            paths-ignore:
+              - trading/js/vendor
+              - fx-desk
+      - uses: github/codeql-action/analyze@74c1aea9df7c0f02e9b7bfe4a8935abf2e5e3aa6 # v3

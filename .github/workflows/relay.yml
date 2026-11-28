@@ -1,0 +1,83 @@
+name: Relais Mèche (Cloudflare)
+
+# Déploie le relais (relay/) chez Cloudflare sans rien installer sur ton PC, puis inscrit son adresse
+# dans trading/js/config.js pour que l'app l'utilise tout de suite.
+#
+# À faire une seule fois : Settings → Secrets and variables → Actions → New repository secret
+#   CLOUDFLARE_API_TOKEN   jeton Cloudflare (modèle « Edit Cloudflare Workers »)
+#   CLOUDFLARE_ACCOUNT_ID  identifiant du compte (tableau de bord Cloudflare → Workers & Pages, colonne de droite)
+#   ANTHROPIC_API_KEY      (facultatif) clé API Claude pour Mèche IA ; fixe une limite de dépense dans la console Anthropic
+# Puis : onglet Actions → « Relais Mèche (Cloudflare) » → Run workflow.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["relay/**", "trading/js/marketdata.js"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: relay
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Vérifier les secrets
+        id: check
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$TOKEN" ] || [ -z "$ACCOUNT" ]; then
+            echo "::warning::Ajoute les secrets CLOUDFLARE_API_TOKEN et CLOUDFLARE_ACCOUNT_ID (voir relay/README.md). Rien n'est déployé."
+            echo "skip=1" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        if: steps.check.outputs.skip != '1'
+        with:
+          node-version: 20
+      - name: Installer
+        if: steps.check.outputs.skip != '1'
+        working-directory: relay
+        run: npm ci || npm install
+      - name: Déployer
+        if: steps.check.outputs.skip != '1'
+        id: deploy
+        uses: cloudflare/wrangler-action@9acf94ace14e7dc412b076f2c5c20b8ce93c79cd # v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: relay
+      - name: Clé Claude pour Mèche IA (si fournie)
+        if: steps.check.outputs.skip != '1'
+        working-directory: relay
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$KEY" ]; then echo "Pas de secret ANTHROPIC_API_KEY : Mèche IA répondra avec ses connaissances locales."; exit 0; fi
+          printf '%s' "$KEY" | npx wrangler secret put ANTHROPIC_API_KEY
+      - name: Brancher l'app sur le relais
+        if: steps.check.outputs.skip != '1'
+        env:
+          URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: |
+          if [ -z "$URL" ]; then echo "::warning::Adresse du relais inconnue : colle-la à la main dans trading/js/config.js (relayUrl)."; exit 0; fi
+          URL="${URL%/}"
+          echo "Relais en ligne : $URL"
+          curl -fsS "$URL" || true
+          sed -i -E "s|^(\s*relayUrl: )\"[^\"]*\"|\1\"$URL\"|" trading/js/config.js
+          git config user.name "meche-relay-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add trading/js/config.js
+          if git diff --cached --quiet; then echo "config.js déjà à jour"; exit 0; fi
+          git commit -m "App : adresse du relais Cloudflare [skip ci]"
+          for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push && exit 0; sleep 5; done
+          exit 1

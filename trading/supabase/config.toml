@@ -1,0 +1,9 @@
+# Configuration Supabase CLI pour Mèche (déploiement : .github/workflows/supabase.yml)
+project_id = "meche"
+
+[functions.checkout]
+verify_jwt = true
+
+# Les prestataires de paiement n'ont pas de jeton Supabase : la fonction vérifie elle-même chaque notification
+[functions.payment-webhook]
+verify_jwt = false

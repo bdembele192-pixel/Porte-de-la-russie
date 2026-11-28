@@ -332,7 +332,7 @@ window.M = window.M || {};
   M.dailyMission = dailyMission;
 
   function disclaimer() {
-    return `<p class="disclaimer">⚠️ Mèche est un simulateur éducatif : l'argent est virtuel, les prix sont réels (API publique Binance) ou simulés si la connexion échoue. Rien ici n'est un conseil en investissement. Le trading comporte un risque de perte en capital ; la majorité des particuliers qui tradent des produits à levier perdent de l'argent.</p>`;
+    return `<p class="disclaimer">⚠️ Mèche est un simulateur éducatif : l'argent est virtuel, les prix sont réels (Binance en direct ; bourses, matières premières, devises et BRVM avec quelques minutes de différé) ou simulés si la connexion échoue. Rien ici n'est un conseil en investissement. Le trading comporte un risque de perte en capital ; la majorité des particuliers qui tradent des produits à levier perdent de l'argent. <a href="legal.html" target="_blank" rel="noopener">En savoir plus</a></p>`;
   }
   M.disclaimer = disclaimer;
 
@@ -446,7 +446,7 @@ window.M = window.M || {};
         if (prev == null || sc > prev) M.addXP(xp, "quiz");
         if (sc === 1) M.unlock("quiz_perfect");
         const nextC = M.COURSES[M.COURSES.indexOf(c) + 1];
-        const tryMap = { live: ["#/live", "⚡ Pratiquer en live"], missions: ["#/missions", "⏳ Tester sur un vrai krach"], swipe: ["#/swipe", "👆 Jouer au Swipe"], lab: ["#/lab", "🧪 Ouvrir l'Algo Lab"], options: ["#/options", "Ouvrir le Labo options"], quiz: ["#/quiz", "🦉 S'entraîner au Quiz"], profil: ["#/profile", "👤 Voir mon profil"] };
+        const tryMap = { live: ["#/live", "⚡ Pratiquer en live"], missions: ["#/missions", "⏳ Tester sur un vrai krach"], swipe: ["#/swipe", "👆 Jouer au Swipe"], lab: ["#/lab", "🧪 Ouvrir l'Algo Lab"], options: ["#/options", "Ouvrir le Labo options"], quiz: ["#/quiz", "🦉 S'entraîner au Quiz"], profil: ["#/profile", "👤 Voir mon profil"], vega: ["#/vega", "🏦 Ouvrir Vega Desk"] };
         const t = tryMap[c.try] || tryMap.live;
         box.innerHTML = `
           <div class="quiz-end">

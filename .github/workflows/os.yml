@@ -29,7 +29,7 @@ jobs:
   tests:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Tests de marche
         run: python3 -m unittest discover -s os/tests -v
       - name: Vérification des scripts shell
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Libérer de l'espace disque
         run: |
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
@@ -61,7 +61,7 @@ jobs:
           TIMEZONE: ${{ github.event.inputs.fuseau || 'Africa/Abidjan' }}
         run: sudo -E ./os/build.sh
       - name: Publier l'ISO (artefact)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: meche-os-iso
           path: |
@@ -71,7 +71,7 @@ jobs:
           retention-days: 14
       - name: Publier une Release
         if: startsWith(github.ref, 'refs/tags/os-v')
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
         with:
           files: |
             os/out/*.iso

@@ -441,11 +441,20 @@ window.M = window.M || {};
   }
 
   // ---------- Cerveau Claude (optionnel, clé API de l'utilisateur) ----------
-  let sdk = null;
+  // Appel direct de l'API Messages : aucun code tiers chargé à la volée, la clé ne part que vers api.anthropic.com
+  async function callClaude(key, body, beta) {
+    const headers = { "content-type": "application/json", "x-api-key": key, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" };
+    const payload = Object.assign({}, body);
+    if (beta && payload.betas) { headers["anthropic-beta"] = payload.betas.join(","); }
+    delete payload.betas;
+    const r = await fetch("https://api.anthropic.com/v1/messages" + (beta ? "?beta=true" : ""), { method: "POST", headers, body: JSON.stringify(payload) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error((d.error && d.error.message) || "Erreur de l'API Claude (" + r.status + ")");
+    return d;
+  }
   async function claude(question, context) {
     const a = st();
-    if (!sdk) sdk = (await import("https://esm.sh/@anthropic-ai/sdk@1.3.0")).default;
-    const client = new sdk({ apiKey: a.cfg.claudeKey, dangerouslyAllowBrowser: true });
+    const key = a.cfg.claudeKey;
     const model = a.cfg.claudeModel || "claude-opus-5-5";
     const isHaiku = /haiku/.test(model);
     const history = a.chat.slice(-10).filter(x => x.text).map(x => ({ role: x.role, content: x.plain || x.text.replace(/<[^>]+>/g, " ") }));
@@ -465,7 +474,7 @@ ${context}`;
     // Repli automatique côté serveur si un modèle refuse (non disponible sur Haiku)
     if (!isHaiku) { body.betas = ["server-side-fallback-2026-07-01"]; body.fallbacks = "default"; }
     do {
-      res = isHaiku ? await client.messages.create(body) : await client.beta.messages.create(body);
+      res = await callClaude(key, body, !isHaiku);
       if (res.stop_reason === "pause_turn") body.messages = body.messages.concat([{ role: "assistant", content: res.content }]);
     } while (res.stop_reason === "pause_turn" && ++guard < 3);
     if (res.stop_reason === "refusal") return "Je ne peux pas répondre à cette demande.";
@@ -759,7 +768,11 @@ Tu réponds aux questions de trading, finance, options, économie, politique, dr
       wait.className = "msg bot"; wait.innerHTML = `${M.icon("ai")}<div class="typing"><i></i><i></i><i></i></div>`;
       log.appendChild(wait); log.scrollTop = log.scrollHeight;
       let r;
-      try { r = await answer(q); } catch (e) { r = { html: "Oups, une erreur est survenue. Réessaie." }; }
+      if (M.Access && !M.Access.use("ia")) {
+        r = { html: `Tu as utilisé tes ${M.Access.LIMITS.ia} questions gratuites du jour. Reviens demain, ou passe au <a href="#/abonnement">Pro</a> pour des questions sans limite.` };
+      } else {
+        try { r = await answer(q); } catch (e) { r = { html: "Oups, une erreur est survenue. Réessaie." }; }
+      }
       a.chat.push({ role: "assistant", text: r.html, plain: r.plain, src: r.src });
       a.chat = a.chat.slice(-40);
       M.save();

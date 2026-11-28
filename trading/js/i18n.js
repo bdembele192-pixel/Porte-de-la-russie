@@ -80,3 +80,65 @@ M.I18N = {
     "Ce qu'il surveille": "Что он отслеживает", "Cerveau Claude (optionnel)": "Мозг Claude (необязательно)", "Effacer la conversation": "Очистить чат"
   }
 };
+
+// Libellés ajoutés avec la finalisation (Académie, Time Machine, Vega Desk, terminal multi-marchés, hors ligne)
+(function () {
+  const K = ["Apprends les vraies règles du jeu", "Chaque terme souligné en pointillés s'explique au survol (ou d'un tap sur mobile). Chaque module se termine par un quiz.",
+    "Le dico du trader", "Rejoue les moments qui ont secoué les marchés", "Tous les actifs", "Toutes", "Toutes difficultés", "Pas encore jouées", "Déjà jouées", "Au hasard",
+    "Facile", "Moyen", "Difficile", "Extrême", "Vega Desk", "Dans la peau d'un trader d'options", "Plein écran", "Les cours du desk", "Guide des onglets",
+    "Crypto", "Bourses", "Matières", "Devises", "● DIFFÉRÉ", "● COPIE", "● FERMÉ", "indisponible", "Installer l'app", "Recharger", "Krachs historiques",
+    "Mentions légales · Confidentialité · Risques", "Supprimer mon compte", "Supprimer le compte", "Aucune mission ne correspond. Élargis les filtres."];
+  const T = {
+    en: ["Learn the real rules of the game", "Every term underlined with dots is explained on hover (or with a tap on mobile). Each module ends with a quiz.",
+      "The trader's dictionary", "Replay the moments that shook the markets", "All assets", "All", "All difficulties", "Not played yet", "Already played", "Random",
+      "Easy", "Medium", "Hard", "Extreme", "Vega Desk", "In an options trader's shoes", "Full screen", "The desk courses", "Tab guide",
+      "Crypto", "Stocks", "Commodities", "Currencies", "● DELAYED", "● COPY", "● CLOSED", "unavailable", "Install the app", "Reload", "Historic crashes",
+      "Legal notice · Privacy · Risks", "Delete my account", "Delete account", "No mission matches. Widen the filters."],
+    zh: ["学习真正的游戏规则", "每个带点状下划线的术语，悬停（手机上轻点）即可看到解释。每个模块都以一个测验结束。",
+      "交易者词典", "重温震撼市场的时刻", "全部资产", "全部", "全部难度", "尚未完成", "已完成", "随机",
+      "简单", "中等", "难", "极难", "Vega 交易台", "体验期权交易员的工作", "全屏", "交易台课程", "标签指南",
+      "加密货币", "股市", "大宗商品", "外汇", "● 延迟", "● 副本", "● 休市", "不可用", "安装应用", "重新加载", "历史暴跌",
+      "法律声明 · 隐私 · 风险", "删除我的账户", "删除账户", "没有符合条件的任务。请放宽筛选条件。"],
+    ru: ["Узнай настоящие правила игры", "Каждый термин, подчёркнутый пунктиром, объясняется при наведении (или касанием на телефоне). Каждый модуль заканчивается квизом.",
+      "Словарь трейдера", "Переживи заново моменты, которые потрясли рынки", "Все активы", "Все", "Любая сложность", "Ещё не пройдены", "Уже пройдены", "Наугад",
+      "Легко", "Средне", "Сложно", "Экстрим", "Vega Desk", "На месте опционного трейдера", "На весь экран", "Курсы деска", "Гид по вкладкам",
+      "Крипта", "Биржи", "Сырьё", "Валюты", "● С ЗАДЕРЖКОЙ", "● КОПИЯ", "● ЗАКРЫТ", "недоступно", "Установить приложение", "Перезагрузить", "Исторические крахи",
+      "Правовая информация · Конфиденциальность · Риски", "Удалить мой аккаунт", "Удалить аккаунт", "Ни одна миссия не подходит. Ослабь фильтры."]
+  };
+  Object.keys(T).forEach(l => { M.I18N[l] = M.I18N[l] || {}; K.forEach((k, i) => { if (T[l][i]) M.I18N[l][k] = T[l][i]; }); });
+})();
+
+// Libellés des comptes, abonnements et du trading réel
+(function () {
+  const K = ["Trading réel", "Abonnement", "Avant de commencer", "Mon compte Binance", "Courtiers agréés", "Journal", "Code e-mail", "Mot de passe", "Téléphone",
+    "J'ai un compte", "Créer un compte", "Se connecter", "Créer mon compte", "Mot de passe oublié ?", "Crée ton compte ou connecte-toi", "Recevoir un code", "Recevoir un SMS",
+    "Acheter", "Vendre", "Au marché", "À cours limité", "Vérifier l'ordre", "Solde", "Ordre", "Ordres ouverts", "Mes plafonds", "Verrouiller", "Déverrouiller",
+    "Coffre verrouillé", "Paiement sécurisé", "Mobile money", "Carte bancaire", "Russie", "Prix à fixer", "bientôt disponible", "pour toujours", "Le plus choisi",
+    "Confirmer l'ordre", "Envoyer l'ordre", "Annuler", "Enregistrer", "Se déconnecter", "Synchroniser maintenant", "Voir les offres", "Gérer", "Changer", "Ajouter",
+    "Double authentification (2FA)", "Se déconnecter partout", "Continuer vers le paiement", "Offre actuelle de base", "J'accepte et je continue", "Exporter (CSV)",
+    "Journal des ordres réels", "Vérifie toujours l'agrément", "Chiffrer et vérifier", "Testnet (argent fictif)", "Compte réel", "Aucun ordre ouvert."];
+  const T = {
+    en: ["Real trading", "Subscription", "Before you start", "My Binance account", "Licensed brokers", "Journal", "E-mail code", "Password", "Phone",
+      "I have an account", "Create an account", "Sign in", "Create my account", "Forgot password?", "Create your account or sign in", "Get a code", "Get an SMS",
+      "Buy", "Sell", "Market", "Limit", "Check the order", "Balance", "Order", "Open orders", "My limits", "Lock", "Unlock",
+      "Vault locked", "Secure payment", "Mobile money", "Bank card", "Russia", "Price to be set", "coming soon", "forever", "Most popular",
+      "Confirm the order", "Send the order", "Cancel", "Save", "Sign out", "Sync now", "See the plans", "Manage", "Change", "Add",
+      "Two-factor authentication (2FA)", "Sign out everywhere", "Continue to payment", "Current basic plan", "I accept and continue", "Export (CSV)",
+      "Real orders journal", "Always check the licence", "Encrypt and verify", "Testnet (play money)", "Real account", "No open orders."],
+    zh: ["真实交易", "订阅", "开始之前", "我的币安账户", "持牌经纪商", "日志", "邮箱验证码", "密码", "电话",
+      "我有账户", "创建账户", "登录", "创建我的账户", "忘记密码？", "创建账户或登录", "获取验证码", "获取短信",
+      "买入", "卖出", "市价", "限价", "检查订单", "余额", "订单", "未成交订单", "我的限额", "锁定", "解锁",
+      "保险库已锁定", "安全支付", "移动支付", "银行卡", "俄罗斯", "价格待定", "即将推出", "永久", "最受欢迎",
+      "确认订单", "发送订单", "取消", "保存", "退出登录", "立即同步", "查看方案", "管理", "更改", "添加",
+      "双重验证（2FA）", "在所有设备上退出", "继续付款", "当前基础方案", "我接受并继续", "导出（CSV）",
+      "真实订单日志", "务必核实牌照", "加密并验证", "测试网（模拟资金）", "真实账户", "没有未成交订单。"],
+    ru: ["Реальная торговля", "Подписка", "Перед началом", "Мой аккаунт Binance", "Лицензированные брокеры", "Журнал", "Код по e-mail", "Пароль", "Телефон",
+      "У меня есть аккаунт", "Создать аккаунт", "Войти", "Создать мой аккаунт", "Забыли пароль?", "Создай аккаунт или войди", "Получить код", "Получить SMS",
+      "Купить", "Продать", "По рынку", "Лимитный", "Проверить ордер", "Баланс", "Ордер", "Открытые ордера", "Мои лимиты", "Заблокировать", "Разблокировать",
+      "Сейф заблокирован", "Безопасная оплата", "Мобильные деньги", "Банковская карта", "Россия", "Цена уточняется", "скоро", "навсегда", "Самый популярный",
+      "Подтвердить ордер", "Отправить ордер", "Отмена", "Сохранить", "Выйти", "Синхронизировать", "Смотреть тарифы", "Управлять", "Изменить", "Добавить",
+      "Двухфакторная аутентификация (2FA)", "Выйти на всех устройствах", "Перейти к оплате", "Текущий базовый тариф", "Принимаю и продолжаю", "Экспорт (CSV)",
+      "Журнал реальных ордеров", "Всегда проверяй лицензию", "Зашифровать и проверить", "Testnet (виртуальные деньги)", "Реальный счёт", "Открытых ордеров нет."]
+  };
+  Object.keys(T).forEach(l => { M.I18N[l] = M.I18N[l] || {}; K.forEach((k, i) => { if (T[l][i]) M.I18N[l][k] = T[l][i]; }); });
+})();

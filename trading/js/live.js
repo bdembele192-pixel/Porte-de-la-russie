@@ -78,7 +78,20 @@ window.M = window.M || {};
       return { price, m, L, slp, tpp, slPrice, tpPrice, notional, riskUsd, riskPct: riskUsd / Math.max(eq, 1), liq };
     }
 
+    // Limites du marché choisi (levier max, vente à découvert) : voir js/quotetrade.js
+    function limits() {
+      const L = opts.limits ? opts.limits() : null;
+      const mx = Math.max(1, Math.min(maxLev, (L && L.maxLev) || maxLev));
+      if (+lev.max !== mx) { lev.max = mx; if (st.lev > mx) { st.lev = mx; lev.value = mx; } }
+      const noShort = L && L.canShort === false;
+      const sb = $(".seg-b.short", el);
+      sb.disabled = !!noShort;
+      sb.setAttribute("data-tip-text", noShort ? "Vente à découvert impossible sur ce marché (BRVM : on ne vend que ce qu'on possède)." : "Parier sur la baisse.");
+      if (noShort && st.dir < 0) setDir(1);
+    }
+
     function refresh() {
+      limits();
       const c = calc();
       $("#t-levv", el).textContent = "×" + c.L;
       $("#t-levv", el).className = c.L > 10 ? "dn" : c.L > 3 ? "warn" : "";
@@ -109,7 +122,7 @@ window.M = window.M || {};
       const c = calc();
       if (tr.pos || !(c.price > 0)) return;
       if (c.m > tr.s.cash) { M.toast("Mise supérieure à ton cash (" + M.fmt$(tr.s.cash) + "). Ajoute des fonds dans Paramètres → Trading.", "err"); return; }
-      if (opts.guard) { const why = opts.guard(c); if (why) { M.toast(why, "err"); M.sfx("ko"); return; } }
+      if (opts.guard) { const why = opts.guard(c, st.dir); if (why) { M.toast(why, "err"); M.sfx("ko"); return; } }
       // Copilote IA (trading live uniquement) : peut proposer une version plus sûre de l'ordre
       if (opts.advisor && !bypass && opts.advisor(c, st.dir, { keep: () => send(null, true), apply: p => { apply(p); send(null, true); } })) return;
       if (cfg.confirm && !confirm(`${st.dir > 0 ? "Acheter (long)" : "Vendre (short)"} pour ${M.fmt$(c.m)}${c.L > 1 ? " ×" + c.L : ""} ?\nStop : ${c.slPrice ? M.Market.fmtPrice(c.slPrice) : "aucun"} · Objectif : ${c.tpPrice ? M.Market.fmtPrice(c.tpPrice) : "aucun"}`)) return;
@@ -203,7 +216,10 @@ window.M = window.M || {};
   // ------------------------------------------------------------------
   M.views.live = function (el, [symParam]) {
     const s = M.state;
-    let sym = M.Market.ASSETS.some(a => a.sym === symParam) ? symParam : s.lastSym;
+    const QT = M.QTrade;
+    const known = x => x && (M.Market.ASSETS.some(a => a.sym === x) || (QT && QT.isQ(x)));
+    let sym = known(symParam) ? symParam : known(s.lastSym) ? s.lastSym : "BTCUSDT";
+    let wlTab = QT && QT.isQ(sym) ? null : "Crypto";
     let tf = s.lastTf || "15m";
     const ind = Object.assign({ ema20: true, ema50: false, bb: false, vwap: false, rsi: false }, s.liveInd || {});
     const trader = new M.Trader(s.wallet);
@@ -213,12 +229,9 @@ window.M = window.M || {};
     el.innerHTML = `
       <div class="live">
         <aside class="watch glass">
-          <h4 data-tip-text="Clique sur un actif pour afficher son graphique.">Marchés</h4>
-          <div id="wl">${M.Market.ASSETS.map(a => `
-            <button class="wl-i" data-s="${a.sym}" data-tip-title="${a.name}" data-tip-text="${a.type} · ${M.GLOSSARY[a.tip].d}">
-              <span class="tk-ic sm" style="--c:${a.color}">${a.icon}</span><span class="wl-n"><b>${a.short}</b><small>${a.name}</small></span>
-              <span class="wl-p mono"><b data-wp="${a.sym}">—</b><small data-wc="${a.sym}">—</small></span>
-            </button>`).join("")}</div>
+          <h4 data-tip-text="Clique sur un actif pour afficher son graphique et le trader.">Marchés</h4>
+          <div class="wl-tabs" id="wl-tabs"></div>
+          <div id="wl"></div>
         </aside>
 
         <section class="chartcol">
@@ -241,7 +254,7 @@ window.M = window.M || {};
             </div>
           </div>
           <div class="chartbox glass" id="chart" data-tip-text="Molette ou pincement = zoom · glisser = se déplacer dans le temps · double-clic = revenir au présent."></div>
-          <div class="tape glass">
+          <div class="tape glass" id="tapebox">
             <div class="tape-h"><h4 data-tip-text="Chaque ligne est une vraie transaction qui vient d'avoir lieu sur Binance : prix, quantité, et qui a été agressif (acheteur en vert, vendeur en rouge). 🐋 = grosse transaction.">Flux des trades réels <span class="pill sm" id="tape-mode">…</span></h4>
               <div class="flow" data-tip-text="Part des volumes à l'achat (vert) et à la vente (rouge) sur les dernières transactions. Indique quel camp est le plus pressé."><i id="flow-b"></i></div></div>
             <div class="tape-rows" id="tape"></div>
@@ -265,7 +278,9 @@ window.M = window.M || {};
 
     const ticket = M.ticket($("#tk", el), {
       trader, maxLev: 20, journal: true, price: () => price, sym: () => sym,
-      guard() {
+      limits: () => { const a = M.Market.asset(sym); return a.quote ? { maxLev: a.maxLev, canShort: a.canShort } : null; },
+      guard(c, dir) {
+        if (QT) { const w = QT.guard(sym, dir, c.L, c.price); if (w) return w; }
         const lim = M.state.settings.dayLoss;
         if (!lim) return null;
         const d0 = new Date(); d0.setHours(0, 0, 0, 0);
@@ -351,7 +366,26 @@ window.M = window.M || {};
       $$(".tf", el).forEach(x => x.classList.toggle("on", x === b));
       load();
     });
-    $$(".wl-i", el).forEach(b => b.onclick = () => { history.replaceState(null, "", "#/live/" + b.dataset.s); sym = b.dataset.s; s.lastSym = sym; M.save(); load(); });
+    // Liste des marchés : cryptos Binance (temps réel) + cours différés échangeables (bourses, matières, devises, BRVM)
+    function wlItem(a) {
+      return `<button class="wl-i ${a.sym === sym ? "on" : ""}" data-s="${a.sym}" data-tip-title="${esc(a.name)}" data-tip-text="${esc(a.type)} · ${esc((M.GLOSSARY[a.tip] || {}).d || "")}">
+              <span class="tk-ic sm" style="--c:${a.color}">${a.icon}</span><span class="wl-n"><b>${esc(a.short)}</b><small>${esc(a.name)}</small></span>
+              <span class="wl-p mono"><b data-wp="${a.sym}">—</b><small data-wc="${a.sym}">—</small></span>
+            </button>`;
+    }
+    function drawWl() {
+      const groups = [["Crypto", M.Market.ASSETS]].concat(QT ? QT.groups().map(([n, qs]) => [n, qs.map(q => M.Market.asset("Q:" + q.id))]) : []);
+      if (!wlTab || !groups.some(g => g[0] === wlTab)) {
+        wlTab = (groups.find(g => g[1].some(x => x.sym === sym)) || groups[0])[0];
+      }
+      $("#wl-tabs", el).innerHTML = groups.length > 1 ? groups.map(([n, l]) => `<button type="button" class="${n === wlTab ? "on" : ""}" data-g="${n}" data-tip-text="${n === "Crypto" ? "Cryptos, or et euro : prix Binance en temps réel, 24 h/24." : n === "BRVM" ? "Actions de la Bourse régionale d'Abidjan (UEMOA) : cours différés, séance 9 h 45 – 15 h GMT, sans levier ni vente à découvert." : "Cours gratuits différés de quelques minutes, échangeables pendant les heures d'ouverture de leur place."}">${n} <small>${l.length}</small></button>`).join("") : "";
+      const g = groups.find(x => x[0] === wlTab) || groups[0];
+      $("#wl", el).innerHTML = g[1].map(wlItem).join("");
+      $$(".wl-tabs button", el).forEach(b => b.onclick = () => { wlTab = b.dataset.g; drawWl(); watchlist(); });
+      $$(".wl-i", el).forEach(b => b.onclick = () => { history.replaceState(null, "", "#/live/" + b.dataset.s); sym = b.dataset.s; s.lastSym = sym; M.save(); load(); });
+    }
+    drawWl();
+    if (QT && !M.Quotes.loaded) M.Quotes.load().then(() => { if (alive) { drawWl(); watchlist(); if (QT.isQ(sym)) load(); } });
 
     function setMode(m) {
       mode = m;
@@ -360,7 +394,10 @@ window.M = window.M || {};
       const map = {
         live: ["● LIVE", "live", "Connecté en temps réel au flux WebSocket de Binance : ce sont les vrais prix du marché."],
         poll: ["● LIVE (4 s)", "live", "Prix réels de Binance, rafraîchis toutes les 4 secondes."],
-        sim: ["● DÉMO", "demo", "Marché injoignable depuis ton réseau : les prix sont simulés. Le fonctionnement reste identique."]
+        sim: ["● DÉMO", "demo", "Marché injoignable depuis ton réseau : les prix sont simulés. Le fonctionnement reste identique."],
+        qlive: ["● DIFFÉRÉ", "live", "Vrai cours, relu toutes les 30 secondes, avec quelques minutes de différé selon la source. Suffisant pour s'entraîner, pas pour du trading à la seconde."],
+        qfile: ["● COPIE", "demo", "Dernière copie des cours enregistrée par le robot de collecte : le cours peut dater de plusieurs heures."],
+        closed: ["● FERMÉ", "demo", "Marché fermé : le cours ne bouge plus jusqu'à la prochaine séance. Les ordres sont refusés, ta position reste ouverte."]
       }[m];
       pill.textContent = map[0]; pill.className = "pill " + map[1]; pill.setAttribute("data-tip-text", map[2]);
     }
@@ -369,9 +406,10 @@ window.M = window.M || {};
       if (price == null || !chart) return;
       const bars = chart.bars;
       const ref = bars.length > 1 ? bars[Math.max(0, bars.length - 1 - Math.round(86400e3 / M.Market.TF[tf]))].o : price;
-      const ch = price / ref - 1;
-      $("#ct-p", el).textContent = M.Market.fmtPrice(price);
-      $("#ct-c", el).textContent = pct(ch) + " (24h)";
+      const qa = QT && QT.isQ(sym) ? M.Quotes.byId[sym.slice(2)] : null;
+      const ch = qa && qa.prev > 0 ? price / qa.prev - 1 : price / ref - 1;
+      $("#ct-p", el).textContent = M.Market.fmtPrice(price) + (qa ? ({ USD: " $", EUR: " €", GBP: " £", JPY: " ¥", HKD: " HK$", XOF: " FCFA" }[qa.cur] || "") : "");
+      $("#ct-c", el).textContent = pct(ch) + (qa ? " (séance)" : " (24h)");
       $("#ct-c", el).className = "mono " + (ch >= 0 ? "up" : "dn");
       document.title = `${M.Market.asset(sym).short} ${M.Market.fmtPrice(price)} · Mèche`;
     }
@@ -403,25 +441,32 @@ window.M = window.M || {};
       const a = M.Market.asset(sym);
       $$(".wl-i", el).forEach(b => b.classList.toggle("on", b.dataset.s === sym));
       $("#ct-ic", el).textContent = a.icon; $("#ct-ic", el).style.setProperty("--c", a.color);
-      $("#ct-name", el).textContent = a.name + " · " + a.short + "/USDT";
-      $("#ct-type", el).textContent = a.type;
+      const qa = a.quote ? M.Quotes.byId[a.id] : null;
+      const ses = qa && QT.session(qa);
+      $("#ct-name", el).textContent = a.quote ? a.name + " · " + a.short : a.name + " · " + a.short + "/USDT";
+      $("#ct-type", el).textContent = a.quote ? `${a.type} · ${ses ? (ses.open ? "ouvert" : "fermé") + " · " + ses.place : ""}${a.maxLev > 1 ? " · levier max ×" + a.maxLev : " · sans levier"}` : a.type;
+      $("#ct-type", el).setAttribute("data-tip-text", a.quote ? `Horaires : ${ses ? ses.hours : "—"}. Produit simulé : ${a.how}. Le gain ou la perte suit le pourcentage de variation du cours, sans risque de change.` : "");
+      // Unités de temps disponibles : les cours différés n'existent pas en 1 et 5 minutes
+      $$(".tf", el).forEach(b => { const off = a.quote && !QT.QTF.includes(b.dataset.tf); b.disabled = off; b.title = off ? "Indisponible pour ce marché (bougies de 15 min minimum)" : ""; });
+      const tfx = a.quote && !QT.QTF.includes(tf) ? "15m" : tf;
+      $$(".tf", el).forEach(x => x.classList.toggle("on", x.dataset.tf === tfx));
       $("#ct-name", el).parentElement.setAttribute("data-tip", a.tip);
       const box = $("#chart", el);
       box.classList.add("loading");
-      const r = await M.Market.klines(sym, tf, { limit: 400 });
-      if (!alive) return;
+      const r = await M.Market.klines(sym, tfx, { limit: 400 });
+      if (!alive || a.sym !== sym) return;
       box.classList.remove("loading");
-      if (!chart) chart = new M.Chart(box, { tf, rsi: ind.rsi, visible: 110 });
-      chart.opts.tf = tf;
+      if (!chart) chart = new M.Chart(box, { tf: tfx, rsi: ind.rsi, visible: 110 });
+      chart.opts.tf = tfx;
       chart.setOverlays(overlays());
       chart.setRsi(ind.rsi);
       chart.setData(r.bars);
       price = r.bars[r.bars.length - 1].c;
-      setMode(r.live ? "live" : "sim");
+      setMode(a.quote ? (ses && !ses.open ? "closed" : qa && qa.fromFile ? "qfile" : "qlive") : r.live ? "live" : "sim");
       showPrice(); drawLines(); ticket.refresh(); posCard.draw(); drawWallet();
-      stream = M.Market.stream(sym, tf, r.bars[r.bars.length - 1], (b) => { chart.push(b); onTick(b); }, setMode);
-      if (!r.live) stream.forceSim();
-      tape = startTape(sym, () => price, !r.live);
+      stream = M.Market.stream(sym, tfx, r.bars[r.bars.length - 1], (b) => { chart.push(b); onTick(b); }, m => setMode(a.quote && ses && !ses.open ? "closed" : m));
+      if (!r.live && !a.quote) stream.forceSim();
+      tape = a.quote ? noTape(a) : startTape(sym, () => price, !r.live);
       watchPos();
     }
 
@@ -448,7 +493,9 @@ window.M = window.M || {};
     async function catchUp() {
       const p = trader.pos;
       if (!p || !p.lastCheck || Date.now() - p.lastCheck < 60e3) return;
-      const r = await M.Market.klines(p.sym, "1m", { limit: 1000, startTime: p.lastCheck });
+      const r = QT && QT.isQ(p.sym)
+        ? { live: true, bars: (await M.Quotes.bars(p.sym.slice(2), "1S").catch(() => [])).filter(b => b.t > p.lastCheck) }
+        : await M.Market.klines(p.sym, "1m", { limit: 1000, startTime: p.lastCheck });
       if (!r.live || !trader.pos) return;
       for (const b of r.bars) {
         const t = trader.check(b, b.t);
@@ -478,7 +525,7 @@ window.M = window.M || {};
 
     // Prix de la liste de marchés
     async function watchlist() {
-      const r = await M.Market.tickers(M.Market.ASSETS.map(a => a.sym));
+      const r = await M.Market.tickers($$(".wl-i", el).map(b => b.dataset.s).concat(["EURUSDT"]).filter((x, i, l) => l.indexOf(x) === i));
       if (!alive) return;
       if (r.live && r.data.EURUSDT) M.setEurUsd(r.data.EURUSDT.last);
       Object.entries(r.data).forEach(([k, d]) => {
@@ -489,6 +536,8 @@ window.M = window.M || {};
     }
     watchlist();
     const wiv = setInterval(watchlist, 20000);
+    const onQ = () => { if (alive && wlTab !== "Crypto") watchlist(); };
+    document.addEventListener("quotes:update", onQ);
 
     drawHist();
     load().then(catchUp);
@@ -496,6 +545,7 @@ window.M = window.M || {};
     return () => {
       alive = false;
       document.removeEventListener("keydown", keys);
+      document.removeEventListener("quotes:update", onQ);
       clearInterval(wiv);
       if (stream) stream.close();
       if (posStream) posStream.close();
@@ -505,6 +555,15 @@ window.M = window.M || {};
       M.save(true);
     };
   };
+
+  /* Cours différés : pas de flux public des transactions. */
+  function noTape(a) {
+    const box = document.getElementById("tape"), modeEl = document.getElementById("tape-mode"), flowEl = document.getElementById("flow-b");
+    if (modeEl) { modeEl.textContent = "indisponible"; modeEl.className = "pill sm demo"; }
+    if (flowEl) flowEl.style.width = "50%";
+    if (box) box.innerHTML = `<p class="muted small pad">Pas de flux gratuit des transactions pour ${esc(a.name)} : seules les cryptos publient chaque transaction en direct. ${a.type === "BRVM" ? "À la BRVM, les échanges sont peu nombreux : quelques ordres suffisent à faire bouger un titre (faible liquidité)." : "Sur les bourses classiques, ce flux est vendu par les places de cotation."}</p>`;
+    return { close() {} };
+  }
 
   /* Flux des transactions réelles (aggTrade). Repli : transactions simulées. */
   function startTape(sym, getPrice, forceSim) {

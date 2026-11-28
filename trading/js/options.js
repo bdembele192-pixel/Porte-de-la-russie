@@ -66,6 +66,7 @@ window.M = window.M || {};
   M.views.options = function (el) {
     const saved = M.state.optLab || {};
     const st = Object.assign({ strat: "call", under: "", S: 100, K: 100, days: 30, vol: 25, r: 4, qty: 1, at: 0 }, saved);
+    if (M.Access && M.Access.lockedStrat(st.strat)) st.strat = "call";   // stratégie Pro gardée d'un ancien abonnement
 
     el.innerHTML = `
       <div class="page-head"><div><p class="eyebrow">Labo options</p><h1>Comprends les options <span class="grad">en les manipulant</span></h1>
