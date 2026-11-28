@@ -143,7 +143,7 @@ create table if not exists public.payments (
   id           uuid primary key default gen_random_uuid(),
   user_id      uuid not null references auth.users (id) on delete cascade,
   plan_id      text not null references public.plans (id),
-  provider     text not null check (provider in ('cinetpay', 'stripe')),
+  provider     text not null check (provider in ('cinetpay', 'stripe', 'test')),   -- test = paiement simulé (mode test)
   amount       numeric(14, 2) not null check (amount > 0),
   currency     text not null check (currency in ('XOF', 'EUR', 'USD')),
   status       text not null default 'pending' check (status in ('pending', 'paid', 'failed', 'canceled')),

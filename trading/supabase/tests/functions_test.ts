@@ -139,3 +139,31 @@ Deno.test("CinetPay : vérification par l'API puis retour client redirigé", asy
   assertEquals(db.payments.find(x => x.id === payment_id)!.status, "paid");
   assert(db.grants.includes(payment_id));
 });
+
+Deno.test("paiement de test : refusé tant que TEST_PAYMENTS n'est pas activé", async () => {
+  Deno.env.delete("TEST_PAYMENTS");
+  const r = await post(checkout, "https://f/checkout", { plan_id: "premium", provider: "test" }, { authorization: "Bearer good" });
+  assertEquals(r.status, 403);
+});
+Deno.test("paiement de test : simulation complète, réservée au propriétaire du paiement", async () => {
+  Deno.env.set("TEST_PAYMENTS", "1");
+  const r = await post(checkout, "https://f/checkout", { plan_id: "premium", provider: "test" }, { authorization: "Bearer good" });
+  assertEquals(r.status, 200);
+  const { url, payment_id } = await r.json();
+  assert(url.includes("#/abonnement/test/" + payment_id));
+  const pay = db.payments.find(x => x.id === payment_id)!;
+  assertEquals([pay.provider, pay.currency, pay.amount, pay.status], ["test", "XOF", 3000, "pending"]);
+  // Sans connexion : refusé
+  const anon = await post(webhook, "https://f/payment-webhook?provider=test", { payment_id, result: "ok" }, { authorization: "Bearer bad" });
+  assertEquals(anon.status, 401);
+  // Paiement d'un autre utilisateur : introuvable
+  pay.user_id = "autre";
+  const other = await post(webhook, "https://f/payment-webhook?provider=test", { payment_id, result: "ok" }, { authorization: "Bearer good" });
+  assertEquals(other.status, 404);
+  pay.user_id = "u1";
+  const ok = await post(webhook, "https://f/payment-webhook?provider=test", { payment_id, result: "ok" }, { authorization: "Bearer good" });
+  assertEquals(ok.status, 200);
+  assertEquals(pay.status, "paid");
+  assert(db.grants.includes(payment_id));
+  Deno.env.delete("TEST_PAYMENTS");
+});

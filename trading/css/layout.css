@@ -160,3 +160,4 @@ body.side-open #net-bar, body.side-open .ai-fab, body.side-open .ai-panel { visi
 .region-b b { color: var(--ink); }
 .region-b small { color: var(--mut); }
 .region-b.on { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+.test-pay { max-width: 620px; margin: 30px auto; text-align: center; } .test-pay .cta { justify-content: center; }

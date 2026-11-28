@@ -3,7 +3,9 @@
 // Le prix vient TOUJOURS de la table plans (jamais du navigateur).
 import { admin, APP_URL, cors, env, FN_URL, json } from "../_shared/pay.ts";
 
-const CURRENCY: Record<string, string> = { cinetpay: "XOF", stripe: env("STRIPE_CURRENCY") || "EUR" };
+const CURRENCY: Record<string, string> = { cinetpay: "XOF", stripe: env("STRIPE_CURRENCY") || "EUR", test: "XOF" };
+// Paiement simulé : seulement si le secret TEST_PAYMENTS vaut 1 (avant l'ouverture du compte marchand)
+const TEST = () => env("TEST_PAYMENTS") === "1";
 
 Deno.serve(async (req) => {
   const h = cors(req);
@@ -17,14 +19,15 @@ Deno.serve(async (req) => {
     if (!user) return json({ error: "Connecte-toi pour t'abonner." }, 401, h);
 
     const { plan_id, provider } = await req.json().catch(() => ({}));
-    if (!["cinetpay", "stripe"].includes(provider)) return json({ error: "Moyen de paiement inconnu." }, 400, h);
+    if (!["cinetpay", "stripe", "test"].includes(provider)) return json({ error: "Moyen de paiement inconnu." }, 400, h);
+    if (provider === "test" && !TEST()) return json({ error: "Le paiement de test est désactivé." }, 403, h);
     const { data: plan } = await db.from("plans").select("*").eq("id", plan_id).eq("active", true).eq("buyable", true).maybeSingle();
     if (!plan) return json({ error: "Offre introuvable." }, 404, h);
     // Pilote : abonnements ouverts seulement aux régions listées (pays du compte, choisi par le client)
     const { data: prof } = await db.from("profiles").select("country").eq("id", user.id).maybeSingle();
     const open = (env("PILOT_COUNTRIES") || "ML,SN,CI,BF,BJ,TG").split(",").map(s => s.trim());
     if (!prof?.country) return json({ error: "Choisis d'abord ta région dans ton compte." }, 409, h);
-    if (provider === "cinetpay" && !open.includes(prof.country)) return json({ error: "Les abonnements ne sont pas encore ouverts dans ta région." }, 409, h);
+    if ((provider === "cinetpay" || provider === "test") && !open.includes(prof.country)) return json({ error: "Les abonnements ne sont pas encore ouverts dans ta région." }, 409, h);
     const currency = CURRENCY[provider];
     const amount = Number(plan.prices?.[currency]);
     if (!(amount > 0)) return json({ error: "Le prix de cette offre n'est pas encore fixé dans cette devise." }, 409, h);
@@ -39,6 +42,11 @@ Deno.serve(async (req) => {
     if (error) throw error;
     const back = APP_URL() + "#/abonnement";
     let url = "", ref = "";
+
+    if (provider === "test") {
+      // Aucune banque : l'app affiche une page de paiement simulée, qui confirme via payment-webhook?provider=test
+      url = back + "/test/" + pay.id; ref = "test-" + pay.id.slice(0, 8);
+    }
 
     if (provider === "stripe") {
       const key = env("STRIPE_SECRET_KEY");

@@ -11,6 +11,7 @@ name: Comptes et paiements Mèche (Supabase)
 # Secrets facultatifs (chaque moyen de paiement s'active quand ses secrets sont présents) :
 #   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_CURRENCY (EUR par défaut)
 #   CINETPAY_APIKEY, CINETPAY_SITE_ID
+#   TEST_PAYMENTS          1 = paiement simulé autorisé (essais sans compte marchand) ; à retirer au lancement
 #   PILOT_COUNTRIES        pays où l'abonnement est vendu (défaut : ML,SN,CI,BF,BJ,TG)
 #   TURNSTILE_SECRET_KEY    captcha Cloudflare (la clé de site publique va dans config.js : turnstileSiteKey)
 #   GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, APPLE_CLIENT_ID, APPLE_SECRET   connexion Google / Apple
@@ -69,11 +70,12 @@ jobs:
           CINETPAY_APIKEY: ${{ secrets.CINETPAY_APIKEY }}
           CINETPAY_SITE_ID: ${{ secrets.CINETPAY_SITE_ID }}
           PILOT_COUNTRIES: ${{ secrets.PILOT_COUNTRIES }}
+          TEST_PAYMENTS: ${{ secrets.TEST_PAYMENTS }}
         run: |
           f=$(mktemp)
           echo "APP_URL=$APP_URL" >> "$f"
           echo "ALLOWED_ORIGINS=https://bdembele192-pixel.github.io" >> "$f"
-          for k in STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET STRIPE_CURRENCY CINETPAY_APIKEY CINETPAY_SITE_ID PILOT_COUNTRIES; do
+          for k in STRIPE_SECRET_KEY STRIPE_WEBHOOK_SECRET STRIPE_CURRENCY CINETPAY_APIKEY CINETPAY_SITE_ID PILOT_COUNTRIES TEST_PAYMENTS; do
             v="${!k}"
             if [ -n "$v" ]; then echo "$k=$v" >> "$f"; echo "✓ $k"; else echo "– $k absent"; fi
           done

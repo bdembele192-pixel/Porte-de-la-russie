@@ -42,6 +42,15 @@ Pas de prélèvement automatique : chaque paiement couvre une période (30 jours
   utilisateur technique peut les contourner. Les paiements et l'abonnement, eux, sont protégés côté serveur. Pour une
   protection forte, il faudra servir les contenus Pro depuis la base (étape suivante, après le pilote).
 
+## Tester sans compte marchand (mode test)
+Tant que la société et le compte CinetPay n'existent pas, tout le parcours se teste avec un **paiement simulé** :
+1. Crée le projet Supabase et lance le robot (voir `COMPTES.md`) en ajoutant le secret GitHub `TEST_PAYMENTS` = `1`.
+2. Dans l'app : Abonnement → choisir un pass → **Paiement de test** → « Simuler un paiement réussi ». Le serveur active le
+   Pro exactement comme après un vrai paiement (même vérification, même prolongation).
+3. Les paiements simulés sont enregistrés avec `provider = 'test'` : faciles à repérer et à supprimer dans la table `payments`.
+4. **Au lancement** : supprime le secret `TEST_PAYMENTS`, relance le robot, et mets `testPayments: false` dans `config.js`.
+   Sans ce secret, le serveur refuse tout paiement simulé, même si le bouton restait affiché.
+
 ## Modifier les prix
 Supabase → **Table Editor → plans** → colonne `prices`, par exemple `{"XOF": 3000}` (nombre entier, **multiple de 5**,
 exigé par CinetPay). `name`, `description`, `period_days`, `buyable` (proposé à l'achat) et `sort` se changent au même endroit.

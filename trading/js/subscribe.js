@@ -13,7 +13,8 @@ window.M = window.M || {};
 
   const PROVIDERS = {
     cinetpay: { cur: "XOF", name: "Mobile money ou carte", sub: "Orange Money, Wave, Moov, MTN, Free, Visa, Mastercard · FCFA", ic: "phone", hosts: ["cinetpay.com"] },
-    stripe: { cur: "EUR", name: "Carte bancaire", sub: "Visa, Mastercard, Apple Pay, Google Pay", ic: "wallet", hosts: ["checkout.stripe.com"] }
+    stripe: { cur: "EUR", name: "Carte bancaire", sub: "Visa, Mastercard, Apple Pay, Google Pay", ic: "wallet", hosts: ["checkout.stripe.com"] },
+    test: { cur: "XOF", name: "Paiement de test", sub: "Simulation pour essayer le parcours : aucun argent n'est débité", ic: "lab", hosts: [] }
   };
   // Pass Pro par défaut (identiques au contenu initial de la table plans), affichés tant que la base n'est pas reliée
   const PASSES = [
@@ -38,11 +39,44 @@ window.M = window.M || {};
   const label = d => d === 1 ? "1 jour" : d === 7 ? "7 jours" : d === 30 ? "1 mois" : d === 90 ? "3 mois" : d === 180 ? "6 mois" : d + " jours";
   const fcfa = v => new Intl.NumberFormat("fr-FR").format(v) + " FCFA";
   const fmt = (v, cur) => v == null ? null : cur === "XOF" ? fcfa(v) : new Intl.NumberFormat("fr-FR", { style: "currency", currency: cur }).format(v);
-  const safeUrl = (u, p) => { try { const x = new URL(u); return x.protocol === "https:" && p.hosts.some(h => x.hostname === h || x.hostname.endsWith("." + h)); } catch { return false; } };
+  const safeUrl = (u, p) => {
+    try {
+      const x = new URL(u, location.href);
+      if (p === PROVIDERS.test) return x.origin === location.origin;   // la page de test est dans l'app elle-même
+      return x.protocol === "https:" && p.hosts.some(h => x.hostname === h || x.hostname.endsWith("." + h));
+    } catch { return false; }
+  };
 
-  M.views.abonnement = function (el, [ret]) {
+  // Page de paiement simulée (mode test) : remplace la page du prestataire, rien n'est débité
+  async function testCheckout(el, id) {
+    const A = M.Account;
+    el.innerHTML = `<div class="glass pad test-pay"><p class="eyebrow">${M.icon("lab")} Paiement de test</p><h2>Chargement…</h2></div>`;
+    await A.client();
+    const box = $(".test-pay", el);
+    if (!A.session()) { box.innerHTML = `<h2>Connecte-toi pour continuer</h2><a class="btn primary" href="#/account">Mon compte</a>`; return; }
+    const { data: pay } = await A.sb().from("payments").select("id, plan_id, amount, currency, status").eq("id", id).maybeSingle();
+    if (!pay) { box.innerHTML = `<h2>Paiement introuvable</h2><a class="btn ghost" href="#/abonnement">Retour</a>`; return; }
+    box.innerHTML = `<p class="eyebrow">${M.icon("lab")} Paiement de test · simulation</p>
+      <h2>${esc((PASSES.find(x => x.id === pay.plan_id) || { name: pay.plan_id }).name)} · ${fcfa(Number(pay.amount))}</h2>
+      <div class="risk-band test">${M.icon("shield")} Aucun argent n'est débité. Cette page remplace celle de CinetPay le temps des essais : elle permet de vérifier que le Pro s'active bien après un paiement confirmé par le serveur.</div>
+      ${pay.status !== "pending" ? `<p>Ce paiement est déjà « ${esc(pay.status)} ».</p><a class="btn ghost" href="#/abonnement">Retour</a>` :
+      `<div class="cta"><button class="btn primary" id="tp-ok">${M.icon("check")} Simuler un paiement réussi</button><button class="btn ghost" id="tp-no">Simuler un refus</button></div>`}`;
+    const send = async result => {
+      $$("button", box).forEach(b => b.disabled = true);
+      const { error } = await A.sb().functions.invoke("payment-webhook?provider=test", { body: { payment_id: id, result } });
+      if (error) { let m = error.message; try { const j = await error.context.json(); if (j && j.error) m = j.error; } catch { /* sans JSON */ } M.toast(m, "err"); $$("button", box).forEach(b => b.disabled = false); return; }
+      if (M.Access) await M.Access.refresh();
+      M.go(result === "ok" ? "#/abonnement/ok" : "#/abonnement/annule");
+    };
+    const ok = $("#tp-ok", box), no = $("#tp-no", box);
+    if (ok) ok.onclick = () => send("ok");
+    if (no) no.onclick = () => send("refus");
+  }
+
+  M.views.abonnement = function (el, [ret, payId]) {
     const A = M.Account, on = A && A.enabled();
-    const pays = (C().payments || []).filter(p => PROVIDERS[p]);
+    if (ret === "test" && payId) { testCheckout(el, payId); return; }
+    const pays = (C().payments || []).filter(p => PROVIDERS[p]).concat(C().testPayments && on ? ["test"] : []);
     let passes = PASSES, pick = "pro-1m";
     el.innerHTML = `
       <div class="page-head"><div><p class="eyebrow">${M.icon("crown")} <span>Abonnement</span></p>
@@ -108,7 +142,7 @@ window.M = window.M || {};
       const regionOk = !M.Region || !M.Region.get() || M.Region.open();
       $("#pay", el).innerHTML = pays.map(k => {
         const v = p.prices && p.prices[PROVIDERS[k].cur];
-        return `<button class="btn primary" data-prov="${k}" ${v && regionOk ? "" : "disabled"}>${M.icon(PROVIDERS[k].ic)} Payer ${v ? fmt(v, PROVIDERS[k].cur) : ""} · ${PROVIDERS[k].name}</button>`;
+        return `<button class="btn ${k === "test" ? "ghost" : "primary"}" data-prov="${k}" ${v && regionOk ? "" : "disabled"}>${M.icon(PROVIDERS[k].ic)} Payer ${v ? fmt(v, PROVIDERS[k].cur) : ""} · ${PROVIDERS[k].name}</button>`;
       }).join("") || `<p class="small muted">Paiement bientôt disponible.</p>`;
       $$("[data-prov]", el).forEach(b => b.onclick = () => buy(p, b.dataset.prov, b));
     }
@@ -133,6 +167,7 @@ window.M = window.M || {};
             throw new Error(msg);
           }
           if (!data || !safeUrl(data.url, P)) throw new Error("Adresse de paiement inattendue : paiement bloqué par sécurité.");
+          md.close();   // la page de test est dans l'app : la fenêtre ne doit pas rester ouverte par-dessus
           location.href = data.url;
         } catch (e) { M.toast(e.message, "err"); md.close(); btn.disabled = false; }
       };

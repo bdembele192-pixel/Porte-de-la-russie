@@ -3,7 +3,7 @@
 //   · Stripe : signature HMAC de l'en-tête Stripe-Signature vérifiée avec STRIPE_WEBHOOK_SECRET ;
 //   · CinetPay : le paiement est revérifié en interrogeant directement leur API.
 // L'abonnement n'est prolongé que si le montant et la devise correspondent au paiement enregistré.
-import { APP_URL, env, hmacHex, json, markFailed, markPaid, safeEq } from "../_shared/pay.ts";
+import { admin, APP_URL, cors, env, hmacHex, json, markFailed, markPaid, safeEq } from "../_shared/pay.ts";
 
 const uuid = (s: string) => s.length === 32 ? `${s.slice(0, 8)}-${s.slice(8, 12)}-${s.slice(12, 16)}-${s.slice(16, 20)}-${s.slice(20)}` : s;
 
@@ -38,6 +38,26 @@ Deno.serve(async (req) => {
     let ok = false;
     try { const tid = cinetTid(req.method === "POST" ? await req.text() : u.search.slice(1)); if (provider === "cinetpay" && tid) ok = await verifyCinetpay(tid); } catch (e) { console.error(e); }
     return new Response(null, { status: 303, headers: { location: APP_URL() + "#/abonnement/" + (ok ? "ok" : "retour") } });
+  }
+  // Paiement simulé (mode test) : l'utilisateur connecté confirme ou refuse SON paiement « test » en attente.
+  // Actif seulement si TEST_PAYMENTS=1 ; aucun argent ne circule, le paiement est marqué provider = 'test'.
+  if (provider === "test") {
+    const h = cors(req);
+    if (req.method === "OPTIONS") return new Response(null, { headers: h });
+    if (env("TEST_PAYMENTS") !== "1") return json({ error: "Le paiement de test est désactivé." }, 403, h);
+    const token = (req.headers.get("authorization") || "").replace(/^Bearer\s+/i, "");
+    const db = admin();
+    const { data: { user } } = token ? await db.auth.getUser(token) : { data: { user: null } };
+    if (!user) return json({ error: "Connecte-toi." }, 401, h);
+    const { payment_id, result } = await req.json().catch(() => ({}));
+    const { data: pay } = await db.from("payments").select("*").eq("id", payment_id).maybeSingle();
+    if (!pay || pay.user_id !== user.id || pay.provider !== "test") return json({ error: "Paiement introuvable." }, 404, h);
+    if (result === "ok") {
+      const r = await markPaid(pay.id, { amount: Number(pay.amount), currency: pay.currency, ref: pay.provider_ref, details: { simulation: true } });
+      return json(r.ok ? { ok: true } : { error: r.why }, r.ok ? 200 : 409, h);
+    }
+    await markFailed(pay.id, "canceled", { simulation: true });
+    return json({ ok: true, canceled: true }, 200, h);
   }
   if (req.method !== "POST") return json({ error: "Méthode non autorisée" }, 405);
   const raw = await req.text();

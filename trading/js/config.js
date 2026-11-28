@@ -42,6 +42,9 @@ M.CONFIG = {
   freemium: "auto",
   // Moyens de paiement : cinetpay = Orange Money, Wave, Moov, MTN, Free et cartes, en FCFA. (stripe : après le pilote)
   payments: ["cinetpay"],
+  // Paiement de test (simulation, aucun argent réel) pour essayer tout le parcours avant d'avoir un compte marchand.
+  // Le serveur ne l'accepte que si le secret TEST_PAYMENTS vaut 1. Passer à false à l'ouverture du vrai paiement.
+  testPayments: true,
   // Pays où l'abonnement est ouvert pendant le pilote (le serveur applique la même liste : secret PILOT_COUNTRIES)
   pilotCountries: ["ML", "SN", "CI", "BF", "BJ", "TG"],
 
