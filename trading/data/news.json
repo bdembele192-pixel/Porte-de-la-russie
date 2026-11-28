@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-27T23:28:01.957Z",
+ "generatedAt": "2026-11-28T04:49:36.821Z",
  "sources": [
   {
    "id": "fed",
@@ -2620,94 +2620,6 @@
    "cat": "Banques centrales",
    "date": "2026-10-29T10:00:00.000Z",
    "firstSeen": "2026-10-29T15:37:34.005Z"
-  },
-  {
-   "id": "20eaa4bb0a114a9d",
-   "title": "CPMI publishes analysis on how central banks support payment system safety and efficiency and trust in money in the rapidly changing payments ecosystem",
-   "url": "https://www.bis.org/media-releases/20261029-cpmi-publishes-analysis-how-central-banks-support-payment-system-safety-and-efficiency-and",
-   "summary": "A new report by the BIS Committee on Payments and Market Infrastructures (CPMI) examines how technological innovation, changing user demand and the emergence of new types of payment service providers and arrangements are transforming payment systems.",
-   "source": "Banque des règlements internationaux",
-   "sid": "bis",
-   "cat": "Banques centrales",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-10-29T15:37:34.005Z"
-  },
-  {
-   "id": "ff16fe6c85a68537",
-   "title": "Global Review 2026 spotlights partnerships for trade and development",
-   "url": "https://www.wto.org/english/news_e/news26_e/aid_29oct26_526_e.htm",
-   "summary": "\"Developing economies seeking trade success need stronger partnerships with all stakeholders,\" WTO Director-General Ngozi Okonjo-Iweala said in her opening remarks at the 2026 Global Review on 29 October, marking 20 years of the Aid for Trade initiative. Over two days, ministers, heads of international organizations an",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-10-29T15:37:34.005Z"
-  },
-  {
-   "id": "53b3eb9ed4c6b63a",
-   "title": "Côte d'Ivoire President: Re-globalization an opportunity to move beyond traditional trade",
-   "url": "https://www.wto.org/english/news_e/news26_e/pls_29oct26_530_e.htm",
-   "summary": "\"Re-globalization presents an opportunity for developing countries to move beyond their traditional areas of specialization in exporting primary products, and to occupy a more prominent place in the spheres of innovation, transformation, industrial production and marketing.\" That was the key message on 29 October of H.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-10-29T20:31:44.207Z"
-  },
-  {
-   "id": "acd234c2a8a064d4",
-   "title": "WHO, WIPO and the WTO to hold 13th Joint Technical Symposium on 25 November 2026",
-   "url": "https://www.wto.org/english/news_e/news26_e/heal_29oct26_531_e.htm",
-   "summary": "The World Health Organization (WHO), the World Intellectual Property Organization (WIPO) and the World Trade Organization (WTO) will hold the 13th Joint Technical Symposium on Enabling Ecosystems for Local and Regional Health Products Manufacturing: Considering the Role of Trade, IP, AI and Digital Innovation on 25 Nov",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-10-30T11:35:45.733Z"
-  },
-  {
-   "id": "a53463f53c256d38",
-   "title": "New report looks at role of South-South and triangular cooperation for trade development",
-   "url": "https://www.wto.org/english/news_e/news26_e/devel_29oct26_535_e.htm",
-   "summary": "The growing importance of trade between developing economies - South-South trade - is highlighted in a joint publication launched on Day 1 (29 October) of the 10th Global Review of Aid for Trade by the WTO and the United Nations Office for South-South Cooperation (UNOSSC). The publication examines how the partnerships ",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-10-30T17:07:48.666Z"
-  },
-  {
-   "id": "d35703e751e4ac09",
-   "title": "Members review regional trade agreements, confirm meeting frequency, adopt annual report",
-   "url": "https://www.wto.org/english/news_e/news26_e/rta_29oct26_532_e.htm",
-   "summary": "At a meeting of the Committee on Regional Trade Agreements (CRTA) on 29 October, WTO members considered five regional trade agreements (RTAs) among members as well as three involving non-members. They also took note of new RTA notifications and adopted the Committee's annual report for 2026.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-10-30T17:07:48.666Z"
-  },
-  {
-   "id": "38493e294a908b0c",
-   "title": "Members review 34 notifications, share experiences at Fisheries Subsidies Committee",
-   "url": "https://www.wto.org/english/news_e/news26_e/fish_29oct26_539_e.htm",
-   "summary": "At a meeting of the Committee on Fisheries Subsidies on 29 October, WTO members conducted the first review of notifications under the WTO Agreement on Fisheries Subsidies and shared experiences on how they are implementing the Agreement since it entered into force just over a year ago.",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-11-03T16:39:15.956Z"
-  },
-  {
-   "id": "8ece4bfb49afee1c",
-   "title": "Cotton partners launch drive to bring textile/garment investment to West, Central Africa",
-   "url": "https://www.wto.org/english/news_e/news26_e/cotpt_29oct26_540_e.htm",
-   "summary": "On the margins of the Global Aid for Trade Review, the Partenariat pour le Coton (PPC – the Cotton Partnership) launched an Investment Promotion Drive on 29 October to help Africa’s farmers move from exporting cotton as raw fibre to increasing participation in higher-value activities, such as garment manufacturing. The",
-   "source": "OMC",
-   "sid": "wto",
-   "cat": "Institutions",
-   "date": "2026-10-29T00:00:00.000Z",
-   "firstSeen": "2026-11-04T16:11:26.517Z"
   }
  ]
 }
